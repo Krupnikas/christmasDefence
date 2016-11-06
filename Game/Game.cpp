@@ -2,7 +2,7 @@
 
 Game::Game()
 {
-    
+    gameScene = new QGraphicsScene();
 }
 
 Game::~Game()
