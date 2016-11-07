@@ -39,7 +39,10 @@ void MainView::resizeEvent(QResizeEvent *)
     calculateWorkingRectangle();
     Game game;
     ui->graphicsView->setScene(game.gameScene);
-    game.gameScene->addRect(workingRectangle, QPen("lightblue"), QBrush("blue"));
+    QPixmap borders("borders.png");
+    borders = borders.scaled(workingRectangle.width(), workingRectangle.height());
+    game.gameScene->addPixmap(borders);
+    //game.gameScene->addRect(workingRectangle, QPen("lightblue"), QBrush("blue"));
 }
 
 #endif
