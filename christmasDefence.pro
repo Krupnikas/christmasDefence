@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = christmasDefence
 TEMPLATE = app
 
+CONFIG += c++11
 
 SOURCES += main.cpp\
         mainview.cpp \
@@ -20,7 +21,9 @@ SOURCES += main.cpp\
     Cannon/MonsterCannon.cpp \
     Cannon/SlowCannon.cpp \
     Enemy/IEnemy.cpp \
-    Game/Game.cpp
+    Game/Game.cpp \
+    Cannon/FastCannon.cpp \
+    Game/resource.cpp
 
 HEADERS  += mainview.h \
     Bullet/IBullet.h \
@@ -29,6 +32,8 @@ HEADERS  += mainview.h \
     Cannon/MonsterCannon.h \
     Cannon/SlowCannon.h \
     Enemy/IEnemy.h \
-    Game/Game.h
+    Game/Game.h \
+    Game/resource.h \
+    Cannon/FastCannon.h
 
 FORMS    += mainview.ui

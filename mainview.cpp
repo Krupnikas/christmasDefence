@@ -1,3 +1,5 @@
+#include <Game/Game.h>
+#include <Cannon/FastCannon.h>
 #include "mainview.h"
 #include "ui_mainview.h"
 
@@ -37,11 +39,13 @@ void MainView::calculateWorkingRectangle()
 void MainView::resizeEvent(QResizeEvent *)
 {
     calculateWorkingRectangle();
-    Game game;
+    Game game(&r);
     ui->graphicsView->setScene(game.gameScene);
     QPixmap borders("borders.png");
     borders = borders.scaled(workingRectangle.width(), workingRectangle.height());
     game.gameScene->addPixmap(borders);
+    std::shared_ptr<ICannon> cannon = std::static_pointer_cast<ICannon>(std::make_shared<FastCannon>(&game));
+    cannon->draw();
     //game.gameScene->addRect(workingRectangle, QPen("lightblue"), QBrush("blue"));
 }
 

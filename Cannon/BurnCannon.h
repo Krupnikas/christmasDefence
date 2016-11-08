@@ -10,7 +10,8 @@ private:
 public:
     
     BurnCannon();
-    ~BurnCannon();
+    
+    virtual ~BurnCannon();
     
     virtual void draw() override;
     virtual void fire() override;

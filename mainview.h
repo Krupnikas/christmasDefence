@@ -11,6 +11,7 @@
 
 #include <QWidget>
 #include <QRect>
+#include <Game/resource.h>
 #include <Game/Game.h>
 
 namespace Ui {
@@ -20,21 +21,27 @@ class MainView;
 class MainView : public QWidget
 {
     Q_OBJECT
-
+    
 public:
+    
+    QRect workingRectangle;               //Прямоугольник рабочей области
+    R r;
+    
     explicit MainView(QWidget *parent = 0);
     ~MainView();
-
-QRect workingRectangle;               //Прямоугольник рабочей области
-
-void calculateWorkingRectangle();
-
-#ifdef TEST
-    void resizeEvent(QResizeEvent *);
-#endif
-
+    
+    void calculateWorkingRectangle();
+    
+    
+    
+    #ifdef TEST
+        void resizeEvent(QResizeEvent *);
+    #endif
+    
 private:
+
     Ui::MainView *ui;
+    
 };
 
 #endif // MAINVIEW_H

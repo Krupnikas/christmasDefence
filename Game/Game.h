@@ -3,6 +3,7 @@
 //#define TEST
 
 #include <QGraphicsScene>
+#include <Game/resource.h>
 
 class Game 
 {
@@ -11,7 +12,8 @@ public:
 
     QGraphicsScene *gameScene; //Всё действо будет происходить на этой сцене
 
-    Game();
+    R *r;
+    Game(R *r_in);
     ~Game();
     
 };
