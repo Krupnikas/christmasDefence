@@ -2,7 +2,7 @@
 #define GAME_H
 //#define TEST
 
-#include <QGraphicsScene>
+#include <Game/Scene.h>
 #include <Game/resource.h>
 
 class Game 
@@ -11,9 +11,11 @@ class Game
 public:
 
     QGraphicsScene *gameScene; //Всё действо будет происходить на этой сцене
-
+    
     R *r;
-    Game(R *r_in);
+    Scene *scene;
+    
+    Game(R *r_in, Scene *scene);
     ~Game();
     
 };

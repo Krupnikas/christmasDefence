@@ -8,9 +8,6 @@ R::R()
     fast_cannon_2 = QPixmap(R::get("fast_cannon_2"));
     fast_cannon_3 = QPixmap(R::get("fast_cannon_3.png"));
     
-    QSize size(100, 100);
-    fast_cannon_3 = fast_cannon_3.scaled(size);
-    
 }
 
 QString R::get(const char *val)

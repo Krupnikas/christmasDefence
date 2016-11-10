@@ -3,6 +3,8 @@
 
 #include <QString>
 #include <QPixmap>
+#include <QGraphicsItem>
+#include <QGraphicsPixmapItem>
 #include <memory>
 
 struct R

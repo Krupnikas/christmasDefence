@@ -13,6 +13,7 @@
 #include <QRect>
 #include <Game/resource.h>
 #include <Game/Game.h>
+#include <Game/Scene.h>
 
 namespace Ui {
 class MainView;
@@ -24,13 +25,12 @@ class MainView : public QWidget
     
 public:
     
-    QRect workingRectangle;               //Прямоугольник рабочей области
+    Scene scene;
+
     R r;
     
     explicit MainView(QWidget *parent = 0);
     ~MainView();
-    
-    void calculateWorkingRectangle();
     
     
     

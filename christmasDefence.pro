@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     Enemy/IEnemy.cpp \
     Game/Game.cpp \
     Cannon/FastCannon.cpp \
-    Game/resource.cpp
+    Game/resource.cpp \
+    Game/Scene.cpp
 
 HEADERS  += mainview.h \
     Bullet/IBullet.h \
@@ -34,6 +35,7 @@ HEADERS  += mainview.h \
     Enemy/IEnemy.h \
     Game/Game.h \
     Game/resource.h \
-    Cannon/FastCannon.h
+    Cannon/FastCannon.h \
+    Game/Scene.h
 
 FORMS    += mainview.ui
