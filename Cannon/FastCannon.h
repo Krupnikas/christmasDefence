@@ -1,7 +1,7 @@
 #ifndef FASTCANNON_H
 #define FASTCANNON_H
 
-#include "ICannon.h"
+#include <Cannon/ICannon.h>
 
 class FastCannon : public ICannon
 {

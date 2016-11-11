@@ -1,8 +1,7 @@
 #ifndef CANNON_H
 #define CANNON_H
 
-#include <QGraphicsPixmapItem>
-#include <Game/resource.h>
+#include <Game/Resource.h>
 #include <Game/Game.h>
 
 class ICannon

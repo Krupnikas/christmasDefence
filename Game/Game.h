@@ -2,21 +2,28 @@
 #define GAME_H
 //#define TEST
 
+#include <Game/Resource.h>
 #include <Game/Scene.h>
-#include <Game/resource.h>
+#include <Bullet/IBullet.h>
 
 class Game 
 {
     
+//public attributes
 public:
-
-    QGraphicsScene *gameScene; //Всё действо будет происходить на этой сцене
-    
     R *r;
     Scene *scene;
+
+//private attributes
+private:
+    std::vector<std::vector<IBullet> > bullets;
     
-    Game(R *r_in, Scene *scene);
+    
+//public methods
+public:
+    Game(R *r, Scene *scene);
     ~Game();
+
     
 };
 

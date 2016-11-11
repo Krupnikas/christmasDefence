@@ -1,7 +1,6 @@
-#include "Game.h"
-#include <Cannon/FastCannon.h>
+#include <Game/Game.h>
 
-Game::Game(R *r_in, Scene *scene) : r(r_in), scene(scene) {}
+Game::Game(R *r, Scene *scene) : r(r), scene(scene) {}
 
 Game::~Game()
 {

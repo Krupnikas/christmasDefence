@@ -1,7 +1,7 @@
 #ifndef SLOWCANNON_H
 #define SLOWCANNON_H
 
-#include "ICannon.h"
+#include <Cannon/ICannon.h>
 
 class SlowCannon : public ICannon
 {

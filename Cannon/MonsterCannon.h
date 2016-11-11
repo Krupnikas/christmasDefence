@@ -1,7 +1,7 @@
 #ifndef MONSTERCANNON_H
 #define MONSTERCANNON_H
 
-#include "ICannon.h"
+#include <Cannon/ICannon.h>
 
 class MonsterCannon : public ICannon
 {

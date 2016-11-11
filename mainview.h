@@ -1,6 +1,10 @@
 #ifndef MAINVIEW_H
 #define MAINVIEW_H
 
+#include <Game/Resource.h>
+#include <Game/Scene.h>
+#include <Game/Game.h>
+
 #define TEST
 
 /* MainView - объект приложения.
@@ -8,12 +12,6 @@
  * занимается сохранением результатов
  * Следит за разрешением и системами отсчета
  */
-
-#include <QWidget>
-#include <QRect>
-#include <Game/resource.h>
-#include <Game/Game.h>
-#include <Game/Scene.h>
 
 namespace Ui {
 class MainView;
@@ -25,9 +23,9 @@ class MainView : public QWidget
     
 public:
     
-    Scene scene;
-
     R r;
+    Scene scene;
+    Game game;
     
     explicit MainView(QWidget *parent = 0);
     ~MainView();

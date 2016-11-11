@@ -1,7 +1,7 @@
 #ifndef BURNCANNON_H
 #define BURNCANNON_H
 
-#include "ICannon.h"
+#include <Cannon/ICannon.h>
 
 class BurnCannon : public ICannon
 {
