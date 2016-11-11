@@ -24,7 +24,7 @@ void MainView::resizeEvent(QResizeEvent *)
     game.scene = &scene;
     ui->graphicsView->setScene(scene.getGraphicsScene());
 
-    scene.updateBackground();    
+    scene.updateWindowBackground();    
     scene.drawPixmap(0, 0, LocalWidth, LocalHeight, r.game_background);
     
     std::shared_ptr<ICannon> cannon = std::static_pointer_cast<ICannon>(std::make_shared<FastCannon>(&game));
