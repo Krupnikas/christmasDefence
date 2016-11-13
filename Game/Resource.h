@@ -5,6 +5,7 @@
 #include <QRect>
 #include <QString>
 #include <QPixmap>
+#include <QTransform>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
@@ -21,6 +22,9 @@ struct R
     
     QPixmap window_background;
     QPixmap game_background;
+    
+    QPixmap cell1;
+    QPixmap cell2;
     
     QPixmap fast_cannon_1;
     QPixmap fast_cannon_2;

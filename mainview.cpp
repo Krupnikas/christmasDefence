@@ -23,11 +23,8 @@ void MainView::resizeEvent(QResizeEvent *)
     scene.updateGameRect(ui->graphicsView->geometry());
     game.scene = &scene;
     ui->graphicsView->setScene(scene.getGraphicsScene());
-
-    scene.updateWindowBackground();    
-    scene.drawPixmap(0, 0, LocalWidth, LocalHeight, r.game_background);
     
-    std::shared_ptr<ICannon> cannon = std::static_pointer_cast<ICannon>(std::make_shared<FastCannon>(&game));
+    std::shared_ptr<ICannon> cannon = std::static_pointer_cast<ICannon>(std::make_shared<FastCannon>(&game, 0, 0));
     cannon->draw();
     //game.gameScene->addRect(workingRectangle, QPen("lightblue"), QBrush("blue"));
 }

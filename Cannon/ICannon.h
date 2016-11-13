@@ -1,5 +1,4 @@
-#ifndef CANNON_H
-#define CANNON_H
+#pragma once
 
 #include <Game/Resource.h>
 #include <Game/Game.h>
@@ -11,6 +10,9 @@ class ICannon
     };
 
 protected:
+    
+    int x;
+    int y;
     
     double hp;
     double angle;
@@ -26,5 +28,3 @@ public:
     virtual void fire();
 
 };
-
-#endif // CANNON_H

@@ -8,7 +8,7 @@ class FastCannon : public ICannon
     
 public:
     
-    FastCannon(Game *game);
+    FastCannon(Game *game, int x, int y);
     ~FastCannon();
     
     virtual void draw() override;

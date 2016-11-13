@@ -3,6 +3,9 @@
 R::R()
 {
     res_dir = "../christmasDefence/res/christmas";
+
+    cell1 = QPixmap(get("cell1"));
+    cell2 = QPixmap(get("cell2"));
     
     window_background = QPixmap(get("window_background"));
     game_background = QPixmap(get("game_background"));

@@ -1,10 +1,10 @@
-#ifndef GAME_H
-#define GAME_H
-//#define TEST
+#pragma once
 
 #include <Game/Resource.h>
 #include <Game/Scene.h>
 #include <Bullet/IBullet.h>
+
+class ICannon;
 
 class Game 
 {
@@ -17,6 +17,7 @@ public:
 //private attributes
 private:
     std::vector<std::vector<IBullet> > bullets;
+    std::vector<std::vector<std::shared_ptr<ICannon>>> cannons;
     
     
 //public methods
@@ -27,5 +28,3 @@ public:
     
 };
 
-
-#endif // GAME_H

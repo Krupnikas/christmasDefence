@@ -8,9 +8,11 @@ const int LocalHeight = 900;
 
 const int MenuButtonOffset = 3;
 
-const int CellNumWidth = 12; //always even
-const int CellNumHeight = 7; //always odd
+const int CellNumY = 7; //always odd
+const int CellSize = LocalHeight / CellNumY;
+const int CellNumX = LocalWidth / CellSize - 2;
 
+const int OffsetX = (LocalWidth - CellNumX * CellSize) / 2;
 
 #endif // GAMEMETRICS_H
 

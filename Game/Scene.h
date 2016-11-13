@@ -13,7 +13,7 @@ public:
     
     Scene(R* r);
     
-    QGraphicsItem *drawPixmap(int x_local, int y_local, int x_size_local, int y_size_local, QPixmap pixmap);
+    QGraphicsItem *drawPixmap(int x_local, int y_local, int x_size_local, int y_size_local, QPixmap pixmap, int angle = 0);
     void positionItem(int x_local, int y_local, QGraphicsItem *item);
     
     void updateGameRect(QRect geometry);
