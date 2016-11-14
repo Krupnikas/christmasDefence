@@ -1,5 +1,3 @@
-#include <Game/Game.h>
-#include <Cannon/FastCannon.h>
 #include "mainview.h"
 #include "ui_mainview.h"
 
@@ -24,8 +22,22 @@ void MainView::resizeEvent(QResizeEvent *)
     game.scene = &scene;
     ui->graphicsView->setScene(scene.getGraphicsScene());
     
-    std::shared_ptr<ICannon> cannon = std::static_pointer_cast<ICannon>(std::make_shared<FastCannon>(&game, 0, 0));
-    cannon->draw();
+    game.updateObjects();
+    /*std::shared_ptr<ICannon> cannon = std::static_pointer_cast<ICannon>(
+                std::make_shared<FastCannon>(&game, 0, 0, 100, 50, 100));
+    cannon->draw();*/
+    
+    /*QTimer *timer = new QTimer(this);
+    FastCannon *can = reinterpret_cast<FastCannon*>(cannon.get());
+    connect(timer, SIGNAL(timeout()), can, SLOT(rotate()));
+    timer->start(1000);*/
+    
+    /*
+    QTime time;
+    time.start();
+    for(;time.elapsed() < 1000;)
+    {
+    }*/
     //game.gameScene->addRect(workingRectangle, QPen("lightblue"), QBrush("blue"));
 }
 

@@ -2,13 +2,19 @@
 #define RESOURCE_H
 
 #include <QWidget>
+#include <QTimer>
+#include <QTime>
 #include <QRect>
 #include <QString>
 #include <QPixmap>
 #include <QTransform>
+#include <QMatrix>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
+#include <QPainter>
+#include <QPen>
+#include <QPaintEvent>
 
 #include <memory>
 #include <vector>

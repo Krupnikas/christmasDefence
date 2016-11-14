@@ -5,8 +5,9 @@
 #include <Bullet/IBullet.h>
 
 class ICannon;
+class FastCannon;
 
-class Game 
+class Game : public QObject
 {
     
 //public attributes
@@ -24,7 +25,9 @@ private:
 public:
     Game(R *r, Scene *scene);
     ~Game();
-
     
+    void updateObjects();
 };
 
+#include <Cannon/ICannon.h>
+#include <Cannon/FastCannon.h>

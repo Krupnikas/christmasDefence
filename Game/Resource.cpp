@@ -11,7 +11,7 @@ R::R()
     game_background = QPixmap(get("game_background"));
     
     fast_cannon_1 = QPixmap(get("fast_cannon_1"));
-    fast_cannon_2 = QPixmap(get("fast_cannon_2"));
+    fast_cannon_2 = QPixmap(get("fast_cannon_2.png"));
     fast_cannon_3 = QPixmap(get("fast_cannon_3.png"));
     
 }

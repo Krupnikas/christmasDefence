@@ -37,6 +37,7 @@ private:
     QRect gameRect; //Прямоугольник рабочей области
     QRect windowRect; //Whole window rectangle
     QGraphicsScene *graphicsScene;
+    QPainter painter;
     
 };
 

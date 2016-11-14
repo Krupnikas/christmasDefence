@@ -4,6 +4,7 @@
 #include <Game/Resource.h>
 #include <Game/Scene.h>
 #include <Game/Game.h>
+#include <Cannon/FastCannon.h>
 
 #define TEST
 
@@ -29,8 +30,7 @@ public:
     
     explicit MainView(QWidget *parent = 0);
     ~MainView();
-    
-    
+
     
     #ifdef TEST
         void resizeEvent(QResizeEvent *);

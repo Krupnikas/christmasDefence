@@ -14,6 +14,9 @@ public:
     
     virtual void draw() override;
     virtual void fire() override;
+     
+public slots:
+    virtual void rotate(){}
 };
 
 #endif // MONSTERCANNON_H
