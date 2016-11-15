@@ -20,6 +20,7 @@
 #include <vector>
 
 #include <Game/Metrics.h>
+#include <Game/Helper.h>
 
 struct R
 {

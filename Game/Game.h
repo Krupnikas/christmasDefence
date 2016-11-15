@@ -6,6 +6,7 @@
 
 class ICannon;
 class FastCannon;
+class MainView;
 
 class Game : public QObject
 {
@@ -14,6 +15,7 @@ class Game : public QObject
 public:
     R *r;
     Scene *scene;
+    MainView *view;
 
 //private attributes
 private:
@@ -21,9 +23,10 @@ private:
     std::vector<std::vector<std::shared_ptr<ICannon>>> cannons;
     
     
+    
 //public methods
 public:
-    Game(R *r, Scene *scene);
+    Game(R *r, Scene *scene, MainView *view);
     ~Game();
     
     void updateObjects();
@@ -31,3 +34,4 @@ public:
 
 #include <Cannon/ICannon.h>
 #include <Cannon/FastCannon.h>
+#include <mainview.h>

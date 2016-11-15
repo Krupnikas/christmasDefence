@@ -14,6 +14,8 @@ class ICannon : public QObject
 
 protected:
     
+    QGraphicsItem *position;
+    
     int x;
     int y;
     

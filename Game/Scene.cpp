@@ -6,54 +6,41 @@ Scene::Scene(R* r) : r(r)
     graphicsScene = new QGraphicsScene();
 }
 
-QGraphicsItem* Scene::drawPixmap(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
-                                 QPixmap pixmap, int angle /*= 0*/)
+QGraphicsItem* Scene::drawPixmap(int xSizeLocal, int ySizeLocal, QPixmap &pixmap)
 {
-
-    if (angle == 0)
-    {
-        QPixmap scaledPixmap = pixmap.scaled(toGlobalCX(xSizeLocal), toGlobalCY(ySizeLocal), 
-                                             Qt::IgnoreAspectRatio);
-        QTransform rm;
-        rm.translate(scaledPixmap.width() / 2.0, scaledPixmap.height() / 2.0);
-        rm.rotate(angle);
-        rm.translate(scaledPixmap.width() / -2.0, -scaledPixmap.height() / -2.0);
-        /*QTransform rotate = QTransform().translate(-pixmap.width() / 2, -pixmap.height() / 2)
-                .rotate(angle).translate(pixmap.width() / 2, pixmap.height() / 2);*/
-        QPixmap rotatedPixmap = scaledPixmap.transformed(rm);
-        QGraphicsPixmapItem *item = graphicsScene->addPixmap(rotatedPixmap);
-        item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
-        return item;
-
-    } else {
-        
-        graphicsScene->clear();
-        updateWindowBackground();
-        updateGameBackground();
-        
-        QPoint center(toGlobalX(xLocal + xSizeLocal / 2), toGlobalY(yLocal + ySizeLocal / 2));
-        int sizeX = toGlobalCX(xSizeLocal);
-        int sizeY = toGlobalCY(ySizeLocal);
-        
-        QPixmap scaledPixmap = pixmap.scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        QTransform rm;
-        rm.translate(sizeX / 2, sizeY / 2);
-        rm.rotate(angle);
-        rm.translate(-sizeX / 2, -sizeY / 2);
-        QPixmap rotatedPixmap = scaledPixmap.transformed(rm, Qt::SmoothTransformation);
-        
-        QGraphicsPixmapItem *item = graphicsScene->addPixmap(rotatedPixmap);
-        QRect rectG = rotatedPixmap.rect();
-        item->setPos(center.x() - rectG.width() / 2, center.y() - rectG.height() / 2);
-        graphicsScene->addEllipse(center.x() - 5, center.y() - 5, 10, 10, QPen(Qt::red), QBrush());
-        return item;
-        
-    }
+    int sizeX = toGlobalCX(xSizeLocal);
+    int sizeY = toGlobalCY(ySizeLocal);
     
+    if (pixmap.size() != QSize(sizeX, sizeY))
+        pixmap = pixmap.scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);      
+    QGraphicsPixmapItem *item = graphicsScene->addPixmap(pixmap);
+    return item;
 }
 
-void Scene::positionItem(int xLocal, int yLocal, QGraphicsItem *item)
+void Scene::positionItem(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
+                         qreal angle, QGraphicsItem *item)
 {
+    int sizeX = toGlobalCX(xSizeLocal);
+    int sizeY = toGlobalCY(ySizeLocal);
+    item->setTransformOriginPoint(sizeX / 2, sizeY / 2);
+    item->setRotation(angle);
+    item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
+}
+
+void Scene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
+                            QPixmap &pixmap, qreal angle /*= 0*/)
+{
+    int sizeX = toGlobalCX(xSizeLocal);
+    int sizeY = toGlobalCY(ySizeLocal);
+    if (pixmap.size() != QSize(sizeX, sizeY))
+        pixmap = pixmap.scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    
+    QGraphicsPixmapItem *item = graphicsScene->addPixmap(pixmap);
+    if (angle != 0)
+    {
+        item->setTransformOriginPoint(sizeX / 2, sizeY / 2);
+        item->setRotation(angle);
+    }
     item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
 }
 
@@ -92,7 +79,7 @@ void Scene::updateWindowBackground()
 
 void Scene::updateGameBackground()
 {
-    drawPixmap(0, 0, LocalWidth, CellNumY * CellSize, r->game_background);
+    drawAndPosition(0, 0, LocalWidth, CellNumY * CellSize, r->game_background);
     
     //draw chess-like field 
     bool first_white = true;
@@ -107,9 +94,9 @@ void Scene::updateGameBackground()
             int x = OffsetX + i * CellSize;
             int y = j * CellSize;
             if (white)
-                drawPixmap(x, y, CellSize, CellSize, r->cell1);
+                drawAndPosition(x, y, CellSize, CellSize, r->cell1);
             else
-                drawPixmap(x, y, CellSize, CellSize, r->cell2);
+                drawAndPosition(x, y, CellSize, CellSize, r->cell2);
             white = !white;
         }
     }
@@ -119,11 +106,11 @@ void Scene::updateGameBackground()
     int xLeft = 0;
     int xRight = OffsetX + CellNumX * CellSize;
     
-    drawPixmap(xLeft, y, OffsetX, CellSize, r->cell2);
+    drawAndPosition(xLeft, y, OffsetX, CellSize, r->cell2);
     if (CellNumX % 2)
-        drawPixmap(xRight, y, OffsetX, CellSize, r->cell2);
+        drawAndPosition(xRight, y, OffsetX, CellSize, r->cell2);
     else
-        drawPixmap(xRight, y, OffsetX, CellSize, r->cell1);
+        drawAndPosition(xRight, y, OffsetX, CellSize, r->cell1);
 }
 
 //private:
