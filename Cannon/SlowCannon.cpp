@@ -15,7 +15,7 @@ void SlowCannon::draw()
     
 }
 
-void SlowCannon::fire()
+void SlowCannon::fire(qreal angle)
 {
     
 }

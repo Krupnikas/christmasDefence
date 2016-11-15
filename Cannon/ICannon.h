@@ -8,16 +8,15 @@ class ICannon : public QObject
 {     
     Q_OBJECT
     
-    enum CannonType {
-        SMALL, MEDIUM, BIG
-    };
-
 protected:
     
     QGraphicsItem *position;
     
-    int x;
-    int y;
+    int cellX;
+    int cellY;
+    
+    QPoint center;
+    QPoint leftTop;
     
     double hp;
     double angle;
@@ -25,12 +24,11 @@ protected:
     Game *game;
     
 public:
-
     
     virtual ~ICannon();
 
     virtual void draw();
-    virtual void fire();
+    virtual void fire(qreal angle);
     
     //getters and setters
     int getX() const;
@@ -48,8 +46,11 @@ public:
     double getGlobalRadius() const;
     void setGlobalRadius(double value);
     
-    public slots:
-        virtual void rotate(){}
+    QPoint getCenter() const;
+    void setCenter(const QPoint &value);
+    
+public slots:
+    virtual void rotate();
 };
 
 #include <Game/Game.h>

@@ -15,7 +15,7 @@ void MonsterCannon::draw()
     
 }
 
-void MonsterCannon::fire()
+void MonsterCannon::fire(qreal angle)
 {
     
 }

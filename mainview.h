@@ -30,11 +30,12 @@ public:
     
     explicit MainView(QWidget *parent = 0);
     ~MainView();
-
+    
     
     #ifdef TEST
         void resizeEvent(QResizeEvent *);
     #endif
+    virtual void mousePressEvent(QMouseEvent *eventPress);
     
 private:
 

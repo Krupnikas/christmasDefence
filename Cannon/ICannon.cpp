@@ -2,22 +2,22 @@
 
 int ICannon::getX() const
 {
-    return x;
+    return cellX;
 }
 
 void ICannon::setX(int value)
 {
-    x = value;
+    cellX = value;
 }
 
 int ICannon::getY() const
 {
-    return y;
+    return cellY;
 }
 
 void ICannon::setY(int value)
 {
-    y = value;
+    cellY = value;
 }
 
 double ICannon::getHp() const
@@ -50,7 +50,18 @@ void ICannon::setGlobalRadius(double value)
     globalRadius = value;
 }
 
+QPoint ICannon::getCenter() const
+{
+    return center;
+}
+
+void ICannon::setCenter(const QPoint &value)
+{
+    center = value;
+}
+
 ICannon::~ICannon() {}
 
 void ICannon::draw(){}
-void ICannon::fire(){}
+void ICannon::fire(qreal angle){}
+void ICannon::rotate(){}

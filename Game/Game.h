@@ -10,17 +10,20 @@ class MainView;
 
 class Game : public QObject
 {
+    Q_OBJECT
     
 //public attributes
 public:
     R *r;
     Scene *scene;
     MainView *view;
-
+    QTimer *gameTimer;
+    std::vector<std::shared_ptr<IBullet> > bullets;
+    std::vector<std::vector<std::shared_ptr<ICannon>>> cannons;
+    
 //private attributes
 private:
-    std::vector<std::vector<IBullet> > bullets;
-    std::vector<std::vector<std::shared_ptr<ICannon>>> cannons;
+
     
     
     
@@ -29,7 +32,9 @@ public:
     Game(R *r, Scene *scene, MainView *view);
     ~Game();
     
-    void updateObjects();
+public slots:
+    virtual void updateObjects();
+    
 };
 
 #include <Cannon/ICannon.h>

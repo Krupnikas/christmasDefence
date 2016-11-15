@@ -8,10 +8,14 @@ Game::Game(R *r, Scene *scene, MainView *view) : r(r), scene(scene), view(view) 
     cannons[5][5] = std::static_pointer_cast<ICannon>(
                 std::make_shared<FastCannon>(this, 5, 5, 100, 30, 100));
     
-    QTimer *timer = new QTimer(this);
+    QLineF line(1, 1, 1, 2);
+    line.translate(2, 2);
+    
+    gameTimer = new QTimer(this);
     FastCannon *can = reinterpret_cast<FastCannon*>(cannons[5][5].get());
-    connect(timer, SIGNAL(timeout()), can, SLOT(rotate()));
-    timer->start(1);
+    connect(gameTimer, SIGNAL(timeout()), can, SLOT(rotate()));
+    connect(gameTimer, SIGNAL(timeout()), this, SLOT(updateObjects()));
+    gameTimer->start(1);
     
 }
 
@@ -22,7 +26,17 @@ Game::~Game()
 
 void Game::updateObjects()
 {
-    cannons[5][5]->draw();
+    for (int i = 0; i < bullets.size(); ++i)
+        if (scene->insideGameRect(bullets[i]->getCenter()))
+        {
+            bullets[i]->move();
+            bullets[i]->draw();
+        }
+    
+    for (int i = 0; i < CellNumY; ++i)
+        for (int j = 0; j < CellNumX; ++j)
+            if (cannons[i][j])
+                cannons[i][j]->draw();
 }
 
 

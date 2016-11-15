@@ -22,6 +22,10 @@
 #include <Game/Metrics.h>
 #include <Game/Helper.h>
 
+enum CannonType {
+    SMALL, MEDIUM, BIG
+};
+
 struct R
 {
     
@@ -36,6 +40,10 @@ struct R
     QPixmap fast_cannon_1;
     QPixmap fast_cannon_2;
     QPixmap fast_cannon_3;
+    
+    QPixmap fast_bullet_1;
+    QPixmap fast_bullet_2;
+    QPixmap fast_bullet_3;
     
     QString get(const char *val);
     

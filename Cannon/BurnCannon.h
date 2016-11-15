@@ -14,7 +14,7 @@ public:
     virtual ~BurnCannon();
     
     virtual void draw() override;
-    virtual void fire() override;
+    virtual void fire(qreal angle) override;
     
 public slots:
     virtual void rotate(){}

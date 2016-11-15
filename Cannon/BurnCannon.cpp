@@ -15,7 +15,7 @@ void BurnCannon::draw()
     
 }
 
-void BurnCannon::fire()
+void BurnCannon::fire(qreal angle)
 {
     
 }

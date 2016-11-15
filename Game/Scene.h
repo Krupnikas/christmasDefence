@@ -16,10 +16,10 @@ public:
     QGraphicsItem *drawPixmap(int xSizeLocal, int ySizeLocal, QPixmap &pixmap);
     
     void positionItem(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
-                      qreal angle, QGraphicsItem *item);
+                      qreal angle, qreal zval, QGraphicsItem *item);
     
     void drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
-                         QPixmap &pixmap, qreal angle = 0);
+                         QPixmap &pixmap, qreal angle = 0, qreal zval = 0);
     
 
     void updateGameRect(QRect geometry);
@@ -35,11 +35,14 @@ public:
     int toGlobalCX(int cx_local);
     int toGlobalCY(int cy_local);
     
+    bool insideGameRect(QPointF point);
+    
 private:
     
     R* r;
     QRect gameRect; //Прямоугольник рабочей области
     QRect windowRect; //Whole window rectangle
+    QRect enclosingRect;
     QGraphicsScene *graphicsScene;
     QPainter painter;
     

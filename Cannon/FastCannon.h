@@ -8,11 +8,11 @@ class FastCannon : public ICannon
     
 public:
     
-    FastCannon(Game *game, int x, int y, double hp, double angle, double globalRadius);
+    FastCannon(Game *game, int cellX, int cellY, double hp, double angle, double globalRadius);
     ~FastCannon();
     
     virtual void draw() override;
-    virtual void fire() override;
+    virtual void fire(qreal angle) override;
     
     
 public slots:

@@ -18,17 +18,18 @@ QGraphicsItem* Scene::drawPixmap(int xSizeLocal, int ySizeLocal, QPixmap &pixmap
 }
 
 void Scene::positionItem(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
-                         qreal angle, QGraphicsItem *item)
+                         qreal angle, qreal zval, QGraphicsItem *item)
 {
     int sizeX = toGlobalCX(xSizeLocal);
     int sizeY = toGlobalCY(ySizeLocal);
     item->setTransformOriginPoint(sizeX / 2, sizeY / 2);
     item->setRotation(angle);
     item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
+    item->setZValue(zval);
 }
 
 void Scene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
-                            QPixmap &pixmap, qreal angle /*= 0*/)
+                            QPixmap &pixmap, qreal angle /*=0*/, qreal zval/*=0*/)
 {
     int sizeX = toGlobalCX(xSizeLocal);
     int sizeY = toGlobalCY(ySizeLocal);
@@ -42,6 +43,7 @@ void Scene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLoc
         item->setRotation(angle);
     }
     item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
+    item->setZValue(zval);
 }
 
 void Scene::updateGameRect(QRect newWindowRect)
@@ -51,6 +53,11 @@ void Scene::updateGameRect(QRect newWindowRect)
     //Иначе экран выше, чем 16х9
     //Устанавливаем новую высоту
     gameRect = windowRect = newWindowRect;
+    
+    QPoint enclosingTopLeft(gameRect.topLeft() - QPoint(CellSize, CellSize));
+    QPoint enclosingBottomRight(gameRect.bottomRight() + QPoint(CellSize, CellSize));
+    enclosingRect = QRect(enclosingTopLeft, enclosingBottomRight);
+    
     QPoint center = newWindowRect.center();
     
     if (newWindowRect.width() * 9 > newWindowRect.height() * 16)
@@ -74,7 +81,7 @@ void Scene::updateWindowBackground()
 {
     QPixmap scaledPixmap = r->window_background.scaled(windowRect.size(),
                                                        Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    graphicsScene->addPixmap(scaledPixmap);
+    graphicsScene->addPixmap(scaledPixmap)->setZValue(0);
 }
 
 void Scene::updateGameBackground()
@@ -134,4 +141,12 @@ int Scene::toGlobalCX(int cxLocal)
 int Scene::toGlobalCY(int cyLocal)
 {
     return std::ceil(1.0 * gameRect.height() * cyLocal / LocalHeight);
+}
+
+bool Scene::insideGameRect(QPointF point)
+{
+    int x = toGlobalX(point.x());
+    int y = toGlobalY(point.y());
+    QPoint pointInt(x, y);
+    return enclosingRect.contains(pointInt);
 }

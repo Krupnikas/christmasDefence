@@ -16,4 +16,12 @@ double calcAngle(int x1, int y1, int x2, int y2)
     QLineF line2(x1, y1, x2, y2);
     return 360 - line1.angleTo(line2);
 }
+
+QPointF addVector(QPointF point, qreal len, qreal angle)
+{
+    qreal x = point.x() + qSin(qDegreesToRadians(angle)) * len;
+    qreal y = point.y() - qCos(qDegreesToRadians(angle)) * len;
+    return QPointF(x, y);
+}
+
 }
