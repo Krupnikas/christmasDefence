@@ -7,6 +7,7 @@ MainView::MainView(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setLayout(ui->gridLayout);
+    this->ui->graphicsView->setRenderHint(QPainter::Antialiasing);
 }
 
 MainView::~MainView()
