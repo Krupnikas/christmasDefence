@@ -20,7 +20,7 @@ Game::Game(R *r, Scene *scene, MainView *view) : r(r), scene(scene), view(view) 
     connect(gameTimer, SIGNAL(timeout()), can2, SLOT(rotate()));
     connect(gameTimer, SIGNAL(timeout()), can, SLOT(rotate()));
     connect(gameTimer, SIGNAL(timeout()), this, SLOT(updateObjects()));
-    gameTimer->start(5);
+    gameTimer->start(16);
     
 }
 
