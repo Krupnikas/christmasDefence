@@ -8,6 +8,7 @@ MainView::MainView(QWidget *parent) :
     ui->setupUi(this);
     this->setLayout(ui->gridLayout);
     ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
+    this->ui->graphicsView->setRenderHint(QPainter::Antialiasing);
 }
 
 MainView::~MainView()
