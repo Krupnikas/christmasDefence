@@ -44,3 +44,9 @@ HEADERS  += mainview.h \
     Bullet/FastBullet.h
 
 FORMS    += mainview.ui
+
+RESOURCES += \
+    qresource.qrc
+
+DISTFILES += \
+    android-sources/AndroidManifest.xml

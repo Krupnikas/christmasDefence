@@ -13,4 +13,4 @@ QPointF addVector(QPointF point, qreal len, qreal angle);
 }
 
 
-#endif HELPER_H
+#endif //HELPER_H

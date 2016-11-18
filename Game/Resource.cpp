@@ -2,21 +2,21 @@
 
 R::R()
 {
-    res_dir = "../christmasDefence/res/christmas";
+    res_dir = "://res/christmas";
 
-    cell1 = QPixmap(get("cell1"));
-    cell2 = QPixmap(get("cell2"));
+    cell1 = QPixmap("://res/christmas/cell1.png");
+    cell2 = QPixmap(get("cell2.png"));
     
-    window_background = QPixmap(get("window_background"));
-    game_background = QPixmap(get("game_background"));
+    window_background = QPixmap(get("window_background.jpg"));
+    game_background = QPixmap(get("game_background.jpg"));
     
-    fast_cannon_1 = QPixmap(get("fast_cannon_1"));
+    fast_cannon_1 = QPixmap(get("fast_cannon_1.jpg"));
     fast_cannon_2 = QPixmap(get("fast_cannon_2.png"));
     fast_cannon_3 = QPixmap(get("fast_cannon_3.png"));
     
-    //fast_cannon_1 = QPixmap(get("fast_cannon_1"));
+    fast_bullet_1 = QPixmap(get("fast_bullet_1.png"));
     fast_bullet_2 = QPixmap(get("fast_bullet_2.png"));
-    //fast_cannon_3 = QPixmap(get("fast_cannon_3.png"));    
+    fast_bullet_3 = QPixmap(get("fast_bullet_3.png"));
 }
 
 QString R::get(const char *val)
