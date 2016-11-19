@@ -1,9 +1,8 @@
-#ifndef SCENE_H
-#define SCENE_H
+#pragma once
 
 #include <Game/Resource.h>
 
-class Scene
+class CScene
 {
 public:
     
@@ -11,18 +10,19 @@ public:
         BACKGROUND, CANNON, ENEMY, BULLET
     };
     
-    Scene(R* r);
+    CScene(R* r);
     
-    QGraphicsItem *drawPixmap(int xSizeLocal, int ySizeLocal, QPixmap &pixmap);
+    std::shared_ptr<QGraphicsItem> addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap);
     
-    void positionItem(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
-                      qreal angle, qreal zval, QGraphicsItem *item);
+    void positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal, 
+                      qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item);
+    void removeItem(std::shared_ptr<QGraphicsItem> item);
     
     void drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
-                         QPixmap &pixmap, qreal angle = 0, qreal zval = 0);
+                         QPixmap *pixmap, qreal angle = 0, qreal zval = 0);
     
 
-    void updateGameRect(QRect geometry);
+    qreal updateGameRect(QRect geometry);
     void updateWindowBackground();
     void updateGameBackground();
     
@@ -47,5 +47,3 @@ private:
     QPainter painter;
     
 };
-
-#endif // SCENE_H

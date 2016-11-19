@@ -1,21 +1,21 @@
 #include <Cannon/MonsterCannon.h>
 
-MonsterCannon::MonsterCannon()
+CMonsterCannon::CMonsterCannon()
 {
     
 }
 
-MonsterCannon::~MonsterCannon()
+CMonsterCannon::~CMonsterCannon()
 {
     
 }
 
-void MonsterCannon::draw()
+void CMonsterCannon::draw()
 {
     
 }
 
-void MonsterCannon::fire(qreal angle)
+void CMonsterCannon::fire(qreal angle)
 {
     
 }

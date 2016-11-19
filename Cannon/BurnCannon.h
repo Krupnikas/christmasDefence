@@ -1,17 +1,16 @@
-#ifndef BURNCANNON_H
-#define BURNCANNON_H
+#pragma once
 
 #include <Cannon/ICannon.h>
 
-class BurnCannon : public ICannon
+class CBurnCannon : public ICannon
 {
 private:
     
 public:
     
-    BurnCannon();
+    CBurnCannon();
     
-    virtual ~BurnCannon();
+    virtual ~CBurnCannon();
     
     virtual void draw() override;
     virtual void fire(qreal angle) override;
@@ -19,5 +18,3 @@ public:
 public slots:
     virtual void rotate(){}
 };
-
-#endif // BURNCANNON_H

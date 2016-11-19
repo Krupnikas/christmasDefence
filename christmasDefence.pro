@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     Game/Scene.cpp \
     Game/Resource.cpp \
     Game/Helper.cpp \
-    Bullet/FastBullet.cpp
+    Bullet/FastBullet.cpp \
+    Game/IGameObject.cpp
 
 HEADERS  += mainview.h \
     Bullet/IBullet.h \
@@ -41,7 +42,8 @@ HEADERS  += mainview.h \
     Game/Resource.h \
     Game/Metrics.h \
     Game/Helper.h \
-    Bullet/FastBullet.h
+    Bullet/FastBullet.h \
+    Game/IGameObject.h
 
 FORMS    += mainview.ui
 

@@ -1,21 +1,21 @@
 #include <Cannon/SlowCannon.h>
 
-SlowCannon::SlowCannon()
+CSlowCannon::CSlowCannon()
 {
     
 }
 
-SlowCannon::~SlowCannon()
+CSlowCannon::~CSlowCannon()
 {
     
 }
 
-void SlowCannon::draw()
+void CSlowCannon::draw()
 {
     
 }
 
-void SlowCannon::fire(qreal angle)
+void CSlowCannon::fire(qreal angle)
 {
     
 }

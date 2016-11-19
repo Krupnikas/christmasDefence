@@ -1,16 +1,13 @@
-#ifndef FASTBULLET_H
-#define FASTBULLET_H
+#pragma once
 
 #include <Bullet/IBullet.h>
 
-class FastBullet : public IBullet
+class CFastBullet : public IBullet
 {
 public:
     
-    FastBullet(Game *game, int centerX, int centerY, double angle);
+    CFastBullet(CGame *game, QPointF center, double angle);
     
     virtual void draw();
     virtual void move();
 };
-
-#endif // FASTBULLET_H

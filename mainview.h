@@ -1,8 +1,5 @@
-#ifndef MAINVIEW_H
-#define MAINVIEW_H
+#pragma once
 
-#include <Game/Resource.h>
-#include <Game/Scene.h>
 #include <Game/Game.h>
 #include <Cannon/FastCannon.h>
 
@@ -25,16 +22,16 @@ class MainView : public QWidget
 public:
     
     R r;
-    Scene scene;
-    Game game;
+    CScene scene;
+    CGame game;
     
     explicit MainView(QWidget *parent = 0);
     ~MainView();
     
-    
     #ifdef TEST
         void resizeEvent(QResizeEvent *);
     #endif
+    virtual void showEvent(QShowEvent * event);
     virtual void mousePressEvent(QMouseEvent *eventPress);
     
 private:
@@ -42,5 +39,3 @@ private:
     Ui::MainView *ui;
     
 };
-
-#endif // MAINVIEW_H

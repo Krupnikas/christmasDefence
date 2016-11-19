@@ -4,7 +4,7 @@ R::R()
 {
     res_dir = "://res/christmas";
 
-    cell1 = QPixmap("://res/christmas/cell1.png");
+    cell1 = QPixmap(get("cell1.png"));
     cell2 = QPixmap(get("cell2.png"));
     
     window_background = QPixmap(get("window_background.jpg"));

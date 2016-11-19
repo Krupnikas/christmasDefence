@@ -1,21 +1,21 @@
 #include <Cannon/BurnCannon.h>
 
-BurnCannon::BurnCannon()
+CBurnCannon::CBurnCannon()
 {
     
 }
 
-BurnCannon::~BurnCannon()
+CBurnCannon::~CBurnCannon()
 {
     
 }
 
-void BurnCannon::draw()
+void CBurnCannon::draw()
 {
     
 }
 
-void BurnCannon::fire(qreal angle)
+void CBurnCannon::fire(qreal angle)
 {
     
 }

@@ -1,42 +1,49 @@
 #include <Game/Scene.h>
 
 //public:
-Scene::Scene(R* r) : r(r)
+CScene::CScene(R* r) : r(r)
 {
     graphicsScene = new QGraphicsScene();
 }
 
-QGraphicsItem* Scene::drawPixmap(int xSizeLocal, int ySizeLocal, QPixmap &pixmap)
+std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap)
 {
-    int sizeX = toGlobalCX(xSizeLocal);
-    int sizeY = toGlobalCY(ySizeLocal);
+    int sizeXGlobal = toGlobalCX(sizeLocal.width());
+    int sizeYGlobal = toGlobalCY(sizeLocal.height());
     
-    if (pixmap.size() != QSize(sizeX, sizeY))
-        pixmap = pixmap.scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);      
-    QGraphicsPixmapItem *item = graphicsScene->addPixmap(pixmap);
+    QPixmap scaledPixmap = *pixmap;
+    if (pixmap->size() != QSize(sizeXGlobal, sizeYGlobal))
+        scaledPixmap = pixmap->scaled(sizeXGlobal, sizeYGlobal, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    std::shared_ptr<QGraphicsPixmapItem> item = 
+            std::shared_ptr<QGraphicsPixmapItem>(graphicsScene->addPixmap(scaledPixmap));
     return item;
 }
 
-void Scene::positionItem(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
-                         qreal angle, qreal zval, QGraphicsItem *item)
+void CScene::positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal, 
+                          qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item)
 {
-    int sizeX = toGlobalCX(xSizeLocal);
-    int sizeY = toGlobalCY(ySizeLocal);
-    item->setTransformOriginPoint(sizeX / 2, sizeY / 2);
+    int sizeXGlobal = toGlobalCX(sizeLocal.width());
+    int sizeYGlobal = toGlobalCY(sizeLocal.height());
+    item->setTransformOriginPoint(sizeXGlobal / 2, sizeYGlobal / 2);
     item->setRotation(angle);
-    item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
+    item->setPos(toGlobalX(leftTopLocal.x()), toGlobalY(leftTopLocal.y()));
     item->setZValue(zval);
 }
 
-void Scene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
-                            QPixmap &pixmap, qreal angle /*=0*/, qreal zval/*=0*/)
+void CScene::removeItem(std::shared_ptr<QGraphicsItem> item)
+{
+    graphicsScene->removeItem(item.get());
+}
+
+void CScene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
+                            QPixmap *pixmap, qreal angle /*=0*/, qreal zval/*=0*/)
 {
     int sizeX = toGlobalCX(xSizeLocal);
     int sizeY = toGlobalCY(ySizeLocal);
-    if (pixmap.size() != QSize(sizeX, sizeY))
-        pixmap = pixmap.scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    if (pixmap->size() != QSize(sizeX, sizeY))
+        *pixmap = pixmap->scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     
-    QGraphicsPixmapItem *item = graphicsScene->addPixmap(pixmap);
+    QGraphicsPixmapItem *item = graphicsScene->addPixmap(*pixmap);
     if (angle != 0)
     {
         item->setTransformOriginPoint(sizeX / 2, sizeY / 2);
@@ -46,7 +53,7 @@ void Scene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLoc
     item->setZValue(zval);
 }
 
-void Scene::updateGameRect(QRect newWindowRect)
+qreal CScene::updateGameRect(QRect newWindowRect)
 {
     //Если экран шире, чем 16х9
     //Устанавливаем новую ширину
@@ -60,33 +67,37 @@ void Scene::updateGameRect(QRect newWindowRect)
     
     QPoint center = newWindowRect.center();
     
+    qreal scaleFactor;    
     if (newWindowRect.width() * 9 > newWindowRect.height() * 16)
     {
         int newWidth = gameRect.height() * 16.0 / 9;
+        scaleFactor = static_cast<qreal>(newWidth) / gameRect.width();
         gameRect.setLeft(center.x() - newWidth / 2.0);
         gameRect.setWidth(newWidth);
     }
     else
     {
         int newHeight = newWindowRect.width() * 9.0 / 16;
+        scaleFactor = static_cast<qreal>(newHeight) / gameRect.height();
         gameRect.setTop(center.y() - newHeight / 2.0);
         gameRect.setHeight(newHeight);
     }
     
     updateWindowBackground();
     updateGameBackground();
+    return scaleFactor;
 }
 
-void Scene::updateWindowBackground()
+void CScene::updateWindowBackground()
 {
     QPixmap scaledPixmap = r->window_background.scaled(windowRect.size(),
                                                        Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     graphicsScene->addPixmap(scaledPixmap)->setZValue(0);
 }
 
-void Scene::updateGameBackground()
+void CScene::updateGameBackground()
 {
-    drawAndPosition(0, 0, LocalWidth, CellNumY * CellSize, r->game_background);
+    drawAndPosition(0, 0, LocalWidth, CellNumY * CellSize, &r->game_background);
     
     //draw chess-like field 
     bool first_white = true;
@@ -101,9 +112,9 @@ void Scene::updateGameBackground()
             int x = OffsetX + i * CellSize;
             int y = j * CellSize;
             if (white)
-                drawAndPosition(x, y, CellSize, CellSize, r->cell1);
+                drawAndPosition(x, y, CellSize, CellSize, &(r->cell1));
             else
-                drawAndPosition(x, y, CellSize, CellSize, r->cell2);
+                drawAndPosition(x, y, CellSize, CellSize, &(r->cell2));
             white = !white;
         }
     }
@@ -113,37 +124,37 @@ void Scene::updateGameBackground()
     int xLeft = 0;
     int xRight = OffsetX + CellNumX * CellSize;
     
-    drawAndPosition(xLeft, y, OffsetX, CellSize, r->cell2);
+    drawAndPosition(xLeft, y, OffsetX, CellSize, &r->cell2);
     if (CellNumX % 2)
-        drawAndPosition(xRight, y, OffsetX, CellSize, r->cell2);
+        drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell2);
     else
-        drawAndPosition(xRight, y, OffsetX, CellSize, r->cell1);
+        drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell1);
 }
 
 //private:
-int Scene::toGlobalX(int xLocal)
+int CScene::toGlobalX(int xLocal)
 {
     return gameRect.left()
             + static_cast<int>(1.0 * gameRect.width() * xLocal / LocalWidth);
 }
 
-int Scene::toGlobalY(int yLocal)
+int CScene::toGlobalY(int yLocal)
 {
     return gameRect.top()
             + static_cast<int>(1.0 * gameRect.height() * yLocal / LocalHeight);
 }
 
-int Scene::toGlobalCX(int cxLocal)
+int CScene::toGlobalCX(int cxLocal)
 {
     return std::ceil(1.0 * gameRect.width() * cxLocal / LocalWidth);
 }
 
-int Scene::toGlobalCY(int cyLocal)
+int CScene::toGlobalCY(int cyLocal)
 {
     return std::ceil(1.0 * gameRect.height() * cyLocal / LocalHeight);
 }
 
-bool Scene::insideGameRect(QPointF point)
+bool CScene::insideGameRect(QPointF point)
 {
     int x = toGlobalX(point.x());
     int y = toGlobalY(point.y());

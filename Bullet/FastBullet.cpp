@@ -1,26 +1,31 @@
 #include <Bullet/FastBullet.h>
+#include <Game/Game.h>
 
-FastBullet::FastBullet(Game *game, int x, int y, double angle)
+CFastBullet::CFastBullet(CGame *game, QPointF center, double angle)
 {
-    this->position = nullptr;
-    this->center = QPoint(x, y);
+    //IGameObject fields
     this->angle = angle;
-    this->step = FastBulletStep;
     this->game = game;
+    this->zOrder = 1;
+    
+    this->size = QSize(BulletSizeX, BulletSizeY);
+    this->pixmap = &game->r->fast_bullet_2;
+    this->position = game->scene->addPixmap(size, pixmap);
+    
+    this->center = center;
+    this->leftTop.setX(center.x() - position->boundingRect().width() / 2);
+    this->leftTop.setY(center.y() - position->boundingRect().height() / 2);
+    
+    //IBullet fields
+    this->step = FastBulletStep;
 }
 
-void FastBullet::draw()
+void CFastBullet::draw()
 {
-    if (!position)
-    {
-        position = game->scene->drawPixmap(BulletSizeX, BulletSizeY, game->r->fast_bullet_2);
-        this->leftTop.setX(center.x() - position->boundingRect().width() / 2);
-        this->leftTop.setY(center.y() - position->boundingRect().height() / 2);
-    }
-    game->scene->positionItem(leftTop.x(), leftTop.y(), BulletSizeX, BulletSizeX, angle, 1, position);
+    game->scene->positionItem(leftTop, size, angle, zOrder, position);
 }
 
-void FastBullet::move()
+void CFastBullet::move()
 {
     center = helper::addVector(center, step, angle);
     leftTop = helper::addVector(leftTop, step, angle);

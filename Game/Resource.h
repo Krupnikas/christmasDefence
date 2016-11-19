@@ -1,5 +1,4 @@
-#ifndef RESOURCE_H
-#define RESOURCE_H
+#pragma once
 
 #include <QWidget>
 #include <QTimer>
@@ -50,7 +49,4 @@ struct R
     R();
     
 };
-
-#endif // RESOURCE_H
-
 

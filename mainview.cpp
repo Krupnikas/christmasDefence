@@ -7,8 +7,11 @@ MainView::MainView(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setLayout(ui->gridLayout);
-    ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
-    this->ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    //ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    
+
+    
 }
 
 MainView::~MainView()
@@ -20,21 +23,41 @@ MainView::~MainView()
 
 void MainView::resizeEvent(QResizeEvent *)
 {
-    scene.updateGameRect(ui->graphicsView->geometry());
+    qreal scaleFactor = scene.updateGameRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene.getGraphicsScene());
+    game.scaleObjects(scaleFactor);
 }
 
 #endif
 
+void MainView::showEvent(QShowEvent *event)
+{    
+    scene.updateGameRect(ui->graphicsView->geometry());
+     
+     game.cannons[2][2] = std::make_shared<CFastCannon>(&game, 2, 2, 100, 30, 100);
+     game.cannons[5][5] = std::make_shared<CFastCannon>(&game, 5, 5, 100, 30, 100);
+     game.cannons[CellNumX - 1][4] = 
+             std::make_shared<CFastCannon>(&game, CellNumX - 1, 4, 100, 30, 100);     
+     
+     CFastCannon *can1 = reinterpret_cast<CFastCannon*>(game.cannons[5][5].get());
+     CFastCannon *can2 = reinterpret_cast<CFastCannon*>(game.cannons[2][2].get());
+     CFastCannon *can3 = reinterpret_cast<CFastCannon*>(game.cannons[CellNumX - 1][4].get());
+     connect(game.gameTimer, SIGNAL(timeout()), can1, SLOT(rotate()));
+     connect(game.gameTimer, SIGNAL(timeout()), can2, SLOT(rotate()));
+     connect(game.gameTimer, SIGNAL(timeout()), can3, SLOT(rotate()));
+     connect(game.gameTimer, SIGNAL(timeout()), &game, SLOT(onTimer()));
+    
+}
+
 void MainView::mousePressEvent(QMouseEvent *eventPress)
 {
-    QPoint p = game.view->mapFromGlobal(QCursor::pos());
+    QPointF p = game.view->mapFromGlobal(QCursor::pos());
 
-    for (int i = 0; i < CellNumY; ++i)
-        for (int j = 0; j < CellNumX; ++j)
+    for (int i = 0; i < CellNumX; ++i)
+        for (int j = 0; j < CellNumY; ++j)
             if (game.cannons[i][j])
             {
-                QPoint center = game.cannons[i][j]->getCenter();
+                QPointF center = game.cannons[i][j]->getCenter();
                 int x1 = game.scene->toGlobalX(center.x());
                 int y1 = game.scene->toGlobalY(center.y());
                 qreal angle = helper::calcAngle(x1, y1, p.x(), p.y());

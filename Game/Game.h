@@ -1,21 +1,19 @@
 #pragma once
 
-#include <Game/Resource.h>
 #include <Game/Scene.h>
-#include <Bullet/IBullet.h>
 
 class ICannon;
-class FastCannon;
+class IBullet;
 class MainView;
 
-class Game : public QObject
+class CGame : public QObject
 {
     Q_OBJECT
     
 //public attributes
 public:
     R *r;
-    Scene *scene;
+    CScene *scene;
     MainView *view;
     QTimer *gameTimer;
     std::vector<std::shared_ptr<IBullet> > bullets;
@@ -25,18 +23,14 @@ public:
 private:
 
     
-    
-    
 //public methods
 public:
-    Game(R *r, Scene *scene, MainView *view);
-    ~Game();
+    CGame(R *r, CScene *scene, MainView *view);
+    ~CGame();
+    
+    void scaleObjects(qreal scaleFactor);
     
 public slots:
-    virtual void updateObjects();
+    virtual void onTimer();
     
 };
-
-#include <Cannon/ICannon.h>
-#include <Cannon/FastCannon.h>
-#include <mainview.h>

@@ -1,30 +1,22 @@
 #pragma once
 
-#include <Game/Resource.h>
+#include <Game/IGameObject.h>
 
-class Game;
+class CGame;
 
-class ICannon : public QObject
+class ICannon : public IGameObject
 {     
     Q_OBJECT
     
 protected:
-    
-    QGraphicsItem *position;
-    
     int cellX;
     int cellY;
-    
-    QPoint center;
-    QPoint leftTop;
-    
     double hp;
-    double angle;
     double globalRadius;  
-    Game *game;
     
 public:
     
+    ICannon();
     virtual ~ICannon();
 
     virtual void draw();
@@ -46,11 +38,6 @@ public:
     double getGlobalRadius() const;
     void setGlobalRadius(double value);
     
-    QPoint getCenter() const;
-    void setCenter(const QPoint &value);
-    
 public slots:
     virtual void rotate();
 };
-
-#include <Game/Game.h>

@@ -1,25 +1,19 @@
 #pragma once
 
 #include <Game/Resource.h>
+#include <Game/IGameObject.h>
 
-class Game;
+class CGame;
 
-class IBullet : public QObject
+class IBullet : public IGameObject
 {     
     Q_OBJECT
     
 protected:
     
-    QGraphicsItem *position;
-    
-    QPointF center;
-    QPointF leftTop;
-    
     std::vector<std::shared_ptr<IBullet>>::iterator iterator;
     
-    qreal angle;
     qreal step;
-    Game *game;
     
 public:
     
@@ -40,5 +34,3 @@ public:
     QPointF getCenter() const;
     void setCenter(const QPointF &value);
 };
-
-#include <Game/Game.h>

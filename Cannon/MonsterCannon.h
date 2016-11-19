@@ -1,16 +1,15 @@
-#ifndef MONSTERCANNON_H
-#define MONSTERCANNON_H
+#pragma once
 
 #include <Cannon/ICannon.h>
 
-class MonsterCannon : public ICannon
+class CMonsterCannon : public ICannon
 {
 private:
     
 public:
     
-     MonsterCannon();
-     ~MonsterCannon();
+     CMonsterCannon();
+     ~CMonsterCannon();
     
     virtual void draw() override;
     virtual void fire(qreal angle) override;
@@ -18,5 +17,3 @@ public:
 public slots:
     virtual void rotate(){}
 };
-
-#endif // MONSTERCANNON_H
