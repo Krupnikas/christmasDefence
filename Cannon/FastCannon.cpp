@@ -28,17 +28,18 @@ CFastCannon::~CFastCannon(){}
 
 void CFastCannon::draw()
 {
-    //game->scene->positionItem(leftTop, size, angle, zOrder, position);
+    game->scene->positionItem(leftTop, size, angle, zOrder, position);
 }
 
 void CFastCannon::fire(qreal angle)
 {
-    std::shared_ptr<IBullet> bullet = std::make_shared<CFastBullet>(game, center, angle);
+    std::shared_ptr<IBullet> bullet = std::make_shared<CFastBullet>(game, center, this->angle);
     game->bullets.push_back(bullet);
     bullet->setIterator(game->bullets.end() - 1);
+    //connect(game->gameTimer, SIGNAL(timeout()), bullet.get(), SLOT(onTimer()));
 }
 
-void CFastCannon::rotate()
+void CFastCannon::onTimer()
 {
     QPoint p = game->view->mapFromGlobal(QCursor::pos());
     int x1 = game->scene->toGlobalX(center.x());

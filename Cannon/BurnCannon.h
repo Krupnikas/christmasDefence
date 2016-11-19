@@ -16,5 +16,5 @@ public:
     virtual void fire(qreal angle) override;
     
 public slots:
-    virtual void rotate(){}
+    virtual void onTimer(){}
 };

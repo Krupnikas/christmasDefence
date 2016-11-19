@@ -13,8 +13,8 @@ CFastBullet::CFastBullet(CGame *game, QPointF center, double angle)
     this->position = game->scene->addPixmap(size, pixmap);
     
     this->center = center;
-    this->leftTop.setX(center.x() - position->boundingRect().width() / 2);
-    this->leftTop.setY(center.y() - position->boundingRect().height() / 2);
+    this->leftTop.setX(center.x() - game->scene->toLocalCX(position->boundingRect().width()) / 2);
+    this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
     
     //IBullet fields
     this->step = FastBulletStep;
@@ -25,10 +25,20 @@ void CFastBullet::draw()
     game->scene->positionItem(leftTop, size, angle, zOrder, position);
 }
 
-void CFastBullet::move()
+bool CFastBullet::move()
 {
-    center = helper::addVector(center, step, angle);
-    leftTop = helper::addVector(leftTop, step, angle);
+    center = helper::addVector(center, game->scene->toGlobalCX(step), angle);
+    leftTop = helper::addVector(leftTop, game->scene->toGlobalCX(step), angle);
+    return game->scene->insideGameRect(center);
+/*    {
+        game->scene->removeItem(position);
+    }*/
    /* if (!game->scene->insideGameRect(center))
         game->bullets.erase(iterator);*/
+}
+
+void CFastBullet::onTimer()
+{
+    move();
+    draw();
 }

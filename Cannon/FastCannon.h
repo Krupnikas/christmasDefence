@@ -15,6 +15,6 @@ public:
     
     
 public slots:
-    virtual void rotate();
+    virtual void onTimer();
     
 };

@@ -20,7 +20,7 @@ public:
     virtual ~IBullet();
 
     virtual void draw();
-    virtual void move();
+    virtual bool move();
     
     //getters and setters
     int getX() const;
@@ -33,4 +33,7 @@ public:
     void setIterator(const std::vector<std::shared_ptr<IBullet> >::iterator &value);
     QPointF getCenter() const;
     void setCenter(const QPointF &value);
+    
+public slots:
+    virtual void onTimer();
 };

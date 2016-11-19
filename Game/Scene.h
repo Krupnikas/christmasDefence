@@ -30,10 +30,15 @@ public:
     int getHeight() { return gameRect.height(); }
     QGraphicsScene *getGraphicsScene() { return graphicsScene; }
     
-    int toGlobalX(int x_local);
-    int toGlobalY(int y_local);
-    int toGlobalCX(int cx_local);
-    int toGlobalCY(int cy_local);
+    int toGlobalX(qreal x_local);
+    int toGlobalY(qreal y_local);
+    int toGlobalCX(qreal cx_local);
+    int toGlobalCY(qreal cy_local);
+
+    qreal toLocalX(qreal xGlobal);
+    qreal toLocalY(qreal yGlobal);    
+    qreal toLocalCX(qreal cxGlobal);
+    qreal toLocalCY(qreal cyGlobal);
     
     bool insideGameRect(QPointF point);
     

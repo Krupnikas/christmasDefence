@@ -35,17 +35,22 @@ void CGame::scaleObjects(qreal scaleFactor)
 
 void CGame::onTimer()
 {
+    size_t lastBulletInd = 0;
     for (size_t i = 0; i < bullets.size(); ++i)
-        if (scene->insideGameRect(bullets[i]->getCenter()))
+        if (bullets[i]->move())
         {
-            bullets[i]->move();
             bullets[i]->draw();
+            if (lastBulletInd < i)
+                bullets[lastBulletInd++] = bullets[i];
+            else
+                lastBulletInd++;
         }
-    
-    for (int i = 0; i < CellNumX; ++i)
+    if (lastBulletInd < bullets.size())
+        bullets.resize(lastBulletInd);
+/*    for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
-                cannons[i][j]->draw();
+                cannons[i][j]->draw();*/
 }
 
 

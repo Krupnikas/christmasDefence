@@ -16,4 +16,4 @@ const int OffsetX = (LocalWidth - CellNumX * CellSize) / 2;
 const int BulletSizeX = 50;
 const int BulletSizeY = 50;
 
-const qreal FastBulletStep = 10;
+const qreal FastBulletStep = CellSize / 30.0;

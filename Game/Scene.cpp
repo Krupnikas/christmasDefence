@@ -16,6 +16,7 @@ std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixma
         scaledPixmap = pixmap->scaled(sizeXGlobal, sizeYGlobal, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     std::shared_ptr<QGraphicsPixmapItem> item = 
             std::shared_ptr<QGraphicsPixmapItem>(graphicsScene->addPixmap(scaledPixmap));
+    item->setVisible(false);
     return item;
 }
 
@@ -28,6 +29,7 @@ void CScene::positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal,
     item->setRotation(angle);
     item->setPos(toGlobalX(leftTopLocal.x()), toGlobalY(leftTopLocal.y()));
     item->setZValue(zval);
+    item->setVisible(true);
 }
 
 void CScene::removeItem(std::shared_ptr<QGraphicsItem> item)
@@ -132,26 +134,46 @@ void CScene::updateGameBackground()
 }
 
 //private:
-int CScene::toGlobalX(int xLocal)
+int CScene::toGlobalX(qreal xLocal)
 {
     return gameRect.left()
             + static_cast<int>(1.0 * gameRect.width() * xLocal / LocalWidth);
 }
 
-int CScene::toGlobalY(int yLocal)
+int CScene::toGlobalY(qreal yLocal)
 {
     return gameRect.top()
             + static_cast<int>(1.0 * gameRect.height() * yLocal / LocalHeight);
 }
 
-int CScene::toGlobalCX(int cxLocal)
+int CScene::toGlobalCX(qreal cxLocal)
 {
     return std::ceil(1.0 * gameRect.width() * cxLocal / LocalWidth);
 }
 
-int CScene::toGlobalCY(int cyLocal)
+int CScene::toGlobalCY(qreal cyLocal)
 {
     return std::ceil(1.0 * gameRect.height() * cyLocal / LocalHeight);
+}
+
+qreal CScene::toLocalX(qreal xGlobal)
+{
+    return (xGlobal - gameRect.left()) * LocalWidth / gameRect.width();
+}
+
+qreal CScene::toLocalY(qreal yGlobal)
+{
+    return (yGlobal - gameRect.top()) * LocalHeight/ gameRect.height();
+}
+
+qreal CScene::toLocalCX(qreal cxGlobal)
+{
+    return cxGlobal * LocalWidth / gameRect.width();
+}
+
+qreal CScene::toLocalCY(qreal cyGlobal)
+{
+    return cyGlobal * LocalHeight / gameRect.height();
 }
 
 bool CScene::insideGameRect(QPointF point)

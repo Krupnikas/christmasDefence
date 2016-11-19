@@ -42,9 +42,9 @@ void MainView::showEvent(QShowEvent *event)
      CFastCannon *can1 = reinterpret_cast<CFastCannon*>(game.cannons[5][5].get());
      CFastCannon *can2 = reinterpret_cast<CFastCannon*>(game.cannons[2][2].get());
      CFastCannon *can3 = reinterpret_cast<CFastCannon*>(game.cannons[CellNumX - 1][4].get());
-     connect(game.gameTimer, SIGNAL(timeout()), can1, SLOT(rotate()));
-     connect(game.gameTimer, SIGNAL(timeout()), can2, SLOT(rotate()));
-     connect(game.gameTimer, SIGNAL(timeout()), can3, SLOT(rotate()));
+     connect(game.gameTimer, SIGNAL(timeout()), can1, SLOT(onTimer()));
+     connect(game.gameTimer, SIGNAL(timeout()), can2, SLOT(onTimer()));
+     connect(game.gameTimer, SIGNAL(timeout()), can3, SLOT(onTimer()));
      connect(game.gameTimer, SIGNAL(timeout()), &game, SLOT(onTimer()));
     
 }

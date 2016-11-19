@@ -16,8 +16,11 @@ public:
     QPointF getCenter() const;
     void setCenter(const QPointF &value);
     
+    qreal getAngle() const;
+    void setAngle(const qreal &value);
+    
 protected:
-
+    
     qreal angle;
     int zOrder;
     

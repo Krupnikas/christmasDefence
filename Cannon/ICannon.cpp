@@ -45,4 +45,4 @@ void ICannon::setGlobalRadius(double value)
 
 void ICannon::draw(){}
 void ICannon::fire(qreal angle){}
-void ICannon::rotate(){}
+void ICannon::onTimer(){}

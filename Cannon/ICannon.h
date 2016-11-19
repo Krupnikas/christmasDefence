@@ -39,5 +39,5 @@ public:
     void setGlobalRadius(double value);
     
 public slots:
-    virtual void rotate();
+    virtual void onTimer();
 };

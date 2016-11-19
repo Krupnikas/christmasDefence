@@ -20,3 +20,13 @@ void IGameObject::setCenter(const QPointF &value)
 {
     center = value;
 }
+
+qreal IGameObject::getAngle() const
+{
+    return angle;
+}
+
+void IGameObject::setAngle(const qreal &value)
+{
+    angle = value;
+}

@@ -20,7 +20,10 @@ void IBullet::setCenter(const QPointF &value)
     center = value;
 }
 
+
 IBullet::~IBullet(){}
 
 void IBullet::draw(){}
-void IBullet::move(){}
+bool IBullet::move(){}
+
+void IBullet::onTimer(){}
