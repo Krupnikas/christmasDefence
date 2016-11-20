@@ -3,11 +3,14 @@
 
 class IEnemy
 {
+protected:
+    
+    
 public:
 
     IEnemy();
     ~IEnemy();
-
+    
 };
 
 #endif // ENEMY_H

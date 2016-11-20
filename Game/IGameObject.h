@@ -11,7 +11,9 @@ class IGameObject : public QObject
 public:
     IGameObject();
     virtual ~IGameObject();
+    
     void scaleItem(qreal scaleFactor);
+    void draw();
 
     QPointF getCenter() const;
     void setCenter(const QPointF &value);

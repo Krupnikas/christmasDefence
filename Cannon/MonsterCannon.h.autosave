@@ -2,17 +2,17 @@
 
 #include <Cannon/ICannon.h>
 
-class CSlowCannon : public ICannon
+class CMonsterCannon : public ICannon
 {
 private:
     
 public:
     
-    CSlowCannon();
-    ~CSlowCannon();
+     CMonsterCannon();
+     ~CMonsterCannon();
     
     virtual void fire(qreal angle) override;
-    
+     
 public slots:
     virtual void onTimer(){}
 };

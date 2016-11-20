@@ -11,6 +11,11 @@ void IGameObject::scaleItem(qreal scaleFactor)
     position = game->scene->addPixmap(size, pixmap);
 }
 
+void IGameObject::draw()
+{
+    game->scene->positionItem(leftTop, size, angle, zOrder, position);
+}
+
 QPointF IGameObject::getCenter() const
 {
     return center;

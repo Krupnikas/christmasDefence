@@ -8,7 +8,6 @@ public:
     
     CFastBullet(CGame *game, QPointF center, double angle);
     
-    virtual void draw();
     virtual bool move();
     
 public slots:

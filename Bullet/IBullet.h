@@ -9,17 +9,10 @@ class IBullet : public IGameObject
 {     
     Q_OBJECT
     
-protected:
-    
-    std::vector<std::shared_ptr<IBullet>>::iterator iterator;
-    
-    qreal step;
-    
 public:
     
     virtual ~IBullet();
 
-    virtual void draw();
     virtual bool move();
     
     //getters and setters
@@ -29,11 +22,13 @@ public:
     int getY() const;
     void setY(int value);
     
-    std::vector<std::shared_ptr<IBullet> >::iterator getIterator() const;
-    void setIterator(const std::vector<std::shared_ptr<IBullet> >::iterator &value);
     QPointF getCenter() const;
     void setCenter(const QPointF &value);
     
 public slots:
     virtual void onTimer();
+    
+protected:
+    
+    qreal step;
 };

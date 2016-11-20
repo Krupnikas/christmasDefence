@@ -2,6 +2,7 @@
 #include <Cannon/FastCannon.h>
 #include <Bullet/FastBullet.h>
 #include <Game/Game.h>
+#include <Game/Helper.h>
 
 CFastCannon::CFastCannon(CGame *game, int cellX, int cellY, double hp, double angle, double globalRadius)
 {
@@ -26,16 +27,10 @@ CFastCannon::CFastCannon(CGame *game, int cellX, int cellY, double hp, double an
 
 CFastCannon::~CFastCannon(){}
 
-void CFastCannon::draw()
-{
-    game->scene->positionItem(leftTop, size, angle, zOrder, position);
-}
-
 void CFastCannon::fire(qreal angle)
 {
-    std::shared_ptr<IBullet> bullet = std::make_shared<CFastBullet>(game, center, this->angle);
+    std::shared_ptr<IBullet> bullet = std::make_shared<CFastBullet>(game, center, angle);
     game->bullets.push_back(bullet);
-    bullet->setIterator(game->bullets.end() - 1);
     //connect(game->gameTimer, SIGNAL(timeout()), bullet.get(), SLOT(onTimer()));
 }
 

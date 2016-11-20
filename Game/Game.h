@@ -18,6 +18,7 @@ public:
     QTimer *gameTimer;
     std::vector<std::shared_ptr<IBullet> > bullets;
     std::vector<std::vector<std::shared_ptr<ICannon>>> cannons;
+    std::vector<std::vector<int>> distances;
     
 //private attributes
 private:
@@ -28,6 +29,7 @@ public:
     CGame(R *r, CScene *scene, MainView *view);
     ~CGame();
     
+    void updatePath();
     void scaleObjects(qreal scaleFactor);
     
 public slots:
