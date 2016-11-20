@@ -30,7 +30,7 @@ void CGame::updatePath()
             for (int j = 0; j < CellNumY; ++j)
             {
                 std::string text(std::to_string(distances[i][j]));
-                scene->drawAndPosition(OffsetX + i * CellSize, j * CellSize, QString(text.c_str()), 0.5);
+                scene->drawAndPosition(OffsetX + i * CellSize, OffsetY + j * CellSize, QString(text.c_str()), 0.5);
             }
 }
 

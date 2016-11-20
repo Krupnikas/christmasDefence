@@ -72,6 +72,7 @@ qreal CScene::updateGameRect(QRect newWindowRect)
     //Устанавливаем новую ширину
     //Иначе экран выше, чем 16х9
     //Устанавливаем новую высоту
+    backgroundItems.clear();
     gameRect = windowRect = newWindowRect;
     
     QPoint enclosingTopLeft(gameRect.topLeft() - QPoint(CellSize, CellSize));
@@ -105,7 +106,9 @@ void CScene::updateWindowBackground()
 {
     QPixmap scaledPixmap = r->window_background.scaled(windowRect.size(),
                                                        Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    graphicsScene->addPixmap(scaledPixmap)->setZValue(0);
+    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
+    backgroundItems.push_back(item);
+    item->setZValue(0);
     
     if (DrawText)
         graphicsScene->addText(QString("LOL KEK"));

@@ -18,14 +18,12 @@ CFastEnemy::CFastEnemy(CGame *game, QPointF center, double angle)
     this->leftTop.setX(center.x() - game->scene->toLocalCX(position->boundingRect().width()) / 2);
     this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
     
-    //IBullet fields
-    this->step = FastBulletStep;
 }
 
 bool CFastEnemy::move()
 {
-    center = helper::addVector(center, game->scene->toGlobalCX(step), angle);
-    leftTop = helper::addVector(leftTop, game->scene->toGlobalCX(step), angle);
+/*    center = helper::addVector(center, game->scene->toGlobalCX(step), angle);
+    leftTop = helper::addVector(leftTop, game->scene->toGlobalCX(step), angle);*/
     return game->scene->insideGameRect(center);
 /*    {
         game->scene->removeItem(position);

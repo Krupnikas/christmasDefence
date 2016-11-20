@@ -1,6 +1,10 @@
 #pragma once
 
-class CFastEnemy
+#include <Game/IGameObject.h>
+
+class CGame;
+
+class CFastEnemy : public IGameObject
 {
 public:
     

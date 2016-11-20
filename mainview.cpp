@@ -26,7 +26,9 @@ void MainView::resizeEvent(QResizeEvent *)
 {
     qreal scaleFactor = scene.updateGameRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene.getGraphicsScene());
+    scene.updateGameRect(ui->graphicsView->geometry());
     game.scaleObjects(scaleFactor);
+    game.updatePath();
 }
 
 #endif
@@ -35,20 +37,20 @@ void MainView::showEvent(QShowEvent *event)
 {    
     scene.updateGameRect(ui->graphicsView->geometry());
      
-     game.cannons[2][2] = std::make_shared<CFastCannon>(&game, 2, 2, 100, 30, 100);
-     game.cannons[5][3] = std::make_shared<CFastCannon>(&game, 5, 3, 100, 30, 100);
-     game.cannons[CellNumX - 1][4] = 
-             std::make_shared<CFastCannon>(&game, CellNumX - 1, 4, 100, 30, 100);     
-     
-     CFastCannon *can2 = reinterpret_cast<CFastCannon*>(game.cannons[2][2].get());
-     CFastCannon *can1 = reinterpret_cast<CFastCannon*>(game.cannons[5][3].get());
-     CFastCannon *can3 = reinterpret_cast<CFastCannon*>(game.cannons[CellNumX - 1][4].get());
-     connect(game.gameTimer, SIGNAL(timeout()), can1, SLOT(onTimer()));
-     connect(game.gameTimer, SIGNAL(timeout()), can2, SLOT(onTimer()));
-     connect(game.gameTimer, SIGNAL(timeout()), can3, SLOT(onTimer()));
-     connect(game.gameTimer, SIGNAL(timeout()), &game, SLOT(onTimer()));
-     
-     game.updatePath();
+    game.cannons[2][2] = std::make_shared<CFastCannon>(&game, 2, 2, 100, 30, 100);
+    game.cannons[5][3] = std::make_shared<CFastCannon>(&game, 5, 3, 100, 30, 100);
+    game.cannons[CellNumX - 1][4] = 
+         std::make_shared<CFastCannon>(&game, CellNumX - 1, 4, 100, 30, 100);     
+    
+    CFastCannon *can2 = reinterpret_cast<CFastCannon*>(game.cannons[2][2].get());
+    CFastCannon *can1 = reinterpret_cast<CFastCannon*>(game.cannons[5][3].get());
+    CFastCannon *can3 = reinterpret_cast<CFastCannon*>(game.cannons[CellNumX - 1][4].get());
+    connect(game.gameTimer, SIGNAL(timeout()), can1, SLOT(onTimer()));
+    connect(game.gameTimer, SIGNAL(timeout()), can2, SLOT(onTimer()));
+    connect(game.gameTimer, SIGNAL(timeout()), can3, SLOT(onTimer()));
+    connect(game.gameTimer, SIGNAL(timeout()), &game, SLOT(onTimer()));
+    
+    game.updatePath();
     
 }
 

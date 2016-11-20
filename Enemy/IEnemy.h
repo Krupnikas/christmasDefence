@@ -1,5 +1,4 @@
-#ifndef ENEMY_H
-#define ENEMY_H
+#pragma once
 
 class IEnemy
 {
@@ -12,5 +11,3 @@ public:
     ~IEnemy();
     
 };
-
-#endif // ENEMY_H
