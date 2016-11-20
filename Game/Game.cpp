@@ -78,6 +78,22 @@ QPoint CGame::findNearestCell(QPointF from)
     return nearestCell;
 }
 
+bool CGame::addCannon(QPoint cell)
+{
+    return addCannon(cell.x(), cell.y());
+}
+
+bool CGame::addCannon(int x, int y)
+{
+    if (x < 0 || x > CellNumX ||
+        y < 0 || y > CellNumY)
+            return false;
+    cannons[x][y]
+            = std::make_shared<CFastCannon>(this, x, y, 100, 30, 100);
+    CFastCannon *can = reinterpret_cast<CFastCannon*>(cannons[x][y].get());
+    connect(gameTimer, SIGNAL(timeout()), can, SLOT(onTimer()));
+}
+
 void CGame::onTimer()
 {
     size_t lastBulletInd = 0;

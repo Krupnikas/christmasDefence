@@ -33,7 +33,7 @@ void MainView::resizeEvent(QResizeEvent *)
 #endif
 
 void MainView::showEvent(QShowEvent *event)
-{    
+{
     scene.updateGameRect(ui->graphicsView->geometry());
 
     game.addCannon(std::make_shared<CFastCannon>(&game, 2, 2, 100, 30, 100));
@@ -42,6 +42,7 @@ void MainView::showEvent(QShowEvent *event)
     connect(game.gameTimer, SIGNAL(timeout()), &game, SLOT(onTimer()));
     
     scene.updateDistances(game.distances);
+    connect(game.gameTimer, SIGNAL(timeout()), &game, SLOT(onTimer()));
 }
 
 void MainView::mousePressEvent(QMouseEvent *eventPress)
