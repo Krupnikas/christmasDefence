@@ -7,7 +7,7 @@ const int LocalHeight = 900;
 
 const int MenuButtonOffset = 2;
 
-const int OffsetY = 15;
+const int OffsetY = 100;
 
 const int CellNumY = 7; //always odd
 const int CellSize = (LocalHeight - 2 * OffsetY) / CellNumY;
