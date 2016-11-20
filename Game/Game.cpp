@@ -1,12 +1,17 @@
 #include <Game/Game.h>
 #include <Cannon/FastCannon.h>
 #include <Bullet/FastBullet.h>
+#include <Game/Helper.h>
 
 CGame::CGame(R *r, CScene *scene, MainView *view) : r(r), scene(scene), view(view)
 {
     cannons.resize(CellNumX);
+    distances.resize(CellNumX);
     for (int i = 0; i < CellNumX; ++i)
+    {
         cannons[i].resize(CellNumY);
+        distances[i].resize(CellNumY);
+    }
     gameTimer = new QTimer(this);
     gameTimer->start(16);
 }
@@ -14,6 +19,19 @@ CGame::CGame(R *r, CScene *scene, MainView *view) : r(r), scene(scene), view(vie
 CGame::~CGame()
 {
     
+}
+
+void CGame::updatePath()
+{
+    helper::calcDistances(cannons, distances);
+    
+    if (DrawText)
+        for (int i = 0; i < CellNumX; ++i)
+            for (int j = 0; j < CellNumY; ++j)
+            {
+                std::string text(std::to_string(distances[i][j]));
+                scene->drawAndPosition(OffsetX + i * CellSize, OffsetY + j * CellSize, QString(text.c_str()), 0.5);
+            }
 }
 
 void CGame::scaleObjects(qreal scaleFactor)

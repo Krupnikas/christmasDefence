@@ -14,13 +14,15 @@
 #include <QPainter>
 #include <QPen>
 #include <QPaintEvent>
+#include <QLineF>
+#include <QtCore/qmath.h>
 #include <QDebug>
 
 #include <memory>
 #include <vector>
+#include <string>
 
 #include <Game/Metrics.h>
-#include <Game/Helper.h>
 
 enum CannonType {
     SMALL, MEDIUM, BIG

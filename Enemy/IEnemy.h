@@ -1,13 +1,13 @@
-#ifndef ENEMY_H
-#define ENEMY_H
+#pragma once
 
 class IEnemy
 {
+protected:
+    
+    
 public:
 
     IEnemy();
     ~IEnemy();
-
+    
 };
-
-#endif // ENEMY_H

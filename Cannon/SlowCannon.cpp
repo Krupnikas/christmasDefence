@@ -10,11 +10,6 @@ CSlowCannon::~CSlowCannon()
     
 }
 
-void CSlowCannon::draw()
-{
-    
-}
-
 void CSlowCannon::fire(qreal angle)
 {
     

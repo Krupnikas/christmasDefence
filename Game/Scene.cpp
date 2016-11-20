@@ -16,6 +16,7 @@ std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixma
         scaledPixmap = pixmap->scaled(sizeXGlobal, sizeYGlobal, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     std::shared_ptr<QGraphicsPixmapItem> item = 
             std::shared_ptr<QGraphicsPixmapItem>(graphicsScene->addPixmap(scaledPixmap));
+    
     item->setVisible(false);
     return item;
 }
@@ -45,12 +46,22 @@ void CScene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLo
     if (pixmap->size() != QSize(sizeX, sizeY))
         *pixmap = pixmap->scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     
-    QGraphicsPixmapItem *item = graphicsScene->addPixmap(*pixmap);
+    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(*pixmap));
+    backgroundItems.push_back(item);
+    
     if (angle != 0)
     {
         item->setTransformOriginPoint(sizeX / 2, sizeY / 2);
         item->setRotation(angle);
     }
+    item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
+    item->setZValue(zval);
+}
+
+void CScene::drawAndPosition(int xLocal, int yLocal, const QString &text, qreal zval)
+{
+    std::shared_ptr<QGraphicsTextItem> item(graphicsScene->addText(text));
+    backgroundItems.push_back(item);
     item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
     item->setZValue(zval);
 }
@@ -61,6 +72,7 @@ qreal CScene::updateGameRect(QRect newWindowRect)
     //Устанавливаем новую ширину
     //Иначе экран выше, чем 16х9
     //Устанавливаем новую высоту
+    backgroundItems.clear();
     gameRect = windowRect = newWindowRect;
     
     QPoint enclosingTopLeft(gameRect.topLeft() - QPoint(CellSize, CellSize));
@@ -94,7 +106,12 @@ void CScene::updateWindowBackground()
 {
     QPixmap scaledPixmap = r->window_background.scaled(windowRect.size(),
                                                        Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    graphicsScene->addPixmap(scaledPixmap)->setZValue(0);
+    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
+    backgroundItems.push_back(item);
+    item->setZValue(0);
+    
+    if (DrawText)
+        graphicsScene->addText(QString("LOL KEK"));
 }
 
 void CScene::updateGameBackground()

@@ -8,18 +8,11 @@ class ICannon : public IGameObject
 {     
     Q_OBJECT
     
-protected:
-    int cellX;
-    int cellY;
-    double hp;
-    double globalRadius;  
-    
 public:
     
     ICannon();
     virtual ~ICannon();
 
-    virtual void draw();
     virtual void fire(qreal angle);
     
     //getters and setters
@@ -40,4 +33,10 @@ public:
     
 public slots:
     virtual void onTimer();
+    
+protected:
+    int cellX;
+    int cellY;
+    double hp;
+    double globalRadius;  
 };

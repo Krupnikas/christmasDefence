@@ -1,16 +1,16 @@
-#include <Bullet/FastBullet.h>
+#include <Enemy/FastEnemy.h>
 #include <Game/Game.h>
 #include <Game/Helper.h>
 
 
-CFastBullet::CFastBullet(CGame *game, QPointF center, double angle)
+CFastEnemy::CFastEnemy(CGame *game, QPointF center, double angle)
 {
     //IGameObject fields
     this->angle = angle;
     this->game = game;
-    this->zOrder = 1;
+    this->zOrder = 2;
     
-    this->size = QSize(BulletSizeX, BulletSizeY);
+    this->size = QSize(CellSize, CellSize);
     this->pixmap = &game->r->fast_bullet_2;
     this->position = game->scene->addPixmap(size, pixmap);
     
@@ -18,14 +18,12 @@ CFastBullet::CFastBullet(CGame *game, QPointF center, double angle)
     this->leftTop.setX(center.x() - game->scene->toLocalCX(position->boundingRect().width()) / 2);
     this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
     
-    //IBullet fields
-    this->step = FastBulletStep;
 }
 
-bool CFastBullet::move()
+bool CFastEnemy::move()
 {
-    center = helper::addVector(center, game->scene->toGlobalCX(step), angle);
-    leftTop = helper::addVector(leftTop, game->scene->toGlobalCX(step), angle);
+/*    center = helper::addVector(center, game->scene->toGlobalCX(step), angle);
+    leftTop = helper::addVector(leftTop, game->scene->toGlobalCX(step), angle);*/
     return game->scene->insideGameRect(center);
 /*    {
         game->scene->removeItem(position);
@@ -34,7 +32,7 @@ bool CFastBullet::move()
         game->bullets.erase(iterator);*/
 }
 
-void CFastBullet::onTimer()
+void CFastEnemy::onTimer()
 {
     move();
     draw();
