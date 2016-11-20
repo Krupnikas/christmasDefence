@@ -99,7 +99,7 @@ void CScene::updateWindowBackground()
 
 void CScene::updateGameBackground()
 {
-    drawAndPosition(0, 0, LocalWidth, CellNumY * CellSize, &r->game_background);
+    drawAndPosition(0, 0, LocalWidth, LocalHeight, &r->game_background);
     
     //draw chess-like field
     for (int i = 0; i < CellNumX; ++i)
@@ -107,7 +107,7 @@ void CScene::updateGameBackground()
         for (int j = 0; j < CellNumY; ++j)
         {
             int x = OffsetX + i * CellSize;
-            int y = j * CellSize;
+            int y = OffsetY + j * CellSize;
             if ((i+j)%2 == 0)
                 drawAndPosition(x, y, CellSize, CellSize, &(r->cell1));
             else
@@ -116,7 +116,7 @@ void CScene::updateGameBackground()
     }
     
     //draw path inside and outside the field
-    int y = (CellNumY / 2) * CellSize;
+    int y = (CellNumY / 2) * CellSize + OffsetY;
     int xLeft = 0;
     int xRight = OffsetX + CellNumX * CellSize;
     
