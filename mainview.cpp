@@ -33,7 +33,7 @@ void MainView::resizeEvent(QResizeEvent *)
 void MainView::showEvent(QShowEvent *event)
 {    
     scene.updateGameRect(ui->graphicsView->geometry());
-     
+
      game.cannons[2][2] = std::make_shared<CFastCannon>(&game, 2, 2, 100, 30, 100);
      game.cannons[5][5] = std::make_shared<CFastCannon>(&game, 5, 5, 100, 30, 100);
      game.cannons[CellNumX - 1][4] = 
@@ -58,9 +58,9 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
         qDebug() << selectedCell;
         game.cannons[selectedCell.x()][selectedCell.y()]
                 = std::make_shared<CFastCannon>(&game, selectedCell.x(), selectedCell.y(), 100, 30, 100);
-        CFastCannon *can4 = reinterpret_cast<CFastCannon*>
+        CFastCannon *can = reinterpret_cast<CFastCannon*>
                 (game.cannons[selectedCell.x()][selectedCell.y()].get());
-        connect(game.gameTimer, SIGNAL(timeout()), can4, SLOT(onTimer()));
+        connect(game.gameTimer, SIGNAL(timeout()), can, SLOT(onTimer()));
         return;
     }
 
