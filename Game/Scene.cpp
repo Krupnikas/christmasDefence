@@ -101,23 +101,17 @@ void CScene::updateGameBackground()
 {
     drawAndPosition(0, 0, LocalWidth, CellNumY * CellSize, &r->game_background);
     
-    //draw chess-like field 
-    bool first_white = true;
-    bool white;
+    //draw chess-like field
     for (int i = 0; i < CellNumX; ++i)
     {
-        white = first_white;
-        first_white = !first_white;
-    
         for (int j = 0; j < CellNumY; ++j)
         {
             int x = OffsetX + i * CellSize;
             int y = j * CellSize;
-            if (white)
+            if ((i+j)%2 == 0)
                 drawAndPosition(x, y, CellSize, CellSize, &(r->cell1));
             else
                 drawAndPosition(x, y, CellSize, CellSize, &(r->cell2));
-            white = !white;
         }
     }
     
@@ -126,11 +120,11 @@ void CScene::updateGameBackground()
     int xLeft = 0;
     int xRight = OffsetX + CellNumX * CellSize;
     
-    drawAndPosition(xLeft, y, OffsetX, CellSize, &r->cell2);
+    drawAndPosition(xLeft, y, OffsetX, CellSize, &r->cell1);
     if (CellNumX % 2)
-        drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell2);
-    else
         drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell1);
+    else
+        drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell2);
 }
 
 //private:
