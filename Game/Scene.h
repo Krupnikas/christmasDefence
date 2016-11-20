@@ -15,7 +15,7 @@ public:
     std::shared_ptr<QGraphicsItem> addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap);
     
     void positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal, 
-                      qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item, bool tremble = false);
+                      qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item);
     void removeItem(std::shared_ptr<QGraphicsItem> item);
     
     void drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 

@@ -32,7 +32,7 @@ void MainView::resizeEvent(QResizeEvent *)
 
 #endif
 
-void MainView::showEvent(QShowEvent *event)
+void MainView::showEvent(QShowEvent*)
 {
     scene.updateGameRect(ui->graphicsView->geometry());
 

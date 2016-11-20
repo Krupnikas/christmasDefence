@@ -1,10 +1,5 @@
 #include <Game/Scene.h>
 
-namespace
-{
-    int scales[] = {0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.2, 1.1, 1.0, 0.9, 0.8, 0.9, 1};
-}
-
 //public:
 CScene::CScene(R* r) : r(r)
 {
@@ -26,7 +21,7 @@ std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixma
 }
 
 void CScene::positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal, 
-                          qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item, bool tremble)
+                          qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item)
 {
     int sizeXGlobal = toGlobalCX(sizeLocal.width());
     int sizeYGlobal = toGlobalCY(sizeLocal.height());
