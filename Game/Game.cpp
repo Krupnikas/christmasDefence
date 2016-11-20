@@ -3,7 +3,7 @@
 #include <Bullet/FastBullet.h>
 #include <Game/Helper.h>
 
-CGame::CGame(R *r, CScene *scene, MainView *view) : r(r), scene(scene), view(view)
+CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view)
 {
     cannons.resize(CellNumX);
     distances.resize(CellNumX);
@@ -21,24 +21,26 @@ CGame::~CGame()
     
 }
 
-void CGame::updatePath()
+bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
 {
-    helper::calcDistances(cannons, distances);
+    int x = cannon->getX();
+    int y = cannon->getY();
+    cannons[x][y] = cannon;
+    if (!helper::calcDistances(cannons, distances))
+    {
+        cannons[x][y] = nullptr;
+        return false;
+    }
     
-    if (DrawText)
-        for (int i = 0; i < CellNumX; ++i)
-            for (int j = 0; j < CellNumY; ++j)
-            {
-                std::string text(std::to_string(distances[i][j]));
-                scene->drawAndPosition(OffsetX + i * CellSize, OffsetY + j * CellSize, QString(text.c_str()), 0.5);
-            }
+    scene->updateDistances(distances);
+    return true;
 }
 
-void CGame::scaleObjects(qreal scaleFactor)
+void CGame::scaleObjects()
 {
     for (size_t i = 0; i < bullets.size(); ++i)
     {
-        bullets[i]->scaleItem(scaleFactor);
+        bullets[i]->scaleItem();
         bullets[i]->draw();
     }
     
@@ -46,9 +48,10 @@ void CGame::scaleObjects(qreal scaleFactor)
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
             {
-                cannons[i][j]->scaleItem(scaleFactor);
+                cannons[i][j]->scaleItem();
                 cannons[i][j]->draw();
             }
+    scene->updateDistances(distances);
 }
 
 QPoint CGame::findNearestCell(QPointF from)
@@ -89,10 +92,18 @@ void CGame::onTimer()
         }
     if (lastBulletInd < bullets.size())
         bullets.resize(lastBulletInd);
-/*    for (int i = 0; i < CellNumX; ++i)
+    
+    for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
-                cannons[i][j]->draw();*/
+            {
+                QPointF center = cannons[i][j]->getCenter();
+                QPoint p = view->mapFromGlobal(QCursor::pos());
+                int x1 = scene->toGlobalX(center.x());
+                int y1 = scene->toGlobalY(center.y());
+                cannons[i][j]->setAngle(helper::calcAngle(x1, y1, p.x(), p.y()));
+                cannons[i][j]->draw();
+            }
 }
 
 

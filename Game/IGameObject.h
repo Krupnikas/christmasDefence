@@ -12,7 +12,7 @@ public:
     IGameObject();
     virtual ~IGameObject();
     
-    void scaleItem(qreal scaleFactor);
+    void scaleItem();
     void draw();
 
     QPointF getCenter() const;

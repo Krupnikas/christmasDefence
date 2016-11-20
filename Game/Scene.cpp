@@ -61,12 +61,12 @@ void CScene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLo
 void CScene::drawAndPosition(int xLocal, int yLocal, const QString &text, qreal zval)
 {
     std::shared_ptr<QGraphicsTextItem> item(graphicsScene->addText(text));
-    backgroundItems.push_back(item);
+    textItems.push_back(item);
     item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
     item->setZValue(zval);
 }
 
-qreal CScene::updateGameRect(QRect newWindowRect)
+void CScene::updateGameRect(QRect newWindowRect)
 {
     //Если экран шире, чем 16х9
     //Устанавливаем новую ширину
@@ -81,25 +81,21 @@ qreal CScene::updateGameRect(QRect newWindowRect)
     
     QPoint center = newWindowRect.center();
     
-    qreal scaleFactor;    
     if (newWindowRect.width() * 9 > newWindowRect.height() * 16)
     {
         int newWidth = gameRect.height() * 16.0 / 9;
-        scaleFactor = static_cast<qreal>(newWidth) / gameRect.width();
         gameRect.setLeft(center.x() - newWidth / 2.0);
         gameRect.setWidth(newWidth);
     }
     else
     {
         int newHeight = newWindowRect.width() * 9.0 / 16;
-        scaleFactor = static_cast<qreal>(newHeight) / gameRect.height();
         gameRect.setTop(center.y() - newHeight / 2.0);
         gameRect.setHeight(newHeight);
     }
     
     updateWindowBackground();
     updateGameBackground();
-    return scaleFactor;
 }
 
 void CScene::updateWindowBackground()
@@ -109,9 +105,6 @@ void CScene::updateWindowBackground()
     std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
     backgroundItems.push_back(item);
     item->setZValue(0);
-    
-    if (DrawText)
-        graphicsScene->addText(QString("LOL KEK"));
 }
 
 void CScene::updateGameBackground()
@@ -142,6 +135,20 @@ void CScene::updateGameBackground()
         drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell1);
     else
         drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell2);
+}
+
+void CScene::updateDistances(std::vector<std::vector<int>> &distances)
+{
+    textItems.clear();
+    if (DrawText)
+        for (int i = 0; i < CellNumX; ++i)
+            for (int j = 0; j < CellNumY; ++j)
+            {
+                int x = OffsetX + i * CellSize;
+                int y = OffsetY + j * CellSize;
+                std::string text(std::to_string(distances[i][j]));
+                drawAndPosition(x, y, QString(text.c_str()), 0.5);
+            }
 }
 
 //private:

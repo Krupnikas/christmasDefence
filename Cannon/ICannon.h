@@ -25,9 +25,6 @@ public:
     double getHp() const;
     void setHp(double value);
     
-    double getAngle() const;
-    void setAngle(double value);
-    
     double getGlobalRadius() const;
     void setGlobalRadius(double value);
     

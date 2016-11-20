@@ -24,11 +24,10 @@ MainView::~MainView()
 
 void MainView::resizeEvent(QResizeEvent *)
 {
-    qreal scaleFactor = scene.updateGameRect(ui->graphicsView->geometry());
-    ui->graphicsView->setScene(scene.getGraphicsScene());
     scene.updateGameRect(ui->graphicsView->geometry());
-    game.scaleObjects(scaleFactor);
-    game.updatePath();
+    ui->graphicsView->setScene(scene.getGraphicsScene());
+    game.scaleObjects();
+    
 }
 
 #endif
@@ -36,22 +35,13 @@ void MainView::resizeEvent(QResizeEvent *)
 void MainView::showEvent(QShowEvent *event)
 {    
     scene.updateGameRect(ui->graphicsView->geometry());
-     
-    game.cannons[2][2] = std::make_shared<CFastCannon>(&game, 2, 2, 100, 30, 100);
-    game.cannons[5][3] = std::make_shared<CFastCannon>(&game, 5, 3, 100, 30, 100);
-    game.cannons[CellNumX - 1][4] = 
-         std::make_shared<CFastCannon>(&game, CellNumX - 1, 4, 100, 30, 100);     
-    
-    CFastCannon *can2 = reinterpret_cast<CFastCannon*>(game.cannons[2][2].get());
-    CFastCannon *can1 = reinterpret_cast<CFastCannon*>(game.cannons[5][3].get());
-    CFastCannon *can3 = reinterpret_cast<CFastCannon*>(game.cannons[CellNumX - 1][4].get());
-    connect(game.gameTimer, SIGNAL(timeout()), can1, SLOT(onTimer()));
-    connect(game.gameTimer, SIGNAL(timeout()), can2, SLOT(onTimer()));
-    connect(game.gameTimer, SIGNAL(timeout()), can3, SLOT(onTimer()));
+
+    game.addCannon(std::make_shared<CFastCannon>(&game, 2, 2, 100, 30, 100));
+    game.addCannon(std::make_shared<CFastCannon>(&game, 5, 3, 100, 30, 100));
+    game.addCannon(std::make_shared<CFastCannon>(&game, CellNumX - 1, 4, 100, 30, 100));     
     connect(game.gameTimer, SIGNAL(timeout()), &game, SLOT(onTimer()));
     
-    game.updatePath();
-    
+    scene.updateDistances(game.distances);
 }
 
 void MainView::mousePressEvent(QMouseEvent *eventPress)
@@ -61,11 +51,7 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
     if (eventPress->button() == Qt::RightButton){
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
         qDebug() << selectedCell;
-        game.cannons[selectedCell.x()][selectedCell.y()]
-                = std::make_shared<CFastCannon>(&game, selectedCell.x(), selectedCell.y(), 100, 30, 100);
-        CFastCannon *can4 = reinterpret_cast<CFastCannon*>
-                (game.cannons[selectedCell.x()][selectedCell.y()].get());
-        connect(game.gameTimer, SIGNAL(timeout()), can4, SLOT(onTimer()));
+        game.addCannon(std::make_shared<CFastCannon>(&game, selectedCell.x(), selectedCell.y(), 100, 30, 100));
         return;
     }
 
