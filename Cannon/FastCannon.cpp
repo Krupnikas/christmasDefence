@@ -15,8 +15,8 @@ CFastCannon::CFastCannon(CGame *game, int cellX, int cellY, double hp, double an
     this->pixmap = &game->r->fast_cannon_2;
     position = game->scene->addPixmap(size, pixmap);
     
-    this->center = QPoint(OffsetX + cellX * CellSize + CellSize / 2, cellY * CellSize + CellSize / 2);
-    this->leftTop = QPoint(OffsetX + cellX * CellSize, cellY * CellSize);
+    this->center = QPoint(OffsetX + cellX * CellSize + CellSize / 2, OffsetY + cellY * CellSize + CellSize / 2);
+    this->leftTop = QPoint(OffsetX + cellX * CellSize, OffsetY + cellY * CellSize);
     
     //ICannon fields
     this->cellX = cellX;

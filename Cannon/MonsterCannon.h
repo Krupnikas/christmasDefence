@@ -11,7 +11,6 @@ public:
      CMonsterCannon();
      ~CMonsterCannon();
     
-    virtual void draw() override;
     virtual void fire(qreal angle) override;
      
 public slots:

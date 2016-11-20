@@ -39,6 +39,8 @@ public:
     qreal toLocalY(qreal yGlobal);    
     qreal toLocalCX(qreal cxGlobal);
     qreal toLocalCY(qreal cyGlobal);
+
+    QPointF toLocalPoint(QPointF globalPoint);
     
     bool insideGameRect(QPointF point);
     

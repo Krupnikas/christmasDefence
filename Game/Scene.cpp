@@ -113,30 +113,24 @@ void CScene::updateWindowBackground()
 
 void CScene::updateGameBackground()
 {
-    drawAndPosition(0, 0, LocalWidth, CellNumY * CellSize, &r->game_background);
+    drawAndPosition(0, 0, LocalWidth, LocalHeight, &r->game_background);
     
-    //draw chess-like field 
-    bool first_white = true;
-    bool white;
+    //draw chess-like field
     for (int i = 0; i < CellNumX; ++i)
     {
-        white = first_white;
-        first_white = !first_white;
-    
         for (int j = 0; j < CellNumY; ++j)
         {
             int x = OffsetX + i * CellSize;
-            int y = j * CellSize;
-            if (white)
+            int y = OffsetY + j * CellSize;
+            if ((i+j)%2 == 0)
                 drawAndPosition(x, y, CellSize, CellSize, &(r->cell1));
             else
                 drawAndPosition(x, y, CellSize, CellSize, &(r->cell2));
-            white = !white;
         }
     }
     
     //draw path inside and outside the field
-    int y = (CellNumY / 2) * CellSize;
+    int y = (CellNumY / 2) * CellSize + OffsetY;
     int xLeft = 0;
     int xRight = OffsetX + CellNumX * CellSize;
     
@@ -188,6 +182,12 @@ qreal CScene::toLocalCX(qreal cxGlobal)
 qreal CScene::toLocalCY(qreal cyGlobal)
 {
     return cyGlobal * LocalHeight / gameRect.height();
+}
+
+QPointF CScene::toLocalPoint(QPointF globalPoint)
+{
+    return QPointF(toLocalX(globalPoint.x()),
+                   toLocalY(globalPoint.y()));
 }
 
 bool CScene::insideGameRect(QPointF point)

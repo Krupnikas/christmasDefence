@@ -51,6 +51,30 @@ void CGame::scaleObjects(qreal scaleFactor)
             }
 }
 
+QPoint CGame::findNearestCell(QPointF from)
+{
+    double minDist = CellSize;
+    double manhattanLength;
+    QPoint nearestCell;
+    for (int i = 0; i < CellNumX; ++i)
+    {
+        for (int j = 0; j < CellNumY; ++j)
+        {
+            int x = OffsetX + i * CellSize + CellSize/ 2.0;
+            int y = OffsetY + j * CellSize + CellSize/ 2.0;
+            QPointF checkingCellCenter(x,y);
+            checkingCellCenter -= from;
+            manhattanLength = abs(checkingCellCenter.x()) + abs(checkingCellCenter.y());
+            if (manhattanLength < minDist){
+                    minDist = manhattanLength;
+                    nearestCell.setX(i);
+                    nearestCell.setY(j);
+            }
+        }
+    }
+    return nearestCell;
+}
+
 void CGame::onTimer()
 {
     size_t lastBulletInd = 0;

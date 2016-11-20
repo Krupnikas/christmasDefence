@@ -43,6 +43,5 @@ void ICannon::setGlobalRadius(double value)
     globalRadius = value;
 }
 
-void ICannon::draw(){}
 void ICannon::fire(qreal angle){}
 void ICannon::onTimer(){}

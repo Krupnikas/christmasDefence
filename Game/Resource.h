@@ -16,6 +16,7 @@
 #include <QPaintEvent>
 #include <QLineF>
 #include <QtCore/qmath.h>
+#include <QDebug>
 
 #include <memory>
 #include <vector>
