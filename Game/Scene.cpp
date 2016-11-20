@@ -170,6 +170,12 @@ qreal CScene::toLocalCY(qreal cyGlobal)
     return cyGlobal * LocalHeight / gameRect.height();
 }
 
+QPointF CScene::toLocalPoint(QPointF globalPoint)
+{
+    return QPointF(toLocalX(globalPoint.x()),
+                   toLocalY(globalPoint.y()));
+}
+
 bool CScene::insideGameRect(QPointF point)
 {
     int x = toGlobalX(point.x());

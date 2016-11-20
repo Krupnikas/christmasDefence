@@ -29,6 +29,7 @@ public:
     ~CGame();
     
     void scaleObjects(qreal scaleFactor);
+    QPoint findNearestCell(QPointF from);
     
 public slots:
     virtual void onTimer();

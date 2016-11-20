@@ -53,6 +53,17 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
 {
     QPointF p = game.view->mapFromGlobal(QCursor::pos());
 
+    if (eventPress->button() == Qt::RightButton){
+        QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
+        qDebug() << selectedCell;
+        game.cannons[selectedCell.x()][selectedCell.y()]
+                = std::make_shared<CFastCannon>(&game, selectedCell.x(), selectedCell.y(), 100, 30, 100);
+        CFastCannon *can4 = reinterpret_cast<CFastCannon*>
+                (game.cannons[selectedCell.x()][selectedCell.y()].get());
+        connect(game.gameTimer, SIGNAL(timeout()), can4, SLOT(onTimer()));
+        return;
+    }
+
     for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)
             if (game.cannons[i][j])

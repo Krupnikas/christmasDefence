@@ -14,6 +14,7 @@
 #include <QPainter>
 #include <QPen>
 #include <QPaintEvent>
+#include <QDebug>
 
 #include <memory>
 #include <vector>
