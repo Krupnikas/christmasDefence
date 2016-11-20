@@ -32,6 +32,8 @@ public:
     void updatePath();
     void scaleObjects(qreal scaleFactor);
     QPoint findNearestCell(QPointF from);
+    bool addCannon(QPoint cell);
+    bool addCannon(int x, int y);
     
 public slots:
     virtual void onTimer();
