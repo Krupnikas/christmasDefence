@@ -1,10 +1,12 @@
 #pragma once
 
-#include <Game/IGameObject.h>
+#include <Enemy/IEnemy.h>
 
 class CGame;
 
-class CFastEnemy : public IGameObject
+const qreal Delta = 10;
+
+class CFastEnemy : public IEnemy
 {
 public:
     
@@ -14,4 +16,5 @@ public:
     
 public slots:
     virtual void onTimer();
+    
 };

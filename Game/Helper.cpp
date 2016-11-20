@@ -34,6 +34,9 @@ bool calcDistances(
         std::vector<std::vector<std::shared_ptr<ICannon> > > &cannons,
         std::vector<std::vector<int> > &distances)
 {
+    if (cannons[ExitX][ExitY] || cannons[EntranceX][EntranceY])
+        return false;
+    
     for (int x = 0; x < CellNumX; ++x)
         for (int y = 0; y < CellNumY; ++y)
         {
@@ -68,7 +71,13 @@ bool calcDistances(
         }
     }
     
-    return (distances[EntranceX][EntranceY] > -1) && (distances[EntranceX][EntranceY] < Inf);
+/*    bool connected = true;
+    for (int x = 0; x < CellNumX; ++x)
+        for (int y = 0; y < CellNumY; ++y)
+            if (distances[x][y] == -1)
+                connected = false;*/
+    
+    return /*connected && */(distances[EntranceX][EntranceY] > -1);
 }
 
 QPointF addVector(QPointF point, qreal len, qreal angle)

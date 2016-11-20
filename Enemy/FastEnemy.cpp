@@ -22,6 +22,14 @@ CFastEnemy::CFastEnemy(CGame *game, QPointF center, double angle)
 
 bool CFastEnemy::move()
 {
+    if (abs(angleDesired - angle) < Delta)
+    {
+        
+    }
+    else
+    {
+        
+    }
 /*    center = helper::addVector(center, game->scene->toGlobalCX(step), angle);
     leftTop = helper::addVector(leftTop, game->scene->toGlobalCX(step), angle);*/
     return game->scene->insideGameRect(center);

@@ -1,5 +1,10 @@
 #include <Game/Scene.h>
 
+namespace
+{
+    int scales[] = {0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.2, 1.1, 1.0, 0.9, 0.8, 0.9, 1};
+}
+
 //public:
 CScene::CScene(R* r) : r(r)
 {
@@ -14,15 +19,14 @@ std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixma
     QPixmap scaledPixmap = *pixmap;
     if (pixmap->size() != QSize(sizeXGlobal, sizeYGlobal))
         scaledPixmap = pixmap->scaled(sizeXGlobal, sizeYGlobal, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    std::shared_ptr<QGraphicsPixmapItem> item = 
-            std::shared_ptr<QGraphicsPixmapItem>(graphicsScene->addPixmap(scaledPixmap));
+    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
     
     item->setVisible(false);
     return item;
 }
 
 void CScene::positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal, 
-                          qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item)
+                          qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item, bool tremble)
 {
     int sizeXGlobal = toGlobalCX(sizeLocal.width());
     int sizeYGlobal = toGlobalCY(sizeLocal.height());

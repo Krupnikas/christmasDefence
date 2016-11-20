@@ -15,7 +15,7 @@ public:
     std::shared_ptr<QGraphicsItem> addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap);
     
     void positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal, 
-                      qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item);
+                      qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item, bool tremble = false);
     void removeItem(std::shared_ptr<QGraphicsItem> item);
     
     void drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
@@ -45,6 +45,7 @@ public:
     
     bool insideGameRect(QPointF point);
     
+
 private:
     
     R* r;
@@ -57,4 +58,6 @@ private:
     std::vector<std::shared_ptr<QGraphicsItem>> backgroundItems;
     std::vector<std::shared_ptr<QGraphicsItem>> textItems;
     
+private slots:
+    void scalePixmap(qreal scale, QSizeF sizeGlobal, QPixmap *pixmap);
 };
