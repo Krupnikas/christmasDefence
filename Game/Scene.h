@@ -11,6 +11,8 @@ public:
     };
     
     CScene(R* r);
+
+    std::shared_ptr<QGraphicsItem> selectedCellItem;
     
     std::shared_ptr<QGraphicsItem> addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap);
     
@@ -18,7 +20,7 @@ public:
                       qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item);
     void removeItem(std::shared_ptr<QGraphicsItem> item);
     
-    void drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
+    std::shared_ptr<QGraphicsItem> drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal,
                          QPixmap *pixmap, qreal angle = 0, qreal zval = 0);
     void drawAndPosition(int xLocal, int yLocal, const QString &text, qreal zval = 0);
 

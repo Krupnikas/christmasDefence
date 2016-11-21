@@ -38,6 +38,7 @@ struct R
     
     QPixmap cell1;
     QPixmap cell2;
+    QPixmap cellSelected;
     
     QPixmap fast_cannon_1;
     QPixmap fast_cannon_2;

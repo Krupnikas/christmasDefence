@@ -13,5 +13,6 @@
         <file>res/christmas/game_background.jpg</file>
         <file>res/christmas/game_background.png</file>
         <file>res/christmas/window_background.jpg</file>
+        <file>res/christmas/cellSelected.png</file>
     </qresource>
 </RCC>

@@ -54,6 +54,29 @@ void CGame::scaleObjects()
     scene->updateDistances(distances);
 }
 
+void CGame::selectCell(QPoint pos)
+{
+    selectCell(pos.x(), pos.y());
+}
+
+void CGame::selectCell(int i, int j)
+{
+    deselectCell();
+    selectedCell = QPoint(i, j);
+
+    int x = OffsetX + i * CellSize;
+    int y = OffsetY + j * CellSize;
+
+    scene->selectedCellItem = scene->drawAndPosition(x, y, CellSize, CellSize, &(r->cellSelected), 0, 0.5);
+}
+
+void CGame::deselectCell()
+{
+    if (selectedCell == QPoint(-1,-1)) return;
+    scene->removeItem(scene->selectedCellItem);
+    selectedCell = QPoint(-1, -1);
+}
+
 QPoint CGame::findNearestCell(QPointF from)
 {
     double minDist = CellSize;

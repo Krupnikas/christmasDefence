@@ -16,6 +16,9 @@ public:
     CScene *scene;
     QWidget *view;
     QTimer *gameTimer;
+
+    QPoint selectedCell = QPoint(-1, -1);
+
     std::vector<std::shared_ptr<IBullet> > bullets;
     std::vector<std::vector<std::shared_ptr<ICannon>>> cannons;
     std::vector<std::vector<int>> distances;
@@ -33,7 +36,13 @@ public:
     
     void updatePath();
     void scaleObjects();
+
+    void selectCell(QPoint pos);
+    void selectCell(int i, int j);
+    void deselectCell();
+
     QPoint findNearestCell(QPointF from);
+
     bool addCannon(QPoint cell);
     bool addCannon(int x, int y);
     

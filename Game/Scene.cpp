@@ -37,7 +37,7 @@ void CScene::removeItem(std::shared_ptr<QGraphicsItem> item)
     graphicsScene->removeItem(item.get());
 }
 
-void CScene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal, 
+std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal,
                             QPixmap *pixmap, qreal angle /*=0*/, qreal zval/*=0*/)
 {
     int sizeX = toGlobalCX(xSizeLocal);
@@ -55,6 +55,7 @@ void CScene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLo
     }
     item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
     item->setZValue(zval);
+    return item;
 }
 
 void CScene::drawAndPosition(int xLocal, int yLocal, const QString &text, qreal zval)
@@ -71,7 +72,7 @@ void CScene::updateGameRect(QRect newWindowRect)
     //Устанавливаем новую ширину
     //Иначе экран выше, чем 16х9
     //Устанавливаем новую высоту
-    backgroundItems.clear();
+    backgroundItems.clear(); /////////////////////////////////////////PROBLEM! NOT DELETING BUT LOOSE POINTERS!
     gameRect = windowRect = newWindowRect;
     
     QPoint enclosingTopLeft(gameRect.topLeft() - QPoint(CellSize, CellSize));

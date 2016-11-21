@@ -6,6 +6,7 @@ R::R()
 
     cell1 = QPixmap(get("cell1.png"));
     cell2 = QPixmap(get("cell2.png"));
+    cellSelected = QPixmap(get("cellSelected.png"));
     
     window_background = QPixmap(get("window_background.jpg"));
     game_background = QPixmap(get("game_background.jpg"));
