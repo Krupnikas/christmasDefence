@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     Game/Helper.cpp \
     Bullet/FastBullet.cpp \
     Game/IGameObject.cpp \
-    Enemy/FastEnemy.cpp
+    Enemy/FastEnemy.cpp \
+    Enemy/Movements.cpp
 
 HEADERS  += mainview.h \
     Bullet/IBullet.h \
@@ -45,7 +46,8 @@ HEADERS  += mainview.h \
     Game/Helper.h \
     Bullet/FastBullet.h \
     Game/IGameObject.h \
-    Enemy/FastEnemy.h
+    Enemy/FastEnemy.h \
+    Enemy/Movements.h
 
 FORMS    += mainview.ui
 
