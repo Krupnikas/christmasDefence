@@ -12,7 +12,7 @@ https://habrahabr.ru/post/133897/
 
 *Нужно будет написать статью на хабре - очень повышает число загрузок
 
-Разработка сразу сотен игр за месяц на Android и IOS с использованием Qt и C++
+Как разработать сто игр за месяц на Android и IOS зная только C++ и геометрию
 
 <img src="http://photos4.meetupstatic.com/photos/event/e/5/5/8/global_79138712.jpeg" alt="image"/>
 
