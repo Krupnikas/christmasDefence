@@ -22,9 +22,10 @@ public:
                          QPixmap *pixmap, qreal angle = 0, qreal zval = 0);
     void drawAndPosition(int xLocal, int yLocal, const QString &text, qreal zval = 0);
 
-    qreal updateGameRect(QRect geometry);
+    void updateGameRect(QRect geometry);
     void updateWindowBackground();
     void updateGameBackground();
+    void updateDistances(std::vector<std::vector<int>> &distances);
     
     int getWidth() { return gameRect.width(); }
     int getHeight() { return gameRect.height(); }
@@ -44,6 +45,7 @@ public:
     
     bool insideGameRect(QPointF point);
     
+
 private:
     
     R* r;
@@ -54,5 +56,8 @@ private:
     QPainter painter;
     
     std::vector<std::shared_ptr<QGraphicsItem>> backgroundItems;
+    std::vector<std::shared_ptr<QGraphicsItem>> textItems;
     
+private slots:
+    void scalePixmap(qreal scale, QSizeF sizeGlobal, QPixmap *pixmap);
 };

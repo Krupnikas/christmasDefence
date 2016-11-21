@@ -14,7 +14,7 @@ class CGame : public QObject
 public:
     R *r;
     CScene *scene;
-    MainView *view;
+    QWidget *view;
     QTimer *gameTimer;
     std::vector<std::shared_ptr<IBullet> > bullets;
     std::vector<std::vector<std::shared_ptr<ICannon>>> cannons;
@@ -26,11 +26,13 @@ private:
     
 //public methods
 public:
-    CGame(R *r, CScene *scene, MainView *view);
+    CGame(R *r, CScene *scene, QWidget *view);
     ~CGame();
     
+    bool addCannon(std::shared_ptr<ICannon> cannon);
+    
     void updatePath();
-    void scaleObjects(qreal scaleFactor);
+    void scaleObjects();
     QPoint findNearestCell(QPointF from);
     bool addCannon(QPoint cell);
     bool addCannon(int x, int y);

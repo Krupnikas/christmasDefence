@@ -24,27 +24,25 @@ MainView::~MainView()
 
 void MainView::resizeEvent(QResizeEvent *)
 {
-    qreal scaleFactor = scene.updateGameRect(ui->graphicsView->geometry());
-    ui->graphicsView->setScene(scene.getGraphicsScene());
     scene.updateGameRect(ui->graphicsView->geometry());
-    game.scaleObjects(scaleFactor);
-    game.updatePath();
+    ui->graphicsView->setScene(scene.getGraphicsScene());
+    game.scaleObjects();
+    
 }
 
 #endif
 
-void MainView::showEvent(QShowEvent *event)
+void MainView::showEvent(QShowEvent*)
 {
     scene.updateGameRect(ui->graphicsView->geometry());
 
-    game.addCannon(2, 2);
-    game.addCannon(2, 1);
-    game.addCannon(2, 0);
-
+    game.addCannon(std::make_shared<CFastCannon>(&game, 2, 2, 100, 30, 100));
+    game.addCannon(std::make_shared<CFastCannon>(&game, 5, 3, 100, 30, 100));
+    game.addCannon(std::make_shared<CFastCannon>(&game, CellNumX - 1, 4, 100, 30, 100));     
     connect(game.gameTimer, SIGNAL(timeout()), &game, SLOT(onTimer()));
-
-    game.updatePath();
-
+    
+    scene.updateDistances(game.distances);
+    connect(game.gameTimer, SIGNAL(timeout()), &game, SLOT(onTimer()));
 }
 
 void MainView::mousePressEvent(QMouseEvent *eventPress)
@@ -53,7 +51,8 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
 
     if (eventPress->button() == Qt::RightButton){
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
-        game.addCannon(selectedCell);
+        qDebug() << selectedCell;
+        game.addCannon(std::make_shared<CFastCannon>(&game, selectedCell.x(), selectedCell.y(), 100, 30, 100));
         return;
     }
 

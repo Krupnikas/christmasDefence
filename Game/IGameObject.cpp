@@ -4,7 +4,7 @@
 IGameObject::IGameObject(){}
 IGameObject::~IGameObject(){}
 
-void IGameObject::scaleItem(qreal scaleFactor)
+void IGameObject::scaleItem()
 {
     if (position)
         game->scene->removeItem(position);
