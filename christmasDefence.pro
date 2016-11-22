@@ -35,7 +35,7 @@ SOURCES += main.cpp\
     InfoBlock/WaveInfo.cpp \
     InfoBlock/ControlButtons.cpp \
     InfoBlock/PauseWindow.cpp \
-    InfoBlock/CannoSelection.cpp
+    InfoBlock/CannonSelection.cpp
 
 HEADERS  += mainview.h \
     Bullet/IBullet.h \
@@ -59,7 +59,7 @@ HEADERS  += mainview.h \
     InfoBlock/WaveInfo.h \
     InfoBlock/ControlButtons.h \
     InfoBlock/PauseWindow.h \
-    InfoBlock/CannoSelection.h
+    InfoBlock/CannonSelection.h
 
 FORMS    += mainview.ui
 

@@ -35,10 +35,13 @@ struct R
     
     QPixmap window_background;
     QPixmap game_background;
-    
+    QPixmap cannonSelectionBackground;
+
     QPixmap cell1;
     QPixmap cell2;
     QPixmap cellSelected;
+
+
     
     QPixmap fast_cannon_1;
     QPixmap fast_cannon_2;

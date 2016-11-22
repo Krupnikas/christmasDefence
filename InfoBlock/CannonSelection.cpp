@@ -1,8 +1,9 @@
-#include "CannoSelection.h"
+#include "CannonSelection.h"
 
 CCannoSelection::CCannoSelection(CGame *game, QPoint selectedCell)
 {
     this->game = game;
+    this->pixmap = &game->r->cannonSelectionBackground;
     if (selectedCell.x() > CellNumX / 2.0)
     {
      //block must be at the left side

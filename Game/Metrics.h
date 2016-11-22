@@ -15,8 +15,8 @@ const int CellNumX = LocalWidth / CellSize - MenuButtonOffset;
 
 const int OffsetX = (LocalWidth - CellNumX * CellSize) / 2;
 
-const int BulletSizeX = 50;
-const int BulletSizeY = 50;
+const int BulletSizeX = CellSize / 3.0;
+const int BulletSizeY = CellSize / 3.0;
 
 const qreal FastBulletStep = CellSize / 30.0;
 

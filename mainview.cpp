@@ -53,6 +53,7 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
         if (game.selectedCell != selectedCell){
             game.selectCell(selectedCell);
+
             return;
         }
         game.addCannon(std::make_shared<CFastCannon>(&game, selectedCell.x(), selectedCell.y(), 100, 30, 100));
