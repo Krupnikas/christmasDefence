@@ -1,8 +1,8 @@
 # christmasDefence
 
-[*Статья 1*](https://habrahabr.ru/post/247651/)
-[*Статья 2*](https://habrahabr.ru/post/136725/)
-[*Статья 3*](https://habrahabr.ru/post/133897/)
+[*Статья1*](https://habrahabr.ru/post/247651/)
+[*Статья2*](https://habrahabr.ru/post/136725/)
+[*Статья3*](https://habrahabr.ru/post/133897/)
 [*Продать корейцам?*](https://habrahabr.ru/post/112565/)
 [*Баланс*](https://habrahabr.ru/post/173913/)
 [*Продвижение*](https://habrahabr.ru/sandbox/55733/)
