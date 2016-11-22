@@ -10,9 +10,7 @@ MainView::MainView(QWidget *parent) :
     this->setLayout(ui->gridLayout);
     //ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    
-
-    
+    this->showFullScreen();
 }
 
 MainView::~MainView()

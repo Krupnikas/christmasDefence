@@ -147,8 +147,8 @@ void CScene::updateDistances(std::vector<std::vector<int>> &distances)
             {
                 int x = OffsetX + i * CellSize;
                 int y = OffsetY + j * CellSize;
-                std::string text(std::to_string(distances[i][j]));
-                drawAndPosition(x, y, QString(text.c_str()), 0.5);
+                QString text = QString::number(distances[i][j]);
+                drawAndPosition(x, y, text, 0.5);
             }
 }
 
