@@ -1,6 +1,6 @@
 # christmasDefence
 
-* https://habrahabr.ru/post/247651/ *
+*https://habrahabr.ru/post/247651/
 
 https://habrahabr.ru/post/136725/
 
@@ -12,7 +12,7 @@ https://habrahabr.ru/post/133897/
 
 Продвижение https://habrahabr.ru/sandbox/55733/
 
-*Нужно будет написать статью на хабре - очень повышает число загрузок *
+Нужно будет написать статью на хабре - очень повышает число загрузок*
 
 # Как разработать сто игр за месяц на Android и IOS зная только C++ и геометрию
 
