@@ -1,4 +1,4 @@
-# christmasDefence
+# Christmas Defence
 
 [Статья1](https://habrahabr.ru/post/247651/), 
 [Статья2](https://habrahabr.ru/post/136725/), 
