@@ -11,8 +11,8 @@
         <file>res/christmas/fast_cannon_3.jpg</file>
         <file>res/christmas/fast_cannon_3.png</file>
         <file>res/christmas/game_background.jpg</file>
-        <file>res/christmas/game_background.png</file>
         <file>res/christmas/window_background.jpg</file>
         <file>res/christmas/cellSelected.png</file>
+        <file>res/christmas/cannonSelectingInfoBlockBackground.png</file>
     </qresource>
 </RCC>
