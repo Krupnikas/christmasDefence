@@ -18,6 +18,7 @@ public:
     
     void hide();
     void show();
+    bool isVisible();
     
     QPointF getCenter() const;
     void setCenter(const QPointF &value);
@@ -37,5 +38,5 @@ protected:
     QPixmap *pixmap;
     CGame *game;
     std::shared_ptr<QGraphicsItem> position;
-    
+
 };

@@ -18,6 +18,7 @@ public:
     QWidget *view;
     QTimer *gameTimer;
     std::shared_ptr<CCannonSelection> block;
+    std::shared_ptr<QGraphicsItem> selectedCellItem;
     QPoint selectedCell = QPoint(-1, -1);
 
     std::vector<std::shared_ptr<IBullet> > bullets;

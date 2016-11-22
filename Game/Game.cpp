@@ -58,6 +58,12 @@ void CGame::scaleObjects()
         block->scaleItem();
         block->draw();
     }
+    if (selectedCellItem)
+    {
+        scene->removeItem(selectedCellItem);
+        selectedCellItem = nullptr;
+        selectCell(selectedCell.x(), selectedCell.y());
+    }
     
     scene->updateDistances(distances);
 }
@@ -69,19 +75,21 @@ void CGame::selectCell(QPoint pos)
 
 void CGame::selectCell(int i, int j)
 {
-    deselectCell();
     selectedCell = QPoint(i, j);
 
     int x = OffsetX + i * CellSize;
     int y = OffsetY + j * CellSize;
+    QSizeF size(CellSize, CellSize);
 
-    scene->selectedCellItem = scene->drawAndPosition(x, y, CellSize, CellSize, &(r->cellSelected), 0, 0.5);
+    if (!selectedCellItem)
+        selectedCellItem = scene->addPixmap(size, &(r->cellSelected));
+    
+    scene->positionItem(QPointF(x, y), size, 0, 0.5, selectedCellItem);
 }
 
 void CGame::deselectCell()
 {
-    if (selectedCell == QPoint(-1,-1)) return;
-    scene->removeItem(scene->selectedCellItem);
+    selectedCellItem->hide();
     selectedCell = QPoint(-1, -1);
 }
 

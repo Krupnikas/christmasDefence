@@ -12,6 +12,6 @@ public:
     CCannonSelection(CGame *game, QPoint selectedCell);
     ~CCannonSelection();
     
-    updatePosition(QPoint selectedCell);
+    void updatePosition(QPoint selectedCell);
     
 };

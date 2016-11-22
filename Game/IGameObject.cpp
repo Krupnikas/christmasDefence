@@ -14,6 +14,7 @@ void IGameObject::scaleItem()
 void IGameObject::draw()
 {
     game->scene->positionItem(leftTop, size, angle, zOrder, position);
+    show();
 }
 
 void IGameObject::remove()
@@ -29,7 +30,12 @@ void IGameObject::hide()
 
 void IGameObject::show()
 {
-    position->setVisible(true);
+    position->show();
+}
+
+bool IGameObject::isVisible()
+{
+    return position->isVisible();
 }
 
 QPointF IGameObject::getCenter() const

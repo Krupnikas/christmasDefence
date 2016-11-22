@@ -15,8 +15,7 @@ std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixma
     if (pixmap->size() != QSize(sizeXGlobal, sizeYGlobal))
         scaledPixmap = pixmap->scaled(sizeXGlobal, sizeYGlobal, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
-    
-    item->setVisible(false);
+    item->hide();
     return item;
 }
 
@@ -29,7 +28,7 @@ void CScene::positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal,
     item->setRotation(angle);
     item->setPos(toGlobalX(leftTopLocal.x()), toGlobalY(leftTopLocal.y()));
     item->setZValue(zval);
-    item->setVisible(true);
+    item->show();
 }
 
 void CScene::removeItem(std::shared_ptr<QGraphicsItem> item)

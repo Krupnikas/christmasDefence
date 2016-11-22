@@ -26,7 +26,7 @@ CCannonSelection::~CCannonSelection()
 {
 }
 
-CCannonSelection::updatePosition(QPoint selectedCell)
+void CCannonSelection::updatePosition(QPoint selectedCell)
 {
     if (selectedCell.x() > CellNumX / 2.0)
     {

@@ -11,8 +11,6 @@ public:
     };
     
     CScene(R* r);
-
-    std::shared_ptr<QGraphicsItem> selectedCellItem;
     
     std::shared_ptr<QGraphicsItem> addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap);
     
@@ -24,6 +22,7 @@ public:
                          QPixmap *pixmap, qreal angle = 0, qreal zval = 0);
     std::shared_ptr<QGraphicsItem> drawAndPosition(int xLocal, int yLocal, const QString &text, qreal zval = 0);
 
+    
     void updateGameRect(QRect geometry);
     void updateWindowBackground();
     void updateGameBackground();
@@ -59,6 +58,7 @@ private:
     
     std::vector<std::shared_ptr<QGraphicsItem>> backgroundItems;
     std::vector<std::shared_ptr<QGraphicsItem>> textItems;
+    
     
 private slots:
     void scalePixmap(qreal scale, QSizeF sizeGlobal, QPixmap *pixmap);
