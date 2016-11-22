@@ -2,15 +2,15 @@
 
 #include <InfoBlock/IInfoBlock.h>
 
-class CCannoSelection : public IInfoBlock
+class CCannonSelection : public IInfoBlock
 {
     Q_OBJECT
     
 public:
 
     
-    CCannoSelection(CGame *game, QPoint selectedCell);
-    ~CCannoSelection();
+    CCannonSelection(CGame *game, QPoint selectedCell);
+    ~CCannonSelection();
     
     updatePosition(QPoint selectedCell);
     

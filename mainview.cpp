@@ -55,7 +55,7 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
                 game.block->updatePosition(selectedCell);
             else
             {
-                game.block = std::make_shared<CCannoSelection>(&game, selectedCell);
+                game.block = std::make_shared<CCannonSelection>(&game, selectedCell);
                 game.block->draw();
             }
             
@@ -73,7 +73,7 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
         if (game.selectedCell != selectedCell){
             game.selectCell(selectedCell);
-            game.block = std::make_shared<CCannoSelection>(&game, selectedCell);
+            game.block = std::make_shared<CCannonSelection>(&game, selectedCell);
             game.block->draw();
             return;
         }

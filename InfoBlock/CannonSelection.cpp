@@ -1,6 +1,6 @@
 #include "CannonSelection.h"
 
-CCannoSelection::CCannoSelection(CGame *game, QPoint selectedCell)
+CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
 {
     //IGameObject fields
     this->angle = 0;
@@ -22,11 +22,11 @@ CCannoSelection::CCannoSelection(CGame *game, QPoint selectedCell)
     
 }
 
-CCannoSelection::~CCannoSelection()
+CCannonSelection::~CCannonSelection()
 {
 }
 
-CCannoSelection::updatePosition(QPoint selectedCell)
+CCannonSelection::updatePosition(QPoint selectedCell)
 {
     if (selectedCell.x() > CellNumX / 2.0)
     {

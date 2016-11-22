@@ -5,7 +5,7 @@
 class ICannon;
 class IBullet;
 class MainView;
-class CCannoSelection;
+class CCannonSelection;
 
 class CGame : public QObject
 {
@@ -17,7 +17,7 @@ public:
     CScene *scene;
     QWidget *view;
     QTimer *gameTimer;
-    std::shared_ptr<CCannoSelection> block;
+    std::shared_ptr<CCannonSelection> block;
     QPoint selectedCell = QPoint(-1, -1);
 
     std::vector<std::shared_ptr<IBullet> > bullets;
