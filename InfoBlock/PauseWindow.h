@@ -1,11 +1,9 @@
-#ifndef CPAUSEWINDOW_H
-#define CPAUSEWINDOW_H
+#pragma once
 
+#include <InfoBlock/IInfoBlock.h>
 
 class CPauseWindow : public IInfoBlock
 {
 public:
     CPauseWindow();
 };
-
-#endif // CPAUSEWINDOW_H

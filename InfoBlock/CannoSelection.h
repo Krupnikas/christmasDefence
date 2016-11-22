@@ -1,11 +1,9 @@
-#ifndef CCANNOSELECTION_H
-#define CCANNOSELECTION_H
+#pragma once
 
+#include <InfoBlock/IInfoBlock.h>
 
 class CCannoSelection : public IInfoBlock
 {
 public:
     CCannoSelection();
 };
-
-#endif // CCANNOSELECTION_H

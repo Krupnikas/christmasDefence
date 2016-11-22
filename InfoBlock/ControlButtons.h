@@ -1,6 +1,6 @@
-#ifndef CCONTROLBUTTONS_H
-#define CCONTROLBUTTONS_H
+#pragma once
 
+#include <InfoBlock/IInfoBlock.h>
 
 class CControlButtons : public IInfoBlock
 {
@@ -8,4 +8,3 @@ public:
     CControlButtons();
 };
 
-#endif // CCONTROLBUTTONS_H

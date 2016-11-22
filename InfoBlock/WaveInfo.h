@@ -1,11 +1,9 @@
-#ifndef CWAVEINFO_H
-#define CWAVEINFO_H
+#pragma once
 
+#include <InfoBlock/IInfoBlock.h>
 
 class CWaveInfo : public IInfoBlock
 {
 public:
     CWaveInfo();
 };
-
-#endif // CWAVEINFO_H
