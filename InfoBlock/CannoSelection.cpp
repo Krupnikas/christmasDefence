@@ -11,7 +11,6 @@ CCannoSelection::CCannoSelection(CGame *game, QPoint selectedCell)
     {
      //block must be at the right side
     }
-        ;
 }
 
 CCannoSelection::~CCannoSelection(){}
