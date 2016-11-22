@@ -53,12 +53,16 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
         if (game.selectedCell != selectedCell){
             game.selectCell(selectedCell);
-
+            block = new CCannoSelection(&game, selectedCell);
             return;
         }
         game.addCannon(std::make_shared<CFastCannon>(&game,
                                                      selectedCell.x(), selectedCell.y(),
                                                      100, 30, 100));
+        qDebug() << "Cannon added";
+        block->hide();
+        game.deselectCell();
+        delete block;
         return;
     }
 
