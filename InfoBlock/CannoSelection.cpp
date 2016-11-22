@@ -14,4 +14,4 @@ CCannoSelection::CCannoSelection(CGame *game, QPoint selectedCell)
         ;
 }
 
-CCannoSelection::~CFastCannon(){}
+CCannoSelection::~CCannoSelection(){}
