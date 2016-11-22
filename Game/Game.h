@@ -5,6 +5,7 @@
 class ICannon;
 class IBullet;
 class MainView;
+class IInfoblock;
 
 class CGame : public QObject
 {

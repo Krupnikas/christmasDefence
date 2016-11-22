@@ -2,13 +2,13 @@
 
 #include <Game/Game.h>
 #include <Cannon/FastCannon.h>
+#include <InfoBlock/CannonSelection.h>
 
 #define TEST
 
 /* MainView - объект приложения.
  * Он создает объекты меню и игры,
  * занимается сохранением результатов
- * Следит за разрешением и системами отсчета
  */
 
 namespace Ui {
