@@ -22,7 +22,8 @@ void Queue::push(QPointF val)
     dxArr[frontInd] = val.x();
     dyArr[frontInd] = val.y();
     backInd = frontInd;
-    frontInd = ++frontInd % WindowSize;
+    ++frontInd;
+    frontInd %= WindowSize;
 }
 
 QPointF Queue::sum()

@@ -24,7 +24,6 @@ public:
     R r;
     CScene scene;
     CGame game;
-    CCannoSelection *block;
 
     explicit MainView(QWidget *parent = 0);
     ~MainView();

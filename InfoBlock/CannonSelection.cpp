@@ -2,29 +2,41 @@
 
 CCannoSelection::CCannoSelection(CGame *game, QPoint selectedCell)
 {
+    //IGameObject fields
+    this->angle = 0;
     this->game = game;
+    this->zOrder = 5;
+    
+    this->size = QSize(LocalWidth / 2 - OffsetX - 2 * CannonSelectionOffsetX,
+                       LocalHeight - 2 * OffsetY - 2 *CannonSelectionOffsetY);    
     this->pixmap = &game->r->cannonSelectionBackground;
-    this->size = QSize(LocalWidth / 2 - OffsetX - 2 * myOffsetX,
-                       LocalHeight - 2 * OffsetY - 2 *myOffsetY);
-    this->leftTop = QPointF(OffsetX + myOffsetX,
-                            OffsetY + myOffsetY);
-
+    this->position = game->scene->addPixmap(size, pixmap);
+    
     if (selectedCell.x() > CellNumX / 2.0)
-    {
-        this->leftTop = QPointF(OffsetX + myOffsetX,
-                                OffsetY + myOffsetY);
-    }
+        this->leftTop = QPointF(OffsetX + CannonSelectionOffsetX,
+                                OffsetY + CannonSelectionOffsetY);
     else
-    {
-        this->leftTop = QPointF(myOffsetX + LocalWidth / 2,
-                                OffsetY + myOffsetY);
-    }
-    position = game->scene->drawAndPosition(leftTop.x(), leftTop.y(),
-                                            size.width(), size.height(),
-                                            pixmap, 0, 5);
+        this->leftTop = QPointF(CannonSelectionOffsetX + LocalWidth / 2,
+                                OffsetY + CannonSelectionOffsetY);
+    this->center = QPointF(leftTop.x() + size.width() / 2, leftTop.y() + size.height() + 2);
+    
 }
 
 CCannoSelection::~CCannoSelection()
 {
-    game->scene->removeItem(position);
+}
+
+CCannoSelection::updatePosition(QPoint selectedCell)
+{
+    if (selectedCell.x() > CellNumX / 2.0)
+    {
+        this->leftTop = QPointF(OffsetX + CannonSelectionOffsetX,
+                                OffsetY + CannonSelectionOffsetY);
+    }
+    else
+    {
+        this->leftTop = QPointF(CannonSelectionOffsetX + LocalWidth / 2,
+                                OffsetY + CannonSelectionOffsetY);
+    }
+    draw();
 }

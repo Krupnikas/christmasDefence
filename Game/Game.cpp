@@ -2,8 +2,9 @@
 #include <Cannon/FastCannon.h>
 #include <Bullet/FastBullet.h>
 #include <Game/Helper.h>
+#include <InfoBlock/CannonSelection.h>
 
-CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view)
+CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view), block(nullptr)
 {
     cannons.resize(CellNumX);
     distances.resize(CellNumX);
@@ -51,6 +52,13 @@ void CGame::scaleObjects()
                 cannons[i][j]->scaleItem();
                 cannons[i][j]->draw();
             }
+    
+    if (block)
+    {
+        block->scaleItem();
+        block->draw();
+    }
+    
     scene->updateDistances(distances);
 }
 
@@ -115,6 +123,7 @@ bool CGame::addCannon(int x, int y)
             = std::make_shared<CFastCannon>(this, x, y, 100, 30, 100);
     CFastCannon *can = reinterpret_cast<CFastCannon*>(cannons[x][y].get());
     connect(gameTimer, SIGNAL(timeout()), can, SLOT(onTimer()));
+    return true;
 }
 
 void CGame::onTimer()

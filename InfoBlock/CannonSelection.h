@@ -4,11 +4,14 @@
 
 class CCannoSelection : public IInfoBlock
 {
+    Q_OBJECT
+    
 public:
 
-    const int myOffsetX = 50;
-    const int myOffsetY = 50;
-
+    
     CCannoSelection(CGame *game, QPoint selectedCell);
     ~CCannoSelection();
+    
+    updatePosition(QPoint selectedCell);
+    
 };
