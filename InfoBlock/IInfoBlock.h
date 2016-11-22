@@ -13,7 +13,7 @@ public:
 
     IInfoBlock();
     virtual ~IInfoBlock();
-    
+
 public slots:
     virtual void onTimer();
 };

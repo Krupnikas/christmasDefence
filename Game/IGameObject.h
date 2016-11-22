@@ -14,7 +14,7 @@ public:
     
     void scaleItem();
     void draw();
-
+    void hide();
     QPointF getCenter() const;
     void setCenter(const QPointF &value);
     

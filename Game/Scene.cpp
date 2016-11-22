@@ -58,12 +58,13 @@ std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, i
     return item;
 }
 
-void CScene::drawAndPosition(int xLocal, int yLocal, const QString &text, qreal zval)
+std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, const QString &text, qreal zval)
 {
     std::shared_ptr<QGraphicsTextItem> item(graphicsScene->addText(text));
     textItems.push_back(item);
     item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
     item->setZValue(zval);
+    return item;
 }
 
 void CScene::updateGameRect(QRect newWindowRect)

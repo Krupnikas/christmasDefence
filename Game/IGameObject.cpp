@@ -16,6 +16,12 @@ void IGameObject::draw()
     game->scene->positionItem(leftTop, size, angle, zOrder, position);
 }
 
+void IGameObject::hide()
+{
+    if (position)
+    game->scene->removeItem(position);
+}
+
 QPointF IGameObject::getCenter() const
 {
     return center;

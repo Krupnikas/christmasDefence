@@ -56,9 +56,12 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
 
             return;
         }
-        game.addCannon(std::make_shared<CFastCannon>(&game, selectedCell.x(), selectedCell.y(), 100, 30, 100));
+        game.addCannon(std::make_shared<CFastCannon>(&game,
+                                                     selectedCell.x(), selectedCell.y(),
+                                                     100, 30, 100));
         return;
     }
+
     CCannoSelection *block;
     if (eventPress->button() == Qt::MidButton){
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
@@ -67,7 +70,11 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
             block = new CCannoSelection(&game, selectedCell);
             return;
         }
-        game.addCannon(std::make_shared<CFastCannon>(&game, selectedCell.x(), selectedCell.y(), 100, 30, 100));
+        game.addCannon(std::make_shared<CFastCannon>(&game,
+                                                     selectedCell.x(), selectedCell.y(),
+                                                     100, 30, 100));
+        qDebug() << "Cannon added";
+        block->hide();
         delete block;
         return;
     }
