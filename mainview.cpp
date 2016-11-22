@@ -50,20 +50,21 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
     if (eventPress->button() == Qt::RightButton){
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
         if (game.selectedCell != selectedCell){
-            if (game.selectedCell != QPoint(-1,-1))
-            {
-                block->hide();
-                delete block;
-            }
             game.selectCell(selectedCell);
-            block = new CCannoSelection(&game, selectedCell);
+            if (game.block)
+                game.block->updatePosition(selectedCell);
+            else
+            {
+                game.block = std::make_shared<CCannoSelection>(&game, selectedCell);
+                game.block->draw();
+            }
+            
             return;
         }
         game.addCannon(std::make_shared<CFastCannon>(&game,
                                                      selectedCell.x(), selectedCell.y(),
                                                      100, 30, 100));
-        block->hide();
-        delete block;
+        game.block->hide();
         game.deselectCell();
         return;
     }
@@ -72,19 +73,19 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
         if (game.selectedCell != selectedCell){
             game.selectCell(selectedCell);
-            block = new CCannoSelection(&game, selectedCell);
+            game.block = std::make_shared<CCannoSelection>(&game, selectedCell);
+            game.block->draw();
             return;
         }
         game.addCannon(std::make_shared<CFastCannon>(&game,
                                                      selectedCell.x(), selectedCell.y(),
                                                      100, 30, 100));
         qDebug() << "Cannon added";
-        block->hide();
+        game.block->hide();
         game.deselectCell();
-        delete block;
         return;
     }
-
+                  
     for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)
             if (game.cannons[i][j])

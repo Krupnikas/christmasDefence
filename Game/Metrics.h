@@ -6,6 +6,8 @@ const int LocalWidth = 1600;
 const int LocalHeight = 900;
 
 const int MenuButtonOffset = 1;
+const int CannonSelectionOffsetX = 50;
+const int CannonSelectionOffsetY = 50;
 
 const int OffsetY = 15;
 
@@ -27,3 +29,4 @@ const int EntranceX = ExitLeft ? CellNumX - 1 : 0;
 const int EntranceY = CellNumY / 2;
 
 const bool DrawText = true;
+
