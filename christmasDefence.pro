@@ -29,7 +29,13 @@ SOURCES += main.cpp\
     Bullet/FastBullet.cpp \
     Game/IGameObject.cpp \
     Enemy/FastEnemy.cpp \
-    Enemy/Movements.cpp
+    Enemy/Movements.cpp \
+    InfoBlock/IInfoBlock.cpp \
+    InfoBlock/UserInfo.cpp \
+    InfoBlock/WaveInfo.cpp \
+    InfoBlock/ControlButtons.cpp \
+    InfoBlock/PauseWindow.cpp \
+    InfoBlock/CannoSelection.cpp
 
 HEADERS  += mainview.h \
     Bullet/IBullet.h \
@@ -47,7 +53,13 @@ HEADERS  += mainview.h \
     Bullet/FastBullet.h \
     Game/IGameObject.h \
     Enemy/FastEnemy.h \
-    Enemy/Movements.h
+    Enemy/Movements.h \
+    InfoBlock/IInfoBlock.h \
+    InfoBlock/UserInfo.h \
+    InfoBlock/WaveInfo.h \
+    InfoBlock/ControlButtons.h \
+    InfoBlock/PauseWindow.h \
+    InfoBlock/CannoSelection.h
 
 FORMS    += mainview.ui
 
