@@ -62,7 +62,6 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
         return;
     }
 
-    CCannoSelection *block;
     if (eventPress->button() == Qt::MidButton){
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
         if (game.selectedCell != selectedCell){
@@ -75,6 +74,7 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
                                                      100, 30, 100));
         qDebug() << "Cannon added";
         block->hide();
+        game.deselectCell();
         delete block;
         return;
     }
