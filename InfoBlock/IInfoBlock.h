@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Game/IGameObject.h>
+#include <Game/Game.h>
 
 class CGame;
 

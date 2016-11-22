@@ -5,5 +5,6 @@
 class CCannoSelection : public IInfoBlock
 {
 public:
-    CCannoSelection();
+    CCannoSelection(CGame *game, QPoint selectedCell);
+    ~CFastCannon();
 };
