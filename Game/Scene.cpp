@@ -41,8 +41,9 @@ std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, i
 {
     int sizeX = toGlobalCX(xSizeLocal);
     int sizeY = toGlobalCY(ySizeLocal);
+    QPixmap scaledPixmap = *pixmap;
     if (pixmap->size() != QSize(sizeX, sizeY))
-        *pixmap = pixmap->scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        scaledPixmap = pixmap->scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     
     std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(*pixmap));
     backgroundItems.push_back(item);
