@@ -3,42 +3,65 @@
 #include <Game/Resource.h>
 
 //number of vector to be added
-const int WindowSize = 7;
+const int QueueSize = 10;
 
-//112 = number of steps with length = 1 through one Cell in width (the same about height)
-const qreal Step = CellSize / ((WindowSize + 1) / 2  * WindowSize * 4); // = CellSize / 112
+const int dP = 1;
+const int dZ = 0;
+const int dN = -1;
 
-const qreal dP = 0.1;
-const qreal dN = -0.1;
+//60 ++ 55 + 55 + 60, 55 - turnArea, 60 - nonturnArea
+const int LocalSize = 230;
+const QRect turnArea(59, 59, 59 + 110, 59 + 110);
 
+const int half = 59 + 55;
+const QPoint CellCenter(half, half);
+
+
+
+class CGame;
 
 struct Queue
 {
-    qreal dxArr[WindowSize];
-    qreal dyArr[WindowSize];
+    int dxArr[QueueSize];
+    int dyArr[QueueSize];
     int frontInd;
     int backInd;
+    QPoint curSum;
     
     Queue();
-    QPointF front();
-    void push(QPointF val);
-    
-    QPointF sum();
+    QPoint front();
+    void push(QPoint val);
 };
 
 class Movements
 {
 public:
-    Movements();
+    Movements(){}
+    Movements(CGame *game);
+    QPointF move();
+    QPointF curCenter();
+    qreal curAngle();
     
 private:
+    bool isCenterDirected();
+    QPoint vectorToCenter();
+    QPoint vectorToNext();
     
-    QSize curCell;
-    QSize nextCell;
-    QSize curPos; //from (0, 0) to (112, 112)
+    void updateCur();
+    void updateNext();
+    
+private:
+    CGame *game;
+    
+    QPoint curCell;
+    QPoint nextCell;
+    QPoint curPos; //(0, 0) .. (220, 220)
     Queue queue;
     
     
+    QPoint center;
     
+    const int ExitWidth = OffsetX * 2;
+    const int LocalExitSize = LocalSize * ExitWidth / CellSize / 10 * 10;
     
 };

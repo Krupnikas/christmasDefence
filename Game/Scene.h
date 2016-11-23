@@ -16,6 +16,8 @@ public:
     
     void positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal, 
                       qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item);
+    void positionItemByCenter(const QPointF &centerLocal, const QSizeF &sizeLocal, 
+                      qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item);
     void removeItem(std::shared_ptr<QGraphicsItem> item);
     
     std::shared_ptr<QGraphicsItem> drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal,
@@ -45,7 +47,6 @@ public:
     QPointF toLocalPoint(QPointF globalPoint);
     
     bool insideGameRect(QPointF point);
-    
 
 private:
     

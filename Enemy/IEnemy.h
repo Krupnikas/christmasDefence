@@ -1,28 +1,18 @@
 #pragma once
 
 #include <Game/IGameObject.h>
+#include <Enemy/Movements.h>
 
 class IEnemy : public IGameObject
 {
-protected:
-    
-    
+    Q_OBJECT
 public:
 
     IEnemy();
     ~IEnemy();
     
-virtual bool move();
-    
-public slots:
-    virtual void onTimer();
+    virtual bool move();
     
 protected:
-    
-    qreal angleDesired;
-    int cellXCur;
-    int cellYCur;
-    int cellXNext;
-    int cellYNext;
-    QLineF trajectory;
+    std::shared_ptr<Movements> movements;
 };

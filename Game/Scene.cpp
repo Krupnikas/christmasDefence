@@ -31,6 +31,20 @@ void CScene::positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal,
     item->show();
 }
 
+void CScene::positionItemByCenter(const QPointF &centerLocal, const QSizeF &sizeLocal,
+                                  qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item)
+{
+    int sizeXGlobal = toGlobalCX(sizeLocal.width());
+    int sizeYGlobal = toGlobalCY(sizeLocal.height());
+    item->setTransformOriginPoint(sizeXGlobal / 2, sizeYGlobal / 2);
+    item->setRotation(angle);
+    int left = toGlobalX(centerLocal.x()) - item->boundingRect().width() / 2;
+    int top = toGlobalY(centerLocal.y()) - item->boundingRect().height() / 2;
+    item->setPos(left, top);
+    item->setZValue(zval);
+    item->show();
+}
+
 void CScene::removeItem(std::shared_ptr<QGraphicsItem> item)
 {
     graphicsScene->removeItem(item.get());
@@ -45,7 +59,7 @@ std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, i
     if (pixmap->size() != QSize(sizeX, sizeY))
         scaledPixmap = pixmap->scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     
-    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(*pixmap));
+    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
     backgroundItems.push_back(item);
     
     if (angle != 0)

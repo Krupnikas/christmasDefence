@@ -16,15 +16,15 @@ const int Inf = std::numeric_limits<int>::max();
 namespace helper
 {
 
-double calcAngle(QPoint p1, QPoint p2)
+qreal calcAngle(QPointF p1, QPointF p2)
 {
-    QPoint p(p1.x(), p1.y() - 10);
+    QPointF p(p1.x(), p1.y() - 10);
     QLineF line1(p1, p);
     QLineF line2(p1, p2);
     return 360 - line1.angleTo(line2);
 }
 
-double calcAngle(int x1, int y1, int x2, int y2)
+qreal calcAngle(qreal x1, qreal y1, qreal x2, qreal y2)
 {
     QLineF line1(x1, y1, x1, y1 - 10);
     QLineF line2(x1, y1, x2, y2);
@@ -80,11 +80,29 @@ bool calcDistances(
     return /*connected && */(distances[EntranceX][EntranceY] > -1);
 }
 
+QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, QPoint curPoint)
+{
+    int curVal = distances[curPoint.x()][curPoint.y()];
+    for (int i = 0; i < dNum; ++i)
+    {
+        int xNext = curPoint.x() + dx[i];
+        int yNext = curPoint.y() + dy[i];
+        if (xNext < 0 || yNext < 0 || 
+                xNext >= CellNumX || yNext >= CellNumY)
+            continue;
+        if (distances[xNext][yNext] + 1 == curVal)
+            return QPoint(xNext, yNext);
+    }
+    return QPoint(-1, -1);
+}
+
 QPointF addVector(QPointF point, qreal len, qreal angle)
 {
     qreal x = point.x() + qSin(qDegreesToRadians(angle)) * len;
     qreal y = point.y() - qCos(qDegreesToRadians(angle)) * len;
     return QPointF(x, y);
 }
+
+
 
 }

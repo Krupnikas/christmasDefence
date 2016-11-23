@@ -18,6 +18,10 @@ R::R()
     fast_bullet_1 = QPixmap(get("fast_bullet_1.png"));
     fast_bullet_2 = QPixmap(get("fast_bullet_2.png"));
     fast_bullet_3 = QPixmap(get("fast_bullet_3.png"));
+    
+    fast_enemy_1 = QPixmap(get("fast_enemy_1.png"));
+    fast_enemy_2 = QPixmap(get("fast_enemy_2.png"));
+    fast_enemy_3 = QPixmap(get("fast_enemy_3.png"));
 }
 
 QString R::get(const char *val)

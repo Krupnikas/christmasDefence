@@ -7,7 +7,7 @@ class CGame;
 class ICannon : public IGameObject
 {     
     Q_OBJECT
-    
+        
 public:
     
     ICannon();

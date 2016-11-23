@@ -1,6 +1,7 @@
 #include <Game/Game.h>
-#include <Cannon/FastCannon.h>
 #include <Bullet/FastBullet.h>
+#include <Enemy/FastEnemy.h>
+#include <Cannon/FastCannon.h>
 #include <Game/Helper.h>
 #include <InfoBlock/CannonSelection.h>
 
@@ -13,8 +14,10 @@ CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view
         cannons[i].resize(CellNumY);
         distances[i].resize(CellNumY);
     }
+    helper::calcDistances(cannons, distances);
+    enemies.push_back(std::make_shared<CFastEnemy>(this));
     gameTimer = new QTimer(this);
-    gameTimer->start(16);
+    gameTimer->start(50);
 }
 
 CGame::~CGame()
@@ -44,7 +47,11 @@ void CGame::scaleObjects()
         bullets[i]->scaleItem();
         bullets[i]->draw();
     }
-    
+    for (size_t i = 0; i < enemies.size(); ++i)
+    {
+        enemies[i]->scaleItem();
+        enemies[i]->draw();
+    }
     for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
@@ -148,6 +155,18 @@ void CGame::onTimer()
         }
     if (lastBulletInd < bullets.size())
         bullets.resize(lastBulletInd);
+    
+    size_t lastEnemyInd = 0;
+    for (size_t i = 0; i < enemies.size(); ++i)
+        if (enemies[i]->move())
+        {
+            if (lastBulletInd < i)
+                enemies[lastEnemyInd++] = enemies[i];
+            else
+                lastEnemyInd++;
+        }
+    if (lastEnemyInd < enemies.size())
+        enemies.resize(lastEnemyInd);
     
     for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)

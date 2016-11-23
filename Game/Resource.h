@@ -51,9 +51,12 @@ struct R
     QPixmap fast_bullet_2;
     QPixmap fast_bullet_3;
     
+    QPixmap fast_enemy_1;
+    QPixmap fast_enemy_2;
+    QPixmap fast_enemy_3;
+    
     QString get(const char *val);
     
     R();
     
 };
-
