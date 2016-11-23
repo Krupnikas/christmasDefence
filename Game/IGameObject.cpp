@@ -2,6 +2,17 @@
 #include <Game/Game.h>
 
 IGameObject::IGameObject(){}
+
+IGameObject::IGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF size, QPixmap *pixmap, CGame *game):
+    angle(angle),
+    zOrder(zOrder),
+    center(center),
+    leftTop(leftTop),
+    size(size),
+    pixmap(pixmap),
+    game(game)
+{}
+
 IGameObject::~IGameObject(){}
 
 void IGameObject::scaleItem()

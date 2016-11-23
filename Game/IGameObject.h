@@ -10,6 +10,8 @@ class IGameObject : public QObject
     
 public:
     IGameObject();
+    IGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF size, QPixmap *pixmap, CGame *game);
+    std::shared_ptr<QGraphicsItem> position;
     virtual ~IGameObject();
     
     void scaleItem();
@@ -29,7 +31,7 @@ public:
 protected:
     
     qreal angle;
-    int zOrder;
+    qreal zOrder;
     
     QPointF center;
     QPointF leftTop;
