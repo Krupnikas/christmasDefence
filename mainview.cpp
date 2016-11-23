@@ -52,7 +52,10 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
         if (game.selectedCell != selectedCell){
             game.selectCell(selectedCell);
             if (game.block)
+            {
                 game.block->updatePosition(selectedCell);
+                game.block->draw();
+            }
             else
             {
                 game.block = std::make_shared<CCannonSelection>(&game, selectedCell);
