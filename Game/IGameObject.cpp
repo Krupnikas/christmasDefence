@@ -3,7 +3,7 @@
 
 IGameObject::IGameObject(){}
 
-IGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF size, QPixmap *pixmap, CGame *game):
+IGameObject::IGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF size, QPixmap *pixmap, CGame *game):
     angle(angle),
     zOrder(zOrder),
     center(center),
