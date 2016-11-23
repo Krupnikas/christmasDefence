@@ -1,5 +1,6 @@
 #pragma once
 
+//#define SHOW_DISTANCES
 #include <Game/Scene.h>
 
 class ICannon;

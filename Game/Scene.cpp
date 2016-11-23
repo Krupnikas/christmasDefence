@@ -139,6 +139,7 @@ void CScene::updateGameBackground()
 
 void CScene::updateDistances(std::vector<std::vector<int>> &distances)
 {
+#ifdef SHOW_DISTANCES
     textItems.clear();
     if (DrawText)
         for (int i = 0; i < CellNumX; ++i)
@@ -149,6 +150,7 @@ void CScene::updateDistances(std::vector<std::vector<int>> &distances)
                 QString text = QString::number(distances[i][j]);
                 drawAndPosition(x, y, text, 0.5);
             }
+#endif
 }
 
 //private:
