@@ -72,7 +72,7 @@ void CScene::updateGameRect(QRect newWindowRect)
     //Устанавливаем новую ширину
     //Иначе экран выше, чем 16х9
     //Устанавливаем новую высоту
-    backgroundItems.clear(); /////////////////////////////////////////PROBLEM! NOT DELETING BUT LOOSE POINTERS!
+    backgroundItems.clear();
     gameRect = windowRect = newWindowRect;
     
     QPoint enclosingTopLeft(gameRect.topLeft() - QPoint(CellSize, CellSize));
@@ -119,7 +119,9 @@ void CScene::updateGameBackground()
             int x = OffsetX + i * CellSize;
             int y = OffsetY + j * CellSize;
             if ((i+j)%2 == 0)
+            {
                 drawAndPosition(x, y, CellSize, CellSize, &(r->cell1));
+            }
             else
                 drawAndPosition(x, y, CellSize, CellSize, &(r->cell2));
         }
