@@ -2,46 +2,31 @@
 #include <Game/Game.h>
 #include <Game/Helper.h>
 
-
-CFastEnemy::CFastEnemy(CGame *game, QPointF center, double angle)
+CFastEnemy::CFastEnemy(CGame *game)
 {
+    //IEnemy fields
+    this->movements = std::make_shared<Movements>(game);
+    
     //IGameObject fields
-    this->angle = angle;
+    this->angle = movements->curAngle();
+    this->center = movements->curCenter();
+    this->leftTop.setX(center.x() - size.width() / 2);
+    this->leftTop.setY(center.y() - size.height() / 2);
+    
     this->game = game;
     this->zOrder = 2;
     
     this->size = QSize(CellSize, CellSize);
-    this->pixmap = &game->r->fast_bullet_2;
+    this->pixmap = &game->r->fast_enemy_2;
     this->position = game->scene->addPixmap(size, pixmap);
     
-    this->center = center;
-    this->leftTop.setX(center.x() - game->scene->toLocalCX(position->boundingRect().width()) / 2);
-    this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
-    
+
 }
 
 bool CFastEnemy::move()
 {
-    if (abs(angleDesired - angle) < Delta)
-    {
-        
-    }
-    else
-    {
-        
-    }
-/*    center = helper::addVector(center, game->scene->toGlobalCX(step), angle);
-    leftTop = helper::addVector(leftTop, game->scene->toGlobalCX(step), angle);*/
+    center = movements->move();
+    angle = movements->curAngle();
+    game->scene->positionItemByCenter(center, size, angle, zOrder, position);
     return game->scene->insideGameRect(center);
-/*    {
-        game->scene->removeItem(position);
-    }*/
-   /* if (!game->scene->insideGameRect(center))
-        game->bullets.erase(iterator);*/
-}
-
-void CFastEnemy::onTimer()
-{
-    move();
-    draw();
 }

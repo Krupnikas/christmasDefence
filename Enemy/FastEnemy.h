@@ -8,13 +8,11 @@ const qreal Delta = 10;
 
 class CFastEnemy : public IEnemy
 {
+    Q_OBJECT
+    
 public:
     
-    CFastEnemy(CGame *game, QPointF center, double angle);
+    CFastEnemy(CGame *game);
     
-    virtual bool move();
-    
-public slots:
-    virtual void onTimer();
-    
+    virtual bool move();    
 };
