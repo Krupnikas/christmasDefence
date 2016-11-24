@@ -11,7 +11,7 @@ const int dN = -1;
 
 //60 ++ 55 + 55 + 60, 55 - turnArea, 60 - nonturnArea
 const int LocalSize = 230;
-const QRect turnArea(59, 59, 59 + 110, 59 + 110);
+const QRect turnArea(59, 59, 110, 110);
 
 const int half = 59 + 55;
 const QPoint CellCenter(half, half);
@@ -33,6 +33,16 @@ struct Queue
     void push(QPoint val);
 };
 
+struct Cell
+{
+    QSize cellGameSize;
+    QRect localRect;
+    bool edge;
+    Cell();
+    Cell(QSize cellGameSize, QRect localRect, bool edge);
+    Cell(const Cell &cell);
+};
+
 class Movements
 {
 public:
@@ -48,20 +58,29 @@ private:
     QPoint vectorToNext();
     
     void updateCur();
-    void updateNext();
     
 private:
     CGame *game;
-    
-    QPoint curCell;
-    QPoint nextCell;
+
+    QPoint curGameCell;
+    QPoint nextGameCell;
+
+    Cell curLocalCell;
+    Cell nextLocalCell;
     QPoint curPos; //(0, 0) .. (220, 220)
+    
     Queue queue;
-    
-    
-    QPoint center;
     
     const int ExitWidth = OffsetX * 2;
     const int LocalExitSize = LocalSize * ExitWidth / CellSize / 10 * 10;
+    
+    const QRect NormalRect = QRect(0, 0, LocalSize, LocalSize);
+    const QSize NormalSize = QSize(CellSize, CellSize);
+    
+    const QRect EdgeRect = QRect(0, 0, LocalExitSize, LocalExitSize);
+    const QSize EdgeSize = QSize(ExitWidth, CellSize);
+    
+    const Cell NormalLocalCell = Cell(NormalSize, NormalRect, false);
+    const Cell EdgeLocalCell = Cell(EdgeSize, EdgeRect, true);
     
 };

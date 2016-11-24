@@ -80,13 +80,37 @@ bool calcDistances(
     return /*connected && */(distances[EntranceX][EntranceY] > -1);
 }
 
-QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, QPoint curPoint)
+QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoint& curPoint)
 {
+    QPoint ans(curPoint);
+    if (ExitLeft)
+    {
+        if (ans.y() == CellNumY / 2 && (ans.x() <= 0 || ans.x() >= CellNumX))
+        {
+            ans.setX(ans.x() - 1);
+            return ans;
+        }
+    }
+    else
+    {
+        if (ans.y() == CellNumY / 2 && (ans.x() < 0 || ans.x() >= CellNumX - 1))
+        {
+            ans.setX(ans.x() + 1);        
+            return ans;
+        }
+    }
+
+    //random permutation of indecies for moving to random cell first
+    std::vector<int> randomInd(dNum);
+    for (int i = 0; i < dNum; ++i)
+        randomInd[i] = i;
+    std::random_shuffle(randomInd.begin(), randomInd.end());
+    
     int curVal = distances[curPoint.x()][curPoint.y()];
     for (int i = 0; i < dNum; ++i)
     {
-        int xNext = curPoint.x() + dx[i];
-        int yNext = curPoint.y() + dy[i];
+        int xNext = curPoint.x() + dx[randomInd[i]];
+        int yNext = curPoint.y() + dy[randomInd[i]];
         if (xNext < 0 || yNext < 0 || 
                 xNext >= CellNumX || yNext >= CellNumY)
             continue;

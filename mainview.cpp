@@ -1,6 +1,7 @@
 #include "mainview.h"
 #include "ui_mainview.h"
 #include <Game/Helper.h>
+#include <Enemy/FastEnemy.h>
 
 MainView::MainView(QWidget *parent) :
     QWidget(parent),
@@ -73,7 +74,8 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
     }
 
     if (eventPress->button() == Qt::MidButton){
-        QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
+        game.enemies.push_back(std::make_shared<CFastEnemy>(&game));
+/*        QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
         if (game.selectedCell != selectedCell){
             game.selectCell(selectedCell);
             game.block = std::make_shared<CCannonSelection>(&game, selectedCell);
@@ -85,7 +87,7 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
                                                      100, 30, 100));
         qDebug() << "Cannon added";
         game.block->hide();
-        game.deselectCell();
+        game.deselectCell();*/
         return;
     }
                   

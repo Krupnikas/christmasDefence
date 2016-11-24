@@ -15,7 +15,7 @@ CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view
         distances[i].resize(CellNumY);
     }
     helper::calcDistances(cannons, distances);
-    enemies.push_back(std::make_shared<CFastEnemy>(this));
+    
     gameTimer = new QTimer(this);
     gameTimer->start(50);
 }
@@ -160,7 +160,7 @@ void CGame::onTimer()
     for (size_t i = 0; i < enemies.size(); ++i)
         if (enemies[i]->move())
         {
-            if (lastBulletInd < i)
+            if (lastEnemyInd < i)
                 enemies[lastEnemyInd++] = enemies[i];
             else
                 lastEnemyInd++;

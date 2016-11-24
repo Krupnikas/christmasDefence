@@ -38,8 +38,10 @@ void CScene::positionItemByCenter(const QPointF &centerLocal, const QSizeF &size
     int sizeYGlobal = toGlobalCY(sizeLocal.height());
     item->setTransformOriginPoint(sizeXGlobal / 2, sizeYGlobal / 2);
     item->setRotation(angle);
-    int left = toGlobalX(centerLocal.x()) - item->boundingRect().width() / 2;
-    int top = toGlobalY(centerLocal.y()) - item->boundingRect().height() / 2;
+    
+    QRectF boundRect = item->boundingRect();
+    qreal left = toGlobalX(centerLocal.x()) - boundRect.width() / 2;
+    qreal top = toGlobalY(centerLocal.y()) - boundRect.height() / 2;
     item->setPos(left, top);
     item->setZValue(zval);
     item->show();
@@ -171,26 +173,26 @@ void CScene::updateDistances(std::vector<std::vector<int>> &distances)
 }
 
 //private:
-int CScene::toGlobalX(qreal xLocal)
+qreal CScene::toGlobalX(qreal xLocal)
 {
     return gameRect.left()
-            + static_cast<int>(1.0 * gameRect.width() * xLocal / LocalWidth);
+            + 1.0 * gameRect.width() * xLocal / LocalWidth;
 }
 
-int CScene::toGlobalY(qreal yLocal)
+qreal CScene::toGlobalY(qreal yLocal)
 {
     return gameRect.top()
-            + static_cast<int>(1.0 * gameRect.height() * yLocal / LocalHeight);
+            + 1.0 * gameRect.height() * yLocal / LocalHeight;
 }
 
-int CScene::toGlobalCX(qreal cxLocal)
+qreal CScene::toGlobalCX(qreal cxLocal)
 {
-    return std::ceil(1.0 * gameRect.width() * cxLocal / LocalWidth);
+    return 1.0 * gameRect.width() * cxLocal / LocalWidth;
 }
 
-int CScene::toGlobalCY(qreal cyLocal)
+qreal CScene::toGlobalCY(qreal cyLocal)
 {
-    return std::ceil(1.0 * gameRect.height() * cyLocal / LocalHeight);
+    return 1.0 * gameRect.height() * cyLocal / LocalHeight;
 }
 
 qreal CScene::toLocalX(qreal xGlobal)

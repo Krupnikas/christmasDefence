@@ -34,10 +34,10 @@ public:
     int getHeight() { return gameRect.height(); }
     QGraphicsScene *getGraphicsScene() { return graphicsScene; }
     
-    int toGlobalX(qreal x_local);
-    int toGlobalY(qreal y_local);
-    int toGlobalCX(qreal cx_local);
-    int toGlobalCY(qreal cy_local);
+    qreal toGlobalX(qreal x_local);
+    qreal toGlobalY(qreal y_local);
+    qreal toGlobalCX(qreal cx_local);
+    qreal toGlobalCY(qreal cy_local);
 
     qreal toLocalX(qreal xGlobal);
     qreal toLocalY(qreal yGlobal);    

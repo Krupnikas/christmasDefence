@@ -34,18 +34,43 @@ void Queue::push(QPoint val)
 }
 
 ///////////////////////////////////////////////
-Movements::Movements(CGame *game) : game(game)
+Cell::Cell():
+    cellGameSize(0, 0),
+    localRect(0, 0, 0, 0),
+    edge(false)
 {
+}
+
+Cell::Cell(QSize cellGameSize, QRect localRect, bool edge):
+    cellGameSize(cellGameSize),
+    localRect(localRect),
+    edge(edge)
+{
+}
+
+Cell::Cell(const Cell &cell):
+    cellGameSize(cell.cellGameSize),
+    localRect(cell.localRect),
+    edge(cell.edge)
+{
+}
+
+///////////////////////////////////////////////
+Movements::Movements(CGame *game):
+    game(game)
+{
+    curLocalCell = EdgeLocalCell;
+    nextLocalCell = NormalLocalCell;
     if (ExitLeft)
     {
-        curCell = QPoint(EntranceX + 1, EntranceY);
-        nextCell = QPoint(EntranceX, EntranceY);
+        curGameCell = QPoint(EntranceX + 1, EntranceY);
+        nextGameCell = QPoint(EntranceX, EntranceY);
         curPos = QPoint(LocalExitSize - 1, half);
     }
     else
     {
-        curCell = QPoint(-1, EntranceY);
-        nextCell = QPoint(0, EntranceY);
+        curGameCell = QPoint(-1, EntranceY);
+        nextGameCell = QPoint(0, EntranceY);
         curPos = QPoint(0, half);
     }
 }
@@ -56,28 +81,28 @@ QPointF Movements::move()
     bool insideTurnArea = turnArea.contains(curPos);
     QPoint toCenter = vectorToCenter();
     QPoint toNext = vectorToNext();
+    
     if (!insideTurnArea && centerDirected)
         queue.push(toCenter);
     else
         queue.push(toNext);
+    
     curPos += queue.curSum;
-    
     updateCur();
-    
     return curCenter();
 }
 
 QPointF Movements::curCenter()
 {
     QPointF curPoint;
-    if (curCell == QPoint(-1, EntranceY))
-        curPoint.setX(static_cast<qreal>(curPos.x()) / LocalExitSize);
-    else if (curCell == QPoint(CellNumX, EntranceY))
-        curPoint.setX(OffsetX + curCell.x() * CellSize + static_cast<qreal>(curPos.x()) / LocalExitSize);
+    if (curGameCell.x() < 0)
+        curPoint.setX((curGameCell.x() + 0.5) * ExitWidth + static_cast<qreal>(curPos.x()) * ExitWidth / LocalExitSize);
+    else if (curGameCell.x() >= CellNumX)
+        curPoint.setX(OffsetX + curGameCell.x() * CellSize + static_cast<qreal>(curPos.x()) * ExitWidth / LocalExitSize );
     else
-        curPoint.setX(OffsetX + curCell.x() * CellSize + static_cast<qreal>(curPos.x()) / LocalSize);
+        curPoint.setX(OffsetX + curGameCell.x() * CellSize + static_cast<qreal>(curPos.x()) * CellSize / LocalSize);
     
-    curPoint.setY(OffsetY + curCell.y() * CellSize + static_cast<qreal>(curPos.y()) / LocalSize);
+    curPoint.setY(OffsetY + curGameCell.y() * CellSize + static_cast<qreal>(curPos.y()) * CellSize / LocalSize);
     return curPoint;
 }
 
@@ -102,8 +127,6 @@ bool Movements::isCenterDirected()
 
 QPoint Movements::vectorToCenter()
 {
-    if (curPos.x() != half && curPos.y() != half)
-        qDebug() << "Movements: out of trajectory";
     qreal dx = dZ;
     qreal dy = dZ;
     if (curPos.x() == half)
@@ -121,92 +144,54 @@ QPoint Movements::vectorToCenter()
 
 QPoint Movements::vectorToNext()
 {
-    if (abs(curCell.x() - nextCell.x()) + abs(curCell.y() - nextCell.y()) > 1)
+    if (abs(curGameCell.x() - nextGameCell.x()) + abs(curGameCell.y() - nextGameCell.y()) > 1)
         qDebug() << "Movements: wrong next cell";
-    return QPoint(nextCell.x() - curCell.x(), nextCell.y() - curCell.y());
+    return QPoint(nextGameCell.x() - curGameCell.x(), nextGameCell.y() - curGameCell.y());
 }
 
 void Movements::updateCur()
 {
-    //on start
-    if ((curCell == QPoint(-1, EntranceY)) && curPos.x() >= LocalExitSize)
-    {
-        curCell.setX(0);
-        curPos.setX(curPos.x() - LocalExitSize);
-        updateNext();
-        return;
-    }
-    if ((curCell == QPoint(0, EntranceY)) && curPos.x() < 0 && ExitLeft)
-    {
-        curCell.setX(-1);
-        curPos.setX(curPos.x() + LocalExitSize);
-        updateNext();
-        return;
-    }
-        
+    bool update = false;
     if (curPos.x() < 0)
     {
-        curCell.setX(curCell.x() - 1);
-        curPos.setX(curPos.x() + LocalSize);
-        updateNext();
+        curGameCell.setX(curGameCell.x() - 1);
+        curPos.setX(curPos.x() + nextLocalCell.localRect.width());
+        update = true;
     }
-    else if (curPos.x() >= LocalSize && curCell.x() < CellNumX && curCell.x() >= 0)
+    else if (curPos.x() >= curLocalCell.localRect.width())
     {
-        curCell.setX(curCell.x() + 1);
-        curPos.setX(curPos.x() - LocalSize);
-        updateNext();
+        curGameCell.setX(curGameCell.x() + 1);
+        curPos.setX(curPos.x() - curLocalCell.localRect.width());
+        update = true;
     }
     
     if (curPos.y() < 0)
     {
-        curCell.setY(curCell.y() - 1);
+        curGameCell.setY(curGameCell.y() - 1);
         curPos.setY(curPos.y() + LocalSize);
-        updateNext();
+        update = true;
     }
     else if (curPos.y() >= LocalSize)
     {
-        curCell.setY(curCell.y() + 1);
+        curGameCell.setY(curGameCell.y() + 1);
         curPos.setY(curPos.y() - LocalSize);
-        updateNext();
+        update = true;
+    }
+    
+    if (update)
+    {
+        if (curGameCell.x() < 0 || curGameCell.x() >= CellNumX)
+            curLocalCell = EdgeLocalCell;
+        else
+            curLocalCell = NormalLocalCell;
+        
+        nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
+        
+        if (nextGameCell.x() < 0 || curGameCell.x() >= CellNumX)
+            nextLocalCell = EdgeLocalCell;
+        else
+            nextLocalCell = NormalLocalCell;
     }
 }
 
-void Movements::updateNext()
-{
-    //on start
-    if ((curCell == QPoint(-1, EntranceY)) && !ExitLeft)
-    {
-        nextCell.setX(0);
-        return;
-    }
-    else if ((curCell == QPoint(CellNumX, EntranceY)) && ExitLeft)
-    {
-        nextCell.setX(CellNumX - 1);
-        return;
-    }
-        
-    //before exit
-    if ((curCell == QPoint(0, ExitY)) && ExitLeft)
-    {
-        nextCell.setX(-1);
-        return;
-    }
-    else if ((curCell == QPoint(CellNumX - 1, ExitY)) && !ExitLeft)
-    {
-        nextCell.setX(CellNumX);
-        return;
-    }
-    
-    if (curCell.x() < 0  && ExitLeft)
-    {
-        nextCell.setX(curCell.x() - 1);
-        return;
-    }
-    else if ((curCell == QPoint(CellNumX, ExitY)) && !ExitLeft)
-    {
-        nextCell.setX(CellNumX + 1);
-        return;
-    }
-    
-    nextCell = helper::findLowerNeighbour(game->distances, curCell);
-}
+
