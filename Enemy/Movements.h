@@ -52,6 +52,8 @@ public:
     QPointF curCenter();
     qreal curAngle();
     
+    void updateNext();
+    
 private:
     bool isCenterDirected();
     QPoint vectorToCenter();

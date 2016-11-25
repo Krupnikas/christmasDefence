@@ -15,4 +15,5 @@ public:
     CFastEnemy(CGame *game);
     
     virtual bool move();    
+    virtual void updateDistances();
 };

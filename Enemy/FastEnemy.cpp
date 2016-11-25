@@ -30,3 +30,8 @@ bool CFastEnemy::move()
     game->scene->positionItemByCenter(center, size, angle, zOrder, position);
     return game->scene->insideGameRect(center);
 }
+
+void CFastEnemy::updateDistances()
+{
+    movements->updateNext();
+}

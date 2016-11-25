@@ -39,7 +39,7 @@ public:
     
     bool addCannon(std::shared_ptr<ICannon> cannon);
     
-    void updatePath();
+    void updateDistances();
     void scaleObjects();
 
     void selectCell(QPoint pos);

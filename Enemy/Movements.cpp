@@ -111,6 +111,16 @@ qreal Movements::curAngle()
     return helper::calcAngle(QPointF(0, 0), queue.curSum);
 }
 
+void Movements::updateNext()
+{
+    nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
+    
+    if (nextGameCell.x() < 0 || curGameCell.x() >= CellNumX)
+        nextLocalCell = EdgeLocalCell;
+    else
+        nextLocalCell = NormalLocalCell;
+}
+
 bool Movements::isCenterDirected()
 {
     if (curPos.x() != half && curPos.y() != half)
@@ -145,7 +155,12 @@ QPoint Movements::vectorToCenter()
 QPoint Movements::vectorToNext()
 {
     if (abs(curGameCell.x() - nextGameCell.x()) + abs(curGameCell.y() - nextGameCell.y()) > 1)
+    {
         qDebug() << "Movements: wrong next cell";
+        updateNext();
+    }
+    if (abs(curGameCell.x() - nextGameCell.x()) + abs(curGameCell.y() - nextGameCell.y()) > 1)
+        qDebug() << "Movements: still wrong next cell(((((";
     return QPoint(nextGameCell.x() - curGameCell.x(), nextGameCell.y() - curGameCell.y());
 }
 
@@ -185,13 +200,6 @@ void Movements::updateCur()
         else
             curLocalCell = NormalLocalCell;
         
-        nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
-        
-        if (nextGameCell.x() < 0 || curGameCell.x() >= CellNumX)
-            nextLocalCell = EdgeLocalCell;
-        else
-            nextLocalCell = NormalLocalCell;
+        updateNext();
     }
 }
-
-

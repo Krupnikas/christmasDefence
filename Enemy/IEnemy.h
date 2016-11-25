@@ -12,6 +12,7 @@ public:
     ~IEnemy();
     
     virtual bool move();
+    virtual void updateDistances();
     
 protected:
     std::shared_ptr<Movements> movements;

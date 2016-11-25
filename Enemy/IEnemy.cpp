@@ -6,3 +6,5 @@ IEnemy::IEnemy(){}
 IEnemy::~IEnemy(){}
 
 bool IEnemy::move(){}
+
+void IEnemy::updateDistances(){}

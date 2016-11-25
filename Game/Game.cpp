@@ -29,6 +29,12 @@ bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
 {
     int x = cannon->getX();
     int y = cannon->getY();
+    
+    if (x < 0 || x > CellNumX ||
+        y < 0 || y > CellNumY/* ||
+        !enemies.empty()*/)
+        return false;
+    
     cannons[x][y] = cannon;
     if (!helper::calcDistances(cannons, distances))
     {
@@ -36,8 +42,16 @@ bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
         return false;
     }
     
+    updateDistances();
+    for (size_t i = 0; i < enemies.size(); ++i)
+        enemies[i]->updateDistances();
     scene->updateDistances(distances);
     return true;
+}
+
+void CGame::updateDistances()
+{
+    helper::calcDistances(cannons, distances);
 }
 
 void CGame::scaleObjects()
@@ -129,15 +143,15 @@ bool CGame::addCannon(QPoint cell)
     return addCannon(cell.x(), cell.y());
 }
 
+
 bool CGame::addCannon(int x, int y)
 {
     if (x < 0 || x > CellNumX ||
-        y < 0 || y > CellNumY)
+        y < 0 || y > CellNumY ||
+        !enemies.empty())
             return false;
-    cannons[x][y]
-            = std::make_shared<CFastCannon>(this, x, y, 100, 30, 100);
-    CFastCannon *can = reinterpret_cast<CFastCannon*>(cannons[x][y].get());
-    connect(gameTimer, SIGNAL(timeout()), can, SLOT(onTimer()));
+    
+    cannons[x][y] = std::make_shared<CFastCannon>(this, x, y, 100, 30, 100);
     return true;
 }
 
