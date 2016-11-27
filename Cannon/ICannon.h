@@ -3,6 +3,7 @@
 #include <Game/IGameObject.h>
 
 class CGame;
+class IEnemy;
 
 class ICannon : public IGameObject
 {     
@@ -15,12 +16,14 @@ public:
 
     virtual void fire(qreal angle);
     
-    //getters and setters
-    int getX() const;
-    void setX(int value);
+    void showRadius();
+    void hideRadius();
+    void rotate();
+    void count();
     
-    int getY() const;
-    void setY(int value);
+    //getters and setters
+    QPoint getGameCell() const;
+    void setGameCell(const QPoint &value);
     
     double getHp() const;
     void setHp(double value);
@@ -28,12 +31,20 @@ public:
     double getGlobalRadius() const;
     void setGlobalRadius(double value);
     
-public slots:
-    virtual void onTimer();
+
     
 protected:
-    int cellX;
-    int cellY;
-    double hp;
-    double globalRadius;  
+    QPoint gameCell;
+    qreal hp;
+    qreal rotationSpeed;
+    int fireSpeed;
+    qreal globalRadius;
+    std::shared_ptr<QGraphicsItem> radiusItem;
+    
+    std::shared_ptr<IEnemy> curEnemy;
+    
+private:
+    int counter = 0;
+    
+    const int Epsilon = 0.5;
 };

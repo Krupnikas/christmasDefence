@@ -1,6 +1,7 @@
 #include <Bullet/FastBullet.h>
 #include <Game/Game.h>
 #include <Game/Helper.h>
+#include <Enemy/IEnemy.h>
 
 
 CFastBullet::CFastBullet(CGame *game, QPointF center, double angle)
@@ -32,6 +33,25 @@ bool CFastBullet::move()
     }*/
    /* if (!game->scene->insideGameRect(center))
         game->bullets.erase(iterator);*/
+}
+
+bool CFastBullet::reachedEnemy()
+{
+    for (auto enemy: game->enemies)
+    {
+        qreal enemyZ = enemy->getZOrder();
+        enemy->setZOrder(zOrder);   
+        QList<QGraphicsItem *> list(enemy->getPosition()->collidingItems(Qt::ContainsItemBoundingRect));
+        QList<QGraphicsItem *> list1(position->collidingItems(Qt::ContainsItemBoundingRect));
+        if (position->collidesWithItem(enemy->getPosition().get()/*, Qt::ContainsItemShape*/))
+        {
+            enemy->die();
+            return true;
+        }
+        enemy->setZOrder(enemyZ);
+    }
+    
+    return false;
 }
 
 void CFastBullet::onTimer()

@@ -17,7 +17,7 @@ const int dN = -1;
 //60 ++ 55 + 55 + 60, 55 - turnArea, 60 - nonturnArea = 230
 //1300*2 + 1275*2 = 5150
 const int LocalSize = 5150;
-const QRect turnArea(1299, 1299, 1275, 1275);
+const QRect turnArea(1299, 1299, 2550, 2550);
 
 const int half = 1299 + 1275;
 const QPoint CellCenter(half, half);
@@ -53,6 +53,8 @@ public:
     QPointF move();
     QPointF curCenter();
     qreal curAngle();
+    int iterNum(qreal step);
+    qreal getDistanceToFinish();
     
     void updateNext();
     
@@ -81,7 +83,7 @@ private:
     const QRect NormalRect = QRect(0, 0, LocalSize, LocalSize);
     const QSize NormalSize = QSize(CellSize, CellSize);
     
-    const QRect EdgeRect = QRect(0, 0, LocalExitSize, LocalExitSize);
+    const QRect EdgeRect = QRect(0, 0, LocalExitSize, LocalSize);
     const QSize EdgeSize = QSize(ExitWidth, CellSize);
     
     const Cell NormalLocalCell = Cell(NormalSize, NormalRect, false);

@@ -15,4 +15,6 @@ IBullet::~IBullet(){}
 
 bool IBullet::move(){}
 
+bool IBullet::reachedEnemy(){}
+
 void IBullet::onTimer(){}

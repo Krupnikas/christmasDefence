@@ -10,13 +10,29 @@ CScene::CScene(R* r) : r(r), fpsItem(nullptr), tpsItem(nullptr)
 
 std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap)
 {
-    int sizeXGlobal = toGlobalCX(sizeLocal.width());
-    int sizeYGlobal = toGlobalCY(sizeLocal.height());
+    qreal sizeXGlobal = toGlobalCX(sizeLocal.width());
+    qreal sizeYGlobal = toGlobalCY(sizeLocal.height());
     
     QPixmap scaledPixmap = *pixmap;
     if (pixmap->size() != QSize(sizeXGlobal, sizeYGlobal))
         scaledPixmap = pixmap->scaled(sizeXGlobal, sizeYGlobal, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
+    item->hide();
+    item->setFlag(QGraphicsItem::ItemHasNoContents, true);
+    item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+    return item;
+}
+
+std::shared_ptr<QGraphicsItem> CScene::addEllipse(const QPointF &centerLocal, const QSizeF &sizeLocal)
+{
+    qreal sizeXGlobal = toGlobalCX(sizeLocal.width());
+    qreal sizeYGlobal = toGlobalCY(sizeLocal.height());
+    QPointF centerGlobal = toGlobalPoint(centerLocal);
+    qreal leftTopX = centerGlobal.x() - sizeXGlobal / 2;
+    qreal leftTopY = centerGlobal.y() - sizeYGlobal / 2;
+    
+    std::shared_ptr<QGraphicsItem> item(
+                graphicsScene->addEllipse(leftTopX, leftTopY, sizeXGlobal, sizeYGlobal));
     item->hide();
     item->setFlag(QGraphicsItem::ItemHasNoContents, true);
     item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
@@ -225,6 +241,11 @@ qreal CScene::toGlobalCX(qreal cxLocal)
 qreal CScene::toGlobalCY(qreal cyLocal)
 {
     return 1.0 * gameRect.height() * cyLocal / LocalHeight;
+}
+
+QPointF CScene::toGlobalPoint(QPointF localPoint)
+{
+    return QPointF(toGlobalX(localPoint.x()), toGlobalY(localPoint.y()));
 }
 
 qreal CScene::toLocalX(qreal xGlobal)

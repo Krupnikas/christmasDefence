@@ -70,3 +70,19 @@ void IGameObject::setAngle(const qreal &value)
 {
     angle = value;
 }
+
+std::shared_ptr<QGraphicsItem> IGameObject::getPosition() const
+{
+    return position;
+}
+
+qreal IGameObject::getZOrder() const
+{
+    return zOrder;
+}
+
+void IGameObject::setZOrder(const qreal &value)
+{
+    zOrder = value;
+    position->setZValue(value);
+}

@@ -14,6 +14,7 @@ public:
     virtual ~IBullet();
 
     virtual bool move();
+    virtual bool reachedEnemy();
     
     //getters and setters
     int getX() const;

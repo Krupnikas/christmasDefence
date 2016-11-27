@@ -27,6 +27,11 @@ public:
     qreal getAngle() const;
     void setAngle(const qreal &value);
     
+    std::shared_ptr<QGraphicsItem> getPosition() const;
+    
+    qreal getZOrder() const;
+    void setZOrder(const qreal &value);
+    
 protected:
     
     qreal angle;

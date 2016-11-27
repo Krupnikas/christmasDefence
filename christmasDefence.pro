@@ -11,8 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = christmasDefence
 TEMPLATE = app
 
-CONFIG += c++11 desktop 
-QMAKE_CXXFLAGS += -opengl desktop
+CONFIG += c++11 
 
 SOURCES += main.cpp\
         mainview.cpp \

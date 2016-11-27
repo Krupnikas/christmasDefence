@@ -18,11 +18,12 @@ public:
     R *r;
     CScene *scene;
     QWidget *view;
-    QTimer *gameTimer;
-    QTimer *gameTimer2;
+    QTimer *positionTimer;
+    QTimer *drawTimer;
     std::shared_ptr<CCannonSelection> block;
     std::shared_ptr<QGraphicsItem> selectedCellItem;
     QPoint selectedCell = QPoint(-1, -1);
+    QPoint hintedCell = QPoint(0, 0);
 
     std::vector<std::shared_ptr<IBullet> > bullets;
     std::vector<std::shared_ptr<IEnemy> > enemies;
@@ -43,6 +44,9 @@ public:
     bool addCannon(std::shared_ptr<ICannon> cannon);
     bool addEnemy(std::shared_ptr<IEnemy> enemy);
     
+    QPointF cellLeftTop(QPoint cell);
+    QPointF cellCenter(QPoint cell);
+    
     void updateDistances();
     void scaleObjects();
     
@@ -55,11 +59,8 @@ public:
 
     QPoint findNearestCell(QPointF from);
 
-    bool addCannon(QPoint cell);
-    bool addCannon(int x, int y);
-    
 public slots:
-    virtual void onTimer();
-    virtual void onTimer2();
+    virtual void onPositionTimer();
+    virtual void onDrawTimer();
     
 };

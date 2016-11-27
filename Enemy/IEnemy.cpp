@@ -7,4 +7,17 @@ IEnemy::~IEnemy(){}
 
 bool IEnemy::move(){}
 
+void IEnemy::die(){}
+
+qreal IEnemy::getDistanceToFinish()
+{
+    return movements->getDistanceToFinish();
+}
+
 void IEnemy::updateDistances(){}
+
+bool IEnemy::isDead() const
+{
+    return dead;
+}
+

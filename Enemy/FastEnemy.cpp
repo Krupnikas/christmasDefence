@@ -6,6 +6,7 @@ CFastEnemy::CFastEnemy(CGame *game)
 {
     //IEnemy fields
     this->movements = std::shared_ptr<mov::Movements>(new mov::Movements(game));
+    this->moveIter = movements->iterNum(FastEnemyStep);
     
     //IGameObject fields
     this->angle = movements->curAngle();
@@ -16,8 +17,8 @@ CFastEnemy::CFastEnemy(CGame *game)
     this->game = game;
     this->zOrder = 2;
     
-    this->size = QSize(CellSize, CellSize);
-    this->pixmap = &game->r->fast_enemy_2;
+    this->size = FastEnemySize;
+    this->pixmap = &game->r->fast_enemy_3;
     this->position = game->scene->addPixmap(size, pixmap);
     
 
@@ -25,10 +26,16 @@ CFastEnemy::CFastEnemy(CGame *game)
 
 bool CFastEnemy::move()
 {
-    center = movements->move();
+    for (int i = 0; i < 1/*moveIter*/; ++i)
+        center = movements->move();
     angle = movements->curAngle();
     game->scene->positionItemByCenter(center, size, angle, zOrder, position);
     return game->scene->insideGameRect(center);
+}
+
+void CFastEnemy::die()
+{
+    dead = true;
 }
 
 void CFastEnemy::updateDistances()
