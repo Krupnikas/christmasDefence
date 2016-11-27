@@ -4,12 +4,14 @@
 
 //all sizes are in pixels in local coordinate system 
 
+const int TypesOfCannon = 4;
+
 const int LocalWidth = 1600;
 const int LocalHeight = 900;
 
 const int MenuButtonOffset = 1;
-const int CannonSelectionOffsetX = 50;
-const int CannonSelectionOffsetY = 50;
+const int CannonSelectionOffsetX = 20;
+const int CannonSelectionOffsetY = 20;
 
 const int OffsetY = 15;
 
