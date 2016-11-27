@@ -7,6 +7,7 @@ CFastEnemy::CFastEnemy(CGame *game)
     //IEnemy fields
     this->movements = std::shared_ptr<mov::Movements>(new mov::Movements(game));
     this->moveIter = movements->iterNum(FastEnemyStep);
+    this->dead = false;
     
     //IGameObject fields
     this->angle = movements->curAngle();
@@ -26,7 +27,7 @@ CFastEnemy::CFastEnemy(CGame *game)
 
 bool CFastEnemy::move()
 {
-    for (int i = 0; i < 1/*moveIter*/; ++i)
+    for (int i = 0; i < moveIter; ++i)
         center = movements->move();
     angle = movements->curAngle();
     game->scene->positionItemByCenter(center, size, angle, zOrder, position);

@@ -86,3 +86,8 @@ void IGameObject::setZOrder(const qreal &value)
     zOrder = value;
     position->setZValue(value);
 }
+
+QSizeF IGameObject::getSize() const
+{
+    return size;
+}

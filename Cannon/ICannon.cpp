@@ -53,6 +53,8 @@ void ICannon::rotate()
             }
             if (counter == fireSpeed)
             {
+                if (game->enemies.size() < 5)
+                    game->addEnemy(std::make_shared<CFastEnemy>(game));
                 fire(angle);
                 counter = 0;
             }
@@ -70,7 +72,8 @@ void ICannon::rotate()
         std::shared_ptr<IEnemy> minEnemy = nullptr;
         for (std::shared_ptr<IEnemy> enemy: game->enemies)
         {
-            if (radiusItem->collidesWithItem(enemy->getPosition().get()))
+            qreal length = helper::manhattanLength(center, enemy->getCenter());
+            if (length <= (enemy->getSize().width() / 2 + globalRadius)) 
             {
                 qreal distToFinish = enemy->getDistanceToFinish();
                 if (distToFinish < minDist)
@@ -80,7 +83,7 @@ void ICannon::rotate()
                 }
             }
         }
-        if (curEnemy && curEnemy->isDead())
+        if (curEnemy && curEnemy->isDead() && (game->enemies.size() < 5))
             game->addEnemy(std::make_shared<CFastEnemy>(game));
         curEnemy = minEnemy;
     }
@@ -96,13 +99,12 @@ void ICannon::count()
 
 void ICannon::showRadius()
 {
-    game->scene->positionItemByCenter(center, QSizeF(FastCannonRadius, FastCannonRadius), 0, zOrder - 0.1, radiusItem);
+    game->scene->positionItemByCenter(center, QSizeF(FastCannonRadius * 2, FastCannonRadius * 2),
+                                      0, zOrder - 0.1, radiusItem);
     radiusItem->show();
-    radiusItem->setFlag(QGraphicsItem::ItemHasNoContents, false);
 }
 
 void ICannon::hideRadius()
 {
-    radiusItem->setFlag(QGraphicsItem::ItemHasNoContents, false);
     radiusItem->hide();
 }

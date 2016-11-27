@@ -32,9 +32,9 @@ std::shared_ptr<QGraphicsItem> CScene::addEllipse(const QPointF &centerLocal, co
     qreal leftTopY = centerGlobal.y() - sizeYGlobal / 2;
     
     std::shared_ptr<QGraphicsItem> item(
-                graphicsScene->addEllipse(leftTopX, leftTopY, sizeXGlobal, sizeYGlobal));
+                graphicsScene->addEllipse(0, 0, sizeXGlobal, sizeYGlobal));
+    item->setPos(leftTopX, leftTopY);
     item->hide();
-    item->setFlag(QGraphicsItem::ItemHasNoContents, true);
     item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
     return item;
 }

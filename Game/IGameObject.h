@@ -32,6 +32,8 @@ public:
     qreal getZOrder() const;
     void setZOrder(const qreal &value);
     
+    QSizeF getSize() const;
+    
 protected:
     
     qreal angle;

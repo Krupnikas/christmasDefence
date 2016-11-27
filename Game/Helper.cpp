@@ -147,6 +147,11 @@ QPointF addVector(QPointF point, qreal len, qreal angle)
     return QPointF(x, y);
 }
 
+qreal manhattanLength(QPointF p1, QPointF p2)
+{
+    return pow(pow(abs(p1.x() - p2.x()), 2.0) + pow(abs(p1.y() - p2.y()), 2.0), 0.5);
+}
+
 
 
 

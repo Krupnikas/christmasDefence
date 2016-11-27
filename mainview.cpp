@@ -9,7 +9,7 @@ MainView::MainView(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setLayout(ui->gridLayout);
-    //ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
+    ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
     ui->graphicsView->setOptimizationFlag(QGraphicsView::DontSavePainterState, true);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -54,11 +54,13 @@ void MainView::showEvent(QShowEvent*)
         for (int j = 0; j < CellNumY; ++j)
             game.addCannon(std::make_shared<CFastCannon>(&game, i, j, 100, 30, 100));*/
     
+    game.addCannon(std::make_shared<CFastCannon>(&game, QPoint(6, 1), 100));
     game.addCannon(std::make_shared<CFastCannon>(&game, QPoint(6, 2), 100));
     game.addCannon(std::make_shared<CFastCannon>(&game, QPoint(6, 3), 100));
     game.addCannon(std::make_shared<CFastCannon>(&game, QPoint(6, 4), 100));
     game.addCannon(std::make_shared<CFastCannon>(&game, QPoint(6, 5), 100));
     game.addCannon(std::make_shared<CFastCannon>(&game, QPoint(CellNumX - 3, 3), 100));
+    game.addEnemy(std::make_shared<CFastEnemy>(&game));
     scene.updateDistances(game.distances);
     
     connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));

@@ -35,24 +35,7 @@ bool CFastBullet::move()
         game->bullets.erase(iterator);*/
 }
 
-bool CFastBullet::reachedEnemy()
-{
-    for (auto enemy: game->enemies)
-    {
-        qreal enemyZ = enemy->getZOrder();
-        enemy->setZOrder(zOrder);   
-        QList<QGraphicsItem *> list(enemy->getPosition()->collidingItems(Qt::ContainsItemBoundingRect));
-        QList<QGraphicsItem *> list1(position->collidingItems(Qt::ContainsItemBoundingRect));
-        if (position->collidesWithItem(enemy->getPosition().get()/*, Qt::ContainsItemShape*/))
-        {
-            enemy->die();
-            return true;
-        }
-        enemy->setZOrder(enemyZ);
-    }
-    
-    return false;
-}
+
 
 void CFastBullet::onTimer()
 {

@@ -22,15 +22,15 @@ const int OffsetX = (LocalWidth - CellNumX * CellSize) / 2;
 const int BulletSizeX = CellSize / 3.0;
 const int BulletSizeY = CellSize / 3.0;
 
-const qreal FastCannonRotation = 5; // in angles
-const qreal FastCannonRadius = 500;
-const qreal FastCannonInterval = 50;
+const qreal FastCannonRotation = 10; // in angles
+const qreal FastCannonRadius = 450;
+const qreal FastCannonInterval = 60;
 
 // in local points
-const qreal FastBulletStep = CellSize / 15.0;
+const qreal FastBulletStep = CellSize / 20.0;
 
 // in local points
-const qreal FastEnemyStep = CellSize / 20.0;
+const qreal FastEnemyStep = CellSize / 500.0;
 const QSizeF FastEnemySize(CellSize / 2.0, CellSize / 2.0);
 
 const bool ExitLeft = true;
