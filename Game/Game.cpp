@@ -17,7 +17,7 @@ CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view
     helper::calcDistances(cannons, distances);
     
     gameTimer = new QTimer(this);
-    gameTimer->start(50);
+    gameTimer->start(30);
 }
 
 CGame::~CGame()
