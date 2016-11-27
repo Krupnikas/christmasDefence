@@ -4,14 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = christmasDefence
 TEMPLATE = app
 
-CONFIG += c++11
+CONFIG += c++11 
 
 SOURCES += main.cpp\
         mainview.cpp \

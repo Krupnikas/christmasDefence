@@ -30,6 +30,26 @@ qreal calcAngle(qreal x1, qreal y1, qreal x2, qreal y2)
     QLineF line2(x1, y1, x2, y2);
     return 360 - line1.angleTo(line2);
 }
+
+qreal calcAngle(QPointF p1, QPointF p2, qreal angle1)
+{
+    QPointF p3(addVector(p1, 10, angle1));
+    QLineF line1(p1, p3);
+    QLineF line2(p1, p2);
+    qreal deltaAngle = line2.angleTo(line1);
+    if (deltaAngle > 180)
+        deltaAngle -= 360;
+    return std::max(deltaAngle, deltaAngle);
+}
+
+void reconcileAngles(qreal &angle, const qreal &deltaAngle, const qreal &step)
+{
+    if (deltaAngle <= 180)
+        angle += step;
+    else
+        angle -= step;
+}
+
 bool calcDistances(
         std::vector<std::vector<std::shared_ptr<ICannon> > > &cannons,
         std::vector<std::vector<int> > &distances)
@@ -126,6 +146,14 @@ QPointF addVector(QPointF point, qreal len, qreal angle)
     qreal y = point.y() - qCos(qDegreesToRadians(angle)) * len;
     return QPointF(x, y);
 }
+
+qreal manhattanLength(QPointF p1, QPointF p2)
+{
+    return pow(pow(abs(p1.x() - p2.x()), 2.0) + pow(abs(p1.y() - p2.y()), 2.0), 0.5);
+}
+
+
+
 
 
 

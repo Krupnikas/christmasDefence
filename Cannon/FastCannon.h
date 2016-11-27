@@ -7,13 +7,9 @@ class CFastCannon : public ICannon
     
 public:
     
-    CFastCannon(CGame *game, int cellX, int cellY, double hp, double angle, double globalRadius);
+    CFastCannon(CGame *game, QPoint cell, double angle);
     ~CFastCannon();
     
     virtual void fire(qreal angle) override;
-    
-    
-public slots:
-    virtual void onTimer();
     
 };

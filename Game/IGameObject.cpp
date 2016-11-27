@@ -25,7 +25,7 @@ void IGameObject::scaleItem()
 void IGameObject::draw()
 {
     game->scene->positionItem(leftTop, size, angle, zOrder, position);
-    show();
+    //show();
 }
 
 void IGameObject::remove()
@@ -37,10 +37,12 @@ void IGameObject::remove()
 void IGameObject::hide()
 {
     position->hide();
+    position->setFlag(QGraphicsItem::ItemHasNoContents, true);
 }
 
 void IGameObject::show()
 {
+    position->setFlag(QGraphicsItem::ItemHasNoContents, false);
     position->show();
 }
 
@@ -67,4 +69,25 @@ qreal IGameObject::getAngle() const
 void IGameObject::setAngle(const qreal &value)
 {
     angle = value;
+}
+
+std::shared_ptr<QGraphicsItem> IGameObject::getPosition() const
+{
+    return position;
+}
+
+qreal IGameObject::getZOrder() const
+{
+    return zOrder;
+}
+
+void IGameObject::setZOrder(const qreal &value)
+{
+    zOrder = value;
+    position->setZValue(value);
+}
+
+QSizeF IGameObject::getSize() const
+{
+    return size;
 }

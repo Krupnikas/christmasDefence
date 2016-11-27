@@ -11,6 +11,8 @@ R::R()
     window_background = QPixmap(get("window_background.jpg"));
     game_background = QPixmap(get("game_background.jpg"));
     cannonSelectionBackground = QPixmap(get("cannonSelectingInfoBlockBackground.png"));
+
+    entireRadius = QPixmap(get("entireRadius.png"));
     
     fast_cannon_1 = QPixmap(get("fast_cannon_1.jpg"));
     fast_cannon_2 = QPixmap(get("fast_cannon_2.png"));

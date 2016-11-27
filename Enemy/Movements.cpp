@@ -2,6 +2,9 @@
 #include <Game/Game.h>
 #include <Game/Helper.h>
 
+namespace mov
+{
+
 Queue::Queue() : frontInd(0), backInd(QueueSize - 1)
 {
     int defVal = dN;
@@ -97,18 +100,65 @@ QPointF Movements::curCenter()
     QPointF curPoint;
     if (curGameCell.x() < 0)
         curPoint.setX((curGameCell.x() + 0.5) * ExitWidth + static_cast<qreal>(curPos.x()) * ExitWidth / LocalExitSize);
-    else if (curGameCell.x() >= CellNumX)
-        curPoint.setX(OffsetX + curGameCell.x() * CellSize + static_cast<qreal>(curPos.x()) * ExitWidth / LocalExitSize );
     else
-        curPoint.setX(OffsetX + curGameCell.x() * CellSize + static_cast<qreal>(curPos.x()) * CellSize / LocalSize);
+        curPoint.setX(OffsetX + curGameCell.x() * CellSize + static_cast<qreal>(curPos.x()) * 
+                  curLocalCell.cellGameSize.width() / curLocalCell.localRect.width());
     
-    curPoint.setY(OffsetY + curGameCell.y() * CellSize + static_cast<qreal>(curPos.y()) * CellSize / LocalSize);
+    curPoint.setY(OffsetY + curGameCell.y() * CellSize + static_cast<qreal>(curPos.y()) * 
+                  curLocalCell.cellGameSize.height() / curLocalCell.localRect.height());
     return curPoint;
 }
 
 qreal Movements::curAngle()
 {
     return helper::calcAngle(QPointF(0, 0), queue.curSum);
+}
+
+int Movements::iterNum(qreal step)
+{
+    qreal pointsOnMove = static_cast<qreal>(QueueSize) * CellSize / LocalSize;
+    if (step < pointsOnMove)
+    {
+        qDebug() << "Movements: too small step:(";
+        return 1;
+    }
+        
+    return static_cast<int>(step / pointsOnMove);
+}
+
+qreal Movements::getDistanceToFinish()
+{
+    if (curGameCell.x() < 0)
+    {
+        return -(curLocalCell.localRect.width() - curPos.x()) / curLocalCell.localRect.width();
+    }
+    
+    if (curGameCell.x() >= CellNumX)
+    {
+        return game->distances[CellNumX - 1][CellNumY / 2] + curPos.x() / curLocalCell.localRect.width();
+    }
+    
+    qreal dist = game->distances[curGameCell.x()][curGameCell.y()];
+    if (isCenterDirected())
+    {
+        dist += half;
+        dist += abs(CellCenter.x() - curPos.x()) + abs(CellCenter.y() - curPos.y());
+    }
+    else
+    {
+        dist += half - (abs(CellCenter.x() - curPos.x()) + abs(CellCenter.y() - curPos.y()));
+    }
+    return dist;
+}
+
+QPoint Movements::getCurrentGameCell()
+{
+    return curGameCell;
+}
+
+QPoint Movements::getNextGameCell()
+{
+    return nextGameCell;
 }
 
 void Movements::updateNext()
@@ -124,8 +174,9 @@ void Movements::updateNext()
 bool Movements::isCenterDirected()
 {
     if (curPos.x() != half && curPos.y() != half)
+
         qDebug() << "Movements: out of trajectory";
-    
+
     qreal dx = queue.curSum.x();
     qreal dy = queue.curSum.y();
     if (curPos.x() == half)
@@ -183,13 +234,13 @@ void Movements::updateCur()
     if (curPos.y() < 0)
     {
         curGameCell.setY(curGameCell.y() - 1);
-        curPos.setY(curPos.y() + LocalSize);
+        curPos.setY(curPos.y() + curLocalCell.localRect.height());
         update = true;
     }
-    else if (curPos.y() >= LocalSize)
+    else if (curPos.y() >= curLocalCell.localRect.height())
     {
         curGameCell.setY(curGameCell.y() + 1);
-        curPos.setY(curPos.y() - LocalSize);
+        curPos.setY(curPos.y() - curLocalCell.localRect.height());
         update = true;
     }
     
@@ -203,3 +254,5 @@ void Movements::updateCur()
         updateNext();
     }
 }
+
+} // namespace mov

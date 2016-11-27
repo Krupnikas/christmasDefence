@@ -13,6 +13,7 @@ public:
     CScene(R* r);
     
     std::shared_ptr<QGraphicsItem> addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap);
+    std::shared_ptr<QGraphicsItem> addEllipse(const QPointF &centerLocal, const QSizeF &sizeLocal);
     
     void positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal, 
                       qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item);
@@ -29,6 +30,8 @@ public:
     void updateWindowBackground();
     void updateGameBackground();
     void updateDistances(std::vector<std::vector<int>> &distances);
+    void updateFPS(int fps, int tps);
+    void updateItems();
     
     int getWidth() { return gameRect.width(); }
     int getHeight() { return gameRect.height(); }
@@ -38,6 +41,7 @@ public:
     qreal toGlobalY(qreal y_local);
     qreal toGlobalCX(qreal cx_local);
     qreal toGlobalCY(qreal cy_local);
+    QPointF toGlobalPoint(QPointF localPoint);
 
     qreal toLocalX(qreal xGlobal);
     qreal toLocalY(qreal yGlobal);    
@@ -59,6 +63,8 @@ private:
     
     std::vector<std::shared_ptr<QGraphicsItem>> backgroundItems;
     std::vector<std::shared_ptr<QGraphicsItem>> textItems;
+    std::shared_ptr<QGraphicsTextItem> fpsItem;
+    std::shared_ptr<QGraphicsTextItem> tpsItem;
     
     
 private slots:

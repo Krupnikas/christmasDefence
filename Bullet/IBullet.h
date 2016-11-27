@@ -15,6 +15,8 @@ public:
 
     virtual bool move();
     
+    bool reachedEnemy();
+    
     //getters and setters
     int getX() const;
     void setX(int value);

@@ -1,6 +1,7 @@
 #include <Bullet/FastBullet.h>
 #include <Game/Game.h>
 #include <Game/Helper.h>
+#include <Enemy/IEnemy.h>
 
 
 CFastBullet::CFastBullet(CGame *game, QPointF center, double angle)
@@ -33,6 +34,8 @@ bool CFastBullet::move()
    /* if (!game->scene->insideGameRect(center))
         game->bullets.erase(iterator);*/
 }
+
+
 
 void CFastBullet::onTimer()
 {

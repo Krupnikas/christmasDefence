@@ -1,4 +1,7 @@
 #include "IBullet.h"
+#include <Game/Helper.h>
+#include <Game/Game.h>
+#include <Enemy/IEnemy.h>
 
 QPointF IBullet::getCenter() const
 {
@@ -14,5 +17,20 @@ void IBullet::setCenter(const QPointF &value)
 IBullet::~IBullet(){}
 
 bool IBullet::move(){}
+
+bool IBullet::reachedEnemy()
+{
+    for (auto enemy: game->enemies)
+    {
+        qreal length = helper::manhattanLength(center, enemy->getCenter());
+        if (length <= size.width() / 2 + enemy->getSize().width() / 2)
+        {
+            enemy->die();
+            return true;
+        }
+    }
+    
+    return false;
+}
 
 void IBullet::onTimer(){}

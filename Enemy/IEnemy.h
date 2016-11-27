@@ -12,8 +12,20 @@ public:
     ~IEnemy();
     
     virtual bool move();
+    
+    bool isDead() const;
+    virtual void die();
+    
+    qreal getDistanceToFinish();
+    
+    QPoint getCurrentGameCell();
+    QPoint getNextGameCell();
+
     virtual void updateDistances();
     
+    
 protected:
-    std::shared_ptr<Movements> movements;
+    std::shared_ptr<mov::Movements> movements;
+    int moveIter;
+    bool dead;
 };
