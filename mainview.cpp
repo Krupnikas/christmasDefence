@@ -63,11 +63,6 @@ void MainView::showEvent(QShowEvent*)
     game.showObjects();
 }
 
-void MainView::mouseDoubleClickEvent(QMouseEvent *eventPress)
-{
-
-}
-
 void MainView::mousePressEvent(QMouseEvent *eventPress)
 {
     QPointF p = game.view->mapFromGlobal(QCursor::pos());
@@ -103,6 +98,6 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
     }
 
                  
-    if (eventPress->button() == Qt::LeftButton)
-        game.addEnemy(std::make_shared<CFastEnemy>(&game));
+    /*if (eventPress->button() == Qt::LeftButton)
+        game.addEnemy(std::make_shared<CFastEnemy>(&game));*/
 }
