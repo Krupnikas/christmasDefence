@@ -55,7 +55,10 @@ public:
     qreal curAngle();
     int iterNum(qreal step);
     qreal getDistanceToFinish();
-    
+
+    QPoint getCurrentGameCell();
+    QPoint getNextGameCell();
+
     void updateNext();
     
 private:

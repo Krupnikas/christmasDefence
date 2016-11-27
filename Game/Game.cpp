@@ -35,7 +35,7 @@ bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
     
     if (x < 0 || x > CellNumX ||
         y < 0 || y > CellNumY ||
-        !enemies.empty())
+        isEnemieCollision(cell))
         return false;
     
     cannons[x][y] = cannon;
@@ -60,6 +60,17 @@ bool CGame::addEnemy(std::shared_ptr<IEnemy> enemy)
     enemy->draw();
     enemy->show();
     return true;
+}
+
+bool CGame::isEnemieCollision(QPoint Cell)
+{
+    for (size_t i = 0; i < enemies.size(); ++i)
+    {    
+        if (enemies[i]->getCurrentGameCell() == Cell ||
+            enemies[i]->getNextGameCell() == Cell)
+                return true;
+    }
+    return false;
 }
 
 QPointF CGame::cellLeftTop(QPoint cell)

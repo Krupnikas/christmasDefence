@@ -18,6 +18,9 @@ public:
     
     qreal getDistanceToFinish();
     
+    QPoint getCurrentGameCell();
+    QPoint getNextGameCell();
+
     virtual void updateDistances();
     
     

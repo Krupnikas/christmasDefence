@@ -1,6 +1,8 @@
 #pragma once
 
 //#define SHOW_DISTANCES
+#define SHOW_GRAPHICS_DEBUG
+
 #include <Game/Scene.h>
 
 class IBullet;
@@ -43,6 +45,8 @@ public:
     
     bool addCannon(std::shared_ptr<ICannon> cannon);
     bool addEnemy(std::shared_ptr<IEnemy> enemy);
+
+    bool isEnemieCollision(QPoint Cell);
     
     QPointF cellLeftTop(QPoint cell);
     QPointF cellCenter(QPoint cell);

@@ -151,6 +151,16 @@ qreal Movements::getDistanceToFinish()
     return dist;
 }
 
+QPoint Movements::getCurrentGameCell()
+{
+    return curGameCell;
+}
+
+QPoint Movements::getNextGameCell()
+{
+    return nextGameCell;
+}
+
 void Movements::updateNext()
 {
     nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
@@ -164,8 +174,9 @@ void Movements::updateNext()
 bool Movements::isCenterDirected()
 {
     if (curPos.x() != half && curPos.y() != half)
+
         qDebug() << "Movements: out of trajectory";
-    
+
     qreal dx = queue.curSum.x();
     qreal dy = queue.curSum.y();
     if (curPos.x() == half)
