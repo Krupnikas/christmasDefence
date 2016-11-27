@@ -20,7 +20,7 @@ const int OffsetX = (LocalWidth - CellNumX * CellSize) / 2;
 const int BulletSizeX = CellSize / 3.0;
 const int BulletSizeY = CellSize / 3.0;
 
-const qreal FastBulletStep = CellSize / 30.0;
+const qreal FastBulletStep = CellSize / 20.0;
 
 const bool ExitLeft = true;
 const int ExitX = ExitLeft ? 0 : CellNumX - 1;
@@ -28,5 +28,4 @@ const int ExitY = CellNumY / 2;
 const int EntranceX = ExitLeft ? CellNumX - 1 : 0;
 const int EntranceY = CellNumY / 2;
 
-const bool DrawText = true;
-
+#define SHOW_FPS

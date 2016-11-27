@@ -17,6 +17,8 @@
 #include <QLineF>
 #include <QtCore/qmath.h>
 #include <QDebug>
+#include <QtOpenGL/QGLWidget>
+#include <QtOpenGL/QGLFormat>
 
 #include <memory>
 #include <vector>

@@ -15,5 +15,5 @@ public:
     virtual void updateDistances();
     
 protected:
-    std::shared_ptr<Movements> movements;
+    std::shared_ptr<mov::Movements> movements;
 };

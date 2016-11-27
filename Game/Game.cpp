@@ -17,7 +17,9 @@ CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view
     helper::calcDistances(cannons, distances);
     
     gameTimer = new QTimer(this);
-    gameTimer->start(50);
+    gameTimer->start(16);
+    gameTimer2 = new QTimer(this);
+    gameTimer2->start(16);
 }
 
 CGame::~CGame()
@@ -46,6 +48,14 @@ bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
     for (size_t i = 0; i < enemies.size(); ++i)
         enemies[i]->updateDistances();
     scene->updateDistances(distances);
+    return true;
+}
+
+bool CGame::addEnemy(std::shared_ptr<IEnemy> enemy)
+{
+    enemies.push_back(enemy);
+    enemy->draw();
+    enemy->show();
     return true;
 }
 
@@ -87,6 +97,38 @@ void CGame::scaleObjects()
     }
     
     scene->updateDistances(distances);
+}
+
+void CGame::hideObjects()
+{
+    for (size_t i = 0; i < bullets.size(); ++i)
+        bullets[i]->hide();
+    for (size_t i = 0; i < enemies.size(); ++i)
+        enemies[i]->hide();
+    for (int i = 0; i < CellNumX; ++i)
+        for (int j = 0; j < CellNumY; ++j)
+            if (cannons[i][j])
+                cannons[i][j]->hide();
+    if (block)
+        block->hide();
+    if (selectedCellItem)
+        selectedCellItem->hide();
+}
+
+void CGame::showObjects()
+{
+    for (size_t i = 0; i < bullets.size(); ++i)
+        bullets[i]->show();
+    for (size_t i = 0; i < enemies.size(); ++i)
+        enemies[i]->show();
+    for (int i = 0; i < CellNumX; ++i)
+        for (int j = 0; j < CellNumY; ++j)
+            if (cannons[i][j])
+                cannons[i][j]->show();
+    if (block)
+        block->show();
+    if (selectedCellItem)
+        selectedCellItem->show();    
 }
 
 void CGame::selectCell(QPoint pos)
@@ -161,7 +203,6 @@ void CGame::onTimer()
     for (size_t i = 0; i < bullets.size(); ++i)
         if (bullets[i]->move())
         {
-            bullets[i]->draw();
             if (lastBulletInd < i)
                 bullets[lastBulletInd++] = bullets[i];
             else
@@ -182,6 +223,26 @@ void CGame::onTimer()
     if (lastEnemyInd < enemies.size())
         enemies.resize(lastEnemyInd);
     
+    static QTime time;
+    static int frameCnt=0;
+    static double timeElapsed=0;
+    // fps counting...
+    frameCnt++;
+    timeElapsed += time.elapsed();
+    time.restart();
+    if (timeElapsed >= 500)
+    {
+       tps = frameCnt * 1000.0 / timeElapsed;
+       timeElapsed = 0;
+       frameCnt = 0;
+    }
+}
+
+void CGame::onTimer2()
+{
+    for (size_t i = 0; i < bullets.size(); ++i)
+        bullets[i]->draw();
+    
     for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
@@ -193,6 +254,21 @@ void CGame::onTimer()
                 cannons[i][j]->setAngle(helper::calcAngle(x1, y1, p.x(), p.y()));
                 cannons[i][j]->draw();
             }
+    
+    static QTime time;
+    static int frameCnt=0;
+    static double timeElapsed=0;
+    // fps counting...
+    frameCnt++;
+    timeElapsed += time.elapsed();
+    time.restart();
+    if (timeElapsed >= 500)
+    {
+       fps = frameCnt * 1000.0 / timeElapsed;
+       timeElapsed = 0;
+       frameCnt = 0;
+    }
+    scene->updateFPS(fps, tps);
 }
 
 

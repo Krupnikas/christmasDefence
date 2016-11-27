@@ -2,6 +2,9 @@
 #include <Game/Game.h>
 #include <Game/Helper.h>
 
+namespace mov
+{
+
 Queue::Queue() : frontInd(0), backInd(QueueSize - 1)
 {
     int defVal = dN;
@@ -203,3 +206,5 @@ void Movements::updateCur()
         updateNext();
     }
 }
+
+} // namespace mov

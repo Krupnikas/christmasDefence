@@ -29,6 +29,8 @@ public:
     void updateWindowBackground();
     void updateGameBackground();
     void updateDistances(std::vector<std::vector<int>> &distances);
+    void updateFPS(int fps, int tps);
+    void updateItems();
     
     int getWidth() { return gameRect.width(); }
     int getHeight() { return gameRect.height(); }
@@ -59,6 +61,8 @@ private:
     
     std::vector<std::shared_ptr<QGraphicsItem>> backgroundItems;
     std::vector<std::shared_ptr<QGraphicsItem>> textItems;
+    std::shared_ptr<QGraphicsTextItem> fpsItem;
+    std::shared_ptr<QGraphicsTextItem> tpsItem;
     
     
 private slots:

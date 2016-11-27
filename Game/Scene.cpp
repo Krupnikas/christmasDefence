@@ -1,9 +1,11 @@
 #include <Game/Scene.h>
 
 //public:
-CScene::CScene(R* r) : r(r)
+CScene::CScene(R* r) : r(r), fpsItem(nullptr), tpsItem(nullptr)
 {
     graphicsScene = new QGraphicsScene();
+    graphicsScene->setItemIndexMethod(QGraphicsScene::NoIndex);
+
 }
 
 std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap)
@@ -16,6 +18,8 @@ std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixma
         scaledPixmap = pixmap->scaled(sizeXGlobal, sizeYGlobal, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
     item->hide();
+    item->setFlag(QGraphicsItem::ItemHasNoContents, true);
+    item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
     return item;
 }
 
@@ -28,7 +32,6 @@ void CScene::positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal,
     item->setRotation(angle);
     item->setPos(toGlobalX(leftTopLocal.x()), toGlobalY(leftTopLocal.y()));
     item->setZValue(zval);
-    item->show();
 }
 
 void CScene::positionItemByCenter(const QPointF &centerLocal, const QSizeF &sizeLocal,
@@ -44,12 +47,12 @@ void CScene::positionItemByCenter(const QPointF &centerLocal, const QSizeF &size
     qreal top = toGlobalY(centerLocal.y()) - boundRect.height() / 2;
     item->setPos(left, top);
     item->setZValue(zval);
-    item->show();
 }
 
 void CScene::removeItem(std::shared_ptr<QGraphicsItem> item)
 {
-    graphicsScene->removeItem(item.get());
+    item->setEnabled(false);
+    //graphicsScene->removeItem(item.get());
 }
 
 std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal,
@@ -78,6 +81,7 @@ std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, c
 {
     std::shared_ptr<QGraphicsTextItem> item(graphicsScene->addText(text));
     textItems.push_back(item);
+    item->setDefaultTextColor(Qt::red);
     item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
     item->setZValue(zval);
     return item;
@@ -91,6 +95,7 @@ void CScene::updateGameRect(QRect newWindowRect)
     //Устанавливаем новую высоту
     backgroundItems.clear();
     gameRect = windowRect = newWindowRect;
+    
     
     QPoint enclosingTopLeft(gameRect.topLeft() - QPoint(CellSize, CellSize));
     QPoint enclosingBottomRight(gameRect.bottomRight() + QPoint(CellSize, CellSize));
@@ -110,6 +115,7 @@ void CScene::updateGameRect(QRect newWindowRect)
         gameRect.setTop(center.y() - newHeight / 2.0);
         gameRect.setHeight(newHeight);
     }
+    
     
     updateWindowBackground();
     updateGameBackground();
@@ -170,6 +176,32 @@ void CScene::updateDistances(std::vector<std::vector<int>> &distances)
                 drawAndPosition(x, y, text, 0.5);
             }
 #endif
+}
+
+void CScene::updateFPS(int fps, int tps)
+{
+#ifdef SHOW_FPS
+    
+    if (fpsItem)
+        graphicsScene->removeItem(fpsItem.get());
+    if (tpsItem)
+        graphicsScene->removeItem(tpsItem.get());
+    
+    fpsItem = std::shared_ptr<QGraphicsTextItem>(graphicsScene->addText(QString::number((int)fps) + " FPS"));
+    fpsItem->setPos(toGlobalX(10), toGlobalY(10));
+    fpsItem->setDefaultTextColor(Qt::red);
+    fpsItem->setZValue(10);
+    
+    tpsItem = std::shared_ptr<QGraphicsTextItem>(graphicsScene->addText(QString::number((int)tps) + " TPS"));
+    tpsItem->setPos(gameRect.width() - 45, toGlobalY(10));
+    tpsItem->setDefaultTextColor(Qt::red);
+    tpsItem->setZValue(10);
+#endif
+}
+
+void CScene::updateItems()
+{
+    graphicsScene->update(gameRect);    
 }
 
 //private:

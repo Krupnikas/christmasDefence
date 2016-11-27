@@ -5,7 +5,7 @@
 CFastEnemy::CFastEnemy(CGame *game)
 {
     //IEnemy fields
-    this->movements = std::make_shared<Movements>(game);
+    this->movements = std::shared_ptr<mov::Movements>(new mov::Movements(game));
     
     //IGameObject fields
     this->angle = movements->curAngle();

@@ -19,6 +19,7 @@ public:
     CScene *scene;
     QWidget *view;
     QTimer *gameTimer;
+    QTimer *gameTimer2;
     std::shared_ptr<CCannonSelection> block;
     std::shared_ptr<QGraphicsItem> selectedCellItem;
     QPoint selectedCell = QPoint(-1, -1);
@@ -30,7 +31,9 @@ public:
     
 //private attributes
 private:
-
+    qreal fps = 0;
+    qreal tps = 0;
+    
     
 //public methods
 public:
@@ -38,9 +41,13 @@ public:
     ~CGame();
     
     bool addCannon(std::shared_ptr<ICannon> cannon);
+    bool addEnemy(std::shared_ptr<IEnemy> enemy);
     
     void updateDistances();
     void scaleObjects();
+    
+    void hideObjects();
+    void showObjects();
 
     void selectCell(QPoint pos);
     void selectCell(int i, int j);
@@ -53,5 +60,6 @@ public:
     
 public slots:
     virtual void onTimer();
+    virtual void onTimer2();
     
 };
