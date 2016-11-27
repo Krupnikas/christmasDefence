@@ -23,11 +23,11 @@ const int BulletSizeX = CellSize / 3.0;
 const int BulletSizeY = CellSize / 3.0;
 
 const qreal FastCannonRotation = 10; // in angles
-const qreal FastCannonRadius = 450;
+const qreal FastCannonRadius = 300;
 const qreal FastCannonInterval = 60;
 
 // in local points
-const qreal FastBulletStep = CellSize / 20.0;
+const qreal FastBulletStep = CellSize / 5.0;
 
 // in local points
 const qreal FastEnemyStep = CellSize / 500.0;

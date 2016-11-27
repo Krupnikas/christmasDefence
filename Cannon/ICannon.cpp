@@ -102,6 +102,7 @@ void ICannon::showRadius()
     game->scene->positionItemByCenter(center, QSizeF(FastCannonRadius * 2, FastCannonRadius * 2),
                                       0, zOrder - 0.1, radiusItem);
     radiusItem->show();
+    qDebug() << radiusItem.get();
 }
 
 void ICannon::hideRadius()

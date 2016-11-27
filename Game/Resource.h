@@ -43,7 +43,7 @@ struct R
     QPixmap cell2;
     QPixmap cellSelected;
 
-
+    QPixmap entireRadius;
     
     QPixmap fast_cannon_1;
     QPixmap fast_cannon_2;

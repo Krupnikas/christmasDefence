@@ -18,7 +18,7 @@ std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixma
         scaledPixmap = pixmap->scaled(sizeXGlobal, sizeYGlobal, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
     item->hide();
-    item->setFlag(QGraphicsItem::ItemHasNoContents, true);
+    //item->setFlag(QGraphicsItem::ItemHasNoContents, true);
     item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
     return item;
 }

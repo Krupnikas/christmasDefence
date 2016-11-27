@@ -23,7 +23,10 @@ CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
     this->rotationSpeed = FastCannonRotation;
     this->fireSpeed = FastCannonInterval;
     this->globalRadius = FastCannonRadius;
-    this->radiusItem = game->scene->addEllipse(center, QSizeF(FastCannonRadius * 2, FastCannonRadius * 2));
+    this->radiusItem = game->scene->addPixmap(QSizeF(2 * FastCannonRadius,
+                                                     2 * FastCannonRadius),
+                                                     &game->r->entireRadius);
+    hideRadius();
 }
 
 CFastCannon::~CFastCannon(){}
