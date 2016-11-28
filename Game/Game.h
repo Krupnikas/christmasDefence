@@ -17,6 +17,8 @@ class CGame : public QObject
     
 //public attributes
 public:
+    const QPoint UnselCell = QPoint(-1, -1);
+    
     R *r;
     CScene *scene;
     QWidget *view;
@@ -24,24 +26,20 @@ public:
     QTimer *drawTimer;
     std::shared_ptr<CCannonSelection> block;
     std::shared_ptr<QGraphicsItem> selectedCellItem;
-    QPoint selectedCell = QPoint(-1, -1);
-    QPoint hintedCell = QPoint(0, 0);
+    QPoint selectedCell = UnselCell;
+    QPoint hintedCell = UnselCell;
 
     std::vector<std::shared_ptr<IBullet> > bullets;
     std::vector<std::shared_ptr<IEnemy> > enemies;
     std::vector<std::vector<std::shared_ptr<ICannon>>> cannons;
     std::vector<std::vector<int>> distances;
     
-//private attributes
-private:
-    qreal fps = 0;
-    qreal tps = 0;
-    
-    
 //public methods
 public:
     CGame(R *r, CScene *scene, QWidget *view);
     ~CGame();
+    
+    bool isGameCell(QPoint cell);
     
     bool addCannon(std::shared_ptr<ICannon> cannon);
     bool addEnemy(std::shared_ptr<IEnemy> enemy);
@@ -58,7 +56,6 @@ public:
     void showObjects();
 
     void selectCell(QPoint pos);
-    void selectCell(int i, int j);
     void deselectCell();
 
     QPoint findNearestCell(QPointF from);
@@ -67,4 +64,14 @@ public slots:
     virtual void onPositionTimer();
     virtual void onDrawTimer();
     
+
+//private methods
+private:
+    void deselect_cell_();    
+    
+//private attributes
+private:
+        qreal fps = 0;
+        qreal tps = 0;
+        
 };

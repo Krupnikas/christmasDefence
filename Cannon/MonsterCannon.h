@@ -11,8 +11,5 @@ public:
      CMonsterCannon();
      ~CMonsterCannon();
     
-    virtual void fire(qreal angle) override;
-     
-public slots:
-    virtual void onTimer(){}
+    virtual void fire() override;
 };

@@ -33,4 +33,5 @@ public slots:
 protected:
     
     qreal step;
+    int hitPower;
 };

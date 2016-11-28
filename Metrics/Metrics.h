@@ -4,8 +4,6 @@
 
 //all sizes are in pixels in local coordinate system 
 
-const int TypesOfCannon = 4;
-
 const int LocalWidth = 1600;
 const int LocalHeight = 900;
 
@@ -21,24 +19,14 @@ const int CellNumX = LocalWidth / CellSize - MenuButtonOffset;
 
 const int OffsetX = (LocalWidth - CellNumX * CellSize) / 2;
 
-const int BulletSizeX = CellSize / 3.0;
-const int BulletSizeY = CellSize / 3.0;
-
-const qreal FastCannonRotation = 10; // in angles
-const qreal FastCannonRadius = 300;
-const qreal FastCannonInterval = 60;
-
-// in local points
-const qreal FastBulletStep = CellSize / 5.0;
-
-// in local points
-const qreal FastEnemyStep = CellSize / 500.0;
-const QSizeF FastEnemySize(CellSize / 2.0, CellSize / 2.0);
-
 const bool ExitLeft = true;
 const int ExitX = ExitLeft ? 0 : CellNumX - 1;
 const int ExitY = CellNumY / 2;
 const int EntranceX = ExitLeft ? CellNumX - 1 : 0;
 const int EntranceY = CellNumY / 2;
+
+#include <Metrics/CannonMetrics.h>
+#include <Metrics/EnemyMetrics.h>
+#include <Metrics/BulletMetrics.h>
 
 #define SHOW_FPS

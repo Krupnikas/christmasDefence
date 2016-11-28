@@ -23,9 +23,9 @@ bool IBullet::reachedEnemy()
     for (auto enemy: game->enemies)
     {
         qreal length = helper::manhattanLength(center, enemy->getCenter());
-        if (length <= size.width() / 2 + enemy->getSize().width() / 2)
+        if (length <= textureSize.width() / 2 + enemy->getSize().width() / 2)
         {
-            enemy->die();
+            enemy->hit(hitPower);
             return true;
         }
     }

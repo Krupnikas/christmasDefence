@@ -22,7 +22,7 @@ MainView::MainView(QWidget *parent) :
     //setAttribute(Qt::WA_TranslucentBackground, true);
     setAttribute(Qt::WA_TranslucentBackground);
    // ui->graphicsView->setViewportUpdateMode(QGraphicsView::);
-    //this->showFullScreen();
+    this->showFullScreen();
 }
 
 MainView::~MainView()
@@ -34,12 +34,12 @@ MainView::~MainView()
 
 void MainView::resizeEvent(QResizeEvent *)
 {
-    game.hideObjects();
+    //game.hideObjects();
     ui->graphicsView->setSceneRect(ui->graphicsView->geometry());
     scene.updateGameRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene.getGraphicsScene());
     game.scaleObjects();
-    game.showObjects();
+    //game.showObjects();
 
 }
 
@@ -47,15 +47,12 @@ void MainView::resizeEvent(QResizeEvent *)
 
 void MainView::showEvent(QShowEvent*)
 {
-
     scene.updateGameRect(ui->graphicsView->geometry());
-
     /*for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)
             game.addCannon(std::make_shared<CFastCannon>(&game, i, j, 100, 30, 100));*/
-    
 
-    game.addEnemy(std::make_shared<CFastEnemy>(&game));
+    //game.addEnemy(std::make_shared<CFastEnemy>(&game));
     scene.updateDistances(game.distances);
     
     connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));
@@ -63,11 +60,26 @@ void MainView::showEvent(QShowEvent*)
     game.showObjects();
 }
 
+void MainView::mouseDoubleClickEvent(QMouseEvent *e)
+{
+    if (e->button() == Qt::RightButton)
+    {
+        QPointF p = game.view->mapFromGlobal(QCursor::pos());
+        QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
+        int selX = selectedCell.x();
+        int selY = selectedCell.y();
+        if (game.cannons[selX][selY])
+            game.cannons[selX][selY]->upgrade();
+    }     
+}
+
 void MainView::mousePressEvent(QMouseEvent *eventPress)
 {
     QPointF p = game.view->mapFromGlobal(QCursor::pos());
     QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
-    
+    int selX = selectedCell.x();
+    int selY = selectedCell.y();
+    /*
     if (eventPress->button() == Qt::RightButton){
         if (game.selectedCell != selectedCell){
             game.selectCell(selectedCell);
@@ -79,25 +91,87 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
             game.block->show();            
             return;
         }
-        QPointF cellCenterGlobal(game.scene->toGlobalPoint(game.cellCenter(selectedCell)));
-        qreal angle = helper::calcAngle(cellCenterGlobal, p);
-        game.addCannon(std::make_shared<CFastCannon>(&game,
+        if (!game.cannons[selX][selY])
+        {
+            QPointF cellCenterGlobal(game.scene->toGlobalPoint(game.cellCenter(selectedCell)));
+            qreal angle = helper::calcAngle(cellCenterGlobal, p);
+            game.addCannon(std::make_shared<CFastCannon>(&game,
                                                      selectedCell,
                                                      angle));
+        }
+        else
+        {
+            game.cannons[selX][selY] = nullptr;
+        }
         game.block->hide();
         game.deselectCell();
+    }*/
+    
+    if (eventPress->button() == Qt::LeftButton)
+    {
+        if (selectedCell == game.selectedCell)
+        {
+            game.deselectCell();
+            if (!game.cannons[selX][selY])
+            {
+                QPointF cellCenterGlobal(game.scene->toGlobalPoint(game.cellCenter(selectedCell)));
+                qreal angle = helper::calcAngle(cellCenterGlobal, p);
+                game.addCannon(std::make_shared<CFastCannon>(&game, selectedCell, angle));
+                game.addEnemy(std::make_shared<CFastEnemy>(&game));
+                game.selectCell(selectedCell);
+            }
+            return;
+        }
+        
+        game.selectCell(selectedCell);
+        /*
+        if (!game.cannons[selX][selY])
+            game.addEnemy(std::make_shared<CFastEnemy>(&game));
+        
+        if (game.cannons[selX][selY])
+        {
+            if (selectedCell != game.selectedCell && 
+                    game.selectedCell != QPoint(-1, -1))
+            {
+                if (game.cannons[game.selectedCell.x()][game.selectedCell.y()])
+                {
+                    game.cannons[game.selectedCell.x()][game.selectedCell.y()]->hideRadius();
+                    game.selectedCell = QPoint(-1, -1);
+                }
+                else
+                {
+                    game.block->hide();
+                    game.deselectCell();
+                }
+                game.cannons[selX][selY]->showRadius();
+            }
+            else if (selectedCell == game.selectedCell)
+            {
+                game.cannons[game.selectedCell.x()][game.selectedCell.y()]->hideRadius();
+                game.selectedCell = QPoint(-1, -1);
+            }
+        }
+        
+        if (game.cannons[selX][selY])
+        {
+            game.cannons[selX][selY]->showRadius();
+            if (game.selectedCell != QPoint(-1, -1) && game.cannons[game.selectedCell.x()][game.selectedCell.y()])
+            {
+                game.cannons[game.selectedCell.x()][game.selectedCell.y()]->hideRadius();
+                game.selectedCell = QPoint(-1, -1);
+            }
+            game.selectedCell = selectedCell;
+        }
+        else if (game.selectedCell != QPoint(-1, -1))
+        {
+            if (game.cannons[game.selectedCell.x()][game.selectedCell.y()])
+            {
+                game.cannons[game.selectedCell.x()][game.selectedCell.y()]->hideRadius();
+            }
+            
+        }*/
+        
+        
     }
     
-    if (selectedCell != game.hintedCell && game.cannons[game.hintedCell.x()][game.hintedCell.y()])
-        game.cannons[game.hintedCell.x()][game.hintedCell.y()]->hideRadius();
-        
-    if (game.cannons[selectedCell.x()][selectedCell.y()])
-    {
-        game.cannons[selectedCell.x()][selectedCell.y()]->showRadius();
-        game.hintedCell = selectedCell;
-    }
-
-                 
-    /*if (eventPress->button() == Qt::LeftButton)
-        game.addEnemy(std::make_shared<CFastEnemy>(&game));*/
 }

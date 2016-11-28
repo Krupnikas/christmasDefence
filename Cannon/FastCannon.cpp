@@ -11,31 +11,72 @@ CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
     this->game = game;
     this->zOrder = 2;
     
-    this->size = QSize(CellSize, CellSize);
-    this->pixmap = &game->r->fast_cannon_2;
-    position = game->scene->addPixmap(size, pixmap);
+    this->textureSize = QSize(CellSize, CellSize);
+    this->pixmap = &game->r->fast_cannon_1;
+    position = game->scene->addPixmap(textureSize, pixmap);
     
     this->leftTop = game->cellLeftTop(cell);
     this->center = game->cellCenter(cell);
     
     //ICannon fields
+    this->sizeType = SMALL;
     this->gameCell = cell;
-    this->rotationSpeed = FastCannonRotation;
-    this->fireSpeed = FastCannonInterval;
-    this->globalRadius = FastCannonRadius;
-    this->radiusItem = game->scene->addPixmap(QSizeF(2 * FastCannonRadius,
-                                                     2 * FastCannonRadius),
+    this->rotationSpeed = FastCannonSmRotation;
+    this->fireSpeed = FastCannonSmFireSpeed;
+    this->fireRadius = FastCannonSmRadius;
+    this->radiusItem = game->scene->addPixmap(QSizeF(2 * fireRadius,
+                                                     2 * fireRadius),
                                                      &game->r->entireRadius);
     hideRadius();
 }
 
 CFastCannon::~CFastCannon(){}
 
-void CFastCannon::fire(qreal angle)
+void CFastCannon::fire()
 {
-    std::shared_ptr<IBullet> bullet = std::make_shared<CFastBullet>(game, center, angle);
+    std::shared_ptr<IBullet> bullet = 
+            std::make_shared<CFastBullet>(game, center, this->angle, sizeType);
     game->bullets.push_back(bullet);
     bullet->draw();
     bullet->show();
-    //connect(game->gameTimer, SIGNAL(timeout()), bullet.get(), SLOT(onTimer()));
+}
+
+void CFastCannon::upgrade()
+{
+    ICannon::upgrade();
+    
+    this->pixmap = 
+            helper::choose(
+                            sizeType, 
+                            &game->r->fast_cannon_1, 
+                            &game->r->fast_cannon_2, 
+                            &game->r->fast_cannon_3);
+                
+    game->scene->removeItem(position);
+    position = game->scene->addPixmap(textureSize, pixmap);
+    
+    
+    rotationSpeed = 
+            helper::choose(sizeType, 
+                            FastCannonSmRotation,
+                            FastCannonMidRotation,
+                            FastCannonBigRotation);
+    fireSpeed = 
+            helper::choose(sizeType,
+                            FastCannonSmFireSpeed,
+                            FastCannonMidFireSpeed,
+                            FastCannonBigFireSpeed);
+    fireRadius = 
+            helper::choose(sizeType,
+                            FastCannonSmRadius,
+                            FastCannonMidRadius,
+                            FastCannonBigRadius);
+    game->scene->removeItem(radiusItem);
+    radiusItem = game->scene->addPixmap(QSizeF(2 * fireRadius,
+                                                     2 * fireRadius),
+                                                     &game->r->entireRadius);
+    game->deselectCell();
+    game->selectCell(gameCell);
+    draw();
+    show();
 }

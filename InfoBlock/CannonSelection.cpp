@@ -7,13 +7,13 @@ CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
     this->game = game;
     this->zOrder = 5;
     
-    this->size = QSize(LocalWidth / 2 - OffsetX - 2 * CannonSelectionOffsetX,
+    this->textureSize = QSize(LocalWidth / 2 - OffsetX - 2 * CannonSelectionOffsetX,
                        LocalHeight - 2 * OffsetY - 2 *CannonSelectionOffsetY);    
     this->pixmap = &game->r->cannonSelectionBackground;
-    this->position = game->scene->addPixmap(size, pixmap);
+    this->position = game->scene->addPixmap(textureSize, pixmap);
     
     updatePosition(selectedCell);
-    this->center = QPointF(leftTop.x() + size.width() / 2, leftTop.y() + size.height() + 2);
+    this->center = QPointF(leftTop.x() + textureSize.width() / 2, leftTop.y() + textureSize.height() + 2);
     
 }
 

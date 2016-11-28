@@ -51,18 +51,18 @@ public:
     Movements(){}
     Movements(CGame *game);
     QPointF move();
-    QPointF curCenter();
-    qreal curAngle();
-    int iterNum(qreal step);
-    qreal getDistanceToFinish();
-
-    QPoint getCurrentGameCell();
-    QPoint getNextGameCell();
-
     void updateNext();
     
+    QPointF curCenter() const;
+    qreal curAngle() const;
+    int iterNum(qreal step) const;
+    qreal getDistanceToFinish() const;
+    QPoint getCurrentGameCell() const;
+    QPoint getNextGameCell() const;
+
+    
 private:
-    bool isCenterDirected();
+    bool isCenterDirected() const;
     QPoint vectorToCenter();
     QPoint vectorToNext();
     

@@ -31,7 +31,7 @@ qreal calcAngle(qreal x1, qreal y1, qreal x2, qreal y2)
     return 360 - line1.angleTo(line2);
 }
 
-qreal calcAngle(QPointF p1, QPointF p2, qreal angle1)
+qreal calcAngle(QPointF p1, QPointF p2, const qreal &angle1)
 {
     QPointF p3(addVector(p1, 10, angle1));
     QLineF line1(p1, p3);
@@ -140,7 +140,7 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
     return QPoint(-1, -1);
 }
 
-QPointF addVector(QPointF point, qreal len, qreal angle)
+QPointF addVector(QPointF point, qreal len, const qreal &angle)
 {
     qreal x = point.x() + qSin(qDegreesToRadians(angle)) * len;
     qreal y = point.y() - qCos(qDegreesToRadians(angle)) * len;
@@ -151,10 +151,6 @@ qreal manhattanLength(QPointF p1, QPointF p2)
 {
     return pow(pow(abs(p1.x() - p2.x()), 2.0) + pow(abs(p1.y() - p2.y()), 2.0), 0.5);
 }
-
-
-
-
 
 
 }

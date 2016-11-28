@@ -48,7 +48,6 @@ HEADERS  += mainview.h \
     Cannon/FastCannon.h \
     Game/Scene.h \
     Game/Resource.h \
-    Game/Metrics.h \
     Game/Helper.h \
     Bullet/FastBullet.h \
     Game/IGameObject.h \
@@ -59,7 +58,11 @@ HEADERS  += mainview.h \
     InfoBlock/WaveInfo.h \
     InfoBlock/ControlButtons.h \
     InfoBlock/PauseWindow.h \
-    InfoBlock/CannonSelection.h
+    InfoBlock/CannonSelection.h \
+    Metrics/Metrics.h \
+    Metrics/CannonMetrics.h \
+    Metrics/EnemyMetrics.h \
+    Metrics/BulletMetrics.h
 
 FORMS    += mainview.ui
 

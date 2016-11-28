@@ -24,9 +24,9 @@
 #include <vector>
 #include <string>
 
-#include <Game/Metrics.h>
+#include <Metrics/Metrics.h>
 
-enum CannonType {
+enum SizeType {
     SMALL, MEDIUM, BIG
 };
 

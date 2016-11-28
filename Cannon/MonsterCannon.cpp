@@ -10,7 +10,7 @@ CMonsterCannon::~CMonsterCannon()
     
 }
 
-void CMonsterCannon::fire(qreal angle)
+void CMonsterCannon::fire()
 {
     
 }

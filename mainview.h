@@ -31,7 +31,8 @@ public:
     #ifdef TEST
         void resizeEvent(QResizeEvent *);
     #endif
-    virtual void showEvent(QShowEvent * event);
+    virtual void showEvent(QShowEvent *event);
+    virtual void mouseDoubleClickEvent(QMouseEvent *e);
     virtual void mousePressEvent(QMouseEvent *eventPress);
     
 private:

@@ -10,7 +10,7 @@ class IGameObject : public QObject
     
 public:
     IGameObject();
-    IGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF size, QPixmap *pixmap, CGame *game);
+    IGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF textureSize, QPixmap *pixmap, CGame *game);
     virtual ~IGameObject();
     
     void scaleItem();
@@ -32,6 +32,8 @@ public:
     qreal getZOrder() const;
     void setZOrder(const qreal &value);
     
+    QSizeF getTextureSize() const;
+    
     QSizeF getSize() const;
     
 protected:
@@ -41,6 +43,7 @@ protected:
     
     QPointF center;
     QPointF leftTop;
+    QSizeF textureSize;
     QSizeF size;
     
     QPixmap *pixmap;

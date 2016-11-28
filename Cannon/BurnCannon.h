@@ -10,7 +10,7 @@ public:
     
     virtual ~CBurnCannon();
     
-    virtual void fire(qreal angle) override;
+    virtual void fire() override;
     
 public slots:
     virtual void onTimer(){}

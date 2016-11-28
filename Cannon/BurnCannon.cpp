@@ -10,7 +10,7 @@ CBurnCannon::~CBurnCannon()
     
 }
 
-void CBurnCannon::fire(qreal angle)
+void CBurnCannon::fire()
 {
     
 }

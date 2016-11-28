@@ -10,6 +10,6 @@ public:
     CFastCannon(CGame *game, QPoint cell, double angle);
     ~CFastCannon();
     
-    virtual void fire(qreal angle) override;
-    
+    virtual void fire() override;
+    virtual void upgrade() override;
 };

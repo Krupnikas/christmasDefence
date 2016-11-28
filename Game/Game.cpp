@@ -5,8 +5,10 @@
 #include <Game/Helper.h>
 #include <InfoBlock/CannonSelection.h>
 
-CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view), block(nullptr)
+
+CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view)
 {
+    block = std::make_shared<CCannonSelection>(this, selectedCell);
     cannons.resize(CellNumX);
     distances.resize(CellNumX);
     for (int i = 0; i < CellNumX; ++i)
@@ -25,6 +27,11 @@ CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view
 CGame::~CGame()
 {
     
+}
+
+bool CGame::isGameCell(QPoint cell)
+{
+    return cell.x() >= 0 && cell.x() < CellNumX && cell.y() >= 0 && cell.y() < CellNumY;
 }
 
 bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
@@ -118,7 +125,7 @@ void CGame::scaleObjects()
     {
         scene->removeItem(selectedCellItem);
         selectedCellItem = nullptr;
-        selectCell(selectedCell.x(), selectedCell.y());
+        selectCell(selectedCell);
     }
     
     scene->updateDistances(distances);
@@ -134,10 +141,6 @@ void CGame::hideObjects()
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
                 cannons[i][j]->hide();
-    if (block)
-        block->hide();
-    if (selectedCellItem)
-        selectedCellItem->hide();
 }
 
 void CGame::showObjects()
@@ -150,45 +153,59 @@ void CGame::showObjects()
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
                 cannons[i][j]->show();
-    if (block)
-        block->show();
-    if (selectedCellItem)
-        selectedCellItem->show();    
 }
 
 void CGame::selectCell(QPoint pos)
 {
-    selectCell(pos.x(), pos.y());
-}
-
-void CGame::selectCell(int i, int j)
-{
-    selectedCell = QPoint(i, j);
-
-    int x = OffsetX + i * CellSize;
-    int y = OffsetY + j * CellSize;
-    QSizeF size(CellSize, CellSize);
-
-    if (!selectedCellItem)
-        selectedCellItem = scene->addPixmap(size, &(r->cellSelected));
+    if (!isGameCell(pos))
+    {
+        qDebug() << "CGame: selecteCell: cell is outside the field";
+        return;
+    }
+    if (selectedCell != UnselCell)
+        deselect_cell_();
     
-    scene->positionItem(QPointF(x, y), size, 0, 0.5, selectedCellItem);
-    selectedCellItem->setFlag(QGraphicsItem::ItemHasNoContents, false);
-    selectedCellItem->show();
+    if (selectedCell == pos)
+        return;
+    
+    int selX = pos.x();
+    int selY = pos.y();
+    if (cannons[selX][selY])
+        cannons[selX][selY]->showRadius();
+    else
+    {
+        block->updatePosition(pos);
+        block->draw();
+        block->show();
+        int x = OffsetX + selX * CellSize;
+        int y = OffsetY + selY * CellSize;
+        QSizeF size(CellSize, CellSize);
+        if (!selectedCellItem)
+            selectedCellItem = scene->addPixmap(size, &(r->cellSelected));
+        
+        scene->positionItem(QPointF(x, y), size, 0, 0.5, selectedCellItem);
+        selectedCellItem->setFlag(QGraphicsItem::ItemHasNoContents, false);
+        selectedCellItem->show();
+    }
+    selectedCell = pos;
 }
 
 void CGame::deselectCell()
 {
-    selectedCellItem->setFlag(QGraphicsItem::ItemHasNoContents, false);
-    selectedCellItem->hide();
+    deselect_cell_();
     selectedCell = QPoint(-1, -1);
 }
 
 QPoint CGame::findNearestCell(QPointF from)
 {
+    QPoint nearestCell(-1, -1);
+    nearestCell.setX((from.x() - OffsetX) / CellSize);
+    nearestCell.setY((from.y() - OffsetY) / CellSize);
+    /*
     double minDist = CellSize;
     double manhattanLength;
-    QPoint nearestCell(-1, -1);
+   
+    
     for (int i = 0; i < CellNumX; ++i)
     {
         for (int j = 0; j < CellNumY; ++j)
@@ -204,7 +221,7 @@ QPoint CGame::findNearestCell(QPointF from)
                     nearestCell.setY(j);
             }
         }
-    }
+    }*/
     return nearestCell;
 }
 
@@ -219,6 +236,8 @@ void CGame::onPositionTimer()
             else
                 lastBulletInd++;
         }
+    for (int i = lastBulletInd; i < bullets.size(); ++i)
+        bullets[i]->remove();
     if (lastBulletInd < bullets.size())
         bullets.resize(lastBulletInd);
     
@@ -231,13 +250,15 @@ void CGame::onPositionTimer()
             else
                 lastEnemyInd++;
         }
+    for (int i = lastEnemyInd; i < enemies.size(); ++i)
+        enemies[i]->remove();
     if (lastEnemyInd < enemies.size())
         enemies.resize(lastEnemyInd);
     
     static QTime time;
     static int frameCnt=0;
     static double timeElapsed=0;
-    // fps counting...
+    // tps counting...
     frameCnt++;
     timeElapsed += time.elapsed();
     time.restart();
@@ -260,12 +281,6 @@ void CGame::onDrawTimer()
             {
                 cannons[i][j]->count();                
                 cannons[i][j]->rotate();
-/*                QPointF center = cannons[i][j]->getCenter();
-                QPoint p = view->mapFromGlobal(QCursor::pos());
-                int x1 = scene->toGlobalX(center.x());
-                int y1 = scene->toGlobalY(center.y());
-                cannons[i][j]->setAngle(helper::calcAngle(x1, y1, p.x(), p.y()));
-                cannons[i][j]->draw();*/
             }
     
     static QTime time;
@@ -282,6 +297,22 @@ void CGame::onDrawTimer()
        frameCnt = 0;
     }
     scene->updateFPS(fps, tps);
+}
+
+void CGame::deselect_cell_()
+{
+    int selX = selectedCell.x();
+    int selY = selectedCell.y();
+    if (selectedCell == UnselCell || !cannons[selX][selY])
+    {
+        block->hide();
+        selectedCellItem->hide();
+        selectedCellItem->setFlag(QGraphicsItem::ItemHasNoContents, true);
+    }
+    else
+    {
+        cannons[selX][selY]->hideRadius();
+    }
 }
 
 

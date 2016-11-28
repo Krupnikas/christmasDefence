@@ -14,12 +14,12 @@ public:
     virtual bool move();
     
     bool isDead() const;
-    virtual void die();
+    void hit(int hpDiff);
     
     qreal getDistanceToFinish();
     
-    QPoint getCurrentGameCell();
-    QPoint getNextGameCell();
+    QPoint getCurrentGameCell() const;
+    QPoint getNextGameCell() const;
 
     virtual void updateDistances();
     
@@ -27,5 +27,7 @@ public:
 protected:
     std::shared_ptr<mov::Movements> movements;
     int moveIter;
+    
+    int hp;
     bool dead;
 };

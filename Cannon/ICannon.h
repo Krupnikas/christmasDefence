@@ -14,7 +14,8 @@ public:
     ICannon();
     virtual ~ICannon();
 
-    virtual void fire(qreal angle);
+    virtual void fire();
+    virtual void upgrade();
     
     void showRadius();
     void hideRadius();
@@ -34,17 +35,21 @@ public:
 
     
 protected:
+    SizeType sizeType;
     QPoint gameCell;
     qreal hp;
     qreal rotationSpeed;
     int fireSpeed;
-    qreal globalRadius;
+    qreal fireRadius;
     std::shared_ptr<QGraphicsItem> radiusItem;
     
     std::shared_ptr<IEnemy> curEnemy;
     
 private:
-    int counter = 0;
+    bool reachingEnemy(std::shared_ptr<IEnemy> enemy);
+    void findEnemy();
     
+private:
+    int counter = 0;
     const int Epsilon = 0.5;
 };

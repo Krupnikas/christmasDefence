@@ -8,7 +8,7 @@ IGameObject::IGameObject(qreal angle, qreal zOrder, QPointF center, QPointF left
     zOrder(zOrder),
     center(center),
     leftTop(leftTop),
-    size(size),
+    textureSize(size),
     pixmap(pixmap),
     game(game)
 {}
@@ -19,12 +19,12 @@ void IGameObject::scaleItem()
 {
     if (position)
         game->scene->removeItem(position);
-    position = game->scene->addPixmap(size, pixmap);
+    position = game->scene->addPixmap(textureSize, pixmap);
 }
 
 void IGameObject::draw()
 {
-    game->scene->positionItem(leftTop, size, angle, zOrder, position);
+    game->scene->positionItem(leftTop, textureSize, angle, zOrder, position);
     //show();
 }
 
@@ -85,6 +85,11 @@ void IGameObject::setZOrder(const qreal &value)
 {
     zOrder = value;
     position->setZValue(value);
+}
+
+QSizeF IGameObject::getTextureSize() const
+{
+    return textureSize;
 }
 
 QSizeF IGameObject::getSize() const

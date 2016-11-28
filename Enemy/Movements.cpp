@@ -95,7 +95,7 @@ QPointF Movements::move()
     return curCenter();
 }
 
-QPointF Movements::curCenter()
+QPointF Movements::curCenter() const
 {
     QPointF curPoint;
     if (curGameCell.x() < 0)
@@ -109,12 +109,12 @@ QPointF Movements::curCenter()
     return curPoint;
 }
 
-qreal Movements::curAngle()
+qreal Movements::curAngle() const
 {
     return helper::calcAngle(QPointF(0, 0), queue.curSum);
 }
 
-int Movements::iterNum(qreal step)
+int Movements::iterNum(qreal step) const
 {
     qreal pointsOnMove = static_cast<qreal>(QueueSize) * CellSize / LocalSize;
     if (step < pointsOnMove)
@@ -126,7 +126,7 @@ int Movements::iterNum(qreal step)
     return static_cast<int>(step / pointsOnMove);
 }
 
-qreal Movements::getDistanceToFinish()
+qreal Movements::getDistanceToFinish() const
 {
     if (curGameCell.x() < 0)
     {
@@ -141,37 +141,34 @@ qreal Movements::getDistanceToFinish()
     qreal dist = game->distances[curGameCell.x()][curGameCell.y()];
     if (isCenterDirected())
     {
-        dist += half;
-        dist += abs(CellCenter.x() - curPos.x()) + abs(CellCenter.y() - curPos.y());
+        dist += half / curLocalCell.localRect.width();
+        dist += (abs(CellCenter.x() - curPos.x()) + 
+                 abs(CellCenter.y() - curPos.y())) / curLocalCell.localRect.width();
     }
     else
     {
-        dist += half - (abs(CellCenter.x() - curPos.x()) + abs(CellCenter.y() - curPos.y()));
+        dist += (half - (abs(CellCenter.x() - curPos.x()) + 
+                         abs(CellCenter.y() - curPos.y())))  / curLocalCell.localRect.width();
     }
     return dist;
 }
 
-QPoint Movements::getCurrentGameCell()
+QPoint Movements::getCurrentGameCell() const
 {
     return curGameCell;
 }
 
-QPoint Movements::getNextGameCell()
+QPoint Movements::getNextGameCell() const
 {
     return nextGameCell;
 }
 
 void Movements::updateNext()
 {
-    nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
-    
-    if (nextGameCell.x() < 0 || curGameCell.x() >= CellNumX)
-        nextLocalCell = EdgeLocalCell;
-    else
-        nextLocalCell = NormalLocalCell;
+
 }
 
-bool Movements::isCenterDirected()
+bool Movements::isCenterDirected() const
 {
     if (curPos.x() != half && curPos.y() != half)
 
@@ -251,7 +248,12 @@ void Movements::updateCur()
         else
             curLocalCell = NormalLocalCell;
         
-        updateNext();
+        nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
+        
+        if (nextGameCell.x() < 0 || curGameCell.x() >= CellNumX)
+            nextLocalCell = EdgeLocalCell;
+        else
+            nextLocalCell = NormalLocalCell;
     }
 }
 
