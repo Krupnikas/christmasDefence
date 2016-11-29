@@ -18,5 +18,6 @@
         <file>res/christmas/fast_cannon_1.png</file>
         <file>res/christmas/hp_background.png</file>
         <file>res/christmas/hp_cur.png</file>
+        <file>res/christmas/clo.png</file>
     </qresource>
 </RCC>

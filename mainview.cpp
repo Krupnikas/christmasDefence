@@ -57,6 +57,8 @@ void MainView::showEvent(QShowEvent*)
     
     connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));
     connect(game.drawTimer, SIGNAL(timeout()), &game, SLOT(onDrawTimer()));
+    connect(this, SIGNAL(mousePressed(QMouseEvent*)),
+            &game, SLOT(onMousePressed(QMouseEvent*)));
     game.showObjects();
 }
 
@@ -75,6 +77,8 @@ void MainView::mouseDoubleClickEvent(QMouseEvent *e)
 
 void MainView::mousePressEvent(QMouseEvent *eventPress)
 {
+    emit mousePressed(eventPress);
+
     QPointF p = game.view->mapFromGlobal(QCursor::pos());
     QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
     int selX = selectedCell.x();

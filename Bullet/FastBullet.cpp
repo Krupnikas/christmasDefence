@@ -7,6 +7,7 @@
 CFastBullet::CFastBullet(CGame *game, QPointF center, double angle, SizeType type)
 {
     //IGameObject fields
+    this->label = "Fast Bullet";
     this->angle = angle;
     this->game = game;
     this->zOrder = 1;

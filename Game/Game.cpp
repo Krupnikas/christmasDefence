@@ -119,6 +119,7 @@ void CGame::scaleObjects()
         block->scaleItem();
         block->draw();
     }
+
     if (selectedCellItem)
     {
         scene->removeItem(selectedCellItem);
@@ -295,6 +296,11 @@ void CGame::onDrawTimer()
        frameCnt = 0;
     }
     scene->updateFPS(fps, tps);
+}
+
+void CGame::onMousePressed(QMouseEvent *pressEvent)
+{
+    emit mousePressed(pressEvent);
 }
 
 void CGame::deselect_cell_()

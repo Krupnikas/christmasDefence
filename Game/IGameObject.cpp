@@ -13,7 +13,9 @@ IGameObject::IGameObject(qreal angle, qreal zOrder, QPointF center, QPointF left
     game(game)
 {}
 
-IGameObject::~IGameObject(){}
+IGameObject::~IGameObject(){
+    qDebug() <<  label << " deleted";
+}
 
 void IGameObject::scaleItem()
 {

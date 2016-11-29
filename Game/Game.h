@@ -60,10 +60,14 @@ public:
 
     QPoint findNearestCell(QPointF from);
 
+signals:
+    void mousePressed(QMouseEvent *pressEvent);
+
+
 public slots:
     virtual void onPositionTimer();
     virtual void onDrawTimer();
-    
+    virtual void onMousePressed(QMouseEvent *pressEvent);
 
 //private methods
 private:

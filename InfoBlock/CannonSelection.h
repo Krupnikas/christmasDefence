@@ -1,6 +1,7 @@
 #pragma once
 
 #include <InfoBlock/IInfoBlock.h>
+#include <Game/Button.h>
 
 class CCannonSelection : public IInfoBlock
 {
@@ -8,10 +9,11 @@ class CCannonSelection : public IInfoBlock
     
 public:
 
-    
     CCannonSelection(CGame *game, QPoint selectedCell);
     ~CCannonSelection();
     
+    std::shared_ptr<CButton> closeButton;
+
     void updatePosition(QPoint selectedCell);
     
 };

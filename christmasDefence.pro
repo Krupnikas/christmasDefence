@@ -38,6 +38,7 @@ SOURCES += main.cpp\
     InfoBlock/CannonSelection.cpp \
     Enemy/CHpCurrent.cpp \
     Enemy/CHpBackground.cpp
+    Game/Button.cpp
 
 HEADERS  += mainview.h \
     Bullet/IBullet.h \
@@ -65,8 +66,12 @@ HEADERS  += mainview.h \
     Metrics/CannonMetrics.h \
     Metrics/EnemyMetrics.h \
     Metrics/BulletMetrics.h \
+<<<<<<< HEAD
     Enemy/CHpCurrent.h \
     Enemy/CHpBackground.h
+=======
+    Game/Button.h
+>>>>>>> 738e0f3affd763c1fb3ee60e8fb3ffab118083de
 
 FORMS    += mainview.ui
 
@@ -74,4 +79,5 @@ RESOURCES += \
     qresource.qrc
 
 DISTFILES += \
-    android-sources/AndroidManifest.xml
+    android-sources/AndroidManifest.xml \
+    res/christmas/clo.png
