@@ -57,7 +57,8 @@ void MainView::showEvent(QShowEvent*)
     
     connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));
     connect(game.drawTimer, SIGNAL(timeout()), &game, SLOT(onDrawTimer()));
-    //connect(this, SIGNAL(mousePressed(QMouseEvent*)),&game, SLOT(onMousePressed(QMouseEvent*)));
+    connect(this, SIGNAL(mousePressed(QMouseEvent*)),
+            &game, SLOT(onMousePressed(QMouseEvent*)));
     game.showObjects();
 }
 

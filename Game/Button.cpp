@@ -4,6 +4,13 @@ CButton::CButton(){}
 
 CButton::CButton(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, qreal Angle)
 {
+    init(ButtonRect, Pixmap, Game, ZOrder, Angle);
+}
+
+CButton::~CButton(){}
+
+void CButton::init(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, qreal Angle)
+{
     this->buttonRect = ButtonRect;
     this->textureSize = QSizeF(buttonRect.width(),
                          buttonRect.height());
@@ -20,8 +27,6 @@ CButton::CButton(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, q
     connect(game, SIGNAL(mousePressed(QMouseEvent*)),
             this, SLOT(onMousePressed(QMouseEvent*)));
 }
-
-CButton::~CButton(){}
 
 void CButton::onMousePressed(QMouseEvent *event)
 {

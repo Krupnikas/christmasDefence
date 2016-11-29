@@ -11,8 +11,6 @@ public:
     CCannonSelection(CGame *game, QPoint selectedCell);
     ~CCannonSelection();
     
-    std::shared_ptr<CButton> closeButton;
-
     void updatePosition(QPoint selectedCell);
     
 };
