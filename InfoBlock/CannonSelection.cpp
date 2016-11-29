@@ -14,7 +14,6 @@ CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
     
     updatePosition(selectedCell);
     this->center = QPointF(leftTop.x() + textureSize.width() / 2, leftTop.y() + textureSize.height() + 2);
-    
 }
 
 CCannonSelection::~CCannonSelection()

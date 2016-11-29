@@ -18,9 +18,6 @@ MainView::MainView(QWidget *parent) :
     QGLFormat format = QGLFormat(QGL::DirectRendering);
     QGLWidget *glWidget = new QGLWidget(format);
     ui->graphicsView->setViewport(glWidget);
-
-    connect(this, SIGNAL(mousePressed(QMouseEvent*)),
-            &game, SLOT(onMousePressed(QMouseEvent*)));
     
     //setAttribute(Qt::WA_TranslucentBackground, true);
     setAttribute(Qt::WA_TranslucentBackground);
@@ -60,6 +57,7 @@ void MainView::showEvent(QShowEvent*)
     
     connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));
     connect(game.drawTimer, SIGNAL(timeout()), &game, SLOT(onDrawTimer()));
+    //connect(this, SIGNAL(mousePressed(QMouseEvent*)),&game, SLOT(onMousePressed(QMouseEvent*)));
     game.showObjects();
 }
 

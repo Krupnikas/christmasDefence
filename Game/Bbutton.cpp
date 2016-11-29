@@ -1,5 +1,7 @@
 #include "Button.h"
 
+CButton::CButton(){}
+
 CButton::CButton(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, qreal Angle)
 {
     buttonRect = ButtonRect;
@@ -15,6 +17,11 @@ CButton::CButton(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, q
     angle = Angle;
 
     connect(game, SIGNAL(mousePressed(QMouseEvent*)), this, SLOT(onMousePressed(QMouseEvent*)));
+}
+
+CButton::~CButton()
+{
+    disconnect(game, SIGNAL(mousePressed(QMouseEvent*)), this, SLOT(onMousePressed(QMouseEvent*)));
 }
 
 void CButton::onMousePressed(QMouseEvent *event)
