@@ -34,6 +34,9 @@ public:
     virtual void showEvent(QShowEvent *event);
     virtual void mouseDoubleClickEvent(QMouseEvent *e);
     virtual void mousePressEvent(QMouseEvent *eventPress);
+
+signals:
+    void mousePressed(QMouseEvent *eventPress);
     
 private:
 
