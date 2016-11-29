@@ -3,6 +3,7 @@
 CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
 {
     //IGameObject fields
+    this->label = "Cannon Selection Block";
     this->angle = 0;
     this->game = game;
     this->zOrder = 5;

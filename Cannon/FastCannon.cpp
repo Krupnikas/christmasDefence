@@ -7,6 +7,7 @@
 CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
 {
     //IGameObject fields
+    this->label = "Fast Cannon";
     this->angle = angle;
     this->game = game;
     this->zOrder = 2;

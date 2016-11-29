@@ -121,6 +121,7 @@ void CGame::scaleObjects()
         block->scaleItem();
         block->draw();
     }
+
     if (selectedCellItem)
     {
         scene->removeItem(selectedCellItem);

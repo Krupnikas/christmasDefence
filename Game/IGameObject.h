@@ -38,6 +38,8 @@ public:
     
 protected:
     
+    QString label = "";
+
     qreal angle;
     qreal zOrder;
     

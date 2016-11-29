@@ -11,6 +11,7 @@ CFastEnemy::CFastEnemy(CGame *game)
     this->dead = false;
     
     //IGameObject fields
+    this->label = "Fast Enimie";
     this->angle = movements->curAngle();
     this->center = movements->curCenter();
     this->leftTop.setX(center.x() - textureSize.width() / 2);
