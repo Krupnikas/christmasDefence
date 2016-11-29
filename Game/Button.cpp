@@ -4,6 +4,7 @@ CButton::CButton(){}
 
 CButton::CButton(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, qreal Angle)
 {
+    qDebug() << "Button Created";
     init(ButtonRect, Pixmap, Game, ZOrder, Angle);
 }
 
@@ -11,6 +12,7 @@ CButton::~CButton(){}
 
 void CButton::init(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, qreal Angle)
 {
+    this->label = "Button";
     this->buttonRect = ButtonRect;
     this->textureSize = QSizeF(buttonRect.width(),
                          buttonRect.height());
