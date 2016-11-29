@@ -14,11 +14,11 @@ public:
     virtual ~IGameObject();
     
     void scaleItem();
-    void draw();
     void remove();
     
-    void hide();
-    void show();
+    virtual void draw();
+    virtual void hide();
+    virtual void show();
     bool isVisible();
     
     QPointF getCenter() const;
@@ -33,8 +33,17 @@ public:
     void setZOrder(const qreal &value);
     
     QSizeF getTextureSize() const;
+    void setTextureSize(const QSizeF &value);
     
     QSizeF getSize() const;
+    void setSize(const QSizeF &value);
+    
+    QPointF getLeftTop() const;
+    void setLeftTop(const QPointF &value);
+    
+    QPixmap *getPixmap() const;
+    
+    CGame *getGame() const;
     
 protected:
     

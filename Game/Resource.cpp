@@ -25,6 +25,9 @@ R::R()
     fast_enemy_1 = QPixmap(get("fast_enemy_1"));
     fast_enemy_2 = QPixmap(get("fast_enemy_2"));
     fast_enemy_3 = QPixmap(get("fast_enemy_3"));
+    
+    hp_cur = QPixmap(get("hp_cur"));
+    hp_background = QPixmap(get("hp_background"));
 }
 
 QString R::get(const char *val)

@@ -57,6 +57,9 @@ struct R
     QPixmap fast_enemy_2;
     QPixmap fast_enemy_3;
     
+    QPixmap hp_cur;
+    QPixmap hp_background;
+    
     QString get(const char *val);
     
     R();

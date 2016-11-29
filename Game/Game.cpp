@@ -53,8 +53,6 @@ bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
     }
     
     updateDistances();
-    for (size_t i = 0; i < enemies.size(); ++i)
-        enemies[i]->updateDistances();
     scene->updateDistances(distances);
     cannon->draw();
     cannon->show();
@@ -236,7 +234,7 @@ void CGame::onPositionTimer()
             else
                 lastBulletInd++;
         }
-    for (int i = lastBulletInd; i < bullets.size(); ++i)
+    for (size_t i = lastBulletInd; i < bullets.size(); ++i)
         bullets[i]->remove();
     if (lastBulletInd < bullets.size())
         bullets.resize(lastBulletInd);
@@ -250,7 +248,7 @@ void CGame::onPositionTimer()
             else
                 lastEnemyInd++;
         }
-    for (int i = lastEnemyInd; i < enemies.size(); ++i)
+    for (size_t i = lastEnemyInd; i < enemies.size(); ++i)
         enemies[i]->remove();
     if (lastEnemyInd < enemies.size())
         enemies.resize(lastEnemyInd);

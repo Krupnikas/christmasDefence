@@ -96,3 +96,35 @@ QSizeF IGameObject::getSize() const
 {
     return size;
 }
+
+QPointF IGameObject::getLeftTop() const
+{
+    return leftTop;
+}
+
+void IGameObject::setLeftTop(const QPointF &value)
+{
+    leftTop = value;
+}
+
+QPixmap *IGameObject::getPixmap() const
+{
+    return pixmap;
+}
+
+CGame *IGameObject::getGame() const
+{
+    return game;
+}
+
+void IGameObject::setTextureSize(const QSizeF &value)
+{
+    textureSize = value;
+}
+
+void IGameObject::setSize(const QSizeF &value)
+{
+    size = value;
+}
+
+

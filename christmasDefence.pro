@@ -35,7 +35,9 @@ SOURCES += main.cpp\
     InfoBlock/WaveInfo.cpp \
     InfoBlock/ControlButtons.cpp \
     InfoBlock/PauseWindow.cpp \
-    InfoBlock/CannonSelection.cpp
+    InfoBlock/CannonSelection.cpp \
+    Enemy/CHpCurrent.cpp \
+    Enemy/CHpBackground.cpp
 
 HEADERS  += mainview.h \
     Bullet/IBullet.h \
@@ -62,7 +64,9 @@ HEADERS  += mainview.h \
     Metrics/Metrics.h \
     Metrics/CannonMetrics.h \
     Metrics/EnemyMetrics.h \
-    Metrics/BulletMetrics.h
+    Metrics/BulletMetrics.h \
+    Enemy/CHpCurrent.h \
+    Enemy/CHpBackground.h
 
 FORMS    += mainview.ui
 
