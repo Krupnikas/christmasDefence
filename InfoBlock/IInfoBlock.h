@@ -2,6 +2,7 @@
 
 #include <Game/IGameObject.h>
 #include <Game/Game.h>
+#include <Game/Button.h>
 
 class CGame;
 

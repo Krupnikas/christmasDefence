@@ -8,6 +8,8 @@ CButton::CButton(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, q
     textureSize = QSizeF(buttonRect.width(),
                          buttonRect.height());
     pixmap = Pixmap;
+    position = game->scene->addPixmap(textureSize, pixmap);
+
     game = Game;
     zOrder =ZOrder;
     angle = Angle;
@@ -18,7 +20,8 @@ CButton::CButton(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, q
 void CButton::onMousePressed(QMouseEvent *event)
 {
     if (buttonRect.contains(QPoint(event->localPos().x(),
-                                   event->localPos().y())))
+                                   event->localPos().y()))
+                            && position->isVisible())
     {
         event->accept();
         emit pressed();
