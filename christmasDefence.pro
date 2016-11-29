@@ -36,7 +36,7 @@ SOURCES += main.cpp\
     InfoBlock/ControlButtons.cpp \
     InfoBlock/PauseWindow.cpp \
     InfoBlock/CannonSelection.cpp \
-    Game/Bbutton.cpp
+    Game/Button.cpp
 
 HEADERS  += mainview.h \
     Bullet/IBullet.h \
@@ -72,4 +72,5 @@ RESOURCES += \
     qresource.qrc
 
 DISTFILES += \
-    android-sources/AndroidManifest.xml
+    android-sources/AndroidManifest.xml \
+    res/christmas/clo.png

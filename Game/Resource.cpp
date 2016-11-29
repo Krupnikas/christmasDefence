@@ -13,6 +13,8 @@ R::R()
     cannonSelectionBackground = QPixmap(get("cannonSelectingInfoBlockBackground"));
     
     entireRadius = QPixmap(get("entireRadius.png"));
+
+    buttonClose = QPixmap(get("clo.png"));
     
     fast_cannon_1 = QPixmap(get("fast_cannon_1"));
     fast_cannon_2 = QPixmap(get("fast_cannon_2"));

@@ -44,6 +44,8 @@ struct R
     QPixmap cellSelected;
 
     QPixmap entireRadius;
+
+    QPixmap buttonClose;
     
     QPixmap fast_cannon_1;
     QPixmap fast_cannon_2;
