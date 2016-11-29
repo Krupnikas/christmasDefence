@@ -42,8 +42,8 @@ std::shared_ptr<QGraphicsItem> CScene::addEllipse(const QPointF &centerLocal, co
 void CScene::positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal, 
                           qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item)
 {
-    int sizeXGlobal = toGlobalCX(sizeLocal.width());
-    int sizeYGlobal = toGlobalCY(sizeLocal.height());
+    qreal sizeXGlobal = toGlobalCX(sizeLocal.width());
+    qreal sizeYGlobal = toGlobalCY(sizeLocal.height());
     item->setTransformOriginPoint(sizeXGlobal / 2, sizeYGlobal / 2);
     item->setRotation(angle);
     item->setPos(toGlobalX(leftTopLocal.x()), toGlobalY(leftTopLocal.y()));

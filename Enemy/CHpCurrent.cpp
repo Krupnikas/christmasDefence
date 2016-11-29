@@ -11,7 +11,7 @@ CHpCurrent::CHpCurrent(IEnemy *enemy)
     leftTop.setY(enemy->getLeftTop().y() + CellSize - HpSize.height());
     
     this->game = enemy->getGame();
-    zOrder = enemy->getZOrder() + 10;
+    zOrder = enemy->getZOrder() + 0.2;
     
     textureSize = HpSize;
     size = HpSize;

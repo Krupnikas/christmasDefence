@@ -23,7 +23,8 @@ public:
     
     bool isDead() const;
     void hit(int hpDiff);
-    void updateHp();
+    void updateHpPos();
+    void updateHpSize(); //expensive, uses QTransform
     
     qreal getDistanceToFinish();
     

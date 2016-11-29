@@ -22,7 +22,7 @@ bool IEnemy::move()
     angle = movements->curAngle();
     game->scene->positionItemByCenter(center, textureSize, angle, zOrder, position);
     
-    updateHp();
+    updateHpPos();
     hpBackgroundItem->draw();
     hpCurItem->draw();
     
@@ -53,19 +53,23 @@ void IEnemy::hit(int hpDiff)
     hpCur -= hpDiff;
     if (hpCur <= 0)
         dead = true;
-    updateHp();
+    updateHpSize();
 }
 
-void IEnemy::updateHp()
+void IEnemy::updateHpPos()
 {
     QPointF leftTop(0, 0);
-    leftTop.setX(this->center.x() - HpSize.width() / 2);
-    leftTop.setY(this->center.y() + CellSize / 2 - HpSize.height() * 4);
+    leftTop.setX(this->center.x() - HpSize.width() / 2.0);
+    leftTop.setY(this->center.y() + CellSize / 2.0 - HpSize.height() * 4);
+    hpCurItem->setLeftTop(leftTop);
+    hpBackgroundItem->setLeftTop(leftTop);
+}
+
+void IEnemy::updateHpSize()
+{
     QSizeF hpCurSize(HpSize);
     hpCurSize.setWidth(HpSize.width() * hpCur / hpMax);
     hpCurItem->scaleItemWithLoss(hpCurSize, LeftTop);
-    hpCurItem->setLeftTop(leftTop);
-    hpBackgroundItem->setLeftTop(leftTop);
 }
 
 qreal IEnemy::getDistanceToFinish()
