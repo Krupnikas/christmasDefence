@@ -18,6 +18,9 @@ MainView::MainView(QWidget *parent) :
     QGLFormat format = QGLFormat(QGL::DirectRendering);
     QGLWidget *glWidget = new QGLWidget(format);
     ui->graphicsView->setViewport(glWidget);
+
+    connect(this, SIGNAL(mousePressed(QMouseEvent*)),
+            &game, SLOT(onMousePressed(QMouseEvent*)));
     
     //setAttribute(Qt::WA_TranslucentBackground, true);
     setAttribute(Qt::WA_TranslucentBackground);

@@ -299,6 +299,11 @@ void CGame::onDrawTimer()
     scene->updateFPS(fps, tps);
 }
 
+void CGame::onMousePressed(QMouseEvent *pressEvent)
+{
+    emit mousePressed(pressEvent);
+}
+
 void CGame::deselect_cell_()
 {
     int selX = selectedCell.x();

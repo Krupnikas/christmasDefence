@@ -11,6 +11,8 @@ CButton::CButton(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, q
     game = Game;
     zOrder =ZOrder;
     angle = Angle;
+
+    connect(game, SIGNAL(mousePressed(QMouseEvent*)), this, SLOT(onMousePressed(QMouseEvent*)));
 }
 
 void CButton::onMousePressed(QMouseEvent *event)
