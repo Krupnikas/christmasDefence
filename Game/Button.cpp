@@ -1,4 +1,5 @@
-#include "Button.h"
+#include <Game/Button.h>
+#include <Game/Game.h>
 
 CButton::CButton(){}
 

@@ -1,12 +1,12 @@
 #pragma once
 
-#include <Game/IGameObject.h>
+#include <Game/GameObject.h>
 #include <Game/Game.h>
 #include <Game/Button.h>
 
 class CGame;
 
-class IInfoBlock : public IGameObject
+class IInfoBlock : public CGameObject
 {     
     Q_OBJECT
     

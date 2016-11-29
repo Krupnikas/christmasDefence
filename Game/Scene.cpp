@@ -71,6 +71,17 @@ void CScene::removeItem(std::shared_ptr<QGraphicsItem> item)
     //graphicsScene->removeItem(item.get());
 }
 
+void CScene::scaleItem(QSizeF originSizeLocal, QSizeF resultSizeLocal,
+                       std::shared_ptr<QGraphicsItem> item, ScaleCenter scaleCenter)
+{
+    QSizeF originSizeGlobal(toGlobalSize(originSizeLocal));
+    QSizeF resultSizeGlobal(toGlobalSize(resultSizeLocal));
+    QPointF curPos = item->pos();
+    QTransform transform = QTransform().scale(resultSizeGlobal.width() / originSizeGlobal.width(),
+                                              resultSizeGlobal.height() / originSizeGlobal.height());
+    item->setTransform(transform);
+}
+
 std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal,
                             QPixmap *pixmap, qreal angle /*=0*/, qreal zval/*=0*/)
 {
@@ -246,6 +257,11 @@ qreal CScene::toGlobalCY(qreal cyLocal)
 QPointF CScene::toGlobalPoint(QPointF localPoint)
 {
     return QPointF(toGlobalX(localPoint.x()), toGlobalY(localPoint.y()));
+}
+
+QSizeF CScene::toGlobalSize(QSizeF localSize)
+{
+    return QSizeF(toGlobalCX(localSize.width()), toGlobalCY(localSize.height()));
 }
 
 qreal CScene::toLocalX(qreal xGlobal)

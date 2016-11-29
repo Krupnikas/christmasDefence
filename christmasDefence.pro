@@ -27,7 +27,6 @@ SOURCES += main.cpp\
     Game/Resource.cpp \
     Game/Helper.cpp \
     Bullet/FastBullet.cpp \
-    Game/IGameObject.cpp \
     Enemy/FastEnemy.cpp \
     Enemy/Movements.cpp \
     InfoBlock/IInfoBlock.cpp \
@@ -37,7 +36,9 @@ SOURCES += main.cpp\
     InfoBlock/PauseWindow.cpp \
     InfoBlock/CannonSelection.cpp \
     Enemy/CHpCurrent.cpp \
-    Enemy/CHpBackground.cpp
+    Enemy/CHpBackground.cpp \
+    Game/GameObject.cpp \
+    Game/Button.cpp
     Game/Button.cpp
 
 HEADERS  += mainview.h \
@@ -53,7 +54,6 @@ HEADERS  += mainview.h \
     Game/Resource.h \
     Game/Helper.h \
     Bullet/FastBullet.h \
-    Game/IGameObject.h \
     Enemy/FastEnemy.h \
     Enemy/Movements.h \
     InfoBlock/IInfoBlock.h \
@@ -67,7 +67,9 @@ HEADERS  += mainview.h \
     Metrics/EnemyMetrics.h \
     Metrics/BulletMetrics.h \
     Enemy/CHpCurrent.h \
-    Enemy/CHpBackground.h
+    Enemy/CHpBackground.h \
+    Game/GameObject.h \
+    Game/Button.h
     Game/Button.h
 
 FORMS    += mainview.ui

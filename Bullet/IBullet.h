@@ -1,11 +1,11 @@
 #pragma once
 
 #include <Game/Resource.h>
-#include <Game/IGameObject.h>
+#include <Game/GameObject.h>
 
 class CGame;
 
-class IBullet : public IGameObject
+class IBullet : public CGameObject
 {     
     Q_OBJECT
     

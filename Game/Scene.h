@@ -20,6 +20,8 @@ public:
     void positionItemByCenter(const QPointF &centerLocal, const QSizeF &sizeLocal, 
                       qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item);
     void removeItem(std::shared_ptr<QGraphicsItem> item);
+    void scaleItem(QSizeF originSizeLocal, QSizeF resultSizeLocal,
+                   std::shared_ptr<QGraphicsItem> item, ScaleCenter scaleCenter);
     
     std::shared_ptr<QGraphicsItem> drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal,
                          QPixmap *pixmap, qreal angle = 0, qreal zval = 0);
@@ -42,6 +44,7 @@ public:
     qreal toGlobalCX(qreal cx_local);
     qreal toGlobalCY(qreal cy_local);
     QPointF toGlobalPoint(QPointF localPoint);
+    QSizeF toGlobalSize(QSizeF localSize);
 
     qreal toLocalX(qreal xGlobal);
     qreal toLocalY(qreal yGlobal);    
@@ -65,8 +68,6 @@ private:
     std::vector<std::shared_ptr<QGraphicsItem>> textItems;
     std::shared_ptr<QGraphicsTextItem> fpsItem;
     std::shared_ptr<QGraphicsTextItem> tpsItem;
+
     
-    
-private slots:
-    void scalePixmap(qreal scale, QSizeF sizeGlobal, QPixmap *pixmap);
 };

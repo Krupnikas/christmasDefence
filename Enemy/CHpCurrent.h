@@ -1,10 +1,10 @@
 #pragma once
 
-#include <Game/IGameObject.h>
+#include <Game/GameObject.h>
 
 class IEnemy;
 
-class CHpCurrent : public IGameObject
+class CHpCurrent : public CGameObject
 {
     Q_OBJECT
 

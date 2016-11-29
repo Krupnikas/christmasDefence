@@ -1,12 +1,12 @@
 #pragma once
 
-#include <Game/IGameObject.h>
+#include <Game/GameObject.h>
 #include <Enemy/Movements.h>
 
 class CHpBackground;
 class CHpCurrent;
 
-class IEnemy : public IGameObject
+class IEnemy : public CGameObject
 {
     Q_OBJECT
 public:

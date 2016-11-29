@@ -4,16 +4,17 @@
 
 class CGame;
 
-class IGameObject : public QObject
+class CGameObject : public QObject
 {
     Q_OBJECT
     
 public:
-    IGameObject();
-    IGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF textureSize, QPixmap *pixmap, CGame *game);
-    virtual ~IGameObject();
+    CGameObject();
+    CGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF textureSize, QPixmap *pixmap, CGame *game);
+    virtual ~CGameObject();
     
     void scaleItem();
+    void scaleItemWithLoss(QSizeF newSize, ScaleCenter scaleCenter);
     void remove();
     
     virtual void draw();

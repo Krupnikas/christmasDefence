@@ -30,6 +30,10 @@ enum SizeType {
     SMALL, MEDIUM, BIG
 };
 
+enum ScaleCenter {
+    LeftTop, Center
+};
+
 struct R
 {
     

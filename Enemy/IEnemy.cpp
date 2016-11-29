@@ -10,7 +10,7 @@ IEnemy::~IEnemy(){}
 
 void IEnemy::draw()
 {
-    IGameObject::draw();
+    CGameObject::draw();
     hpBackgroundItem->draw();
     hpCurItem->draw();
 }
@@ -23,7 +23,7 @@ bool IEnemy::move()
     game->scene->positionItemByCenter(center, textureSize, angle, zOrder, position);
     
     updateHp();
-    //hpBackgroundItem->draw();
+    hpBackgroundItem->draw();
     hpCurItem->draw();
     
     return game->scene->insideGameRect(center);
@@ -31,15 +31,15 @@ bool IEnemy::move()
 
 void IEnemy::hide()
 {
-    IGameObject::hide();
+    CGameObject::hide();
     hpBackgroundItem->hide();
     hpCurItem->hide();
 }
 
 void IEnemy::show()
 {
-    IGameObject::show();
-    //hpBackgroundItem->show();
+    CGameObject::show();
+    hpBackgroundItem->show();
     hpCurItem->show();
 }
 
@@ -63,8 +63,8 @@ void IEnemy::updateHp()
     leftTop.setY(this->center.y() + CellSize / 2 - HpSize.height() * 4);
     QSizeF hpCurSize(HpSize);
     hpCurSize.setWidth(HpSize.width() * hpCur / hpMax);
+    hpCurItem->scaleItemWithLoss(hpCurSize, LeftTop);
     hpCurItem->setLeftTop(leftTop);
-    hpCurItem->setTextureSize(hpCurSize);
     hpBackgroundItem->setLeftTop(leftTop);
 }
 
