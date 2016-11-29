@@ -14,6 +14,8 @@ public:
 
     QRect buttonRect;
 
+    void init(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder = 10, qreal Angle = 0);
+
 public slots:
     void onMousePressed(QMouseEvent *event);
 

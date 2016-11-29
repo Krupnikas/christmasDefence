@@ -19,9 +19,23 @@ CButton::CButton(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, q
     connect(game, SIGNAL(mousePressed(QMouseEvent*)), this, SLOT(onMousePressed(QMouseEvent*)));
 }
 
-CButton::~CButton()
+CButton::~CButton(){}
+
+void CButton::init(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, qreal Angle)
 {
-    disconnect(game, SIGNAL(mousePressed(QMouseEvent*)), this, SLOT(onMousePressed(QMouseEvent*)));
+    buttonRect = ButtonRect;
+    center = buttonRect.center();
+    leftTop = buttonRect.topLeft();
+    textureSize = QSizeF(buttonRect.width(),
+                         buttonRect.height());
+    pixmap = Pixmap;
+    position = game->scene->addPixmap(textureSize, pixmap);
+
+    game = Game;
+    zOrder =ZOrder;
+    angle = Angle;
+
+    connect(game, SIGNAL(mousePressed(QMouseEvent*)), this, SLOT(onMousePressed(QMouseEvent*)));
 }
 
 void CButton::onMousePressed(QMouseEvent *event)
