@@ -30,6 +30,8 @@ R::R()
     
     hp_cur = QPixmap(get("hp_cur"));
     hp_background = QPixmap(get("hp_background"));
+
+    waves = get("waves").toStdString();
 }
 
 QString R::get(const char *val)

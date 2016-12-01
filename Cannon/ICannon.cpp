@@ -84,7 +84,6 @@ void ICannon::rotate()
         if (curEnemy->isDead() || !reachingEnemy(curEnemy))
         {
             findEnemy();
-            game->addEnemy(std::make_shared<CFastEnemy>(game));
         }
     }
     

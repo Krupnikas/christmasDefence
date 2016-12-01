@@ -23,6 +23,7 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <fstream>
 
 #include <Metrics/Metrics.h>
 
@@ -65,6 +66,8 @@ struct R
     
     QPixmap hp_cur;
     QPixmap hp_background;
+    
+    std::string waves;
     
     QString get(const char *val);
     

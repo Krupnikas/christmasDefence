@@ -75,7 +75,8 @@ private:
     
 //private attributes
 private:
-        qreal fps = 0;
-        qreal tps = 0;
+    qreal fps = 0;
+    qreal tps = 0;
+    bool distancesChanged = false;
         
 };

@@ -19,5 +19,6 @@
         <file>res/christmas/hp_background.png</file>
         <file>res/christmas/hp_cur.png</file>
         <file>res/christmas/clo.png</file>
+        <file>res/christmas/waves.txt</file>
     </qresource>
 </RCC>

@@ -3,6 +3,7 @@
 #include <Game/Resource.h>
 
 class ICannon;
+class CWave;
 
 namespace helper {
 
@@ -36,5 +37,7 @@ T choose(SizeType type, T var1, T var2, T var3)
         return var1;
     }
 }
+
+std::vector<CWave> &readWaves(std::string filename);
 
 }

@@ -2,6 +2,7 @@
 #include <utility>
 #include <limits>
 #include <Game/Helper.h>
+#include <Wave/Wave.h>
 
 namespace
 {
@@ -150,6 +151,20 @@ QPointF addVector(QPointF point, qreal len, const qreal &angle)
 qreal manhattanLength(QPointF p1, QPointF p2)
 {
     return pow(pow(abs(p1.x() - p2.x()), 2.0) + pow(abs(p1.y() - p2.y()), 2.0), 0.5);
+}
+
+std::vector<CWave> &readWaves(std::string filename)
+{
+    std::ifstream in(filename.c_str());
+    int waveNum;
+    in >> waveNum;
+    
+    std::vector<CWave> waves;
+    for (int i = 0; i < waveNum; ++i)
+    {
+        CWave wave;
+        
+    }
 }
 
 

@@ -91,7 +91,7 @@ QPointF CGame::cellCenter(QPoint cell)
 
 void CGame::updateDistances()
 {
-    helper::calcDistances(cannons, distances);
+    distancesChanged = true;
 }
 
 void CGame::scaleObjects()
@@ -226,6 +226,12 @@ QPoint CGame::findNearestCell(QPointF from)
 
 void CGame::onPositionTimer()
 {
+    if (distancesChanged)
+    {
+        helper::calcDistances(cannons, distances);
+        distancesChanged = false;
+    }
+    
     size_t lastBulletInd = 0;
     for (size_t i = 0; i < bullets.size(); ++i)
         if (bullets[i]->move() && !bullets[i]->reachedEnemy())
@@ -281,6 +287,18 @@ void CGame::onDrawTimer()
                 cannons[i][j]->count();                
                 cannons[i][j]->rotate();
             }
+    
+    static int counter = 0;
+    counter++;
+    int max = 50;
+    if (counter == max)
+    {
+        addEnemy(std::make_shared<CFastEnemy>(this));
+        counter = 0;
+        if (max > 1)
+            max--;
+        
+    }
     
     static QTime time;
     static int frameCnt=0;

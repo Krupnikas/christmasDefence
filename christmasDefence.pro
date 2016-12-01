@@ -38,7 +38,9 @@ SOURCES += main.cpp\
     Enemy/CHpCurrent.cpp \
     Enemy/CHpBackground.cpp \
     Game/GameObject.cpp \
-    Game/Button.cpp
+    Game/Button.cpp \
+    Wave/Wave.cpp \
+    Wave/WaveManager.cpp
     Game/Button.cpp
 
 HEADERS  += mainview.h \
@@ -69,7 +71,9 @@ HEADERS  += mainview.h \
     Enemy/CHpCurrent.h \
     Enemy/CHpBackground.h \
     Game/GameObject.h \
-    Game/Button.h
+    Game/Button.h \
+    Wave/Wave.h \
+    Wave/WaveManager.h
     Game/Button.h
 
 FORMS    += mainview.ui
@@ -77,6 +81,4 @@ FORMS    += mainview.ui
 RESOURCES += \
     qresource.qrc
 
-DISTFILES += \
-    android-sources/AndroidManifest.xml \
-    res/christmas/clo.png
+DISTFILES +=
