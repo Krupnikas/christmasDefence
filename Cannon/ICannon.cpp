@@ -1,4 +1,5 @@
-#include "ICannon.h"
+#include <Cannon/ICannon.h>
+#include <Cannon/CannonRadius.h>
 #include <Enemy/FastEnemy.h>
 #include <Game/Helper.h>
 #include <Game/Game.h>
@@ -26,14 +27,39 @@ void ICannon::setHp(double value)
     hp = value;
 }
 
-double ICannon::getGlobalRadius() const
+double ICannon::getFireRadius() const
 {
     return fireRadius;
 }
 
-void ICannon::setGlobalRadius(double value)
+void ICannon::setFireRadius(double value)
 {
     fireRadius = value;
+}
+
+void ICannon::scaleItem()
+{
+    CGameObject::scaleItem();
+    radiusItem->scaleItem();
+}
+
+void ICannon::draw()
+{
+    CGameObject::draw();
+    radiusItem->draw();
+}
+
+void ICannon::hide()
+{
+    CGameObject::hide();
+    radiusItem->hide();
+}
+
+void ICannon::show()
+{
+    CGameObject::show();
+    if (toShowRadius)
+        radiusItem->show();
 }
 
 bool ICannon::reachingEnemy(std::shared_ptr<IEnemy> enemy)
@@ -73,6 +99,18 @@ void ICannon::upgrade()
     else if (sizeType == MEDIUM)
         sizeType = BIG;
     counter = 0;
+}
+
+void ICannon::showRadius()
+{
+    radiusItem->show();
+    toShowRadius = true;
+}
+
+void ICannon::hideRadius()
+{
+    radiusItem->hide();
+    toShowRadius = false;
 }
 
 void ICannon::rotate()
@@ -124,17 +162,3 @@ void ICannon::count()
         counter++;
 }
 
-void ICannon::showRadius()
-{
-    game->scene->positionItemByCenter(center, QSizeF(fireRadius * 2, fireRadius * 2),
-                                      0, zOrder - 0.1, radiusItem);
-    radiusItem->setFlag(QGraphicsItem::ItemHasNoContents, false);
-    radiusItem->show();
-    qDebug() << radiusItem.get();
-}
-
-void ICannon::hideRadius()
-{
-    radiusItem->hide();
-    radiusItem->setFlag(QGraphicsItem::ItemHasNoContents, true);
-}

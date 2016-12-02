@@ -8,50 +8,6 @@ IEnemy::IEnemy(){}
 
 IEnemy::~IEnemy(){}
 
-void IEnemy::scaleItem()
-{
-    CGameObject::scaleItem();
-    hpBackgroundItem->scaleItem();
-    hpCurItem->scaleItem();
-}
-
-void IEnemy::draw()
-{
-    CGameObject::draw();
-    hpBackgroundItem->draw();
-    hpCurItem->draw();
-}
-
-bool IEnemy::move()
-{
-    for (int i = 0; i < moveIter; ++i)
-        center = movements->move();
-    angle = movements->curAngle();
-    game->scene->positionItemByCenter(center, textureSize, angle, zOrder, position);
-    
-    updateHpPos();
-    hpBackgroundItem->draw();
-    hpCurItem->draw();
-    
-    return game->scene->insideEnclosingRect(center);
-}
-
-QPixmap *IEnemy::getTexture(int enemyTexture){}
-
-void IEnemy::hide()
-{
-    CGameObject::hide();
-    hpBackgroundItem->hide();
-    hpCurItem->hide();
-}
-
-void IEnemy::show()
-{
-    CGameObject::show();
-    hpBackgroundItem->show();
-    hpCurItem->show();
-}
-
 bool IEnemy::isDead() const
 {
     return dead;
@@ -97,6 +53,51 @@ QPoint IEnemy::getCurrentGameCell() const
 QPoint IEnemy::getNextGameCell() const
 {
     return movements->getNextGameCell();
+}
+
+
+void IEnemy::scaleItem()
+{
+    CGameObject::scaleItem();
+    hpBackgroundItem->scaleItem();
+    hpCurItem->scaleItem();
+}
+
+void IEnemy::draw()
+{
+    CGameObject::draw();
+    hpBackgroundItem->draw();
+    hpCurItem->draw();
+}
+
+bool IEnemy::move()
+{
+    for (int i = 0; i < moveIter; ++i)
+        center = movements->move();
+    angle = movements->curAngle();
+    game->scene->positionItemByCenter(center, textureSize, angle, zOrder, position);
+    
+    updateHpPos();
+    hpBackgroundItem->draw();
+    hpCurItem->draw();
+    
+    return game->scene->insideEnclosingRect(center);
+}
+
+QPixmap *IEnemy::getTexture(int enemyTexture){}
+
+void IEnemy::hide()
+{
+    CGameObject::hide();
+    hpBackgroundItem->hide();
+    hpCurItem->hide();
+}
+
+void IEnemy::show()
+{
+    CGameObject::show();
+    hpBackgroundItem->show();
+    hpCurItem->show();
 }
 
 

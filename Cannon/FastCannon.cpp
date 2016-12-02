@@ -1,4 +1,5 @@
 #include <mainview.h>
+#include <Cannon/CannonRadius.h>
 #include <Cannon/FastCannon.h>
 #include <Bullet/FastBullet.h>
 #include <Game/Game.h>
@@ -25,9 +26,7 @@ CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
     this->rotationSpeed = FastCannonSmRotation;
     this->fireSpeed = FastCannonSmFireSpeed;
     this->fireRadius = FastCannonSmRadius;
-    this->radiusItem = game->scene->addPixmap(QSizeF(2 * fireRadius,
-                                                     2 * fireRadius),
-                                                     &game->r->entireRadius);
+    this->radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
     hideRadius();
 }
 
@@ -72,10 +71,9 @@ void CFastCannon::upgrade()
                             FastCannonSmRadius,
                             FastCannonMidRadius,
                             FastCannonBigRadius);
-    game->scene->removeItem(radiusItem);
-    radiusItem = game->scene->addPixmap(QSizeF(2 * fireRadius,
-                                                     2 * fireRadius),
-                                                     &game->r->entireRadius);
+    
+    radiusItem->upgrade(this);
     draw();
     show();
 }
+

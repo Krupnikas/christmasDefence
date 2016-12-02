@@ -4,6 +4,7 @@
 
 class CGame;
 class IEnemy;
+class CCannonRadius;
 
 class ICannon : public CGameObject
 {     
@@ -13,14 +14,14 @@ public:
     
     ICannon();
     virtual ~ICannon();
-
+    
     virtual void fire();
     virtual void upgrade();
     
-    void showRadius();
-    void hideRadius();
     void rotate();
     void count();
+    void showRadius();
+    void hideRadius();
     
     //getters and setters
     QPoint getGameCell() const;
@@ -29,10 +30,14 @@ public:
     double getHp() const;
     void setHp(double value);
     
-    double getGlobalRadius() const;
-    void setGlobalRadius(double value);
+    double getFireRadius() const;
+    void setFireRadius(double value);
     
-
+    //IGameObject methods override
+    virtual void scaleItem();
+    virtual void draw() override;
+    virtual void hide() override;
+    virtual void show() override;
     
 protected:
     SizeType sizeType;
@@ -41,7 +46,9 @@ protected:
     qreal rotationSpeed;
     int fireSpeed;
     qreal fireRadius;
-    std::shared_ptr<QGraphicsItem> radiusItem;
+    
+    std::shared_ptr<CCannonRadius> radiusItem;
+    bool toShowRadius = false;
     
     std::shared_ptr<IEnemy> curEnemy;
     

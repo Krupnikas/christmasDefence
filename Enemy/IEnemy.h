@@ -13,13 +13,6 @@ public:
 
     IEnemy();
     ~IEnemy();
-    
-    //IGameObject methods override
-    virtual void scaleItem() override;
-    virtual void draw() override;
-    virtual void hide() override;
-    virtual void show() override;
-    
     virtual bool move();
     
     bool isDead() const;
@@ -31,6 +24,12 @@ public:
     
     QPoint getCurrentGameCell() const;
     QPoint getNextGameCell() const;
+    
+    //IGameObject methods override
+    virtual void scaleItem() override;
+    virtual void draw() override;
+    virtual void hide() override;
+    virtual void show() override;
 
 protected:
     virtual QPixmap *getTexture(int enemyTexture);

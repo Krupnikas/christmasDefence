@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     Game/Button.cpp \
     Wave/Wave.cpp \
     Wave/WaveManager.cpp \
-    InfoBlock/WaveInfo/WaveInfo.cpp
+    InfoBlock/WaveInfo/WaveInfo.cpp \
+    Cannon/CannonRadius.cpp
     Game/Button.cpp
 
 HEADERS  += mainview.h \
@@ -74,7 +75,8 @@ HEADERS  += mainview.h \
     Game/Button.h \
     Wave/Wave.h \
     Wave/WaveManager.h \
-    InfoBlock/WaveInfo/WaveInfo.h
+    InfoBlock/WaveInfo/WaveInfo.h \
+    Cannon/CannonRadius.h
     Game/Button.h
 
 FORMS    += mainview.ui
