@@ -76,8 +76,6 @@ void CFastCannon::upgrade()
     radiusItem = game->scene->addPixmap(QSizeF(2 * fireRadius,
                                                      2 * fireRadius),
                                                      &game->r->entireRadius);
-    game->deselectCell();
-    game->selectCell(gameCell);
     draw();
     show();
 }
