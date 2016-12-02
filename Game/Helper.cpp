@@ -2,7 +2,9 @@
 #include <utility>
 #include <limits>
 #include <Game/Helper.h>
+#include <Game/Game.h>
 #include <Wave/Wave.h>
+#include <Enemy/FastEnemy.h>
 
 namespace
 {
@@ -138,6 +140,8 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
         if (distances[xNext][yNext] + 1 == curVal)
             return QPoint(xNext, yNext);
     }
+    
+    qDebug() << "Helper: findLowerNeighbour: next cell not found, returning (-1, -1)";
     return QPoint(-1, -1);
 }
 
@@ -153,18 +157,61 @@ qreal manhattanLength(QPointF p1, QPointF p2)
     return pow(pow(abs(p1.x() - p2.x()), 2.0) + pow(abs(p1.y() - p2.y()), 2.0), 0.5);
 }
 
-std::vector<CWave> &readWaves(std::string filename)
+void readWaves(const QString &filename, std::vector<CWave> &waves, CGame *game)
 {
-    std::ifstream in(filename.c_str());
-    int waveNum;
-    in >> waveNum;
+    QFile waveFile(filename);
+    if (!waveFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "Helper: readWaves: failed to open waves.txt";
+        return;
+    }
+    QTextStream textStream(&waveFile);
+    QString line;
+    line = textStream.readLine();
+    int waveNum(line.toInt());
     
-    std::vector<CWave> waves;
     for (int i = 0; i < waveNum; ++i)
     {
-        CWave wave;
+        CWave wave;        
+        line = textStream.readLine();
+        std::stringstream in(line.toStdString());
         
+        in >> wave.timeBeforeStart;
+        in >> wave.enemyIncomeInterval;
+        
+        qint32 enemiesNum;
+        in >> enemiesNum;
+        
+        qint32 enemyType;
+        in >> enemyType;
+        
+        qint32 enemyTexture;
+        in >> enemyTexture;
+        
+        qint32 enemyPower;
+        in >> enemyPower;
+        
+        for (int en = 0; en < enemiesNum; ++en)
+        {
+            switch (enemyType)
+            {
+            case 1:
+                wave.enemies.push(std::make_shared<CFastEnemy>(game, enemyTexture, enemyPower));
+                break;
+            default:
+                qDebug() << "Helper: readWaves: incorrect enemyType";
+                wave.enemies.push(std::make_shared<CFastEnemy>(game, enemyTexture, enemyPower));
+            }
+        }
+        waves.push_back(wave);        
     }
+    
+    waveFile.close();
+}
+
+qreal ticksToTime(int ticks)
+{
+    return static_cast<qreal>(ticks) * TimerInterval / 1000;
 }
 
 

@@ -4,6 +4,7 @@
 
 class ICannon;
 class CWave;
+class CGame;
 
 namespace helper {
 
@@ -38,6 +39,8 @@ T choose(SizeType type, T var1, T var2, T var3)
     }
 }
 
-std::vector<CWave> &readWaves(std::string filename);
+void readWaves(const QString &filename, std::vector<CWave> &waves, CGame *game);
+
+qreal ticksToTime(int ticks);
 
 }

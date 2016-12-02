@@ -4,12 +4,12 @@
 #include <Game/Game.h>
 #include <Game/Helper.h>
 
-CFastEnemy::CFastEnemy(CGame *game)
+CFastEnemy::CFastEnemy(CGame *game, int enemyTexture, int enemyPower)
 {
     //IEnemy fields
     movements = std::shared_ptr<mov::Movements>(new mov::Movements(game));
     moveIter = movements->iterNum(FastEnemyStep);
-    hpCur = hpMax = FastEnemyHp;
+    hpCur = hpMax = enemyPower * FastEnemyHp;
     dead = false;
     
     //IGameObject fields
@@ -24,10 +24,26 @@ CFastEnemy::CFastEnemy(CGame *game)
     
     textureSize = FastEnemyTextureSize;
     size = FastEnemySize;
-    pixmap = &game->r->fast_enemy_2;
+    pixmap = &game->r->fast_enemy_2/*getTexture(enemyTexture)*/;
     position = game->scene->addPixmap(textureSize, pixmap);
     
     //IEnemy fields
     hpBackgroundItem = std::make_shared<CHpBackground>(this);
     hpCurItem = std::make_shared<CHpCurrent>(this);
+}
+
+QPixmap *CFastEnemy::getTexture(int enemyTexture)
+{
+    switch (enemyTexture)
+    {
+    case 1:
+        return &game->r->fast_enemy_1;
+    case 2:
+        return &game->r->fast_enemy_2;
+    case 3:
+        return &game->r->fast_enemy_3;
+    default:
+        qDebug() << "incorrect enemy texture";
+        return &game->r->fast_enemy_2;
+    }
 }

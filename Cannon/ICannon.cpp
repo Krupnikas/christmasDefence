@@ -101,8 +101,6 @@ void ICannon::rotate()
         }
         if (counter == fireSpeed)
         {
-            if (game->enemies.size() < 5)
-                game->addEnemy(std::make_shared<CFastEnemy>(game));
             fire();
             counter = 0;
         }

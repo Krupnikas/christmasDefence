@@ -4,10 +4,14 @@
 #include <Cannon/FastCannon.h>
 #include <Game/Helper.h>
 #include <InfoBlock/CannonSelection.h>
+#include <Wave/WaveManager.h>
 
 
-CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view)
-{
+CGame::CGame(R *r, CScene *scene, QWidget *view):
+    r(r),
+    scene(scene),
+    view(view)
+{    
     block = std::make_shared<CCannonSelection>(this, selectedCell);
     cannons.resize(CellNumX);
     distances.resize(CellNumX);
@@ -19,9 +23,9 @@ CGame::CGame(R *r, CScene *scene, QWidget *view) : r(r), scene(scene), view(view
     helper::calcDistances(cannons, distances);
     
     positionTimer = new QTimer(this);
-    positionTimer->start(16);
     drawTimer = new QTimer(this);
-    drawTimer->start(16);
+    positionTimer->start(TimerInterval);
+    drawTimer->start(TimerInterval);
 }
 
 CGame::~CGame()
@@ -232,6 +236,8 @@ void CGame::onPositionTimer()
         distancesChanged = false;
     }
     
+    waveManager.onTimer();
+    
     size_t lastBulletInd = 0;
     for (size_t i = 0; i < bullets.size(); ++i)
         if (bullets[i]->move() && !bullets[i]->reachedEnemy())
@@ -287,18 +293,6 @@ void CGame::onDrawTimer()
                 cannons[i][j]->count();                
                 cannons[i][j]->rotate();
             }
-    
-    static int counter = 0;
-    counter++;
-    int max = 50;
-    if (counter == max)
-    {
-        addEnemy(std::make_shared<CFastEnemy>(this));
-        counter = 0;
-        if (max > 1)
-            max--;
-        
-    }
     
     static QTime time;
     static int frameCnt=0;

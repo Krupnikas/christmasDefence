@@ -4,6 +4,7 @@
 #define SHOW_GRAPHICS_DEBUG
 
 #include <Game/Scene.h>
+#include <Wave/WaveManager.h>
 
 class IBullet;
 class IEnemy;
@@ -22,6 +23,8 @@ public:
     R *r;
     CScene *scene;
     QWidget *view;
+    CWaveManager waveManager;
+    
     QTimer *positionTimer;
     QTimer *drawTimer;
     std::shared_ptr<CCannonSelection> block;

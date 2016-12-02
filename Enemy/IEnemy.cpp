@@ -29,6 +29,8 @@ bool IEnemy::move()
     return game->scene->insideGameRect(center);
 }
 
+QPixmap *IEnemy::getTexture(int enemyTexture){}
+
 void IEnemy::hide()
 {
     CGameObject::hide();
@@ -52,7 +54,10 @@ void IEnemy::hit(int hpDiff)
 {
     hpCur -= hpDiff;
     if (hpCur <= 0)
+    {
         dead = true;
+        hide();
+    }
     updateHpSize();
 }
 

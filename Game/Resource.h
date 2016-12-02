@@ -5,6 +5,9 @@
 #include <QTime>
 #include <QRect>
 #include <QString>
+#include <QFile>
+#include <QDataStream>
+#include <QIODevice>
 #include <QPixmap>
 #include <QTransform>
 #include <QMatrix>
@@ -22,7 +25,9 @@
 
 #include <memory>
 #include <vector>
+#include <queue>
 #include <string>
+#include <sstream>
 #include <fstream>
 
 #include <Metrics/Metrics.h>
@@ -67,7 +72,7 @@ struct R
     QPixmap hp_cur;
     QPixmap hp_background;
     
-    std::string waves;
+    QString waves;
     
     QString get(const char *val);
     

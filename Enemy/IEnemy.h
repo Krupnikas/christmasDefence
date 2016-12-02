@@ -32,6 +32,9 @@ public:
     QPoint getNextGameCell() const;
 
 protected:
+    virtual QPixmap *getTexture(int enemyTexture);
+    
+protected:
     std::shared_ptr<mov::Movements> movements;
     int moveIter;
     

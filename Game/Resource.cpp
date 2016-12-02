@@ -31,7 +31,7 @@ R::R()
     hp_cur = QPixmap(get("hp_cur"));
     hp_background = QPixmap(get("hp_background"));
 
-    waves = get("waves").toStdString();
+    waves = QString("../christmasDefence/res/christmas/waves.txt")/*get("waves.txt")*/;
 }
 
 QString R::get(const char *val)

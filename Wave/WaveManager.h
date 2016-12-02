@@ -1,17 +1,21 @@
 #pragma once
 
-#include <Game/Resource.h>
+#include <Wave/Wave.h>
 
 class CGame;
 
 class CWaveManager
 {
 public:
-    CWaveManager(CGame *game);
-    onTimer();
+    CWaveManager();
+    void initialize(CGame *game);
+    void onTimer();
     
 private:
     CGame *game;
-    bool waveComes;
+    std::vector<CWave> waves;
+    
+    bool waveGoing;
+    int curWave;
     int counter;
 };

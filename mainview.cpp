@@ -22,7 +22,7 @@ MainView::MainView(QWidget *parent) :
     //setAttribute(Qt::WA_TranslucentBackground, true);
     setAttribute(Qt::WA_TranslucentBackground);
    // ui->graphicsView->setViewportUpdateMode(QGraphicsView::);
-    this->showFullScreen();
+    //this->showFullScreen();
 }
 
 MainView::~MainView()
@@ -48,6 +48,7 @@ void MainView::resizeEvent(QResizeEvent *)
 void MainView::showEvent(QShowEvent*)
 {
     scene.updateGameRect(ui->graphicsView->geometry());
+    game.waveManager.initialize(&game);    
     /*for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)
             game.addCannon(std::make_shared<CFastCannon>(&game, i, j, 100, 30, 100));*/
@@ -121,7 +122,6 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
                 QPointF cellCenterGlobal(game.scene->toGlobalPoint(game.cellCenter(selectedCell)));
                 qreal angle = helper::calcAngle(cellCenterGlobal, p);
                 game.addCannon(std::make_shared<CFastCannon>(&game, selectedCell, angle));
-                game.addEnemy(std::make_shared<CFastEnemy>(&game));
                 game.selectCell(selectedCell);
             }
             return;

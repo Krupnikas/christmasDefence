@@ -12,5 +12,8 @@ class CFastEnemy : public IEnemy
     
 public:
     
-    CFastEnemy(CGame *game);
+    CFastEnemy(CGame *game, int enemyTexture, int enemyPower);
+    
+protected:
+    virtual QPixmap *getTexture(int enemyTexture);
 };

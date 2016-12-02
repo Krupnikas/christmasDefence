@@ -25,6 +25,8 @@ const int ExitY = CellNumY / 2;
 const int EntranceX = ExitLeft ? CellNumX - 1 : 0;
 const int EntranceY = CellNumY / 2;
 
+const int TimerInterval = 16;
+
 #include <Metrics/CannonMetrics.h>
 #include <Metrics/EnemyMetrics.h>
 #include <Metrics/BulletMetrics.h>
