@@ -21,7 +21,7 @@ public:
                       qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item);
     void removeItem(std::shared_ptr<QGraphicsItem> item);
     void scaleItem(QSizeF originSizeLocal, QSizeF resultSizeLocal,
-                   std::shared_ptr<QGraphicsItem> item, ScaleCenter scaleCenter);
+                   std::shared_ptr<QGraphicsItem> item);
     
     std::shared_ptr<QGraphicsItem> drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal,
                          QPixmap *pixmap, qreal angle = 0, qreal zval = 0);
@@ -32,7 +32,8 @@ public:
     void updateWindowBackground();
     void updateGameBackground();
     void updateDistances(std::vector<std::vector<int>> &distances);
-    void updateFPS(int fps, int tps);
+    void updateFPS(int fps);
+    void updateWaveInfo(QString info);
     void updateItems();
     
     int getWidth() { return gameRect.width(); }
@@ -53,6 +54,7 @@ public:
 
     QPointF toLocalPoint(QPointF globalPoint);
     
+    bool insideEnclosingRect(QPointF point);
     bool insideGameRect(QPointF point);
 
 private:
@@ -67,7 +69,7 @@ private:
     std::vector<std::shared_ptr<QGraphicsItem>> backgroundItems;
     std::vector<std::shared_ptr<QGraphicsItem>> textItems;
     std::shared_ptr<QGraphicsTextItem> fpsItem;
-    std::shared_ptr<QGraphicsTextItem> tpsItem;
+    std::shared_ptr<QGraphicsTextItem> waveInfoItem;
 
     
 };

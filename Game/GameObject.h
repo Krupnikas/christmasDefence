@@ -13,10 +13,9 @@ public:
     CGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF textureSize, QPixmap *pixmap, CGame *game);
     virtual ~CGameObject();
     
-    void scaleItem();
-    void scaleItemWithLoss(QSizeF newSize, ScaleCenter scaleCenter);
-    void remove();
-    
+    virtual void scaleItem();
+    virtual void scaleItemWithLoss(QSizeF newSize);
+    virtual void remove();
     virtual void draw();
     virtual void hide();
     virtual void show();

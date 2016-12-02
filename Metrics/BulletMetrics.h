@@ -6,6 +6,6 @@ const int FastBulletSizeY = CellSize / 3.0;
 
 const qreal FastBulletStep = CellSize / 10.0; // in local points
 
-const int FastBulletSmHit = 35;
-const int FastBulletMidHit = 50;
-const int FastBulletBigHit = 100;
+const int FastBulletSmHit = 15;
+const int FastBulletMidHit = 25;
+const int FastBulletBigHit = 35;

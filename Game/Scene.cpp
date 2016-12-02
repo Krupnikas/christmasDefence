@@ -1,7 +1,7 @@
 #include <Game/Scene.h>
 
 //public:
-CScene::CScene(R* r) : r(r), fpsItem(nullptr), tpsItem(nullptr)
+CScene::CScene(R* r) : r(r), fpsItem(nullptr), waveInfoItem(nullptr)
 {
     graphicsScene = new QGraphicsScene();
     graphicsScene->setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -72,11 +72,10 @@ void CScene::removeItem(std::shared_ptr<QGraphicsItem> item)
 }
 
 void CScene::scaleItem(QSizeF originSizeLocal, QSizeF resultSizeLocal,
-                       std::shared_ptr<QGraphicsItem> item, ScaleCenter scaleCenter)
+                       std::shared_ptr<QGraphicsItem> item)
 {
     QSizeF originSizeGlobal(toGlobalSize(originSizeLocal));
     QSizeF resultSizeGlobal(toGlobalSize(resultSizeLocal));
-    QPointF curPos = item->pos();
     QTransform transform = QTransform().scale(resultSizeGlobal.width() / originSizeGlobal.width(),
                                               resultSizeGlobal.height() / originSizeGlobal.height());
     item->setTransform(transform);
@@ -205,24 +204,27 @@ void CScene::updateDistances(std::vector<std::vector<int>> &distances)
 #endif
 }
 
-void CScene::updateFPS(int fps, int tps)
+void CScene::updateWaveInfo(QString info)
+{
+    if (waveInfoItem)
+        graphicsScene->removeItem(waveInfoItem.get());
+
+    waveInfoItem = std::shared_ptr<QGraphicsTextItem>(graphicsScene->addText(info));
+    waveInfoItem->setPos(gameRect.width() - info.size() * 6 - toGlobalX(10), toGlobalY(10));
+    waveInfoItem->setDefaultTextColor(Qt::red);
+    waveInfoItem->setZValue(10);
+}
+
+void CScene::updateFPS(int fps)
 {
 #ifdef SHOW_FPS
-    
     if (fpsItem)
         graphicsScene->removeItem(fpsItem.get());
-    if (tpsItem)
-        graphicsScene->removeItem(tpsItem.get());
     
     fpsItem = std::shared_ptr<QGraphicsTextItem>(graphicsScene->addText(QString::number((int)fps) + " FPS"));
     fpsItem->setPos(toGlobalX(10), toGlobalY(10));
     fpsItem->setDefaultTextColor(Qt::red);
     fpsItem->setZValue(10);
-    
-    tpsItem = std::shared_ptr<QGraphicsTextItem>(graphicsScene->addText(QString::number((int)tps) + " TPS"));
-    tpsItem->setPos(gameRect.width() - 45, toGlobalY(10));
-    tpsItem->setDefaultTextColor(Qt::red);
-    tpsItem->setZValue(10);
 #endif
 }
 
@@ -290,10 +292,19 @@ QPointF CScene::toLocalPoint(QPointF globalPoint)
                    toLocalY(globalPoint.y()));
 }
 
-bool CScene::insideGameRect(QPointF point)
+bool CScene::insideEnclosingRect(QPointF point)
 {
     int x = toGlobalX(point.x());
     int y = toGlobalY(point.y());
     QPoint pointInt(x, y);
     return enclosingRect.contains(pointInt);
 }
+
+bool CScene::insideGameRect(QPointF point)
+{
+    int x = toGlobalX(point.x());
+    int y = toGlobalY(point.y());
+    QPoint pointInt(x, y);
+    return gameRect.contains(pointInt);
+}
+

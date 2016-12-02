@@ -14,10 +14,48 @@ const int dx[dNum] = {0, 1, 0, -1};
 const int dy[dNum] = {-1, 0, 1, 0};
 
 const int Inf = std::numeric_limits<int>::max();
+
+std::mutex distancesMutex;
+
+void breadth_first_search_(std::vector<std::vector<int> > &distances)
+{
+    std::queue<std::pair<int, int>> queue;
+    queue.push(std::make_pair(ExitX, ExitY));
+    distances[ExitX][ExitY] = 0;
+    
+    while (!queue.empty())
+    {
+        int x = queue.front().first ;
+        int y = queue.front().second;
+        queue.pop();
+
+        int nextDistance = distances[x][y] + 1;
+        for (int i = 0; i < dNum; ++i)
+        {
+            int xNext = x + dx[i];
+            int yNext = y + dy[i];
+            if (xNext < 0 || yNext < 0 || 
+                    xNext >= CellNumX || yNext >= CellNumY || 
+                    distances[xNext][yNext] > -1)
+                continue;
+            
+            distances[xNext][yNext] = nextDistance;
+            queue.push(std::make_pair(xNext, yNext));
+        }
+    }
+}
+
 }
 
 namespace helper
 {
+
+QPointF addVector(QPointF point, qreal len, const qreal &angle)
+{
+    qreal x = point.x() + qSin(qDegreesToRadians(angle)) * len;
+    qreal y = point.y() - qCos(qDegreesToRadians(angle)) * len;
+    return QPointF(x, y);
+}
 
 qreal calcAngle(QPointF p1, QPointF p2)
 {
@@ -53,13 +91,12 @@ void reconcileAngles(qreal &angle, const qreal &deltaAngle, const qreal &step)
         angle -= step;
 }
 
-bool calcDistances(
+void updateDistances(
         std::vector<std::vector<std::shared_ptr<ICannon> > > &cannons,
         std::vector<std::vector<int> > &distances)
 {
-    if (cannons[ExitX][ExitY] || cannons[EntranceX][EntranceY])
-        return false;
-    
+    distancesMutex.lock();
+    //here we expect cannons to be correct array
     for (int x = 0; x < CellNumX; ++x)
         for (int y = 0; y < CellNumY; ++y)
         {
@@ -69,39 +106,35 @@ bool calcDistances(
                 distances[x][y] = -1;
         }
     
-    std::queue<std::pair<int, int>> queue;
-    queue.push(std::make_pair(ExitX, ExitY));
-    distances[ExitX][ExitY] = 0;
-    
-    while (!queue.empty())
-    {
-        int x = queue.front().first ;
-        int y = queue.front().second;
-        queue.pop();
+    breadth_first_search_(distances);
+    distancesMutex.unlock();
+}
 
-        int nextDistance = distances[x][y] + 1;
-        for (int i = 0; i < dNum; ++i)
-        {
-            int xNext = x + dx[i];
-            int yNext = y + dy[i];
-            if (xNext < 0 || yNext < 0 || 
-                    xNext >= CellNumX || yNext >= CellNumY || 
-                    distances[xNext][yNext] > -1)
-                continue;
-            
-            distances[xNext][yNext] = nextDistance;
-            queue.push(std::make_pair(xNext, yNext));
-        }
-    }
+
+bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int> > &distances)
+{
+    distancesMutex.lock();
+        if ((xInd == ExitX && yInd == ExitY) || (xInd == EntranceX && yInd == EntranceY))
+            return false;
+        std::vector<std::vector<int>> distCheck(distances);
+    distancesMutex.unlock();
     
-/*    bool connected = true;
+    distCheck[xInd][yInd] = Inf;
     for (int x = 0; x < CellNumX; ++x)
         for (int y = 0; y < CellNumY; ++y)
-            if (distances[x][y] == -1)
-                connected = false;*/
+            if (distCheck[x][y] != Inf)
+                distCheck[x][y] = -1;
     
-    return /*connected && */(distances[EntranceX][EntranceY] > -1);
+    breadth_first_search_(distCheck);
+    
+    /*    bool connected = true;
+        for (int x = 0; x < CellNumX; ++x)
+            for (int y = 0; y < CellNumY; ++y)
+                if (distances[x][y] == -1)
+                    connected = false;*/
+    return /*connected && */(distCheck[EntranceX][EntranceY] > -1);
 }
+
 
 QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoint& curPoint)
 {
@@ -145,19 +178,14 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
     return QPoint(-1, -1);
 }
 
-QPointF addVector(QPointF point, qreal len, const qreal &angle)
-{
-    qreal x = point.x() + qSin(qDegreesToRadians(angle)) * len;
-    qreal y = point.y() - qCos(qDegreesToRadians(angle)) * len;
-    return QPointF(x, y);
-}
+
 
 qreal manhattanLength(QPointF p1, QPointF p2)
 {
     return pow(pow(abs(p1.x() - p2.x()), 2.0) + pow(abs(p1.y() - p2.y()), 2.0), 0.5);
 }
 
-void readWaves(const QString &filename, std::vector<CWave> &waves, CGame *game)
+void readWaves(const QString &filename, std::vector<CWave> &waves)
 {
     QFile waveFile(filename);
     if (!waveFile.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -178,31 +206,10 @@ void readWaves(const QString &filename, std::vector<CWave> &waves, CGame *game)
         
         in >> wave.timeBeforeStart;
         in >> wave.enemyIncomeInterval;
-        
-        qint32 enemiesNum;
-        in >> enemiesNum;
-        
-        qint32 enemyType;
-        in >> enemyType;
-        
-        qint32 enemyTexture;
-        in >> enemyTexture;
-        
-        qint32 enemyPower;
-        in >> enemyPower;
-        
-        for (int en = 0; en < enemiesNum; ++en)
-        {
-            switch (enemyType)
-            {
-            case 1:
-                wave.enemies.push(std::make_shared<CFastEnemy>(game, enemyTexture, enemyPower));
-                break;
-            default:
-                qDebug() << "Helper: readWaves: incorrect enemyType";
-                wave.enemies.push(std::make_shared<CFastEnemy>(game, enemyTexture, enemyPower));
-            }
-        }
+        in >> wave.totalEnemyNum;
+        in >> wave.enemyType;
+        in >> wave.enemyTexture;
+        in >> wave.enemyPower;
         waves.push_back(wave);        
     }
     
@@ -213,6 +220,5 @@ qreal ticksToTime(int ticks)
 {
     return static_cast<qreal>(ticks) * TimerInterval / 1000;
 }
-
 
 }

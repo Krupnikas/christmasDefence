@@ -7,7 +7,12 @@ class IEnemy;
 struct CWave
 {
     CWave();
-    std::queue<std::shared_ptr<IEnemy>> enemies;
     qreal timeBeforeStart;
-    qreal enemyIncomeInterval;    
+    qreal enemyIncomeInterval;
+    int enemyType;
+    int enemyTexture;
+    int enemyPower;
+    
+    int totalEnemyNum;
+    int curEnemyNum;
 };

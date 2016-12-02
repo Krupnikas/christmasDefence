@@ -15,6 +15,7 @@ public:
     ~IEnemy();
     
     //IGameObject methods override
+    virtual void scaleItem() override;
     virtual void draw() override;
     virtual void hide() override;
     virtual void show() override;

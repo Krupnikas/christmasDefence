@@ -8,6 +8,13 @@ IEnemy::IEnemy(){}
 
 IEnemy::~IEnemy(){}
 
+void IEnemy::scaleItem()
+{
+    CGameObject::scaleItem();
+    hpBackgroundItem->scaleItem();
+    hpCurItem->scaleItem();
+}
+
 void IEnemy::draw()
 {
     CGameObject::draw();
@@ -26,7 +33,7 @@ bool IEnemy::move()
     hpBackgroundItem->draw();
     hpCurItem->draw();
     
-    return game->scene->insideGameRect(center);
+    return game->scene->insideEnclosingRect(center);
 }
 
 QPixmap *IEnemy::getTexture(int enemyTexture){}
@@ -74,7 +81,7 @@ void IEnemy::updateHpSize()
 {
     QSizeF hpCurSize(HpSize);
     hpCurSize.setWidth(HpSize.width() * hpCur / hpMax);
-    hpCurItem->scaleItemWithLoss(hpCurSize, LeftTop);
+    hpCurItem->scaleItemWithLoss(hpCurSize);
 }
 
 qreal IEnemy::getDistanceToFinish()

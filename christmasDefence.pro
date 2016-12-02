@@ -31,7 +31,6 @@ SOURCES += main.cpp\
     Enemy/Movements.cpp \
     InfoBlock/IInfoBlock.cpp \
     InfoBlock/UserInfo.cpp \
-    InfoBlock/WaveInfo.cpp \
     InfoBlock/ControlButtons.cpp \
     InfoBlock/PauseWindow.cpp \
     InfoBlock/CannonSelection.cpp \
@@ -40,7 +39,8 @@ SOURCES += main.cpp\
     Game/GameObject.cpp \
     Game/Button.cpp \
     Wave/Wave.cpp \
-    Wave/WaveManager.cpp
+    Wave/WaveManager.cpp \
+    InfoBlock/WaveInfo/WaveInfo.cpp
     Game/Button.cpp
 
 HEADERS  += mainview.h \
@@ -73,7 +73,8 @@ HEADERS  += mainview.h \
     Game/GameObject.h \
     Game/Button.h \
     Wave/Wave.h \
-    Wave/WaveManager.h
+    Wave/WaveManager.h \
+    InfoBlock/WaveInfo/WaveInfo.h
     Game/Button.h
 
 FORMS    += mainview.ui

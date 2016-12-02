@@ -20,7 +20,7 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
         cannons[i].resize(CellNumY);
         distances[i].resize(CellNumY);
     }
-    helper::calcDistances(cannons, distances);
+    helper::updateDistances(cannons, distances);
     
     positionTimer = new QTimer(this);
     drawTimer = new QTimer(this);
@@ -44,27 +44,34 @@ bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
     int x = cell.x();
     int y = cell.y();
     
-    if (x < 0 || x > CellNumX ||
-        y < 0 || y > CellNumY ||
-        isEnemieCollision(cell))
+    if (x < 0 || x > CellNumX   ||
+        y < 0 || y > CellNumY   ||
+        isEnemieCollision(cell) ||
+        !helper::okToAdd(x, y, distances))
         return false;
-    
+
+    cannonAddMutex.lock();
     cannons[x][y] = cannon;
-    if (!helper::calcDistances(cannons, distances))
-    {
-        cannons[x][y] = nullptr;
-        return false;
-    }
-    
-    updateDistances();
-    scene->updateDistances(distances);
+    helper::updateDistances(cannons, distances);    
+    cannonAddMutex.unlock();
     cannon->draw();
     cannon->show();
     return true;
 }
 
-bool CGame::addEnemy(std::shared_ptr<IEnemy> enemy)
+bool CGame::addEnemy(int enemyType, int enemyTexture, int enemyPower)
 {
+    std::shared_ptr<IEnemy> enemy;
+    switch (enemyType)
+    {
+    case 1:
+        enemy = std::make_shared<CFastEnemy>(this, enemyTexture, enemyPower);
+        break;
+    default:
+        qDebug() << "Helper: readWaves: incorrect enemyType";
+        enemy = std::make_shared<CFastEnemy>(this, enemyTexture, enemyPower);
+    }
+    
     enemies.push_back(enemy);
     enemy->draw();
     enemy->show();
@@ -93,22 +100,19 @@ QPointF CGame::cellCenter(QPoint cell)
     return QPointF(leftTop.x() + CellSize / 2.0, leftTop.y() + CellSize / 2.0);
 }
 
-void CGame::updateDistances()
-{
-    distancesChanged = true;
-}
-
 void CGame::scaleObjects()
 {
     for (size_t i = 0; i < bullets.size(); ++i)
     {
         bullets[i]->scaleItem();
         bullets[i]->draw();
+        bullets[i]->show();
     }
     for (size_t i = 0; i < enemies.size(); ++i)
     {
         enemies[i]->scaleItem();
         enemies[i]->draw();
+        enemies[i]->show();
     }
     for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)
@@ -116,6 +120,7 @@ void CGame::scaleObjects()
             {
                 cannons[i][j]->scaleItem();
                 cannons[i][j]->draw();
+                cannons[i][j]->show();
             }
     
     if (block)
@@ -130,8 +135,6 @@ void CGame::scaleObjects()
         selectedCellItem = nullptr;
         selectCell(selectedCell);
     }
-    
-    scene->updateDistances(distances);
 }
 
 void CGame::hideObjects()
@@ -230,12 +233,6 @@ QPoint CGame::findNearestCell(QPointF from)
 
 void CGame::onPositionTimer()
 {
-    if (distancesChanged)
-    {
-        helper::calcDistances(cannons, distances);
-        distancesChanged = false;
-    }
-    
     waveManager.onTimer();
     
     size_t lastBulletInd = 0;
@@ -265,20 +262,6 @@ void CGame::onPositionTimer()
         enemies[i]->remove();
     if (lastEnemyInd < enemies.size())
         enemies.resize(lastEnemyInd);
-    
-    static QTime time;
-    static int frameCnt=0;
-    static double timeElapsed=0;
-    // tps counting...
-    frameCnt++;
-    timeElapsed += time.elapsed();
-    time.restart();
-    if (timeElapsed >= 500)
-    {
-       tps = frameCnt * 1000.0 / timeElapsed;
-       timeElapsed = 0;
-       frameCnt = 0;
-    }
 }
 
 void CGame::onDrawTimer()
@@ -286,13 +269,17 @@ void CGame::onDrawTimer()
     for (size_t i = 0; i < bullets.size(); ++i)
         bullets[i]->draw();
     
-    for (int i = 0; i < CellNumX; ++i)
-        for (int j = 0; j < CellNumY; ++j)
-            if (cannons[i][j])
-            {
-                cannons[i][j]->count();                
-                cannons[i][j]->rotate();
-            }
+    cannonAddMutex.lock();
+    
+        for (int i = 0; i < CellNumX; ++i)
+            for (int j = 0; j < CellNumY; ++j)
+                if (cannons[i][j])
+                {
+                    cannons[i][j]->count();                
+                    cannons[i][j]->rotate();
+                }
+        
+    cannonAddMutex.unlock();
     
     static QTime time;
     static int frameCnt=0;
@@ -307,7 +294,7 @@ void CGame::onDrawTimer()
        timeElapsed = 0;
        frameCnt = 0;
     }
-    scene->updateFPS(fps, tps);
+    scene->updateFPS(fps);
 }
 
 void CGame::onMousePressed(QMouseEvent *pressEvent)
@@ -321,9 +308,13 @@ void CGame::deselect_cell_()
     int selY = selectedCell.y();
     if (selectedCell == UnselCell || !cannons[selX][selY])
     {
-        block->hide();
-        selectedCellItem->hide();
-        selectedCellItem->setFlag(QGraphicsItem::ItemHasNoContents, true);
+        if (block)
+            block->hide();
+        if (selectedCellItem)
+        {
+            selectedCellItem->hide();
+            selectedCellItem->setFlag(QGraphicsItem::ItemHasNoContents, true);
+        }
     }
     else
     {

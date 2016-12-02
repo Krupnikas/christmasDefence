@@ -24,9 +24,9 @@ void CGameObject::scaleItem()
     position = game->scene->addPixmap(textureSize, pixmap);
 }
 
-void CGameObject::scaleItemWithLoss(QSizeF newSize, ScaleCenter scaleCenter)
+void CGameObject::scaleItemWithLoss(QSizeF newSize)
 {
-    game->scene->scaleItem(textureSize, newSize, position, scaleCenter);
+    game->scene->scaleItem(textureSize, newSize, position);
 }
 
 void CGameObject::draw()

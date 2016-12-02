@@ -32,7 +32,7 @@ bool CFastBullet::move()
 {
     center = helper::addVector(center, game->scene->toGlobalCX(step), angle);
     leftTop = helper::addVector(leftTop, game->scene->toGlobalCX(step), angle);
-    return game->scene->insideGameRect(center);
+    return game->scene->insideEnclosingRect(center);
 /*    {
         game->scene->removeItem(position);
     }*/

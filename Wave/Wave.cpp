@@ -1,6 +1,6 @@
 #include "Wave.h"
 
-CWave::CWave()
+CWave::CWave() : curEnemyNum(0)
 {
     
 }

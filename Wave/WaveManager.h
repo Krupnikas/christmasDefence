@@ -10,6 +10,7 @@ public:
     CWaveManager();
     void initialize(CGame *game);
     void onTimer();
+    QString getWaveInfo();
     
 private:
     CGame *game;

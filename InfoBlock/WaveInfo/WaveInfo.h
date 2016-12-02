@@ -5,5 +5,5 @@
 class CWaveInfo : public IInfoBlock
 {
 public:
-    CWaveInfo();
+    CWaveInfo(CGame *game);
 };

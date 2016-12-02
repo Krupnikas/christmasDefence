@@ -24,7 +24,7 @@ CFastEnemy::CFastEnemy(CGame *game, int enemyTexture, int enemyPower)
     
     textureSize = FastEnemyTextureSize;
     size = FastEnemySize;
-    pixmap = &game->r->fast_enemy_2/*getTexture(enemyTexture)*/;
+    pixmap = getTexture(enemyTexture);
     position = game->scene->addPixmap(textureSize, pixmap);
     
     //IEnemy fields

@@ -8,6 +8,7 @@ class CGame;
 
 namespace helper {
 
+QPointF addVector(QPointF point, qreal len, const qreal &angle);
 qreal calcAngle(QPointF p1, QPointF p2);
 qreal calcAngle(qreal x1, qreal y1, qreal x2, qreal y2);
 
@@ -16,12 +17,11 @@ qreal manhattanLength(QPointF p1, QPointF p2);
 
 void reconcileAngles(qreal &angle, const qreal &deltaAngle, const qreal &step);
 
-bool calcDistances(
+void updateDistances(
     std::vector<std::vector<std::shared_ptr<ICannon>>> &cannons,
     std::vector<std::vector<int>> &distances);
+bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int>> &distances);
 QPoint findLowerNeighbour(std::vector<std::vector<int>> &distances, const QPoint& curPoint);
-
-QPointF addVector(QPointF point, qreal len, const qreal &angle);
 
 template <class T>
 T choose(SizeType type, T var1, T var2, T var3)
@@ -39,7 +39,7 @@ T choose(SizeType type, T var1, T var2, T var3)
     }
 }
 
-void readWaves(const QString &filename, std::vector<CWave> &waves, CGame *game);
+void readWaves(const QString &filename, std::vector<CWave> &waves);
 
 qreal ticksToTime(int ticks);
 

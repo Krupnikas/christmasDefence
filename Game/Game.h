@@ -30,7 +30,6 @@ public:
     std::shared_ptr<CCannonSelection> block;
     std::shared_ptr<QGraphicsItem> selectedCellItem;
     QPoint selectedCell = UnselCell;
-    QPoint hintedCell = UnselCell;
 
     std::vector<std::shared_ptr<IBullet> > bullets;
     std::vector<std::shared_ptr<IEnemy> > enemies;
@@ -45,7 +44,7 @@ public:
     bool isGameCell(QPoint cell);
     
     bool addCannon(std::shared_ptr<ICannon> cannon);
-    bool addEnemy(std::shared_ptr<IEnemy> enemy);
+    bool addEnemy(int enemyType, int enemyTexture, int enemyPower);
 
     bool isEnemieCollision(QPoint Cell);
     
@@ -79,7 +78,7 @@ private:
 //private attributes
 private:
     qreal fps = 0;
-    qreal tps = 0;
-    bool distancesChanged = false;
-        
+    
+    std::mutex cannonAddMutex;
+    bool cannonsAdded = false;
 };

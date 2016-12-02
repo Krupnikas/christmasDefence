@@ -49,11 +49,6 @@ void MainView::showEvent(QShowEvent*)
 {
     scene.updateGameRect(ui->graphicsView->geometry());
     game.waveManager.initialize(&game);    
-    /*for (int i = 0; i < CellNumX; ++i)
-        for (int j = 0; j < CellNumY; ++j)
-            game.addCannon(std::make_shared<CFastCannon>(&game, i, j, 100, 30, 100));*/
-
-    //game.addEnemy(std::make_shared<CFastEnemy>(&game));
     scene.updateDistances(game.distances);
     
     connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));
@@ -65,7 +60,7 @@ void MainView::showEvent(QShowEvent*)
 
 void MainView::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    if (e->button() == Qt::RightButton)
+    if (e->button() == Qt::LeftButton)
     {
         QPointF p = game.view->mapFromGlobal(QCursor::pos());
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
@@ -84,33 +79,6 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
     QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
     int selX = selectedCell.x();
     int selY = selectedCell.y();
-    /*
-    if (eventPress->button() == Qt::RightButton){
-        if (game.selectedCell != selectedCell){
-            game.selectCell(selectedCell);
-            if (game.block)
-                game.block->updatePosition(selectedCell);
-            else
-                game.block = std::make_shared<CCannonSelection>(&game, selectedCell);
-            game.block->draw();
-            game.block->show();            
-            return;
-        }
-        if (!game.cannons[selX][selY])
-        {
-            QPointF cellCenterGlobal(game.scene->toGlobalPoint(game.cellCenter(selectedCell)));
-            qreal angle = helper::calcAngle(cellCenterGlobal, p);
-            game.addCannon(std::make_shared<CFastCannon>(&game,
-                                                     selectedCell,
-                                                     angle));
-        }
-        else
-        {
-            game.cannons[selX][selY] = nullptr;
-        }
-        game.block->hide();
-        game.deselectCell();
-    }*/
     
     if (eventPress->button() == Qt::LeftButton)
     {
@@ -126,56 +94,7 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
             }
             return;
         }
-        
         game.selectCell(selectedCell);
-        /*
-        if (!game.cannons[selX][selY])
-            game.addEnemy(std::make_shared<CFastEnemy>(&game));
-        
-        if (game.cannons[selX][selY])
-        {
-            if (selectedCell != game.selectedCell && 
-                    game.selectedCell != QPoint(-1, -1))
-            {
-                if (game.cannons[game.selectedCell.x()][game.selectedCell.y()])
-                {
-                    game.cannons[game.selectedCell.x()][game.selectedCell.y()]->hideRadius();
-                    game.selectedCell = QPoint(-1, -1);
-                }
-                else
-                {
-                    game.block->hide();
-                    game.deselectCell();
-                }
-                game.cannons[selX][selY]->showRadius();
-            }
-            else if (selectedCell == game.selectedCell)
-            {
-                game.cannons[game.selectedCell.x()][game.selectedCell.y()]->hideRadius();
-                game.selectedCell = QPoint(-1, -1);
-            }
-        }
-        
-        if (game.cannons[selX][selY])
-        {
-            game.cannons[selX][selY]->showRadius();
-            if (game.selectedCell != QPoint(-1, -1) && game.cannons[game.selectedCell.x()][game.selectedCell.y()])
-            {
-                game.cannons[game.selectedCell.x()][game.selectedCell.y()]->hideRadius();
-                game.selectedCell = QPoint(-1, -1);
-            }
-            game.selectedCell = selectedCell;
-        }
-        else if (game.selectedCell != QPoint(-1, -1))
-        {
-            if (game.cannons[game.selectedCell.x()][game.selectedCell.y()])
-            {
-                game.cannons[game.selectedCell.x()][game.selectedCell.y()]->hideRadius();
-            }
-            
-        }*/
-        
-        
     }
     
 }

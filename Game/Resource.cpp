@@ -31,6 +31,7 @@ R::R()
     hp_cur = QPixmap(get("hp_cur"));
     hp_background = QPixmap(get("hp_background"));
 
+    enemy_comes = QPixmap(get("enemy_comes"));
     waves = QString("../christmasDefence/res/christmas/waves.txt")/*get("waves.txt")*/;
 }
 

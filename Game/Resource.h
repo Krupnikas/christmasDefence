@@ -24,6 +24,7 @@
 #include <QtOpenGL/QGLFormat>
 
 #include <memory>
+#include <mutex>
 #include <vector>
 #include <queue>
 #include <string>
@@ -72,6 +73,7 @@ struct R
     QPixmap hp_cur;
     QPixmap hp_background;
     
+    QPixmap enemy_comes;
     QString waves;
     
     QString get(const char *val);
