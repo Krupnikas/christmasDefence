@@ -55,6 +55,7 @@ void MainView::showEvent(QShowEvent*)
     connect(game.drawTimer, SIGNAL(timeout()), &game, SLOT(onDrawTimer()));
     connect(this, SIGNAL(mousePressed(QMouseEvent*)),
             &game, SLOT(onMousePressed(QMouseEvent*)));
+    game.block = std::make_shared<CCannonSelection>(&game, game.selectedCell);
     game.showObjects();
 }
 

@@ -12,7 +12,6 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
     scene(scene),
     view(view)
 {    
-    block = std::make_shared<CCannonSelection>(this, selectedCell);
     cannons.resize(CellNumX);
     distances.resize(CellNumX);
     for (int i = 0; i < CellNumX; ++i)
