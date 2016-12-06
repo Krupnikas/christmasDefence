@@ -22,7 +22,7 @@ MainView::MainView(QWidget *parent) :
     //setAttribute(Qt::WA_TranslucentBackground, true);
     setAttribute(Qt::WA_TranslucentBackground);
    // ui->graphicsView->setViewportUpdateMode(QGraphicsView::);
-    //this->showFullScreen();
+    this->showFullScreen();
 }
 
 MainView::~MainView()
@@ -34,13 +34,10 @@ MainView::~MainView()
 
 void MainView::resizeEvent(QResizeEvent *)
 {
-    //game.hideObjects();
     ui->graphicsView->setSceneRect(ui->graphicsView->geometry());
     scene.updateGameRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene.getGraphicsScene());
     game.scaleObjects();
-    //game.showObjects();
-
 }
 
 #endif

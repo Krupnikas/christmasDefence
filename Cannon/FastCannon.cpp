@@ -28,6 +28,8 @@ CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
     this->fireRadius = FastCannonSmRadius;
     this->radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
     hideRadius();
+    
+    cost = FastCannonSmCost;
 }
 
 CFastCannon::~CFastCannon(){}
@@ -43,6 +45,14 @@ void CFastCannon::fire()
 
 void CFastCannon::upgrade()
 {
+    int upgradeCost = getUpgradeCost();
+    if (upgradeCost > game->user.getCash())
+    {
+        qDebug() << "Too expensive to upgrage FastCannon";
+        return;
+    }
+    game->user.decreaseCash(upgradeCost);
+    
     ICannon::upgrade();
     
     this->pixmap = 
@@ -75,5 +85,22 @@ void CFastCannon::upgrade()
     radiusItem->upgrade(this);
     draw();
     show();
+}
+
+int CFastCannon::getUpgradeCost() const
+{
+    SizeType upSizeType = getUpgradeSizeType();
+    return helper::choose(upSizeType,
+                          FastCannonSmCost,
+                          FastCannonMidCost,
+                          FastCannonBigCost);
+}
+
+int CFastCannon::getCurCost() const
+{
+    return helper::choose(sizeType,
+                          FastCannonSmCost,
+                          FastCannonMidCost,
+                          FastCannonBigCost);
 }
 

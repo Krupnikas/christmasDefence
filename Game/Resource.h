@@ -24,6 +24,7 @@
 #include <QtOpenGL/QGLFormat>
 
 #include <memory>
+#include <atomic>
 #include <mutex>
 #include <vector>
 #include <queue>

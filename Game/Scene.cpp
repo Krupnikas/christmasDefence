@@ -188,7 +188,7 @@ void CScene::updateGameBackground()
         drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell2);
 }
 
-void CScene::updateDistances(std::vector<std::vector<int>> &distances)
+void CScene::updateDistances(std::vector<std::vector<int>>&)
 {
 #ifdef SHOW_DISTANCES
     textItems.clear();
@@ -213,6 +213,23 @@ void CScene::updateWaveInfo(QString info)
     waveInfoItem->setPos(gameRect.width() - info.size() * 6 - toGlobalX(10), toGlobalY(10));
     waveInfoItem->setDefaultTextColor(Qt::red);
     waveInfoItem->setZValue(10);
+}
+
+void CScene::updateUserInfo(int cash, int hp)
+{
+    if (userCashItem)
+        graphicsScene->removeItem(userCashItem.get());
+    userCashItem = std::shared_ptr<QGraphicsTextItem>(graphicsScene->addText(QString::number((int)cash) + " coins"));
+    userCashItem->setPos(toGlobalX(LocalWidth - CellSize * 0.7), toGlobalY(LocalHeight - CellSize));
+    userCashItem->setDefaultTextColor(Qt::red);
+    userCashItem->setZValue(10);
+    
+    if (userHpItem)
+        graphicsScene->removeItem(userHpItem.get());
+    userHpItem = std::shared_ptr<QGraphicsTextItem>(graphicsScene->addText(QString::number((int)hp) + " hp"));
+    userHpItem->setPos(toGlobalX(LocalWidth - CellSize * 0.7), toGlobalY(LocalHeight - CellSize * 0.6));
+    userHpItem->setDefaultTextColor(Qt::red);
+    userHpItem->setZValue(10);
 }
 
 void CScene::updateFPS(int fps)

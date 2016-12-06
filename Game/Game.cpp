@@ -43,12 +43,17 @@ bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
     int x = cell.x();
     int y = cell.y();
     
+    int cost = cannon->getCurCost();
+    
     if (x < 0 || x > CellNumX   ||
         y < 0 || y > CellNumY   ||
         isEnemieCollision(cell) ||
-        !helper::okToAdd(x, y, distances))
+        !helper::okToAdd(x, y, distances) ||
+        cost > user.getCash())
         return false;
-
+    
+    user.decreaseCash(cost);
+    
     cannonAddMutex.lock();
     cannons[x][y] = cannon;
     helper::updateDistances(cannons, distances);    
@@ -294,6 +299,7 @@ void CGame::onDrawTimer()
        frameCnt = 0;
     }
     scene->updateFPS(fps);
+    scene->updateUserInfo(user.getCash(), user.getHp());
 }
 
 void CGame::onMousePressed(QMouseEvent *pressEvent)

@@ -18,4 +18,6 @@ const qreal FastCannonSmRadius = 300;
 const qreal FastCannonMidRadius = 350;
 const qreal FastCannonBigRadius = 400;
 
-
+const int FastCannonSmCost = 7;
+const int FastCannonMidCost = 14;
+const int FastCannonBigCost = 25;

@@ -34,6 +34,7 @@ public:
     void updateDistances(std::vector<std::vector<int>> &distances);
     void updateFPS(int fps);
     void updateWaveInfo(QString info);
+    void updateUserInfo(int cash, int hp);
     void updateItems();
     
     int getWidth() { return gameRect.width(); }
@@ -70,6 +71,8 @@ private:
     std::vector<std::shared_ptr<QGraphicsItem>> textItems;
     std::shared_ptr<QGraphicsTextItem> fpsItem;
     std::shared_ptr<QGraphicsTextItem> waveInfoItem;
+    std::shared_ptr<QGraphicsTextItem> userCashItem;
+    std::shared_ptr<QGraphicsTextItem> userHpItem;
 
     
 };

@@ -39,6 +39,13 @@ public:
     virtual void hide() override;
     virtual void show() override;
     
+    //ICannon own virtual methods    
+    virtual int getUpgradeCost() const;
+    virtual int getCurCost() const;
+    
+    SizeType getSizeType() const;
+    SizeType getUpgradeSizeType() const;
+    
 protected:
     SizeType sizeType;
     QPoint gameCell;
@@ -51,6 +58,8 @@ protected:
     bool toShowRadius = false;
     
     std::shared_ptr<IEnemy> curEnemy;
+    
+    int cost;
     
 private:
     bool reachingEnemy(std::shared_ptr<IEnemy> enemy);

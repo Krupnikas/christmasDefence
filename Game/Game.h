@@ -5,6 +5,7 @@
 
 #include <Game/Scene.h>
 #include <Wave/WaveManager.h>
+#include <Game/User.h>
 
 class IBullet;
 class IEnemy;
@@ -23,7 +24,9 @@ public:
     R *r;
     CScene *scene;
     QWidget *view;
+    
     CWaveManager waveManager;
+    CUser user;
     
     QTimer *positionTimer;
     QTimer *drawTimer;

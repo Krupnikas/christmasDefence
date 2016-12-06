@@ -56,11 +56,11 @@ void CWaveManager::onTimer()
                 
             }
             
-            int inside = 0;
+            int outside = 0;
             for (auto enemy: game->enemies)
-                if (game->scene->insideGameRect(enemy->getCenter()))
-                    ++inside;
-            info = std::string("Left: " + std::to_string(wave.totalEnemyNum - inside));
+                if (!game->scene->insideGameRect(enemy->getCenter()))
+                    ++outside;
+            info = std::string("Left: " + std::to_string(wave.totalEnemyNum - wave.curEnemyNum + outside));
         }
         
     }

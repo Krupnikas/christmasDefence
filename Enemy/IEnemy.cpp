@@ -20,6 +20,7 @@ void IEnemy::hit(int hpDiff)
     {
         dead = true;
         hide();
+        game->user.increaseCash(hpMax / EnemyCostFactor);
     }
     updateHpSize();
 }
@@ -81,7 +82,10 @@ bool IEnemy::move()
     hpBackgroundItem->draw();
     hpCurItem->draw();
     
-    return game->scene->insideEnclosingRect(center);
+    bool inside = game->scene->insideEnclosingRect(center);
+    if (!inside)
+        game->user.decreaseHp(hpCur);
+    return inside;
 }
 
 QPixmap *IEnemy::getTexture(int enemyTexture){}

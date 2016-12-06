@@ -62,6 +62,29 @@ void ICannon::show()
         radiusItem->show();
 }
 
+SizeType ICannon::getSizeType() const
+{
+    return sizeType;
+}
+
+SizeType ICannon::getUpgradeSizeType() const
+{
+    if (sizeType == SMALL)
+        return MEDIUM;
+    else
+        return BIG;
+}
+
+int ICannon::getUpgradeCost() const
+{
+    return 0;   
+}
+
+int ICannon::getCurCost() const
+{
+    return 0;
+}
+
 bool ICannon::reachingEnemy(std::shared_ptr<IEnemy> enemy)
 {
     qreal length = helper::manhattanLength(center, enemy->getCenter());
@@ -94,10 +117,7 @@ void ICannon::fire(){}
 
 void ICannon::upgrade()
 {
-    if (sizeType == SMALL)
-        sizeType = MEDIUM;
-    else if (sizeType == MEDIUM)
-        sizeType = BIG;
+    sizeType = getUpgradeSizeType();
     counter = 0;
 }
 
