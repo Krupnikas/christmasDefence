@@ -59,6 +59,7 @@ public:
     qreal getDistanceToFinish() const;
     QPoint getCurrentGameCell() const;
     QPoint getNextGameCell() const;
+    QPointF getSpeed() const;
 
     
 private:

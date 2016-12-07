@@ -20,10 +20,10 @@ public:
     void updateHpPos();
     void updateHpSize(); //expensive, uses QTransform
     
-    qreal getDistanceToFinish();
-    
+    qreal getDistanceToFinish() const;
     QPoint getCurrentGameCell() const;
     QPoint getNextGameCell() const;
+    QPointF getSpeed() const;
     
     //IGameObject methods override
     virtual void scaleItem() override;

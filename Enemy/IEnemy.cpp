@@ -41,7 +41,7 @@ void IEnemy::updateHpSize()
     hpCurItem->scaleItemWithLoss(hpCurSize);
 }
 
-qreal IEnemy::getDistanceToFinish()
+qreal IEnemy::getDistanceToFinish() const
 {
     return movements->getDistanceToFinish();
 }
@@ -54,6 +54,11 @@ QPoint IEnemy::getCurrentGameCell() const
 QPoint IEnemy::getNextGameCell() const
 {
     return movements->getNextGameCell();
+}
+
+QPointF IEnemy::getSpeed() const
+{
+    return movements->getSpeed();
 }
 
 

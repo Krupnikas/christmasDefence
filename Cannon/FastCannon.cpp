@@ -104,3 +104,8 @@ int CFastCannon::getCurCost() const
                           FastCannonBigCost);
 }
 
+qreal CFastCannon::getBulletSpeed() const
+{
+    return FastBulletStep;
+}
+

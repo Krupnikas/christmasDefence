@@ -42,6 +42,7 @@ public:
     //ICannon own virtual methods    
     virtual int getUpgradeCost() const;
     virtual int getCurCost() const;
+    virtual qreal getBulletSpeed() const;
     
     SizeType getSizeType() const;
     SizeType getUpgradeSizeType() const;

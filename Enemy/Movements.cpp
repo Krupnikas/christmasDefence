@@ -163,6 +163,11 @@ QPoint Movements::getNextGameCell() const
     return nextGameCell;
 }
 
+QPointF Movements::getSpeed() const
+{
+    
+}
+
 void Movements::updateNext()
 {
 

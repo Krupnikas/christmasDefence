@@ -12,7 +12,7 @@ QPointF addVector(QPointF point, qreal len, const qreal &angle);
 qreal calcAngle(QPointF p1, QPointF p2);
 qreal calcAngle(qreal x1, qreal y1, qreal x2, qreal y2);
 
-qreal calcAngle(QPointF p1, QPointF p2, const qreal &angle1);
+qreal calcAngle(QPointF cannonCenter, qreal cannonAngle, QPointF enemyCenter, QPointF enemySpeed, qreal bulletSpeed);
 qreal manhattanLength(QPointF p1, QPointF p2);
 
 void reconcileAngles(qreal &angle, const qreal &deltaAngle, const qreal &step);

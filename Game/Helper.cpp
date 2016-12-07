@@ -45,6 +45,7 @@ void breadth_first_search_(std::vector<std::vector<int> > &distances)
     }
 }
 
+
 }
 
 namespace helper
@@ -62,7 +63,7 @@ qreal calcAngle(QPointF p1, QPointF p2)
     QPointF p(p1.x(), p1.y() - 10);
     QLineF line1(p1, p);
     QLineF line2(p1, p2);
-    return 360 - line1.angleTo(line2);
+    return line2.angleTo(line1);
 }
 
 qreal calcAngle(qreal x1, qreal y1, qreal x2, qreal y2)
@@ -70,17 +71,6 @@ qreal calcAngle(qreal x1, qreal y1, qreal x2, qreal y2)
     QLineF line1(x1, y1, x1, y1 - 10);
     QLineF line2(x1, y1, x2, y2);
     return 360 - line1.angleTo(line2);
-}
-
-qreal calcAngle(QPointF p1, QPointF p2, const qreal &angle1)
-{
-    QPointF p3(addVector(p1, 10, angle1));
-    QLineF line1(p1, p3);
-    QLineF line2(p1, p2);
-    qreal deltaAngle = line2.angleTo(line1);
-    if (deltaAngle > 180)
-        deltaAngle -= 360;
-    return std::max(deltaAngle, deltaAngle);
 }
 
 void reconcileAngles(qreal &angle, const qreal &deltaAngle, const qreal &step)
@@ -177,8 +167,6 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
     qDebug() << "Helper: findLowerNeighbour: next cell not found, returning (-1, -1)";
     return QPoint(-1, -1);
 }
-
-
 
 qreal manhattanLength(QPointF p1, QPointF p2)
 {

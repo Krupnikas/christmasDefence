@@ -4,6 +4,49 @@
 #include <Game/Helper.h>
 #include <Game/Game.h>
 
+namespace
+{
+
+//0 - clockwise, 1 - counter-clockwise, 2 - away
+int clockwise_movement_(QPointF p1, QPointF p2, QPointF p2Vect)
+{
+    QLineF line1(p2, p1);
+    QLineF line2(p2, p2Vect);
+    qreal angle = line2.angleTo(line1);
+    if (angle > 185)
+        return 0;
+    if (angle < 175)
+        return 1;
+    return 2;
+}
+
+qreal calc_desired_vector(QPointF cannonCenter, qreal cannonAngle, QPointF enemyCenter, QPointF enemySpeed, qreal bulletSpeed)
+{
+    int clockwise = clockwise_movement_(cannonCenter, enemyCenter, enemySpeed);
+    
+    if (clockwise == 2)
+        return helper::calcAngle(cannonCenter, enemyCenter);
+    
+    
+}
+
+qreal calc_delta_angle(QPointF cannonCenter, qreal cannonAngle, QPointF enemyCenter, QPointF enemySpeed, qreal bulletSpeed)
+{
+    
+    qreal desiredAngle = calc_desired_vector(cannonCenter, cannonAngle, enemyCenter, enemySpeed, bulletSpeed);
+    
+    QPointF pt1(addVector(cannonCenter, 50, cannonAngle));
+    QPointF pt2(addVector(cannonCenter, 50, desiredAngle));
+    QLineF currentLine(cannonCenter, pt1);
+    QLineF desiredLine(cannonCenter, pt2);
+    qreal deltaAngle = desiredLine.angleTo(currentLine);
+    if (deltaAngle > 180)
+        deltaAngle -= 360;
+    return deltaAngle;
+}
+
+}
+
 ICannon::ICannon() : radiusItem(nullptr), curEnemy(nullptr) {}
 ICannon::~ICannon() {}
 
@@ -85,6 +128,11 @@ int ICannon::getCurCost() const
     return 0;
 }
 
+qreal ICannon::getBulletSpeed() const
+{
+    return 0;
+}
+
 bool ICannon::reachingEnemy(std::shared_ptr<IEnemy> enemy)
 {
     qreal length = helper::manhattanLength(center, enemy->getCenter());
@@ -148,7 +196,7 @@ void ICannon::rotate()
     if (!curEnemy)
         return;
     
-    qreal deltaAngle = helper::calcAngle(center, curEnemy->getCenter(), angle);
+    qreal deltaAngle = helper::calcAngle(center, getBulletSpeed(), curEnemy->getCenter(), curEnemy->getSpeed(), angle);
     if (abs(deltaAngle) <= rotationSpeed)
     {
         if (abs(deltaAngle) >= Epsilon)
