@@ -43,6 +43,7 @@ public:
     virtual int getUpgradeCost() const;
     virtual int getCurCost() const;
     virtual qreal getBulletSpeed() const;
+    virtual qreal getBulletRadius() const;
     
     SizeType getSizeType() const;
     SizeType getUpgradeSizeType() const;
@@ -68,5 +69,4 @@ private:
     
 private:
     int counter = 0;
-    const int Epsilon = 0.5;
 };

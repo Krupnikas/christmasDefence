@@ -18,4 +18,5 @@ public:
     virtual int getUpgradeCost() const;
     virtual int getCurCost() const;
     virtual qreal getBulletSpeed() const;
+    virtual qreal getBulletRadius() const;
 };

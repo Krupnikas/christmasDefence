@@ -273,6 +273,19 @@ qreal CScene::toGlobalCY(qreal cyLocal)
     return 1.0 * gameRect.height() * cyLocal / LocalHeight;
 }
 
+qreal CScene::toGlobalDist(qreal distLocal, qreal angle)
+{
+    qreal angleRad(qDegreesToRadians(angle));
+    
+    qreal dx = distLocal * sin(angleRad);
+    qreal dy = distLocal * cos(angleRad);
+    
+    qreal dxGlobal(toGlobalCX(dx));
+    qreal dyGlobal(toGlobalCY(dy));
+    return sqrt(dxGlobal * dxGlobal + dyGlobal * dyGlobal);
+}
+
+
 QPointF CScene::toGlobalPoint(QPointF localPoint)
 {
     return QPointF(toGlobalX(localPoint.x()), toGlobalY(localPoint.y()));

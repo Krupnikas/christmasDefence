@@ -7,6 +7,8 @@
 namespace
 {
 
+const qreal Epsilon = 0.5;
+
 //0 - clockwise, 1 - counter-clockwise, 2 - away
 int clockwise_movement_(QPointF p1, QPointF p2, QPointF p2Vect)
 {
@@ -20,23 +22,104 @@ int clockwise_movement_(QPointF p1, QPointF p2, QPointF p2Vect)
     return 2;
 }
 
-qreal calc_desired_vector(QPointF cannonCenter, qreal cannonAngle, QPointF enemyCenter, QPointF enemySpeed, qreal bulletSpeed)
+bool hits_(QPointF cannonCenter, qreal cannonAngle,
+           QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
+           qreal bulletSpeed, qreal bulletRadius)
+{
+    QLineF bulLine(cannonCenter, helper::addVector(cannonCenter, 50, cannonAngle));
+    QLineF enLine(enemyCenter, enemyCenter + enemySpeed);
+    QPointF intersect;
+    if (bulLine.intersect(enLine, &intersect) != QLineF::NoIntersection)
+    {
+        int bulletStepsStart = std::floor((helper::manhattanLength(cannonCenter, intersect) - enemyRadius - bulletRadius) / bulletSpeed);
+        int bulletStepsEnd = std::floor((helper::manhattanLength(cannonCenter, intersect) + enemyRadius + bulletRadius) / bulletSpeed);
+        
+        for (int step = bulletStepsStart; step <= bulletStepsEnd; ++step)
+        {
+            QPointF bulletPoint = helper::addVector(cannonCenter, step * bulletSpeed, cannonAngle);
+            QPointF enemyPoint = enemyCenter + enemySpeed * step;
+            if (helper::circlesIntersect(bulletPoint, bulletRadius, enemyPoint, enemyRadius))
+                return true;
+        }
+        return false;
+    }
+    else
+    {
+        qDebug() << "ICannon: hits_: Bad parameters";
+        return false;
+    }
+}
+
+qreal bin_search_angle_clockwise_(QPointF cannonCenter,
+                                  QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
+                                  qreal bulletSpeed, qreal bulletRadius)
+{
+    qreal left = helper::calcAngle(cannonCenter, enemyCenter);
+    qreal right = left + 90;
+    
+    while (true)
+    {
+        qreal mid = (right + left) / 2;
+        bool hits_mid = hits_(cannonCenter, mid, enemyCenter, enemySpeed, enemyRadius, bulletSpeed, bulletRadius);
+        bool hits_mid_eps = hits_(cannonCenter, mid + Epsilon, enemyCenter, enemySpeed, enemyRadius, bulletSpeed, bulletRadius);
+        if (hits_mid && !hits_mid_eps)
+            return mid;
+        if (hits_mid && hits_mid_eps)
+            left = mid;
+        else
+            right = mid;
+    }
+}
+
+qreal bin_search_angle_counter_clockwise_(QPointF cannonCenter,
+                                  QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
+                                  qreal bulletSpeed, qreal bulletRadius)
+{
+    qreal right = helper::calcAngle(cannonCenter, enemyCenter) + 360;
+    qreal left = right - 90;
+    
+    while (true)
+    {
+        qreal mid = (right + left) / 2;
+        bool hits_mid = hits_(cannonCenter, mid, enemyCenter, enemySpeed, enemyRadius, bulletSpeed, bulletRadius);
+        bool hits_mid_eps = hits_(cannonCenter, mid - Epsilon, enemyCenter, enemySpeed, enemyRadius, bulletSpeed, bulletRadius);
+        if (hits_mid && !hits_mid_eps)
+            return mid;
+        if (hits_mid && hits_mid_eps)
+            right = mid;
+        else
+            left = mid;
+    }
+}
+
+qreal calc_desired_vector(QPointF cannonCenter,
+                          QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
+                          qreal bulletSpeed, qreal bulletRadius)
 {
     int clockwise = clockwise_movement_(cannonCenter, enemyCenter, enemySpeed);
     
     if (clockwise == 2)
         return helper::calcAngle(cannonCenter, enemyCenter);
-    
-    
+    if (clockwise == 0)
+        return bin_search_angle_clockwise_(cannonCenter,
+                                           enemyCenter, enemySpeed, enemyRadius,
+                                           bulletSpeed, bulletRadius);
+    return bin_search_angle_counter_clockwise_(cannonCenter,
+                                       enemyCenter, enemySpeed, enemyRadius,
+                                       bulletSpeed, bulletRadius);
 }
 
-qreal calc_delta_angle(QPointF cannonCenter, qreal cannonAngle, QPointF enemyCenter, QPointF enemySpeed, qreal bulletSpeed)
+qreal calc_delta_angle(QPointF cannonCenter, qreal cannonAngle,
+                       QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
+                       qreal bulletSpeed, qreal bulletRadius)
 {
     
-    qreal desiredAngle = calc_desired_vector(cannonCenter, cannonAngle, enemyCenter, enemySpeed, bulletSpeed);
+    qreal desiredAngle = calc_desired_vector(cannonCenter,
+                                             enemyCenter, enemySpeed, enemyRadius,
+                                             bulletSpeed, bulletRadius);
     
-    QPointF pt1(addVector(cannonCenter, 50, cannonAngle));
-    QPointF pt2(addVector(cannonCenter, 50, desiredAngle));
+    QPointF pt1(helper::addVector(cannonCenter, 50, cannonAngle));
+    QPointF pt2(helper::addVector(cannonCenter, 50, desiredAngle));
     QLineF currentLine(cannonCenter, pt1);
     QLineF desiredLine(cannonCenter, pt2);
     qreal deltaAngle = desiredLine.angleTo(currentLine);
@@ -133,6 +216,11 @@ qreal ICannon::getBulletSpeed() const
     return 0;
 }
 
+qreal ICannon::getBulletRadius() const
+{
+    return 0;
+}
+
 bool ICannon::reachingEnemy(std::shared_ptr<IEnemy> enemy)
 {
     qreal length = helper::manhattanLength(center, enemy->getCenter());
@@ -196,15 +284,19 @@ void ICannon::rotate()
     if (!curEnemy)
         return;
     
-    qreal deltaAngle = helper::calcAngle(center, getBulletSpeed(), curEnemy->getCenter(), curEnemy->getSpeed(), angle);
+    qreal deltaAngle = calc_delta_angle(center, angle,
+                                        curEnemy->getCenter(), curEnemy->getSpeed(), curEnemy->getSize().width(),
+                                        getBulletSpeed(), getBulletRadius());
     if (abs(deltaAngle) <= rotationSpeed)
     {
-        if (abs(deltaAngle) >= Epsilon)
+        /*if (abs(deltaAngle) >= Epsilon)
         {
             angle = helper::calcAngle(game->scene->toGlobalPoint(center), 
                                       game->scene->toGlobalPoint(curEnemy->getCenter()));
             draw();
-        }
+        }*/
+        angle += deltaAngle;
+        draw();
         if (counter == fireSpeed)
         {
             fire();

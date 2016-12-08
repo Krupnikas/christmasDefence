@@ -109,3 +109,8 @@ qreal CFastCannon::getBulletSpeed() const
     return FastBulletStep;
 }
 
+qreal CFastCannon::getBulletRadius() const
+{
+    return std::min(FastBulletSizeY, FastBulletSizeX);
+}
+

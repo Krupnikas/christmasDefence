@@ -45,6 +45,7 @@ public:
     qreal toGlobalY(qreal y_local);
     qreal toGlobalCX(qreal cx_local);
     qreal toGlobalCY(qreal cy_local);
+    qreal toGlobalDist(qreal distLocal, qreal angle);
     QPointF toGlobalPoint(QPointF localPoint);
     QSizeF toGlobalSize(QSizeF localSize);
 

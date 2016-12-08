@@ -8,6 +8,7 @@ class CGame;
 
 namespace helper {
 
+bool circlesIntersect(QPointF p1, qreal r1, QPointF p2, qreal r2);
 QPointF addVector(QPointF point, qreal len, const qreal &angle);
 qreal calcAngle(QPointF p1, QPointF p2);
 qreal calcAngle(qreal x1, qreal y1, qreal x2, qreal y2);

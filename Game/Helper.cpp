@@ -51,6 +51,11 @@ void breadth_first_search_(std::vector<std::vector<int> > &distances)
 namespace helper
 {
 
+bool circlesIntersect(QPointF p1, qreal r1, QPointF p2, qreal r2)
+{
+    return manhattanLength(p1, p2)  <= r1 + r2;   
+}
+
 QPointF addVector(QPointF point, qreal len, const qreal &angle)
 {
     qreal x = point.x() + qSin(qDegreesToRadians(angle)) * len;
