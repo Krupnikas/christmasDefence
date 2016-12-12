@@ -20,7 +20,7 @@ qreal calc_mid_(qreal left, qreal right)
     return mid;
 }
 
-//0 - clockwise, 1 - counter-clockwise, 2 - away
+//0 - clockwise, 1 - counter-clockwise, 2 - going away
 int clockwise_movement_(QPointF p1, QPointF p2, QPointF p2Vect)
 {
     QLineF line1(p2, p1);
