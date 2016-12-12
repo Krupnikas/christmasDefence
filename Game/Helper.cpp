@@ -175,7 +175,7 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
 
 qreal manhattanLength(QPointF p1, QPointF p2)
 {
-    return pow(pow(abs(p1.x() - p2.x()), 2.0) + pow(abs(p1.y() - p2.y()), 2.0), 0.5);
+    return pow(pow(std::abs(p1.x() - p2.x()), 2.0) + pow(std::abs(p1.y() - p2.y()), 2.0), 0.5);
 }
 
 void readWaves(const QString &filename, std::vector<CWave> &waves)

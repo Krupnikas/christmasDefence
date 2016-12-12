@@ -142,13 +142,13 @@ qreal Movements::getDistanceToFinish() const
     if (isCenterDirected())
     {
         dist += half / curLocalCell.localRect.width();
-        dist += (abs(CellCenter.x() - curPos.x()) + 
-                 abs(CellCenter.y() - curPos.y())) / curLocalCell.localRect.width();
+        dist += (std::abs(CellCenter.x() - curPos.x()) +
+                 std::abs(CellCenter.y() - curPos.y())) / curLocalCell.localRect.width();
     }
     else
     {
-        dist += (half - (abs(CellCenter.x() - curPos.x()) + 
-                         abs(CellCenter.y() - curPos.y())))  / curLocalCell.localRect.width();
+        dist += (half - (std::abs(CellCenter.x() - curPos.x()) +
+                         std::abs(CellCenter.y() - curPos.y())))  / curLocalCell.localRect.width();
     }
     return dist;
 }
@@ -208,12 +208,12 @@ QPoint Movements::vectorToCenter()
 
 QPoint Movements::vectorToNext()
 {
-    if (abs(curGameCell.x() - nextGameCell.x()) + abs(curGameCell.y() - nextGameCell.y()) > 1)
+    if (std::abs(curGameCell.x() - nextGameCell.x()) + std::abs(curGameCell.y() - nextGameCell.y()) > 1)
     {
         qDebug() << "Movements: wrong next cell";
         updateNext();
     }
-    if (abs(curGameCell.x() - nextGameCell.x()) + abs(curGameCell.y() - nextGameCell.y()) > 1)
+    if (std::abs(curGameCell.x() - nextGameCell.x()) + std::abs(curGameCell.y() - nextGameCell.y()) > 1)
         qDebug() << "Movements: still wrong next cell(((((";
     return QPoint(nextGameCell.x() - curGameCell.x(), nextGameCell.y() - curGameCell.y());
 }

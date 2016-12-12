@@ -16,8 +16,6 @@ void IBullet::setCenter(const QPointF &value)
 
 IBullet::~IBullet(){}
 
-bool IBullet::move(){}
-
 bool IBullet::reachedEnemy()
 {
     for (auto enemy: game->enemies)
@@ -32,5 +30,3 @@ bool IBullet::reachedEnemy()
     
     return false;
 }
-
-void IBullet::onTimer(){}

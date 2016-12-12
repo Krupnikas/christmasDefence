@@ -15,7 +15,7 @@ public:
     ICannon();
     virtual ~ICannon();
     
-    virtual void fire();
+    virtual void fire() = 0;
     virtual void upgrade();
     
     void rotate();
@@ -34,7 +34,7 @@ public:
     void setFireRadius(double value);
     
     //IGameObject methods override
-    virtual void scaleItem();
+    virtual void scaleItem() override;
     virtual void draw() override;
     virtual void hide() override;
     virtual void show() override;

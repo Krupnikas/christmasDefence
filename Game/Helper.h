@@ -3,7 +3,7 @@
 #include <Game/Resource.h>
 
 class ICannon;
-class CWave;
+struct CWave;
 class CGame;
 
 namespace helper {

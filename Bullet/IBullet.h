@@ -13,7 +13,7 @@ public:
     
     virtual ~IBullet();
 
-    virtual bool move();
+    virtual bool move() = 0;
     
     bool reachedEnemy();
     
@@ -26,9 +26,6 @@ public:
     
     QPointF getCenter() const;
     void setCenter(const QPointF &value);
-    
-public slots:
-    virtual void onTimer();
     
 protected:
     

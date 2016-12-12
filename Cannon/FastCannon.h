@@ -15,8 +15,8 @@ public:
     virtual void upgrade() override;
     
     //ICannon own virtual methods    
-    virtual int getUpgradeCost() const;
-    virtual int getCurCost() const;
-    virtual qreal getBulletSpeed() const;
-    virtual qreal getBulletRadius() const;
+    virtual int getUpgradeCost() const override;
+    virtual int getCurCost() const override;
+    virtual qreal getBulletSpeed() const override;
+    virtual qreal getBulletRadius() const override;
 };

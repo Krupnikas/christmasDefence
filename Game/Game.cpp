@@ -224,7 +224,7 @@ QPoint CGame::findNearestCell(QPointF from)
             int y = OffsetY + j * CellSize + CellSize/ 2.0;
             QPointF checkingCellCenter(x,y);
             checkingCellCenter -= from;
-            manhattanLength = abs(checkingCellCenter.x()) + abs(checkingCellCenter.y());
+            manhattanLength = std::abs(checkingCellCenter.x()) + std::abs(checkingCellCenter.y());
             if (manhattanLength < minDist){
                     minDist = manhattanLength;
                     nearestCell.setX(i);

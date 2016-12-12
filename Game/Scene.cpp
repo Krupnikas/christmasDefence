@@ -291,6 +291,11 @@ QPointF CScene::toGlobalPoint(QPointF localPoint)
     return QPointF(toGlobalX(localPoint.x()), toGlobalY(localPoint.y()));
 }
 
+QPointF CScene::toGlobalSize(QPointF localSize)
+{
+    return QPointF(toGlobalCX(localSize.x()), toGlobalCY(localSize.y()));
+}
+
 QSizeF CScene::toGlobalSize(QSizeF localSize)
 {
     return QSizeF(toGlobalCX(localSize.width()), toGlobalCY(localSize.height()));
