@@ -84,6 +84,8 @@ bool IEnemy::move()
     game->scene->positionItemByCenter(center, textureSize, angle, zOrder, position);
     
     updateHpPos();
+    hpBackgroundItem->draw();
+    hpCurItem->draw();
     
     bool inside = game->scene->insideEnclosingRect(center);
     if (!inside)

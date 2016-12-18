@@ -13,7 +13,6 @@ void IBullet::setCenter(const QPointF &value)
     center = value;
 }
 
-
 IBullet::~IBullet(){}
 
 bool IBullet::reachedEnemy()
