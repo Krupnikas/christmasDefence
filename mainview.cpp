@@ -22,7 +22,7 @@ MainView::MainView(QWidget *parent) :
     //setAttribute(Qt::WA_TranslucentBackground, true);
     setAttribute(Qt::WA_TranslucentBackground);
    // ui->graphicsView->setViewportUpdateMode(QGraphicsView::);
-    this->showFullScreen();
+   // this->showFullScreen();
 }
 
 MainView::~MainView()

@@ -58,7 +58,7 @@ QPoint IEnemy::getNextGameCell() const
 
 QPointF IEnemy::getSpeed() const
 {
-    return movements->getSpeed();
+    return movements->getSpeed() * moveIter;
 }
 
 
@@ -84,8 +84,6 @@ bool IEnemy::move()
     game->scene->positionItemByCenter(center, textureSize, angle, zOrder, position);
     
     updateHpPos();
-    hpBackgroundItem->draw();
-    hpCurItem->draw();
     
     bool inside = game->scene->insideEnclosingRect(center);
     if (!inside)

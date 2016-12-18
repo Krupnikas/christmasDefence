@@ -165,8 +165,8 @@ QPoint Movements::getNextGameCell() const
 
 QPointF Movements::getSpeed() const
 {
-    return QPointF(static_cast<qreal>(queue.curSum.x()) / curLocalCell.localRect.width(),
-                   static_cast<qreal>(queue.curSum.y()) / curLocalCell.localRect.height());
+    return QPointF(static_cast<qreal>(queue.curSum.x()) / curLocalCell.localRect.width() * curLocalCell.cellGameSize.width(),
+                   static_cast<qreal>(queue.curSum.y()) / curLocalCell.localRect.height() * curLocalCell.cellGameSize.height());
 }
 
 void Movements::updateNext()
