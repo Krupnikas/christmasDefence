@@ -272,6 +272,12 @@ void CGame::onDrawTimer()
 {
     for (size_t i = 0; i < bullets.size(); ++i)
         bullets[i]->draw();
+
+    for (auto enemy: enemies)
+    {
+        qDebug() << "CGame: onTimer: draw enemy";
+        enemy->draw();
+    }
     
     cannonAddMutex.lock();
     

@@ -20,6 +20,8 @@
 #include <QLineF>
 #include <QtCore/qmath.h>
 #include <QDebug>
+#include <qopengl.h>
+#include <QOpenGLContext>
 #include <QtOpenGL/QGLWidget>
 #include <QtOpenGL/QGLFormat>
 

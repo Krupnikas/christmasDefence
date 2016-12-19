@@ -9,6 +9,7 @@ namespace
 
 const qreal EpsilonAngle = 0.1;
 const qreal DeltaAngle = 1;
+const qreal SpeedDiv = 20;
 
 qreal calc_mid_(qreal left, qreal right)
 {
@@ -39,7 +40,9 @@ bool hits_(QPointF cannonCenter, qreal cannonAngle,
            QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
            qreal bulletSpeed, qreal bulletRadius, CGame *game)
 {
-    bulletSpeed = game->scene->toGlobalDist(bulletSpeed, cannonAngle);
+    bulletSpeed = game->scene->toGlobalDist(bulletSpeed, cannonAngle) / SpeedDiv;
+    enemySpeed.setX(enemySpeed.x() / SpeedDiv);
+    enemySpeed.setY(enemySpeed.y() / SpeedDiv);
     QLineF bulLine(cannonCenter, helper::addVector(cannonCenter, 50, cannonAngle));
     QLineF enLine(enemyCenter, enemyCenter + enemySpeed * 100);
     QPointF intersect;
@@ -317,7 +320,7 @@ void ICannon::rotate()
     qreal deltaAngle = calc_delta_angle(game->scene->toGlobalPoint(center), angle,
                                         game->scene->toGlobalPoint(curEnemy->getCenter()),
                                         game->scene->toGlobalSize(curEnemy->getSpeed()),
-                                        game->scene->toGlobalCX(curEnemy->getSize().width() / 2),
+                                        game->scene->toGlobalCX(curEnemy->getSize().width() / 20),
                                         getBulletSpeed(),
                                         game->scene->toGlobalCX(getBulletRadius()),
                                         game);

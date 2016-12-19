@@ -119,6 +119,7 @@ void CScene::updateGameRect(QRect newWindowRect)
     //Устанавливаем новую ширину
     //Иначе экран выше, чем 16х9
     //Устанавливаем новую высоту
+    qDebug() << "New window rect: " << newWindowRect;
     backgroundItems.clear();
     gameRect = windowRect = newWindowRect;
     
@@ -210,7 +211,7 @@ void CScene::updateWaveInfo(QString info)
         graphicsScene->removeItem(waveInfoItem.get());
 
     waveInfoItem = std::shared_ptr<QGraphicsTextItem>(graphicsScene->addText(info));
-    waveInfoItem->setPos(gameRect.width() - info.size() * 6 - toGlobalX(10), toGlobalY(10));
+    waveInfoItem->setPos(gameRect.width() - info.size() * 6 - toGlobalX(50), toGlobalY(10));
     waveInfoItem->setDefaultTextColor(Qt::red);
     waveInfoItem->setZValue(10);
 }
