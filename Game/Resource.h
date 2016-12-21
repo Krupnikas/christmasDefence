@@ -53,6 +53,8 @@ struct R
     QPixmap game_background;
     QPixmap cannonSelectionBackground;
 
+    QPixmap cannonTypePreview[TypesOfCannon];
+
     QPixmap cell1;
     QPixmap cell2;
     QPixmap cellSelected;
@@ -79,7 +81,8 @@ struct R
     QPixmap enemy_comes;
     QString waves;
     
-    QString get(const char *val);
+    QString get(QString val);
+    QString getNameOfTypePreview(int num);
     
     R();
     

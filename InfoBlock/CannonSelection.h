@@ -20,6 +20,8 @@ public:
     void updatePosition(QPoint selectedCell);
     void initButtons();
     void updateButtonsPositions();
+
+    QPoint calculateTopLeftForButton(int i);
     
     void show();
     void hide();
