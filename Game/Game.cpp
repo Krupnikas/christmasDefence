@@ -47,8 +47,7 @@ bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
     
     if (x < 0 || x > CellNumX   ||
         y < 0 || y > CellNumY   ||
-        isEnemieCollision(cell) ||
-        !helper::okToAdd(x, y, distances) ||
+        !helper::okToAdd(x, y, distances, enemies) ||
         cost > user.getCash())
         return false;
     
@@ -85,7 +84,7 @@ bool CGame::addEnemy(int enemyType, int enemyTexture, int enemyPower)
 bool CGame::isEnemieCollision(QPoint Cell)
 {
     for (size_t i = 0; i < enemies.size(); ++i)
-    {    
+    {
         if (enemies[i]->getCurrentGameCell() == Cell ||
             enemies[i]->getNextGameCell() == Cell)
                 return true;
@@ -273,6 +272,9 @@ void CGame::onDrawTimer()
     for (size_t i = 0; i < bullets.size(); ++i)
         bullets[i]->draw();
     
+    for (auto enemy: enemies)
+        enemy->draw();
+
     cannonAddMutex.lock();
     
         for (int i = 0; i < CellNumX; ++i)
@@ -282,7 +284,7 @@ void CGame::onDrawTimer()
                     cannons[i][j]->count();                
                     cannons[i][j]->rotate();
                 }
-        
+
     cannonAddMutex.unlock();
     
     static QTime time;

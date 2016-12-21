@@ -22,7 +22,15 @@ void IEnemy::hit(int hpDiff)
         hide();
         game->user.increaseCash(hpMax / EnemyCostFactor);
     }
-    updateHpSize();
+
+    //not optimal, called too often
+    if (hpCur < hpMax)
+    {
+        show();
+        hpBackgroundItem->show();
+        hpCurItem->show();
+        updateHpSize();
+    }
 }
 
 void IEnemy::updateHpPos()
@@ -71,7 +79,7 @@ void IEnemy::scaleItem()
 
 void IEnemy::draw()
 {
-    CGameObject::draw();
+    game->scene->positionItemByCenter(center, textureSize, angle, zOrder, position);
     hpBackgroundItem->draw();
     hpCurItem->draw();
 }
@@ -81,19 +89,14 @@ bool IEnemy::move()
     for (int i = 0; i < moveIter; ++i)
         center = movements->move();
     angle = movements->curAngle();
-    game->scene->positionItemByCenter(center, textureSize, angle, zOrder, position);
-    
+
     updateHpPos();
-    hpBackgroundItem->draw();
-    hpCurItem->draw();
-    
+
     bool inside = game->scene->insideEnclosingRect(center);
     if (!inside)
         game->user.decreaseHp(hpCur);
     return inside;
 }
-
-QPixmap *IEnemy::getTexture(int enemyTexture){}
 
 void IEnemy::hide()
 {
@@ -101,12 +104,3 @@ void IEnemy::hide()
     hpBackgroundItem->hide();
     hpCurItem->hide();
 }
-
-void IEnemy::show()
-{
-    CGameObject::show();
-    hpBackgroundItem->show();
-    hpCurItem->show();
-}
-
-

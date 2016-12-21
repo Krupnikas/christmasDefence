@@ -29,10 +29,9 @@ public:
     virtual void scaleItem() override;
     virtual void draw() override;
     virtual void hide() override;
-    virtual void show() override;
 
 protected:
-    virtual QPixmap *getTexture(int enemyTexture);
+    virtual QPixmap *getTexture(int enemyTexture) = 0;
     
 protected:
     std::shared_ptr<mov::Movements> movements;

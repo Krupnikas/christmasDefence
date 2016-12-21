@@ -18,7 +18,7 @@ void CWaveManager::initialize(CGame *game)
 
 void CWaveManager::onTimer()
 {
-    std::string info;
+    QString info;
     if (curWave < static_cast<int>(waves.size()))
     {
         CWave &wave = waves[curWave];
@@ -30,11 +30,10 @@ void CWaveManager::onTimer()
             {
                 waveGoing = true;
                 counter = 0;
-                info = std::string("Left: " + std::to_string(wave.totalEnemyNum));
+                info = "Left: " + QString::number(wave.totalEnemyNum);
             }
             else
-                info = std::to_string(
-                            static_cast<int>(wave.timeBeforeStart - curTime)) + "   ";
+                info = QString::number(static_cast<int>(wave.timeBeforeStart - curTime)) + "   ";
         } 
         else
         {
@@ -60,16 +59,16 @@ void CWaveManager::onTimer()
             for (auto enemy: game->enemies)
                 if (!game->scene->insideGameRect(enemy->getCenter()))
                     ++outside;
-            info = std::string("Left: " + std::to_string(wave.totalEnemyNum - wave.curEnemyNum + outside));
+            info = "Left: " + QString::number(wave.totalEnemyNum - wave.curEnemyNum + outside);
         }
         
     }
     else
     {
-        info = std::string("congrats!");    
+        info = "congrats!";
     }
     
-    game->scene->updateWaveInfo(QString(info.c_str()));
+    game->scene->updateWaveInfo(info);
 }
 
 QString CWaveManager::getWaveInfo()

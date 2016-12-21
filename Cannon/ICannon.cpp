@@ -9,6 +9,7 @@ namespace
 
 const qreal EpsilonAngle = 0.1;
 const qreal DeltaAngle = 1;
+const qreal SpeedDiv = 20;
 
 qreal calc_mid_(qreal left, qreal right)
 {
@@ -20,7 +21,7 @@ qreal calc_mid_(qreal left, qreal right)
     return mid;
 }
 
-//0 - clockwise, 1 - counter-clockwise, 2 - going away
+//1 - clockwise, 0 - counter-clockwise, 2 - going away
 int clockwise_movement_(QPointF p1, QPointF p2, QPointF p2Vect)
 {
     QLineF line1(p2, p1);
@@ -30,16 +31,19 @@ int clockwise_movement_(QPointF p1, QPointF p2, QPointF p2Vect)
         (angle >= 175 && angle <= 185))
         return 2;
     if (angle > 185)
-        return 0;
+        return 1;
 
-    return 1;
+    return 0;
 }
 
 bool hits_(QPointF cannonCenter, qreal cannonAngle,
            QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
            qreal bulletSpeed, qreal bulletRadius, CGame *game)
 {
-    bulletSpeed = game->scene->toGlobalDist(bulletSpeed, cannonAngle);
+    bulletSpeed = game->scene->toGlobalDist(bulletSpeed, cannonAngle) / SpeedDiv;
+    enemySpeed.setX(enemySpeed.x() / SpeedDiv);
+    enemySpeed.setY(enemySpeed.y() / SpeedDiv);
+
     QLineF bulLine(cannonCenter, helper::addVector(cannonCenter, 50, cannonAngle));
     QLineF enLine(enemyCenter, enemyCenter + enemySpeed * 100);
     QPointF intersect;
@@ -64,37 +68,69 @@ bool hits_(QPointF cannonCenter, qreal cannonAngle,
     }
 }
 
-qreal bin_search_angle_clockwise_(QPointF cannonCenter,
+qreal bin_search_angle_(QPointF cannonCenter,
                                   QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
-                                  qreal bulletSpeed, qreal bulletRadius, CGame *game)
+                                  qreal bulletSpeed, qreal bulletRadius, CGame *game, bool clockwise)
 {
-    qreal left = helper::calcAngle(cannonCenter, enemyCenter);
-    qreal right = left + 90;
-    if (right > 360)
-        right -= 360;
+    qreal left = 0;
+    qreal right = 0;
 
-    while (true)
+    if (clockwise)
+    {
+        left = helper::calcAngle(cannonCenter, enemyCenter);
+        right = left + 90;
+        if (right > 360)
+            right -= 360;
+    }
+    else
+    {
+        right = helper::calcAngle(cannonCenter, enemyCenter);
+        left = right - 90;
+        if (left < 0)
+            left += 360;
+    }
+
+    while (std::abs(right - left) > EpsilonAngle)
     {
         qreal mid = calc_mid_(left, right);
-        qreal mid_delt = mid + DeltaAngle;
+
+        qreal mid_delt = mid + (clockwise ? DeltaAngle : -DeltaAngle);
         if (mid_delt > 360)
             mid_delt -= 360;
-        qreal mid_delt_eps = mid_delt + EpsilonAngle;
+        if (mid_delt < 0)
+            mid_delt += 360;
+
+        qreal mid_delt_eps = mid_delt + (clockwise ? EpsilonAngle : -EpsilonAngle);
         if (mid_delt_eps > 360)
             mid_delt_eps -= 360;
+        if (mid_delt_eps < 0)
+            mid_delt_eps += 360;
+
         bool hits_mid = hits_(cannonCenter, mid, enemyCenter, enemySpeed, enemyRadius, bulletSpeed, bulletRadius, game);
         bool hits_mid_delt = hits_(cannonCenter, mid_delt, enemyCenter, enemySpeed, enemyRadius, bulletSpeed, bulletRadius, game);
         bool hits_mid_delt_eps = hits_(cannonCenter, mid_delt_eps, enemyCenter, enemySpeed, enemyRadius, bulletSpeed, bulletRadius, game);
         if (hits_mid && hits_mid_delt && !hits_mid_delt_eps)
             return mid;
         if (hits_mid && hits_mid_delt && hits_mid_delt_eps)
-            left = mid;
+        {
+            if (clockwise)
+                left = mid;
+            else
+                right = mid;
+        }
         else
-            right = mid;
+        {
+            if (clockwise)
+                right = mid;
+            else
+                left = mid;
+        }
     }
+    left = right;
+    //return helper::calcAngle(cannonCenter, enemyCenter);
 }
 
-qreal bin_search_angle_counter_clockwise_(QPointF cannonCenter,
+/*qreal bin_search_angle_counter_clockwise_(QPointF cannonCenter,
                                   QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
                                   qreal bulletSpeed, qreal bulletRadius, CGame *game)
 {
@@ -103,7 +139,7 @@ qreal bin_search_angle_counter_clockwise_(QPointF cannonCenter,
     if (left < 0)
         left += 360;
     
-    while (true)
+    while (std::abs(right - left) > EpsilonAngle)
     {
         qreal mid = calc_mid_(left, right);
         qreal mid_delt = mid - DeltaAngle;
@@ -123,6 +159,7 @@ qreal bin_search_angle_counter_clockwise_(QPointF cannonCenter,
             left = mid;
     }
 }
+*/
 
 qreal calc_desired_vector(QPointF cannonCenter,
                           QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
@@ -132,6 +169,11 @@ qreal calc_desired_vector(QPointF cannonCenter,
     
     if (clockwise == 2)
         return helper::calcAngle(cannonCenter, enemyCenter);
+
+    return bin_search_angle_(cannonCenter,
+                                       enemyCenter, enemySpeed, enemyRadius,
+                                       bulletSpeed, bulletRadius, game, clockwise);
+/*
     if (clockwise == 0)
         return bin_search_angle_clockwise_(cannonCenter,
                                            enemyCenter, enemySpeed, enemyRadius,
@@ -139,6 +181,7 @@ qreal calc_desired_vector(QPointF cannonCenter,
     return bin_search_angle_counter_clockwise_(cannonCenter,
                                        enemyCenter, enemySpeed, enemyRadius,
                                        bulletSpeed, bulletRadius, game);
+*/
 }
 
 qreal calc_delta_angle(QPointF cannonCenter, qreal cannonAngle,
@@ -317,7 +360,7 @@ void ICannon::rotate()
     qreal deltaAngle = calc_delta_angle(game->scene->toGlobalPoint(center), angle,
                                         game->scene->toGlobalPoint(curEnemy->getCenter()),
                                         game->scene->toGlobalSize(curEnemy->getSpeed()),
-                                        game->scene->toGlobalCX(curEnemy->getSize().width() / 2),
+                                        game->scene->toGlobalCX(curEnemy->getSize().width() / 20),
                                         getBulletSpeed(),
                                         game->scene->toGlobalCX(getBulletRadius()),
                                         game);

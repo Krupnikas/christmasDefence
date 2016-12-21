@@ -106,8 +106,16 @@ void updateDistances(
 }
 
 
-bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int> > &distances)
+bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int> > &distances,
+             std::vector<std::shared_ptr<IEnemy> > &enemies)
 {
+    for (size_t i = 0; i < enemies.size(); ++i)
+    {
+        if (enemies[i]->getCurrentGameCell() == QPoint(xInd, yInd) ||
+            enemies[i]->getNextGameCell() == QPoint(xInd, yInd))
+            return false;
+    }
+
     distancesMutex.lock();
         if ((xInd == ExitX && yInd == ExitY) || (xInd == EntranceX && yInd == EntranceY))
             return false;
