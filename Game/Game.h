@@ -26,7 +26,9 @@ public:
     QWidget *view;
     
     CWaveManager waveManager;
-    CUser user;
+    CUser user;   
+
+    bool oneOfButtonPressed;
     
     QTimer *positionTimer;
     QTimer *drawTimer;

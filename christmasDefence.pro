@@ -78,7 +78,8 @@ HEADERS  += mainview.h \
     Wave/WaveManager.h \
     InfoBlock/WaveInfo/WaveInfo.h \
     Cannon/CannonRadius.h \
-    Game/User.h
+    Game/User.h \
+    Metrics/ZOrderMetrics.h
     Game/Button.h
 
 FORMS    += mainview.ui

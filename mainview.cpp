@@ -87,6 +87,12 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
 {
     emit mousePressed(eventPress);
 
+    if (game.oneOfButtonPressed){
+        game.oneOfButtonPressed = false;
+        return;
+    }
+
+
     QPointF p = game.view->mapFromGlobal(QCursor::pos());
     QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
     int selX = selectedCell.x();

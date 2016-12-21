@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QSize>
+#include <Metrics/ZOrderMetrics.h>
 
 //all sizes are in pixels in local coordinate system 
 
@@ -16,6 +17,9 @@ const int OffsetY = 15;
 const int CellNumY = 7; //always odd
 const int CellSize = (LocalHeight - 2 * OffsetY) / CellNumY;
 const int CellNumX = LocalWidth / CellSize - MenuButtonOffset;
+
+const int CannonSelectionButtonSize = round(0.7 * CellSize);
+const int CannonSelectionRadius = CellSize;
 
 const int OffsetX = (LocalWidth - CellNumX * CellSize) / 2;
 

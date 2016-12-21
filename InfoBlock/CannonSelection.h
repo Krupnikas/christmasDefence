@@ -9,11 +9,21 @@ class CCannonSelection : public IInfoBlock
     
 public:
 
+    CButton cannonButton[TypesOfCannon];
+    CButton closeButton;
+
+    qreal backgroundImageSize;
+
     CCannonSelection(CGame *game, QPoint selectedCell);
     ~CCannonSelection();
-    
-    std::shared_ptr<CButton> closeButton;
 
     void updatePosition(QPoint selectedCell);
+    void initButtons();
+    void updateButtonsPositions();
     
+    void show();
+    void hide();
+
+private slots:
+    void onCloseButtonPressed();
 };

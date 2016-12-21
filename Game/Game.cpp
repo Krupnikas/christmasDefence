@@ -21,6 +21,8 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
     }
     helper::updateDistances(cannons, distances);
     
+    oneOfButtonPressed = false;
+
     positionTimer = new QTimer(this);
     drawTimer = new QTimer(this);
     positionTimer->start(TimerInterval);

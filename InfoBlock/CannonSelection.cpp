@@ -8,17 +8,17 @@ CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
     this->game = game;
     this->zOrder = 5;
     
-    this->textureSize = QSize(LocalWidth / 2 - OffsetX - 2 * CannonSelectionOffsetX,
-                       LocalHeight - 2 * OffsetY - 2 *CannonSelectionOffsetY);    
+    backgroundImageSize = CannonSelectionRadius * 8.0 / 3;
+    this->textureSize = QSize(backgroundImageSize,
+                              backgroundImageSize);
     this->pixmap = &game->r->cannonSelectionBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
     
-    updatePosition(selectedCell);
-    this->center = QPointF(leftTop.x() + textureSize.width() / 2, leftTop.y() + textureSize.height() + 2);
+    this->center = game->cellCenter(selectedCell);
 
-    closeButton = std::make_shared<CButton>(QRect(10,10,100,100), &game->r->buttonClose, game);
-   /* closeButton->draw();
-    closeButton->show();*/
+    initButtons();
+    updatePosition(selectedCell);
+
 }
 
 CCannonSelection::~CCannonSelection()
@@ -27,14 +27,50 @@ CCannonSelection::~CCannonSelection()
 
 void CCannonSelection::updatePosition(QPoint selectedCell)
 {
-    if (selectedCell.x() > CellNumX / 2.0)
+    center = game->cellCenter(selectedCell);
+    setLeftTop(center - QPointF(backgroundImageSize/2,
+                                backgroundImageSize/2));
+    updateButtonsPositions();
+}
+
+void CCannonSelection::initButtons()
+{
+    closeButton.init(QRect(center.x() - CannonSelectionButtonSize/2,
+                           center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2,
+                           CannonSelectionButtonSize,
+                           CannonSelectionButtonSize),
+                     &game->r->buttonClose,
+                     game,
+                     ButtonZOrder,
+                     0);
+    connect(&closeButton, SIGNAL(pressed()),
+            this, SLOT(onCloseButtonPressed()));
+    for (int i = 0; i < TypesOfCannon; i++)
     {
-        this->leftTop = QPointF(OffsetX + CannonSelectionOffsetX,
-                                OffsetY + CannonSelectionOffsetY);
+        //cannonButton[i].init();
     }
-    else
-    {
-        this->leftTop = QPointF(CannonSelectionOffsetX + LocalWidth / 2,
-                                OffsetY + CannonSelectionOffsetY);
-    }
+}
+
+void CCannonSelection::updateButtonsPositions()
+{
+    closeButton.setLeftTop(QPointF(center.x() - CannonSelectionButtonSize/2,
+                                  center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2));
+    closeButton.draw();
+}
+
+void CCannonSelection::show()
+{
+    CGameObject::show();
+    closeButton.show();
+}
+
+void CCannonSelection::hide()
+{
+    CGameObject::hide();
+    closeButton.hide();
+}
+
+void CCannonSelection::onCloseButtonPressed()
+{
+    game->deselectCell();
 }
