@@ -42,7 +42,10 @@ SOURCES += main.cpp\
     Wave/WaveManager.cpp \
     InfoBlock/WaveInfo/WaveInfo.cpp \
     Cannon/CannonRadius.cpp \
-    Game/User.cpp
+    Game/User.cpp \
+    Bullet/BurnBullet.cpp \
+    Bullet/MonsterBullet.cpp \
+    Bullet/SlowBullet.cpp
     Game/Button.cpp
 
 HEADERS  += mainview.h \
@@ -79,7 +82,10 @@ HEADERS  += mainview.h \
     InfoBlock/WaveInfo/WaveInfo.h \
     Cannon/CannonRadius.h \
     Game/User.h \
-    Metrics/ZOrderMetrics.h
+    Metrics/ZOrderMetrics.h \
+    Bullet/BurnBullet.h \
+    Bullet/MonsterBullet.h \
+    Bullet/SlowBullet.h
     Game/Button.h
 
 FORMS    += mainview.ui

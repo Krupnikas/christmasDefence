@@ -4,14 +4,19 @@
 
 class CBurnCannon : public ICannon
 {
+
 public:
-    
-    CBurnCannon();
-    
-    virtual ~CBurnCannon();
-    
+
+    CBurnCannon(CGame *game, QPoint cell, double angle);
+    ~CBurnCannon();
+
+    //IGameObject methods override
     virtual void fire() override;
-    
-public slots:
-    virtual void onTimer(){}
+    virtual void upgrade() override;
+
+    //ICannon own virtual methods
+    virtual int getUpgradeCost() const override;
+    virtual int getCurCost() const override;
+    virtual qreal getBulletSpeed() const override;
+    virtual qreal getBulletRadius() const override;
 };

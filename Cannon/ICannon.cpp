@@ -127,39 +127,7 @@ qreal bin_search_angle_(QPointF cannonCenter,
         }
     }
     left = right;
-    //return helper::calcAngle(cannonCenter, enemyCenter);
 }
-
-/*qreal bin_search_angle_counter_clockwise_(QPointF cannonCenter,
-                                  QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
-                                  qreal bulletSpeed, qreal bulletRadius, CGame *game)
-{
-    qreal right = helper::calcAngle(cannonCenter, enemyCenter);
-    qreal left = right - 90;
-    if (left < 0)
-        left += 360;
-    
-    while (std::abs(right - left) > EpsilonAngle)
-    {
-        qreal mid = calc_mid_(left, right);
-        qreal mid_delt = mid - DeltaAngle;
-        if (mid_delt < 0)
-            mid_delt += 360;
-        qreal mid_delt_eps = mid_delt - EpsilonAngle;
-        if (mid_delt_eps < 0)
-            mid_delt_eps += 360;
-        bool hits_mid = hits_(cannonCenter, mid, enemyCenter, enemySpeed, enemyRadius, bulletSpeed, bulletRadius, game);
-        bool hits_mid_delt = hits_(cannonCenter, mid_delt, enemyCenter, enemySpeed, enemyRadius, bulletSpeed, bulletRadius, game);
-        bool hits_mid_delt_eps = hits_(cannonCenter, mid_delt_eps, enemyCenter, enemySpeed, enemyRadius, bulletSpeed, bulletRadius, game);
-        if (hits_mid && hits_mid_delt && !hits_mid_delt_eps)
-            return mid;
-        if (hits_mid && hits_mid_delt && hits_mid_delt_eps)
-            right = mid;
-        else
-            left = mid;
-    }
-}
-*/
 
 qreal calc_desired_vector(QPointF cannonCenter,
                           QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
@@ -173,15 +141,6 @@ qreal calc_desired_vector(QPointF cannonCenter,
     return bin_search_angle_(cannonCenter,
                                        enemyCenter, enemySpeed, enemyRadius,
                                        bulletSpeed, bulletRadius, game, clockwise);
-/*
-    if (clockwise == 0)
-        return bin_search_angle_clockwise_(cannonCenter,
-                                           enemyCenter, enemySpeed, enemyRadius,
-                                           bulletSpeed, bulletRadius, game);
-    return bin_search_angle_counter_clockwise_(cannonCenter,
-                                       enemyCenter, enemySpeed, enemyRadius,
-                                       bulletSpeed, bulletRadius, game);
-*/
 }
 
 qreal calc_delta_angle(QPointF cannonCenter, qreal cannonAngle,

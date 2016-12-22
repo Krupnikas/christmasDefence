@@ -34,19 +34,19 @@ void CButton::scaleItem()
 
 void CButton::init(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, qreal Angle)
 {
-    this->label = "Button";
-    this->buttonRect = ButtonRect;
-    this->textureSize = QSizeF(buttonRect.width(),
+    label = "Button";
+    buttonRect = ButtonRect;
+    textureSize = QSizeF(buttonRect.width(),
                          buttonRect.height());
-    this->game = Game;
-    this->zOrder =ZOrder;
-    this->angle = Angle;
-    this->pixmap = Pixmap;
+    game = Game;
+    zOrder =ZOrder;
+    angle = Angle;
+    pixmap = Pixmap;
 
     position = game->scene->addPixmap(textureSize, pixmap);
 
-    this->center = buttonRect.center();
-    this->leftTop = buttonRect.topLeft();
+    center = buttonRect.center();
+    leftTop = buttonRect.topLeft();
 
     connect(game, SIGNAL(mousePressed(QMouseEvent*)),
             this, SLOT(onMousePressed(QMouseEvent*)));
