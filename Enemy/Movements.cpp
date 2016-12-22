@@ -119,7 +119,7 @@ int Movements::iterNum(qreal step) const
     qreal pointsOnMove = static_cast<qreal>(QueueSize) * CellSize / LocalSize;
     if (step < pointsOnMove)
     {
-        qDebug() << "Movements: too small step:(";
+        //qDebug() << "Movements: too small step:(";
         return 1;
     }
         
@@ -176,9 +176,9 @@ void Movements::updateNext()
 
 bool Movements::isCenterDirected() const
 {
-    if (curPos.x() != half && curPos.y() != half)
+    //if (curPos.x() != half && curPos.y() != half)
 
-        qDebug() << "Movements: out of trajectory";
+        //qDebug() << "Movements: out of trajectory";
 
     qreal dx = queue.curSum.x();
     qreal dy = queue.curSum.y();

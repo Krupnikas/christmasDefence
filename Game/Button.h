@@ -17,6 +17,8 @@ public:
 
     QRect buttonRect;
 
+    void draw();
+
     void init(QRect ButtonRect, QPixmap *Pixmap,
               CGame *Game,
               qreal ZOrder = 10, qreal Angle = 0);

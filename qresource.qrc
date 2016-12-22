@@ -20,5 +20,9 @@
         <file>res/christmas/hp_cur.png</file>
         <file>res/christmas/clo.png</file>
         <file>res/christmas/waves.txt</file>
+        <file>res/christmas/cannonPreviewType_0.png</file>
+        <file>res/christmas/cannonPreviewType_1.png</file>
+        <file>res/christmas/cannonPreviewType_2.png</file>
+        <file>res/christmas/cannonPreviewType_3.png</file>
     </qresource>
 </RCC>

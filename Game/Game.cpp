@@ -21,6 +21,8 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
     }
     helper::updateDistances(cannons, distances);
     
+    oneOfButtonPressed = false;
+
     positionTimer = new QTimer(this);
     drawTimer = new QTimer(this);
     positionTimer->start(TimerInterval);
@@ -271,6 +273,12 @@ void CGame::onDrawTimer()
 {
     for (size_t i = 0; i < bullets.size(); ++i)
         bullets[i]->draw();
+
+    for (auto enemy: enemies)
+    {
+        qDebug() << "CGame: onTimer: draw enemy";
+        enemy->draw();
+    }
     
     for (auto enemy: enemies)
         enemy->draw();

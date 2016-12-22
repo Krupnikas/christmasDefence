@@ -33,10 +33,21 @@ R::R()
 
     enemy_comes = QPixmap(get("enemy_comes"));
     waves = get("waves.txt");
+
+    for (int i = 0; i < TypesOfCannon; i++)
+    {
+        cannonTypePreview[i] = QPixmap(get(getNameOfTypePreview(i)));
+    }
 }
 
-QString R::get(const char *val)
+QString R::get(QString val)
 {
     QString str = res_dir + "/" + val;
+    return str;
+}
+
+QString R::getNameOfTypePreview(int num)
+{
+    QString str = "cannonPreviewType_" + QString::number(num) + ".png";
     return str;
 }

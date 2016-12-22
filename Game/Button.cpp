@@ -11,6 +11,13 @@ CButton::CButton(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, q
 
 CButton::~CButton(){}
 
+void CButton::draw()
+{
+    CGameObject::draw();
+    buttonRect.moveLeft(leftTop.x());
+    buttonRect.moveTop(leftTop.y());
+}
+
 void CButton::init(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, qreal Angle)
 {
     this->label = "Button";
@@ -33,11 +40,16 @@ void CButton::init(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder,
 
 void CButton::onMousePressed(QMouseEvent *event)
 {
+    qDebug() << event->localPos() << " is in " << buttonRect
+             << buttonRect.contains(QPoint(event->localPos().x(),
+                                                                event->localPos().y()));
     if (buttonRect.contains(QPoint(event->localPos().x(),
                                    event->localPos().y()))
                             && position->isVisible())
     {
+        qDebug() << "One Of Buttons Pressed";
         event->accept();
+        game->oneOfButtonPressed = true;
         emit pressed();
     }
 }

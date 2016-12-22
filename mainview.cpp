@@ -7,6 +7,20 @@ MainView::MainView(QWidget *parent) :
     QWidget(parent),
     r(), scene(&r), game(&r, &scene, this), ui(new Ui::MainView)
 {
+    QSurfaceFormat fmt;
+    fmt.setDepthBufferSize(24);
+    QOpenGLContext::OpenGLModuleType type(QOpenGLContext::openGLModuleType());
+    qDebug() << "QOpenGLContextQOpenGLContextQOpenGLContext" << type;
+    if (type == QOpenGLContext::LibGL) {
+        fmt.setVersion(3, 3);
+        fmt.setProfile(QSurfaceFormat::CompatibilityProfile);
+    } else {
+        fmt.setVersion(3, 0);
+        fmt.setRenderableType(QSurfaceFormat::OpenGLES);
+    }
+
+    QSurfaceFormat::setDefaultFormat(fmt);
+
     ui->setupUi(this);
     this->setLayout(ui->gridLayout);
     ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
@@ -72,6 +86,12 @@ void MainView::mouseDoubleClickEvent(QMouseEvent *e)
 void MainView::mousePressEvent(QMouseEvent *eventPress)
 {
     emit mousePressed(eventPress);
+
+    if (game.oneOfButtonPressed){
+        game.oneOfButtonPressed = false;
+        return;
+    }
+
 
     QPointF p = game.view->mapFromGlobal(QCursor::pos());
     QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));

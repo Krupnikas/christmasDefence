@@ -41,7 +41,8 @@ void CWaveManager::onTimer()
             {
                 if (wave.curEnemyNum < wave.totalEnemyNum)
                 {
-                    game->addEnemy(wave.enemyType, wave.enemyTexture, wave.enemyPower);                    
+                    game->addEnemy(wave.enemyType, wave.enemyTexture, wave.enemyPower);
+                    qDebug() << "WaveManager: enemy added!";
                     wave.curEnemyNum++;
                     counter = 0;
                 }

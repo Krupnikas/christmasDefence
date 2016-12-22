@@ -14,7 +14,7 @@ CGameObject::CGameObject(qreal angle, qreal zOrder, QPointF center, QPointF left
 {}
 
 CGameObject::~CGameObject(){
-    qDebug() <<  label << " deleted";
+    //qDebug() <<  label << " deleted";
 }
 
 void CGameObject::scaleItem()

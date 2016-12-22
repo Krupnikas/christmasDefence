@@ -26,7 +26,6 @@ void IEnemy::hit(int hpDiff)
     //not optimal, called too often
     if (hpCur < hpMax)
     {
-        show();
         hpBackgroundItem->show();
         hpCurItem->show();
         updateHpSize();
@@ -104,3 +103,4 @@ void IEnemy::hide()
     hpBackgroundItem->hide();
     hpCurItem->hide();
 }
+
