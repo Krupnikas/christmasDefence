@@ -109,6 +109,17 @@ void CCannonSelection::hide()
     }
 }
 
+void CCannonSelection::draw()
+{
+    CGameObject::draw();
+    closeButton.draw();
+
+    for (int i = 0; i < TypesOfCannon; i++)
+    {
+        cannonButton[i].draw();
+    }
+}
+
 void CCannonSelection::onCloseButtonPressed()
 {
     game->deselectCell();

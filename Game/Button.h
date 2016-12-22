@@ -18,6 +18,8 @@ public:
     QRect buttonRect;
 
     void draw();
+    void show();
+    void scaleItem();
 
     void init(QRect ButtonRect, QPixmap *Pixmap,
               CGame *Game,

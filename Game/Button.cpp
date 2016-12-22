@@ -14,8 +14,22 @@ CButton::~CButton(){}
 void CButton::draw()
 {
     CGameObject::draw();
+}
+
+void CButton::show()
+{
+    CGameObject::show();
+    buttonRect = QRect(0,
+                       0,
+                       game->scene->toLocalCX(position->boundingRect().width()),
+                       game->scene->toLocalCX(position->boundingRect().height()));
     buttonRect.moveLeft(leftTop.x());
     buttonRect.moveTop(leftTop.y());
+}
+
+void CButton::scaleItem()
+{
+    CGameObject::scaleItem();
 }
 
 void CButton::init(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, qreal Angle)
@@ -40,11 +54,10 @@ void CButton::init(QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder,
 
 void CButton::onMousePressed(QMouseEvent *event)
 {
-    qDebug() << event->localPos() << " is in " << buttonRect
-             << buttonRect.contains(QPoint(event->localPos().x(),
-                                                                event->localPos().y()));
-    if (buttonRect.contains(QPoint(event->localPos().x(),
-                                   event->localPos().y()))
+    QPoint click = game->scene->toLocalPoint(event->localPos()).toPoint();
+    qDebug() << click << " is in " << buttonRect
+             << buttonRect.contains(click);
+    if (buttonRect.contains(click)
                             && position->isVisible())
     {
         qDebug() << "One Of Buttons Pressed";

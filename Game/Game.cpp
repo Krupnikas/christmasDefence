@@ -131,6 +131,14 @@ void CGame::scaleObjects()
     if (block)
     {
         block->scaleItem();
+        block->closeButton.scaleItem();
+
+        for (int i = 0; i < TypesOfCannon; i++)
+        {
+            block->cannonButton[i].scaleItem();
+        }
+
+        block->updateButtonsPositions();
         block->draw();
     }
 

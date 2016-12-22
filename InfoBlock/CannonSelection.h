@@ -25,6 +25,7 @@ public:
     
     void show();
     void hide();
+    void draw();
 
 private slots:
     void onCloseButtonPressed();
