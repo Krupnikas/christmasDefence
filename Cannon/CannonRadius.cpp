@@ -2,8 +2,6 @@
 #include <Cannon/ICannon.h>
 #include <Cannon/CannonRadius.h>
 
-
-
 CCannonRadius::CCannonRadius(ICannon *cannon)
 {
     //IGameObject fields

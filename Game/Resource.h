@@ -63,13 +63,31 @@ struct R
 
     QPixmap buttonClose;
     
+    QPixmap burn_cannon_1;
+    QPixmap burn_cannon_2;
+    QPixmap burn_cannon_3;
     QPixmap fast_cannon_1;
     QPixmap fast_cannon_2;
     QPixmap fast_cannon_3;
+    QPixmap monster_cannon_1;
+    QPixmap monster_cannon_2;
+    QPixmap monster_cannon_3;
+    QPixmap slow_cannon_1;
+    QPixmap slow_cannon_2;
+    QPixmap slow_cannon_3;
     
+    QPixmap burn_bullet_1;
+    QPixmap burn_bullet_2;
+    QPixmap burn_bullet_3;
     QPixmap fast_bullet_1;
     QPixmap fast_bullet_2;
     QPixmap fast_bullet_3;
+    QPixmap monster_bullet_1;
+    QPixmap monster_bullet_2;
+    QPixmap monster_bullet_3;
+    QPixmap slow_bullet_1;
+    QPixmap slow_bullet_2;
+    QPixmap slow_bullet_3;
     
     QPixmap fast_enemy_1;
     QPixmap fast_enemy_2;

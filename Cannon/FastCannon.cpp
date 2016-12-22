@@ -8,26 +8,25 @@
 CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
 {
     //IGameObject fields
-    this->label = "Fast Cannon";
+    label = "Fast Cannon";
     this->angle = angle;
     this->game = game;
-    this->zOrder = 2;
+    zOrder = 2;
     
-    this->textureSize = QSize(CellSize, CellSize);
-    this->pixmap = &game->r->fast_cannon_1;
+    textureSize = QSize(CellSize, CellSize);
+    pixmap = &game->r->fast_cannon_1;
     position = game->scene->addPixmap(textureSize, pixmap);
     
-    this->leftTop = game->cellLeftTop(cell);
-    this->center = game->cellCenter(cell);
+    leftTop = game->cellLeftTop(cell);
+    center = game->cellCenter(cell);
     
     //ICannon fields
-    this->sizeType = SMALL;
-    this->gameCell = cell;
-    this->rotationSpeed = FastCannonSmRotation;
-    this->fireSpeed = FastCannonSmFireSpeed;
-    this->fireRadius = FastCannonSmRadius;
-    this->radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
-    hideRadius();
+    sizeType = SMALL;
+    gameCell = cell;
+    rotationSpeed = FastCannonSmRotation;
+    fireSpeed = FastCannonSmFireSpeed;
+    fireRadius = FastCannonSmRadius;
+    radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
     
     cost = FastCannonSmCost;
 }

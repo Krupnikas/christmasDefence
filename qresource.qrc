@@ -1,28 +1,50 @@
 <RCC>
     <qresource prefix="/">
+        <file>res/christmas/cannonSelectingInfoBlockBackground.png</file>
+        <file>res/christmas/cellSelected.png</file>
+        <file>res/christmas/clo.png</file>
+        <file>res/christmas/clo.psd</file>
+        <file>res/christmas/mainTheme.mp3</file>
         <file>res/christmas/cell1.png</file>
         <file>res/christmas/cell2.png</file>
-        <file>res/christmas/fast_bullet_1.png</file>
-        <file>res/christmas/fast_bullet_2.png</file>
-        <file>res/christmas/fast_bullet_3.png</file>
-        <file>res/christmas/fast_cannon_2.png</file>
-        <file>res/christmas/fast_cannon_3.png</file>
-        <file>res/christmas/game_background.jpg</file>
-        <file>res/christmas/window_background.jpg</file>
-        <file>res/christmas/cellSelected.png</file>
-        <file>res/christmas/cannonSelectingInfoBlockBackground.png</file>
-        <file>res/christmas/fast_enemy_1.png</file>
-        <file>res/christmas/fast_enemy_2.png</file>
-        <file>res/christmas/fast_enemy_3.png</file>
+        <file>res/christmas/enemy_comes.png</file>
         <file>res/christmas/entireRadius.png</file>
-        <file>res/christmas/fast_cannon_1.png</file>
+        <file>res/christmas/game_background.jpg</file>
         <file>res/christmas/hp_background.png</file>
         <file>res/christmas/hp_cur.png</file>
-        <file>res/christmas/clo.png</file>
         <file>res/christmas/waves.txt</file>
-        <file>res/christmas/cannonPreviewType_0.png</file>
-        <file>res/christmas/cannonPreviewType_1.png</file>
-        <file>res/christmas/cannonPreviewType_2.png</file>
-        <file>res/christmas/cannonPreviewType_3.png</file>
+        <file>res/christmas/window_background.jpg</file>
+        <file>res/christmas/bullets/burn_bullet_1.png</file>
+        <file>res/christmas/bullets/burn_bullet_2.png</file>
+        <file>res/christmas/bullets/burn_bullet_3.png</file>
+        <file>res/christmas/bullets/fast_bullet_1.png</file>
+        <file>res/christmas/bullets/fast_bullet_2.png</file>
+        <file>res/christmas/bullets/fast_bullet_3.png</file>
+        <file>res/christmas/bullets/monster_bullet_1.png</file>
+        <file>res/christmas/bullets/monster_bullet_2.png</file>
+        <file>res/christmas/bullets/monster_bullet_3.png</file>
+        <file>res/christmas/bullets/slow_bullet_1.png</file>
+        <file>res/christmas/bullets/slow_bullet_2.png</file>
+        <file>res/christmas/bullets/slow_bullet_3.png</file>
+        <file>res/christmas/cannons/cannonPreviewType_0.png</file>
+        <file>res/christmas/cannons/cannonPreviewType_1.png</file>
+        <file>res/christmas/cannons/cannonPreviewType_2.png</file>
+        <file>res/christmas/cannons/cannonPreviewType_3.png</file>
+        <file>res/christmas/cannons/burn_cannon_1.png</file>
+        <file>res/christmas/cannons/burn_cannon_2.png</file>
+        <file>res/christmas/cannons/burn_cannon_3.png</file>
+        <file>res/christmas/cannons/fast_cannon_1.png</file>
+        <file>res/christmas/cannons/fast_cannon_2.png</file>
+        <file>res/christmas/cannons/fast_cannon_2.psd</file>
+        <file>res/christmas/cannons/fast_cannon_3.png</file>
+        <file>res/christmas/cannons/monster_cannon_1.png</file>
+        <file>res/christmas/cannons/monster_cannon_2.png</file>
+        <file>res/christmas/cannons/monster_cannon_3.png</file>
+        <file>res/christmas/cannons/slow_cannon_1.png</file>
+        <file>res/christmas/cannons/slow_cannon_2.png</file>
+        <file>res/christmas/cannons/slow_cannon_3.png</file>
+        <file>res/christmas/enemies/fast_enemy_1.png</file>
+        <file>res/christmas/enemies/fast_enemy_2.png</file>
+        <file>res/christmas/enemies/fast_enemy_3.png</file>
     </qresource>
 </RCC>

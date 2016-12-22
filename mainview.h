@@ -1,8 +1,6 @@
 #pragma once
 
 #include <Game/Game.h>
-#include <Cannon/FastCannon.h>
-#include <InfoBlock/CannonSelection.h>
 
 #define TEST
 
