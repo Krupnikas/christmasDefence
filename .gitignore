@@ -12,4 +12,3 @@ android-*
 app_process
 *.app
 Makefile
-clear

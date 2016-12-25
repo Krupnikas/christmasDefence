@@ -37,6 +37,9 @@
 
 #include <Metrics/Metrics.h>
 
+enum class eGameStatus {
+    eGameMenu, eLevelMenu, eGame
+};
 
 enum eSizeType {
     SMALL, MEDIUM, BIG

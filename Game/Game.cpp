@@ -24,11 +24,12 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
 
     pressedButton = eBTnone;
 
+    cannonSelectionInfoBlock = std::make_shared<CCannonSelection>(this, UnselCell);
+
     positionTimer = new QTimer(this);
     drawTimer = new QTimer(this);
-
-    positionTimer->start(TimerInterval);
-    drawTimer->start(TimerInterval);
+    connect(positionTimer, SIGNAL(timeout()), this, SLOT(onPositionTimer()));
+    connect(drawTimer, SIGNAL(timeout()), this, SLOT(onDrawTimer()));
 }
 
 CGame::~CGame()
@@ -38,6 +39,7 @@ CGame::~CGame()
 
 void CGame::startLevel(int level)
 {
+    resize();
     waveManager.initialize(this, level);
     positionTimer->start(TimerInterval);
     drawTimer->start(TimerInterval);
@@ -306,18 +308,18 @@ void CGame::scaleObjects()
                 cannons[i][j]->show();
             }
 
-    if (block)
+    if (cannonSelectionInfoBlock)
     {
-        block->scaleItem();
-        block->closeButton.scaleItem();
+        cannonSelectionInfoBlock->scaleItem();
+        cannonSelectionInfoBlock->closeButton.scaleItem();
 
         for (int i = 0; i < TypesOfCannon; i++)
         {
-            block->cannonButton[i].scaleItem();
+            cannonSelectionInfoBlock->cannonButton[i].scaleItem();
         }
 
-        block->updateButtonsPositions();
-        block->draw();
+        cannonSelectionInfoBlock->updateButtonsPositions();
+        cannonSelectionInfoBlock->draw();
     }
 
     if (selectedCellItem)
