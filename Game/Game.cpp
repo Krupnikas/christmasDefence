@@ -5,6 +5,7 @@
 #include <Game/Helper.h>
 #include <InfoBlock/CannonSelection.h>
 #include <InfoBlock/CannonUpgrade.h>
+#include <InfoBlock/UserInfo.h>
 #include <Wave/WaveManager.h>
 
 
@@ -29,6 +30,8 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
 
     positionTimer->start(TimerInterval);
     drawTimer->start(TimerInterval);
+
+    userInformationBlock = std::make_shared<CUserInfo>(this);
 }
 
 CGame::~CGame()

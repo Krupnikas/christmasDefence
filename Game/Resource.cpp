@@ -13,6 +13,7 @@ R::R()
 
     cannonSelectionBackground = QPixmap(get("cannonSelectingInfoBlockBackground"));
     cannonUpgradeBackground = QPixmap(get("cannonUpgradeInfoBlockBackground"));
+    userInfoBackground = QPixmap(get("userInfoBlock"));
 
     buttonUpgrade = QPixmap(get("upgrade.png"));
     buttonSell = QPixmap(get("sell.png"));

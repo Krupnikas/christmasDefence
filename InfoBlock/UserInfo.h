@@ -5,5 +5,5 @@
 class CUserInfo : public IInfoBlock
 {
 public:
-    CUserInfo();
+    CUserInfo(CGame *game);
 };

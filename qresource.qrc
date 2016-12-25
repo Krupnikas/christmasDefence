@@ -51,5 +51,6 @@
         <file>res/christmas/cannonUpgradeInfoBlockBackground.png</file>
         <file>res/christmas/sell.png</file>
         <file>res/christmas/upgrade.png</file>
+        <file>res/christmas/userInfoBlock.png</file>
     </qresource>
 </RCC>
