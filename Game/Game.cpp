@@ -53,7 +53,6 @@ void CGame::end()
 
 void CGame::resize()
 {
-    scene->updateWindowBackground();
     scene->updateGameBackground();
     scaleObjects();
 }

@@ -29,8 +29,11 @@ public:
 
     
     void updateGameRect(QRect geometry);
-    void updateWindowBackground();
+
+    void updateGameMenuBackground();
+    void updateLevelMenuBackground();
     void updateGameBackground();
+
     void updateDistances(std::vector<std::vector<int>> &distances);
     void updateFPS(int fps);
     void updateWaveInfo(QString info);

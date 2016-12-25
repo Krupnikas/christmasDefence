@@ -143,17 +143,17 @@ void CScene::updateGameRect(QRect newWindowRect)
     }
 }
 
-void CScene::updateWindowBackground()
+void CScene::updateGameBackground()
 {
+    //update Window background
     QPixmap scaledPixmap = r->window_background.scaled(windowRect.size(),
                                                        Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
     backgroundItems.push_back(item);
     item->setZValue(0);
-}
 
-void CScene::updateGameBackground()
-{
+
+    //update game background
     drawAndPosition(0, 0, LocalWidth, LocalHeight, &r->game_background);
     
     //draw chess-like field

@@ -91,9 +91,9 @@ void MainView::showEvent(QShowEvent*)
 
 }
 
-void MainView::mouseDoubleClickEvent(QMouseEvent *e)
+void MainView::mouseDoubleClickEvent(QMouseEvent *)
 {
-    if (e->button() == Qt::LeftButton)
+/*    if (e->button() == Qt::LeftButton)
     {
         QPointF p = game.view->mapFromGlobal(QCursor::pos());
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
@@ -102,6 +102,7 @@ void MainView::mouseDoubleClickEvent(QMouseEvent *e)
         if (game.cannons[selX][selY])
             game.cannons[selX][selY]->upgrade();
     }
+    */
 }
 
 void MainView::mousePressEvent(QMouseEvent *eventPress)

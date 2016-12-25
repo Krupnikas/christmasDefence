@@ -80,16 +80,17 @@ Movements::Movements(CGame *game):
 
 QPointF Movements::move()
 {
-    bool centerDirected = isCenterDirected();
-    bool insideTurnArea = turnArea.contains(curPos, true);
-    
-    if (!insideTurnArea && centerDirected)
+    if (beforeTurnArea())
     {
         QPoint toCenter = vectorToCenter();
         queue.push(toCenter);
     }
     else
     {
+        if (onTurnArea())
+        {
+            updateNext();
+        }
         QPoint toNext = vectorToNext();
         queue.push(toNext);
     }
@@ -173,11 +174,15 @@ QPointF Movements::getSpeed() const
                    static_cast<qreal>(queue.curSum.y()) / curLocalCell.localRect.height() * curLocalCell.cellGameSize.height());
 }
 
-void Movements::updateNext()
+bool Movements::beforeTurnArea() const
 {
-
+    bool centerDirected = isCenterDirected();
+    bool insideTurnArea = turnArea.contains(curPos, true);
+    return !insideTurnArea && centerDirected;
 }
 
+
+//private methods:
 bool Movements::isCenterDirected() const
 {
     bool insideTurnArea = turnArea.contains(curPos);
@@ -191,6 +196,12 @@ bool Movements::isCenterDirected() const
                 (curPos.y() >= half && dy <= 0);
     return (curPos.x() <= half && dx >= 0) ||
             (curPos.x() >= half && dx <= 0);
+}
+
+bool Movements::onTurnArea() const
+{
+    bool centerDirected = isCenterDirected();
+    return centerDirected && !turnArea.contains(curPos, true) && turnArea.contains(curPos, false);
 }
 
 QPoint Movements::vectorToCenter()
@@ -257,14 +268,19 @@ void Movements::updateCur()
             curLocalCell = EdgeLocalCell;
         else
             curLocalCell = NormalLocalCell;
-        
-        nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
-        
-        if (nextGameCell.x() < 0 || curGameCell.x() >= CellNumX)
-            nextLocalCell = EdgeLocalCell;
-        else
-            nextLocalCell = NormalLocalCell;
+
+        updateNext();
     }
+}
+
+void Movements::updateNext()
+{
+    nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
+
+    if (nextGameCell.x() < 0 || curGameCell.x() >= CellNumX)
+        nextLocalCell = EdgeLocalCell;
+    else
+        nextLocalCell = NormalLocalCell;
 }
 
 } // namespace mov

@@ -51,7 +51,6 @@ public:
     Movements(){}
     Movements(CGame *game);
     QPointF move();
-    void updateNext();
     
     QPointF curCenter() const;
     qreal curAngle() const;
@@ -61,13 +60,16 @@ public:
     QPoint getNextGameCell() const;
     QPointF getSpeed() const;
 
+    bool beforeTurnArea() const;
     
 private:
     bool isCenterDirected() const;
+    bool onTurnArea() const;
     QPoint vectorToCenter();
     QPoint vectorToNext();
     
     void updateCur();
+    void updateNext();
     
 private:
     CGame *game;
