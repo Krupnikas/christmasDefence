@@ -240,26 +240,6 @@ eSizeType ICannon::getUpgradeSizeType() const
         return BIG;
 }
 
-int ICannon::getUpgradeCost() const
-{
-    return 0;   
-}
-
-int ICannon::getCurCost() const
-{
-    return 0;
-}
-
-qreal ICannon::getBulletSpeed() const
-{
-    return 0;
-}
-
-qreal ICannon::getBulletRadius() const
-{
-    return 0;
-}
-
 bool ICannon::reachingEnemy(std::shared_ptr<IEnemy> enemy)
 {
     qreal length = helper::manhattanLength(center, enemy->getCenter());
@@ -292,6 +272,14 @@ void ICannon::upgrade()
 {
     sizeType = getUpgradeSizeType();
     counter = 0;
+}
+
+void ICannon::sell()
+{
+    remove();
+    radiusItem->remove();
+    game->cannons[gameCell.x()][gameCell.y()] = nullptr;
+    game->user.increaseCash(getCurCost() / 2);
 }
 
 void ICannon::showRadius()

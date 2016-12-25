@@ -67,7 +67,7 @@ void MainView::showEvent(QShowEvent*)
 {
     ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
     scene.updateGameRect(ui->gridLayout->geometry());
-    game.waveManager.initialize(&game);
+    game.waveManager.initialize(&game, 1);
     scene.updateDistances(game.distances);
     
     connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));

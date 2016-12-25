@@ -61,7 +61,7 @@ R::R()
     hp_background = QPixmap(get("hp_background"));
 
     enemy_comes = QPixmap(get("enemy_comes"));
-    waves = get("waves.txt");
+    waves = get("waves/level");
 
     for (int i = 0; i < TypesOfCannon; i++)
     {

@@ -8,7 +8,7 @@ class CWaveManager
 {
 public:
     CWaveManager();
-    void initialize(CGame *game);
+    void initialize(CGame *game, int level);
     void onTimer();
     QString getWaveInfo();
     

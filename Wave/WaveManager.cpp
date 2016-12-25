@@ -10,10 +10,11 @@ CWaveManager::CWaveManager():
     counter(0)
 {}
 
-void CWaveManager::initialize(CGame *game)
+void CWaveManager::initialize(CGame *game, int level)
 {
     this->game = game;
-    helper::readWaves(game->r->waves, waves);
+    QString filename = game->r->waves + QString::number(level) + QString(".txt");
+    helper::readWaves(filename, waves);
 }
 
 void CWaveManager::onTimer()
@@ -34,7 +35,7 @@ void CWaveManager::onTimer()
             }
             else
                 info = QString::number(static_cast<int>(wave.timeBeforeStart - curTime)) + "   ";
-        } 
+        }
         else
         {
             if (curTime >= wave.enemyIncomeInterval)
@@ -46,29 +47,29 @@ void CWaveManager::onTimer()
                     wave.curEnemyNum++;
                     counter = 0;
                 }
-                
+
                 if (game->enemies.empty())
                 {
-                    waveGoing = false; 
+                    waveGoing = false;
                     counter = 0;
                     ++curWave;
                 }
-                
+
             }
-            
+
             int outside = 0;
             for (auto enemy: game->enemies)
                 if (!game->scene->insideGameRect(enemy->getCenter()))
                     ++outside;
             info = "Left: " + QString::number(wave.totalEnemyNum - wave.curEnemyNum + outside);
         }
-        
+
     }
     else
     {
         info = "congrats!";
     }
-    
+
     game->scene->updateWaveInfo(info);
 }
 
