@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     Game/User.cpp \
     Bullet/BurnBullet.cpp \
     Bullet/MonsterBullet.cpp \
-    Bullet/SlowBullet.cpp
+    Bullet/SlowBullet.cpp \
+    InfoBlock/CannonUpgrade.cpp
     Game/Button.cpp
 
 HEADERS  += mainview.h \
@@ -85,7 +86,8 @@ HEADERS  += mainview.h \
     Metrics/ZOrderMetrics.h \
     Bullet/BurnBullet.h \
     Bullet/MonsterBullet.h \
-    Bullet/SlowBullet.h
+    Bullet/SlowBullet.h \
+    InfoBlock/CannonUpgrade.h
     Game/Button.h
 
 FORMS    += mainview.ui
