@@ -50,8 +50,7 @@ MainView::MainView(QWidget *parent) :
     QGLWidget *glWidget = new QGLWidget(format);
     //ui->graphicsView->setViewport(glWidget);
     
-    setAttribute(Qt::WA_TranslucentBackground);
-
+    //setAttribute(Qt::WA_TranslucentBackground);
    // this->showFullScreen();*/
 }
 

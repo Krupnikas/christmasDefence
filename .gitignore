@@ -3,3 +3,7 @@ christmasDefence.pro.user*
 *autosave
 .DS_Store
 .qmake.stash
+*.o
+moc_*
+christmasDefence.app*
+qrc_qresource.cpp

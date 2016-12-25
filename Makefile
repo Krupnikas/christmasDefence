@@ -273,7 +273,6 @@ DIST          = ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/qt_config.prf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/default_pre.prf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -510,7 +509,6 @@ Makefile: christmasDefence.pro ../../../Qt5.7.0/5.7/clang_64/mkspecs/macx-clang/
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/qt_config.prf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/default_pre.prf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -672,7 +670,6 @@ Makefile: christmasDefence.pro ../../../Qt5.7.0/5.7/clang_64/mkspecs/macx-clang/
 ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/qt_config.prf:
 ../../../Qt5.7.0/5.7/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_post.prf:
-.qmake.stash:
 ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/default_pre.prf:
 ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/mac/default_pre.prf:

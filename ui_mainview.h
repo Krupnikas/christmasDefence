@@ -13,8 +13,10 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -23,6 +25,8 @@ class Ui_MainView
 {
 public:
     QPushButton *pushButton;
+    QCheckBox *checkBox;
+    QRadioButton *radioButton;
 
     void setupUi(QWidget *MainView)
     {
@@ -32,6 +36,12 @@ public:
         pushButton = new QPushButton(MainView);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(140, 390, 113, 32));
+        checkBox = new QCheckBox(MainView);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+        checkBox->setGeometry(QRect(100, 310, 87, 20));
+        radioButton = new QRadioButton(MainView);
+        radioButton->setObjectName(QStringLiteral("radioButton"));
+        radioButton->setGeometry(QRect(140, 200, 100, 20));
 
         retranslateUi(MainView);
 
@@ -42,6 +52,8 @@ public:
     {
         MainView->setWindowTitle(QApplication::translate("MainView", "Chirstmas Defence", 0));
         pushButton->setText(QApplication::translate("MainView", "PushButton", 0));
+        checkBox->setText(QApplication::translate("MainView", "CheckBox", 0));
+        radioButton->setText(QApplication::translate("MainView", "RadioButton", 0));
     } // retranslateUi
 
 };
