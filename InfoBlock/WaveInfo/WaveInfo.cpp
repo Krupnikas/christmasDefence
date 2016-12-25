@@ -1,6 +1,6 @@
 #include <InfoBlock/WaveInfo/WaveInfo.h>
 
-CWaveInfo::CWaveInfo(CGame *game)
+CWaveInfo::CWaveInfo(CGame *)
 {
     
     

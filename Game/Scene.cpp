@@ -5,7 +5,6 @@ CScene::CScene(R* r) : r(r), fpsItem(nullptr), waveInfoItem(nullptr)
 {
     graphicsScene = new QGraphicsScene();
     graphicsScene->setItemIndexMethod(QGraphicsScene::NoIndex);
-
 }
 
 std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap)

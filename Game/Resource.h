@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWidget>
+#include <QMainWindow>
 #include <QTimer>
 #include <QTime>
 #include <QRect>
