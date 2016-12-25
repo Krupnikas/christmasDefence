@@ -18,6 +18,8 @@ class MainView : public QWidget
     Q_OBJECT
     
 public:
+
+    eGameStatus gameStatus;
     
     R r;
     CScene scene;

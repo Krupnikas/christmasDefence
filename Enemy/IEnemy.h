@@ -23,6 +23,7 @@ public:
     qreal getDistanceToFinish() const;
     QPoint getCurrentGameCell() const;
     QPoint getNextGameCell() const;
+    bool beforeTurnArea() const;
     QPointF getSpeed() const;
     
     //IGameObject methods override

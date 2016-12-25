@@ -112,7 +112,8 @@ bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int> > &distances
     for (size_t i = 0; i < enemies.size(); ++i)
     {
         if (enemies[i]->getCurrentGameCell() == QPoint(xInd, yInd) ||
-            enemies[i]->getNextGameCell() == QPoint(xInd, yInd))
+            (enemies[i]->getNextGameCell() == QPoint(xInd, yInd) &&
+             enemies[i]->beforeTurnArea()))
             return false;
     }
 

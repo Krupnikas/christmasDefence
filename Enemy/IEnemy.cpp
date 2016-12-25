@@ -63,6 +63,11 @@ QPoint IEnemy::getNextGameCell() const
     return movements->getNextGameCell();
 }
 
+bool IEnemy::beforeTurnArea() const
+{
+    return movements->beforeTurnArea();
+}
+
 QPointF IEnemy::getSpeed() const
 {
     return movements->getSpeed() * moveIter;

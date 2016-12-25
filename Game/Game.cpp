@@ -25,13 +25,15 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
 
     pressedButton = eBTnone;
 
+
     positionTimer = new QTimer(this);
     drawTimer = new QTimer(this);
 
-    positionTimer->start(TimerInterval);
-    drawTimer->start(TimerInterval);
-
+    cannonSelectionInfoBlock = std::make_shared<CCannonSelection>(this, UnselCell);
     userInformationBlock = std::make_shared<CUserInfo>(this);
+
+    connect(positionTimer, SIGNAL(timeout()), this, SLOT(onPositionTimer()));
+    connect(drawTimer, SIGNAL(timeout()), this, SLOT(onDrawTimer()));
 }
 
 CGame::~CGame()
@@ -39,8 +41,9 @@ CGame::~CGame()
 
 }
 
-void CGame::start(int level)
+void CGame::startLevel(int level)
 {
+    resize();
     waveManager.initialize(this, level);
     positionTimer->start(TimerInterval);
     drawTimer->start(TimerInterval);
@@ -50,6 +53,12 @@ void CGame::end()
 {
     positionTimer->stop();
     drawTimer->stop();
+}
+
+void CGame::resize()
+{
+    scene->updateGameBackground();
+    scaleObjects();
 }
 
 bool CGame::isGameCell(QPoint cell)
@@ -110,66 +119,6 @@ QPointF CGame::cellCenter(QPoint cell)
 {
     QPointF leftTop(cellLeftTop(cell));
     return QPointF(leftTop.x() + CellSize / 2.0, leftTop.y() + CellSize / 2.0);
-}
-
-void CGame::scaleObjects()
-{
-    for (size_t i = 0; i < bullets.size(); ++i)
-    {
-        bullets[i]->scaleItem();
-        bullets[i]->draw();
-        bullets[i]->show();
-    }
-    for (size_t i = 0; i < enemies.size(); ++i)
-    {
-        enemies[i]->scaleItem();
-        enemies[i]->draw();
-        enemies[i]->show();
-    }
-    for (int i = 0; i < CellNumX; ++i)
-        for (int j = 0; j < CellNumY; ++j)
-            if (cannons[i][j])
-            {
-                cannons[i][j]->scaleItem();
-                cannons[i][j]->draw();
-                cannons[i][j]->show();
-            }
-
-    if (cannonSelectionInfoBlock)
-    {
-        cannonSelectionInfoBlock->scaleItem();
-        cannonSelectionInfoBlock->closeButton.scaleItem();
-
-        for (int i = 0; i < TypesOfCannon; i++)
-        {
-            cannonSelectionInfoBlock->cannonButton[i].scaleItem();
-        }
-
-        cannonSelectionInfoBlock->updateButtonsPositions();
-        cannonSelectionInfoBlock->draw();
-    }
-
-    if (cannonUpgradeInfoBlock)
-    {
-        cannonUpgradeInfoBlock->scaleItem();
-
-        if (CloseButtonInInfoBlocksEnabled)
-            cannonUpgradeInfoBlock->closeButton.scaleItem();
-        cannonUpgradeInfoBlock->upgradeButton.scaleItem();
-        cannonUpgradeInfoBlock->sellButton.scaleItem();
-
-        cannonUpgradeInfoBlock->updateButtonsPositions();
-        cannonUpgradeInfoBlock->draw();
-    }
-
-    if (selectedCellItem)
-    {
-        scene->removeItem(selectedCellItem);
-        selectedCellItem = nullptr;
-    }
-    QPoint s = selectedCell;
-    selectedCell = UnselCell;
-    selectCell(s);
 }
 
 void CGame::hideObjects()
@@ -272,27 +221,6 @@ QPoint CGame::findNearestCell(QPointF from)
     QPoint nearestCell(-1, -1);
     nearestCell.setX((from.x() - OffsetX) / CellSize);
     nearestCell.setY((from.y() - OffsetY) / CellSize);
-    /*
-    double minDist = CellSize;
-    double manhattanLength;
-
-
-    for (int i = 0; i < CellNumX; ++i)
-    {
-        for (int j = 0; j < CellNumY; ++j)
-        {
-            int x = OffsetX + i * CellSize + CellSize/ 2.0;
-            int y = OffsetY + j * CellSize + CellSize/ 2.0;
-            QPointF checkingCellCenter(x,y);
-            checkingCellCenter -= from;
-            manhattanLength = std::abs(checkingCellCenter.x()) + std::abs(checkingCellCenter.y());
-            if (manhattanLength < minDist){
-                    minDist = manhattanLength;
-                    nearestCell.setX(i);
-                    nearestCell.setY(j);
-            }
-        }
-    }*/
     return nearestCell;
 }
 
@@ -371,5 +299,62 @@ void CGame::onMousePressed(QMouseEvent *pressEvent)
     emit mousePressed(pressEvent);
 }
 
+void CGame::scaleObjects()
+{
+    for (size_t i = 0; i < bullets.size(); ++i)
+    {
+        bullets[i]->scaleItem();
+        bullets[i]->draw();
+        bullets[i]->show();
+    }
+    for (size_t i = 0; i < enemies.size(); ++i)
+    {
+        enemies[i]->scaleItem();
+        enemies[i]->draw();
+        enemies[i]->show();
+    }
+    for (int i = 0; i < CellNumX; ++i)
+        for (int j = 0; j < CellNumY; ++j)
+            if (cannons[i][j])
+            {
+                cannons[i][j]->scaleItem();
+                cannons[i][j]->draw();
+                cannons[i][j]->show();
+            }
 
+    if (cannonSelectionInfoBlock)
+    {
+        cannonSelectionInfoBlock->scaleItem();
+        cannonSelectionInfoBlock->closeButton.scaleItem();
 
+        for (int i = 0; i < TypesOfCannon; i++)
+        {
+            cannonSelectionInfoBlock->cannonButton[i].scaleItem();
+        }
+
+        cannonSelectionInfoBlock->updateButtonsPositions();
+        cannonSelectionInfoBlock->draw();
+    }
+
+    if (cannonUpgradeInfoBlock)
+    {
+        cannonUpgradeInfoBlock->scaleItem();
+
+        if (CloseButtonInInfoBlocksEnabled)
+            cannonUpgradeInfoBlock->closeButton.scaleItem();
+        cannonUpgradeInfoBlock->upgradeButton.scaleItem();
+        cannonUpgradeInfoBlock->sellButton.scaleItem();
+
+        cannonUpgradeInfoBlock->updateButtonsPositions();
+        cannonUpgradeInfoBlock->draw();
+    }
+
+    if (selectedCellItem)
+    {
+        scene->removeItem(selectedCellItem);
+        selectedCellItem = nullptr;
+    }
+    QPoint s = selectedCell;
+    selectedCell = UnselCell;
+    selectCell(s);
+}

@@ -10,8 +10,26 @@
 
 MainView::MainView(QWidget *parent) :
     QWidget(parent),
+    gameStatus(eGameStatus::eGameMenu),
     r(), scene(&r), game(&r, &scene, this), ui(new Ui::MainView)
 {
+    //layout setting
+    ui->setupUi(this);
+    this->setLayout(ui->gridLayout);
+
+    //graphics view optimizations
+    ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
+    ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
+    ui->graphicsView->setOptimizationFlag(QGraphicsView::DontSavePainterState, true);
+    ui->graphicsView->setRenderHint(QPainter::HighQualityAntialiasing);
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    //OpenGL optimizations
+    QGLFormat format = QGLFormat(QGL::DirectRendering);
+    QGLWidget *glWidget = new QGLWidget(format);
+    ui->graphicsView->setViewport(glWidget);
+
     QSurfaceFormat fmt;
     fmt.setDepthBufferSize(24);
     QOpenGLContext::OpenGLModuleType type(QOpenGLContext::openGLModuleType());
@@ -25,25 +43,11 @@ MainView::MainView(QWidget *parent) :
     }
 
     QSurfaceFormat::setDefaultFormat(fmt);
-
-    ui->setupUi(this);
-
-    this->setLayout(ui->gridLayout);
-
-    ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
-    //ui->graphicsView->fitInView(ui->gridLayout->geometry());
-
-    ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
-    ui->graphicsView->setOptimizationFlag(QGraphicsView::DontSavePainterState, true);
-    ui->graphicsView->setRenderHint(QPainter::HighQualityAntialiasing);
-    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    QGLFormat format = QGLFormat(QGL::DirectRendering);
-    QGLWidget *glWidget = new QGLWidget(format);
-    ui->graphicsView->setViewport(glWidget);
     
-    //setAttribute(Qt::WA_TranslucentBackground);
+    //interface connection setting
+    connect(this, SIGNAL(mousePressed(QMouseEvent*)),
+            &game, SLOT(onMousePressed(QMouseEvent*)));
+
    // this->showFullScreen();*/
 }
 
@@ -58,9 +62,21 @@ void MainView::resizeEvent(QResizeEvent *event)
     ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
     scene.updateGameRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene.getGraphicsScene());
-    game.scaleObjects();
 
-    QTimer::singleShot(2000, this, SLOT(setEnabled()));
+    switch (gameStatus)
+    {
+    case eGameStatus::eGameMenu:
+        break;
+    case eGameStatus::eLevelMenu:
+        break;
+    case eGameStatus::eGame:
+        game.resize();
+        break;
+    default:
+        qDebug() << "MainView: resizeEvent: invalid gameStatus";
+    }
+
+    //QTimer::singleShot(2000, this, SLOT(setEnabled()));
 
 }
 
@@ -68,21 +84,16 @@ void MainView::showEvent(QShowEvent*)
 {
     ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
     scene.updateGameRect(ui->gridLayout->geometry());
-    game.waveManager.initialize(&game, 1);
-    scene.updateDistances(game.distances);
-    
-    connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));
-    connect(game.drawTimer, SIGNAL(timeout()), &game, SLOT(onDrawTimer()));
-    connect(this, SIGNAL(mousePressed(QMouseEvent*)),
-            &game, SLOT(onMousePressed(QMouseEvent*)));
-    game.cannonSelectionInfoBlock = std::make_shared<CCannonSelection>(&game, game.selectedCell);
-    game.showObjects();
+
+
+//    game.resize();
+//    game.showObjects();
 
 }
 
-void MainView::mouseDoubleClickEvent(QMouseEvent *e)
+void MainView::mouseDoubleClickEvent(QMouseEvent *)
 {
-    if (e->button() == Qt::LeftButton)
+/*    if (e->button() == Qt::LeftButton)
     {
         QPointF p = game.view->mapFromGlobal(QCursor::pos());
         QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
@@ -91,21 +102,39 @@ void MainView::mouseDoubleClickEvent(QMouseEvent *e)
         if (game.cannons[selX][selY])
             game.cannons[selX][selY]->upgrade();
     }
+    */
 }
 
 void MainView::mousePressEvent(QMouseEvent *eventPress)
 {
-    emit mousePressed(eventPress);
+    switch (gameStatus)
+    {
+    case eGameStatus::eGameMenu:
+        game.startLevel(1);
+        gameStatus = eGameStatus::eGame;
+        break;
+    case eGameStatus::eLevelMenu:
+        break;
+    case eGameStatus::eGame:
+    {
+        emit mousePressed(eventPress);
 
-    if (game.pressedButton != eBTnone){
-        game.pressedButton = eBTnone;
-        return;
+        if (game.pressedButton != eBTnone){
+            game.pressedButton = eBTnone;
+            return;
+        }
+
+        QPointF p = game.view->mapFromGlobal(QCursor::pos());
+        QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
+
+        game.selectCell(selectedCell);
+        break;
+    }
+    default:
+        qDebug() << "MainView: resizeEvent: invalid gameStatus";
     }
 
-    QPointF p = game.view->mapFromGlobal(QCursor::pos());
-    QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
 
-    game.selectCell(selectedCell);
 
 }
 
