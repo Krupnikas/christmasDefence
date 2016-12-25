@@ -26,15 +26,8 @@ MainView::MainView(QWidget *parent) :
 
     QSurfaceFormat::setDefaultFormat(fmt);
 
-    /*QLayout *layout = new QVBoxLayout();
-    QGraphicsScene *gScene = scene.getGraphicsScene();
-    QGraphicsView *view = new QGraphicsView(gScene);
-
-    layout->addWidget(view);
-    setLayout(layout);*/
-
     ui->setupUi(this);
-/*
+
     this->setLayout(ui->gridLayout);
 
     ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
@@ -45,10 +38,10 @@ MainView::MainView(QWidget *parent) :
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-*/
+
     QGLFormat format = QGLFormat(QGL::DirectRendering);
     QGLWidget *glWidget = new QGLWidget(format);
-    //ui->graphicsView->setViewport(glWidget);
+    ui->graphicsView->setViewport(glWidget);
     
     //setAttribute(Qt::WA_TranslucentBackground);
    // this->showFullScreen();*/
@@ -61,74 +54,74 @@ MainView::~MainView()
 
 void MainView::resizeEvent(QResizeEvent *event)
 {
-//    ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
-//    scene.updateGameRect(ui->graphicsView->geometry());
-//    ui->graphicsView->setScene(scene.getGraphicsScene());
-//    game.scaleObjects();
+    ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
+    scene.updateGameRect(ui->graphicsView->geometry());
+    ui->graphicsView->setScene(scene.getGraphicsScene());
+    game.scaleObjects();
 
-//    QTimer::singleShot(2000, this, SLOT(setEnabled()));
+    QTimer::singleShot(2000, this, SLOT(setEnabled()));
 
 }
 
 void MainView::showEvent(QShowEvent*)
 {
-//    ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
-//    scene.updateGameRect(ui->gridLayout->geometry());
-//    game.waveManager.initialize(&game);
-//    scene.updateDistances(game.distances);
+    ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
+    scene.updateGameRect(ui->gridLayout->geometry());
+    game.waveManager.initialize(&game);
+    scene.updateDistances(game.distances);
     
-//    connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));
-//    connect(game.drawTimer, SIGNAL(timeout()), &game, SLOT(onDrawTimer()));
-//    connect(this, SIGNAL(mousePressed(QMouseEvent*)),
-//            &game, SLOT(onMousePressed(QMouseEvent*)));
-//    game.block = std::make_shared<CCannonSelection>(&game, game.selectedCell);
-//    game.showObjects();
+    connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));
+    connect(game.drawTimer, SIGNAL(timeout()), &game, SLOT(onDrawTimer()));
+    connect(this, SIGNAL(mousePressed(QMouseEvent*)),
+            &game, SLOT(onMousePressed(QMouseEvent*)));
+    game.block = std::make_shared<CCannonSelection>(&game, game.selectedCell);
+    game.showObjects();
 
 }
 
 void MainView::mouseDoubleClickEvent(QMouseEvent *e)
 {
-//    if (e->button() == Qt::LeftButton)
-//    {
-//        QPointF p = game.view->mapFromGlobal(QCursor::pos());
-//        QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
-//        int selX = selectedCell.x();
-//        int selY = selectedCell.y();
-//        if (game.cannons[selX][selY])
-//            game.cannons[selX][selY]->upgrade();
-//    }
+    if (e->button() == Qt::LeftButton)
+    {
+        QPointF p = game.view->mapFromGlobal(QCursor::pos());
+        QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
+        int selX = selectedCell.x();
+        int selY = selectedCell.y();
+        if (game.cannons[selX][selY])
+            game.cannons[selX][selY]->upgrade();
+    }
 }
 
 void MainView::mousePressEvent(QMouseEvent *eventPress)
 {
-//    emit mousePressed(eventPress);
+    emit mousePressed(eventPress);
 
-//    if (game.oneOfButtonPressed){
-//        game.oneOfButtonPressed = false;
-//        return;
-//    }
+    if (game.oneOfButtonPressed){
+        game.oneOfButtonPressed = false;
+        return;
+    }
 
 
-//    QPointF p = game.view->mapFromGlobal(QCursor::pos());
-//    QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
-//    int selX = selectedCell.x();
-//    int selY = selectedCell.y();
+    QPointF p = game.view->mapFromGlobal(QCursor::pos());
+    QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
+    int selX = selectedCell.x();
+    int selY = selectedCell.y();
     
-//    if (eventPress->button() == Qt::LeftButton)
-//    {
-//        if (selectedCell == game.selectedCell)
-//        {
-//            game.deselectCell();
-//            if (!game.cannons[selX][selY])
-//            {
-//                QPointF cellCenterGlobal(game.scene->toGlobalPoint(game.cellCenter(selectedCell)));
-//                qreal angle = helper::calcAngle(cellCenterGlobal, p);
-//                game.addCannon(std::make_shared<CSlowCannon>(&game, selectedCell, angle));
-//            }
-//            return;
-//        }
-//        game.selectCell(selectedCell);
-//    }
+    if (eventPress->button() == Qt::LeftButton)
+    {
+        if (selectedCell == game.selectedCell)
+        {
+            game.deselectCell();
+            if (!game.cannons[selX][selY])
+            {
+                QPointF cellCenterGlobal(game.scene->toGlobalPoint(game.cellCenter(selectedCell)));
+                qreal angle = helper::calcAngle(cellCenterGlobal, p);
+                game.addCannon(std::make_shared<CSlowCannon>(&game, selectedCell, angle));
+            }
+            return;
+        }
+        game.selectCell(selectedCell);
+    }
 }
 
 void MainView::setEnabled()

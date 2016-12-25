@@ -118,7 +118,10 @@ bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int> > &distances
 
     distancesMutex.lock();
         if ((xInd == ExitX && yInd == ExitY) || (xInd == EntranceX && yInd == EntranceY))
+        {
+            distancesMutex.unlock();
             return false;
+        }
         std::vector<std::vector<int>> distCheck(distances);
     distancesMutex.unlock();
     

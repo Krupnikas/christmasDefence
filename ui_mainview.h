@@ -13,10 +13,9 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -24,24 +23,28 @@ QT_BEGIN_NAMESPACE
 class Ui_MainView
 {
 public:
-    QPushButton *pushButton;
-    QCheckBox *checkBox;
-    QRadioButton *radioButton;
+    QWidget *gridLayoutWidget;
+    QGridLayout *gridLayout;
+    QGraphicsView *graphicsView;
 
     void setupUi(QWidget *MainView)
     {
         if (MainView->objectName().isEmpty())
             MainView->setObjectName(QStringLiteral("MainView"));
         MainView->resize(800, 450);
-        pushButton = new QPushButton(MainView);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(140, 390, 113, 32));
-        checkBox = new QCheckBox(MainView);
-        checkBox->setObjectName(QStringLiteral("checkBox"));
-        checkBox->setGeometry(QRect(100, 310, 87, 20));
-        radioButton = new QRadioButton(MainView);
-        radioButton->setObjectName(QStringLiteral("radioButton"));
-        radioButton->setGeometry(QRect(140, 200, 100, 20));
+        gridLayoutWidget = new QWidget(MainView);
+        gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
+        gridLayoutWidget->setGeometry(QRect(-470, 29, 0, 0));
+        gridLayout = new QGridLayout(gridLayoutWidget);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setContentsMargins(0, 0, 0, 0);
+        graphicsView = new QGraphicsView(gridLayoutWidget);
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+
+        gridLayout->addWidget(graphicsView, 0, 0, 1, 1);
+
 
         retranslateUi(MainView);
 
@@ -51,9 +54,6 @@ public:
     void retranslateUi(QWidget *MainView)
     {
         MainView->setWindowTitle(QApplication::translate("MainView", "Chirstmas Defence", 0));
-        pushButton->setText(QApplication::translate("MainView", "PushButton", 0));
-        checkBox->setText(QApplication::translate("MainView", "CheckBox", 0));
-        radioButton->setText(QApplication::translate("MainView", "RadioButton", 0));
     } // retranslateUi
 
 };
