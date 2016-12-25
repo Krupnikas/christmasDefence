@@ -11,7 +11,7 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
     r(r),
     scene(scene),
     view(view)
-{    
+{
     cannons.resize(CellNumX);
     distances.resize(CellNumX);
     for (int i = 0; i < CellNumX; ++i)
@@ -20,7 +20,7 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
         distances[i].resize(CellNumY);
     }
     helper::updateDistances(cannons, distances);
-    
+
     pressedButton = eBTnone;
 
     positionTimer = new QTimer(this);
@@ -31,7 +31,7 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
 
 CGame::~CGame()
 {
-    
+
 }
 
 bool CGame::isGameCell(QPoint cell)
@@ -44,20 +44,20 @@ bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
     QPoint cell = cannon->getGameCell();
     int x = cell.x();
     int y = cell.y();
-    
+
     int cost = cannon->getCurCost();
-    
+
     if (x < 0 || x > CellNumX   ||
         y < 0 || y > CellNumY   ||
         !helper::okToAdd(x, y, distances, enemies) ||
         cost > user.getCash())
         return false;
-    
+
     user.decreaseCash(cost);
-    
+
     cannonAddMutex.lock();
     cannons[x][y] = cannon;
-    helper::updateDistances(cannons, distances);    
+    helper::updateDistances(cannons, distances);
     cannonAddMutex.unlock();
     cannon->draw();
     cannon->show();
@@ -76,7 +76,7 @@ bool CGame::addEnemy(int enemyType, int enemyTexture, int enemyPower)
         qDebug() << "Helper: readWaves: incorrect enemyType";
         enemy = std::make_shared<CFastEnemy>(this, enemyTexture, enemyPower);
     }
-    
+
     enemies.push_back(enemy);
     enemy->draw();
     enemy->show();
@@ -116,7 +116,7 @@ void CGame::scaleObjects()
                 cannons[i][j]->draw();
                 cannons[i][j]->show();
             }
-    
+
     if (block)
     {
         block->scaleItem();
@@ -171,15 +171,23 @@ void CGame::selectCell(QPoint pos)
         return;
     }
     if (selectedCell != UnselCell)
-        deselect_cell_();
-    
+    {
+        deselectCell();
+        return;
+    }
+
     if (selectedCell == pos)
         return;
-    
+
     int selX = pos.x();
     int selY = pos.y();
     if (cannons[selX][selY])
-        cannons[selX][selY]->showRadius();
+        if(cannons[selX][selY]->isRadiusVisible())
+        {
+            cannons[selX][selY]->hideRadius();
+        } else {
+            cannons[selX][selY]->showRadius();
+        }
     else
     {
         block->updatePosition(pos);
@@ -190,7 +198,7 @@ void CGame::selectCell(QPoint pos)
         QSizeF size(CellSize, CellSize);
         if (!selectedCellItem)
             selectedCellItem = scene->addPixmap(size, &(r->cellSelected));
-        
+
         scene->positionItem(QPointF(x, y), size, 0, 0.5, selectedCellItem);
         selectedCellItem->setFlag(QGraphicsItem::ItemHasNoContents, false);
         selectedCellItem->show();
@@ -200,7 +208,17 @@ void CGame::selectCell(QPoint pos)
 
 void CGame::deselectCell()
 {
-    deselect_cell_();
+    int selX = selectedCell.x();
+    int selY = selectedCell.y();
+    if (cannons[selX][selY])
+        cannons[selX][selY]->hideRadius();
+    if (block)
+        block->hide();
+    if (selectedCellItem)
+    {
+        selectedCellItem->hide();
+        selectedCellItem->setFlag(QGraphicsItem::ItemHasNoContents, true);
+    }
     selectedCell = QPoint(-1, -1);
 }
 
@@ -212,8 +230,8 @@ QPoint CGame::findNearestCell(QPointF from)
     /*
     double minDist = CellSize;
     double manhattanLength;
-   
-    
+
+
     for (int i = 0; i < CellNumX; ++i)
     {
         for (int j = 0; j < CellNumY; ++j)
@@ -236,7 +254,7 @@ QPoint CGame::findNearestCell(QPointF from)
 void CGame::onPositionTimer()
 {
     waveManager.onTimer();
-    
+
     size_t lastBulletInd = 0;
     for (size_t i = 0; i < bullets.size(); ++i)
         if (bullets[i]->move() && !bullets[i]->reachedEnemy())
@@ -250,7 +268,7 @@ void CGame::onPositionTimer()
         bullets[i]->remove();
     if (lastBulletInd < bullets.size())
         bullets.resize(lastBulletInd);
-    
+
     size_t lastEnemyInd = 0;
     for (size_t i = 0; i < enemies.size(); ++i)
         if (!enemies[i]->isDead() && enemies[i]->move())
@@ -270,22 +288,22 @@ void CGame::onDrawTimer()
 {
     for (size_t i = 0; i < bullets.size(); ++i)
         bullets[i]->draw();
-    
+
     for (auto enemy: enemies)
         enemy->draw();
 
     cannonAddMutex.lock();
-    
+
         for (int i = 0; i < CellNumX; ++i)
             for (int j = 0; j < CellNumY; ++j)
                 if (cannons[i][j])
                 {
-                    cannons[i][j]->count();                
+                    cannons[i][j]->count();
                     cannons[i][j]->rotate();
                 }
 
     cannonAddMutex.unlock();
-    
+
     static QTime time;
     static int frameCnt=0;
     static double timeElapsed=0;
@@ -308,24 +326,5 @@ void CGame::onMousePressed(QMouseEvent *pressEvent)
     emit mousePressed(pressEvent);
 }
 
-void CGame::deselect_cell_()
-{
-    int selX = selectedCell.x();
-    int selY = selectedCell.y();
-    if (selectedCell == UnselCell || !cannons[selX][selY])
-    {
-        if (block)
-            block->hide();
-        if (selectedCellItem)
-        {
-            selectedCellItem->hide();
-            selectedCellItem->setFlag(QGraphicsItem::ItemHasNoContents, true);
-        }
-    }
-    else
-    {
-        cannons[selX][selY]->hideRadius();
-    }
-}
 
 

@@ -125,7 +125,7 @@ void CCannonSelection::draw()
 }
 
 void CCannonSelection::onButtonPressed(eButtonTypes Type)
-{/*
+{
     switch (Type){
     case eBTcannonSelectionCloseButton:
         break;
@@ -143,6 +143,6 @@ void CCannonSelection::onButtonPressed(eButtonTypes Type)
         break;
     default:
         qDebug() << "Cannon Selection error! need type number " << Type;
-    }*/
+    }
     game->deselectCell();
 }

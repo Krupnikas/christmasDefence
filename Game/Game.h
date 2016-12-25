@@ -76,7 +76,6 @@ public slots:
 
 //private methods
 private:
-    void deselect_cell_();    
     
 //private attributes
 private:
