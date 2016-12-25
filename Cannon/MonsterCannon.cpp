@@ -88,7 +88,7 @@ void CMonsterCannon::upgrade()
 
 int CMonsterCannon::getUpgradeCost() const
 {
-    SizeType upSizeType = getUpgradeSizeType();
+    eSizeType upSizeType = getUpgradeSizeType();
     return helper::choose(upSizeType,
                           MonsterCannonSmCost,
                           MonsterCannonMidCost,

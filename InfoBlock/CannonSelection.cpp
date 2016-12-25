@@ -35,7 +35,8 @@ void CCannonSelection::updatePosition(QPoint selectedCell)
 
 void CCannonSelection::initButtons()
 {
-    closeButton.init(QRect(center.x() - CannonSelectionButtonSize/2,
+    closeButton.init(eBTcannonSelectionCloseButton,
+                     QRect(center.x() - CannonSelectionButtonSize/2,
                            center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2,
                            CannonSelectionButtonSize,
                            CannonSelectionButtonSize),
@@ -44,18 +45,21 @@ void CCannonSelection::initButtons()
                      ButtonZOrder,
                      0);
 
-    connect(&closeButton, SIGNAL(pressed()),
-            this, SLOT(onCloseButtonPressed()));
+    connect(&closeButton, SIGNAL(pressed(eButtonTypes)),
+            this, SLOT(onButtonPressed(eButtonTypes)));
 
     for (int i = 0; i < TypesOfCannon; i++)
     {
-        cannonButton[i].init(QRect(calculateTopLeftForButton(i),
+        cannonButton[i].init(static_cast<eButtonTypes>(i + 2),
+                             QRect(calculateTopLeftForButton(i),
                              QSize(CannonSelectionButtonSize,
                                    CannonSelectionButtonSize)),
                              &game->r->cannonTypePreview[i],
                              game,
                              ButtonZOrder,
                              0);
+        connect(&cannonButton[i], SIGNAL(pressed(eButtonTypes)),
+                this, SLOT(onButtonPressed(eButtonTypes)));
     }
 }
 
@@ -120,7 +124,25 @@ void CCannonSelection::draw()
     }
 }
 
-void CCannonSelection::onCloseButtonPressed()
-{
+void CCannonSelection::onButtonPressed(eButtonTypes Type)
+{/*
+    switch (Type){
+    case eBTcannonSelectionCloseButton:
+        break;
+    case eBTcannonSelectionChooseFast:
+        game->addCannon(std::make_shared<CFastCannon>(game, game->selectedCell, 0));
+        break;
+    case eBTcannonSelectionChooseMonster:
+        game->addCannon(std::make_shared<CMonsterCannon>(game, game->selectedCell, 0));
+        break;
+    case eBTcannonSelectionChooseSlow:
+        game->addCannon(std::make_shared<CSlowCannon>(game, game->selectedCell, 0));
+        break;
+    case eBTcannonSelectionChooseBurn:
+        game->addCannon(std::make_shared<CBurnCannon>(game, game->selectedCell, 0));
+        break;
+    default:
+        qDebug() << "Cannon Selection error! need type number " << Type;
+    }*/
     game->deselectCell();
 }

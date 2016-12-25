@@ -27,7 +27,7 @@ bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int>> &distances,
 QPoint findLowerNeighbour(std::vector<std::vector<int>> &distances, const QPoint& curPoint);
 
 template <class T>
-T choose(SizeType type, T var1, T var2, T var3)
+T choose(eSizeType type, T var1, T var2, T var3)
 {
     switch (type)
     {

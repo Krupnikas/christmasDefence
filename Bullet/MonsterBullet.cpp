@@ -4,19 +4,19 @@
 #include <Enemy/IEnemy.h>
 
 
-CMonsterBullet::CMonsterBullet(CGame *game, QPointF center, double angle, SizeType type)
+CMonsterBullet::CMonsterBullet(CGame *game, QPointF center, double angle, eSizeType type)
 {
     //IGameObject fields
-    this->label = "Fast Bullet";
+    this->label = "Monster Bullet";
     this->angle = angle;
     this->game = game;
     this->zOrder = 1;
     
-    this->textureSize = QSize(FastBulletSizeX, FastBulletSizeY);
+    this->textureSize = QSize(MonsterBulletSizeX, MonsterBulletSizeY);
     this->pixmap = helper::choose(type,
-                                  &game->r->fast_bullet_1,
-                                  &game->r->fast_bullet_2,
-                                  &game->r->fast_bullet_3);
+                                  &game->r->monster_bullet_1,
+                                  &game->r->monster_bullet_2,
+                                  &game->r->monster_bullet_3);
     this->position = game->scene->addPixmap(textureSize, pixmap);
     
     this->center = center;
@@ -24,8 +24,8 @@ CMonsterBullet::CMonsterBullet(CGame *game, QPointF center, double angle, SizeTy
     this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
     
     //IBullet fields
-    this->step = FastBulletStep;
-    this->hitPower = helper::choose(type, FastBulletSmHit, FastBulletMidHit, FastBulletBigHit);
+    this->step = MonsterBulletStep;
+    this->hitPower = helper::choose(type, MonsterBulletSmHit, MonsterBulletMidHit, MonsterBulletBigHit);
 }
 
 bool CMonsterBullet::move()

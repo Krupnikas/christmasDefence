@@ -37,12 +37,24 @@
 
 #include <Metrics/Metrics.h>
 
-enum SizeType {
+
+enum eSizeType {
     SMALL, MEDIUM, BIG
 };
 
-enum ScaleCenter {
+enum eScaleCenter {
     LeftTop, Center
+};
+
+enum eButtonTypes{
+    eBTnone,
+    eBTcannonSelectionCloseButton,
+    eBTcannonSelectionChooseFast,
+    eBTcannonSelectionChooseMonster,
+    eBTcannonSelectionChooseSlow,
+    eBTcannonSelectionChooseBurn,
+    eBTuiPause,
+    eBTuiAccelerate
 };
 
 struct R

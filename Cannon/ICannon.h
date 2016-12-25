@@ -45,11 +45,11 @@ public:
     virtual qreal getBulletSpeed() const;
     virtual qreal getBulletRadius() const;
     
-    SizeType getSizeType() const;
-    SizeType getUpgradeSizeType() const;
+    eSizeType getSizeType() const;
+    eSizeType getUpgradeSizeType() const;
     
 protected:
-    SizeType sizeType;
+    eSizeType sizeType;
     QPoint gameCell;
     qreal hp;
     qreal rotationSpeed;

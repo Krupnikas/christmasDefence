@@ -28,7 +28,7 @@ public:
     CWaveManager waveManager;
     CUser user;   
 
-    bool oneOfButtonPressed;
+    eButtonTypes pressedButton;
     
     QTimer *positionTimer;
     QTimer *drawTimer;
