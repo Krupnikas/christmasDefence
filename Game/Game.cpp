@@ -5,6 +5,7 @@
 #include <Game/Helper.h>
 #include <InfoBlock/CannonSelection.h>
 #include <InfoBlock/CannonUpgrade.h>
+#include <InfoBlock/UserInfo.h>
 #include <Wave/WaveManager.h>
 
 
@@ -24,10 +25,13 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
 
     pressedButton = eBTnone;
 
-    cannonSelectionInfoBlock = std::make_shared<CCannonSelection>(this, UnselCell);
 
     positionTimer = new QTimer(this);
     drawTimer = new QTimer(this);
+
+    cannonSelectionInfoBlock = std::make_shared<CCannonSelection>(this, UnselCell);
+    userInformationBlock = std::make_shared<CUserInfo>(this);
+
     connect(positionTimer, SIGNAL(timeout()), this, SLOT(onPositionTimer()));
     connect(drawTimer, SIGNAL(timeout()), this, SLOT(onDrawTimer()));
 }
@@ -40,6 +44,10 @@ CGame::~CGame()
 void CGame::startLevel(int level)
 {
     resize();
+
+    userInformationBlock->draw();
+    userInformationBlock->show();
+
     waveManager.initialize(this, level);
     positionTimer->start(TimerInterval);
     drawTimer->start(TimerInterval);
@@ -343,6 +351,13 @@ void CGame::scaleObjects()
 
         cannonUpgradeInfoBlock->updateButtonsPositions();
         cannonUpgradeInfoBlock->draw();
+    }
+
+    if (userInformationBlock)
+    {
+        userInformationBlock->scaleItem();
+        userInformationBlock->draw();
+        userInformationBlock->show();
     }
 
     if (selectedCellItem)
