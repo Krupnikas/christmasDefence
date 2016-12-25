@@ -67,7 +67,6 @@ HEADERS  += mainview.h \
     Enemy/Movements.h \
     InfoBlock/IInfoBlock.h \
     InfoBlock/UserInfo.h \
-    InfoBlock/WaveInfo.h \
     InfoBlock/ControlButtons.h \
     InfoBlock/PauseWindow.h \
     InfoBlock/CannonSelection.h \

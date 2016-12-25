@@ -146,12 +146,27 @@ void CGame::scaleObjects()
         cannonSelectionInfoBlock->draw();
     }
 
+    if (cannonUpgradeInfoBlock)
+    {
+        cannonUpgradeInfoBlock->scaleItem();
+
+        if (CloseButtonInInfoBlocksEnabled)
+            cannonUpgradeInfoBlock->closeButton.scaleItem();
+        cannonUpgradeInfoBlock->upgradeButton.scaleItem();
+        cannonUpgradeInfoBlock->sellButton.scaleItem();
+
+        cannonUpgradeInfoBlock->updateButtonsPositions();
+        cannonUpgradeInfoBlock->draw();
+    }
+
     if (selectedCellItem)
     {
         scene->removeItem(selectedCellItem);
         selectedCellItem = nullptr;
-        selectCell(selectedCell);
     }
+    QPoint s = selectedCell;
+    selectedCell = UnselCell;
+    selectCell(s);
 }
 
 void CGame::hideObjects()
@@ -194,14 +209,21 @@ void CGame::selectCell(QPoint pos)
     if (selectedCell == pos)
         return;
 
+    if (!cannonUpgradeInfoBlock)
+        cannonUpgradeInfoBlock = std::make_shared<CCannonUpgrade>(this, pos);
+
     int selX = pos.x();
     int selY = pos.y();
     if (cannons[selX][selY])
         if(cannons[selX][selY]->isRadiusVisible())
         {
             cannons[selX][selY]->hideRadius();
+            cannonUpgradeInfoBlock->hide();
         } else {
             cannons[selX][selY]->showRadius();
+            cannonUpgradeInfoBlock->updatePosition(pos);
+            cannonUpgradeInfoBlock->draw();
+            cannonUpgradeInfoBlock->show();
         }
     else
     {
@@ -226,7 +248,12 @@ void CGame::deselectCell()
     int selX = selectedCell.x();
     int selY = selectedCell.y();
     if (cannons[selX][selY])
+    {
         cannons[selX][selY]->hideRadius();
+        cannonUpgradeInfoBlock->hide();
+    }
+    if (cannonUpgradeInfoBlock)
+        cannonUpgradeInfoBlock->hide();
     if (cannonSelectionInfoBlock)
         cannonSelectionInfoBlock->hide();
     if (selectedCellItem)

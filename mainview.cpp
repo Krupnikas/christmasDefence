@@ -54,6 +54,7 @@ MainView::~MainView()
 
 void MainView::resizeEvent(QResizeEvent *event)
 {
+    event->accept();
     ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
     scene.updateGameRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene.getGraphicsScene());

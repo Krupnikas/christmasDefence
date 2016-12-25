@@ -12,14 +12,13 @@ CCannonUpgrade::CCannonUpgrade(CGame *game, QPoint selectedCell)
 
     this->textureSize = QSize(backgroundImageSize,
                               backgroundImageSize);
-    this->pixmap = &game->r->cannonSelectionBackground;
+    this->pixmap = &game->r->cannonUpgradeBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
 
     this->center = game->cellCenter(selectedCell);
 
-    //initButtons();
-    //updatePosition(selectedCell);
-
+    initButtons();
+    updatePosition(selectedCell);
 }
 
 void CCannonUpgrade::updatePosition(QPoint selectedCell)
@@ -53,7 +52,7 @@ void CCannonUpgrade::initButtons()
                            center.y() - sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
                            CannonUpgradeButtonSize,
                            CannonUpgradeButtonSize),
-                     &game->r->buttonClose,
+                     &game->r->buttonUpgrade,
                      game,
                      ButtonZOrder,
                      0);
@@ -66,12 +65,12 @@ void CCannonUpgrade::initButtons()
                            center.y() - sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
                            CannonUpgradeButtonSize,
                            CannonUpgradeButtonSize),
-                     &game->r->buttonClose,
+                     &game->r->buttonSell,
                      game,
                      ButtonZOrder,
                      0);
 
-    connect(&upgradeButton, SIGNAL(pressed(eButtonTypes)),
+    connect(&sellButton, SIGNAL(pressed(eButtonTypes)),
             this, SLOT(onButtonPressed(eButtonTypes)));
 }
 
@@ -132,10 +131,10 @@ void CCannonUpgrade::onButtonPressed(eButtonTypes Type)
     case eBTCloseButton:
         break;
     case eBTcannonUpgrade:
-      //  game->addCannon(std::make_shared<CFastCannon>(game, game->selectedCell, 0));
+        game->cannons[game->selectedCell.x()][game->selectedCell.y()]->upgrade();
         break;
     case eBTcannonSell:
-      //  game->cannons[]
+        game->cannons[game->selectedCell.x()][game->selectedCell.y()]->sell();
         break;
     default:
         qDebug() << "Cannon Selection error! need type number " << Type;

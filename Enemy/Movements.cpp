@@ -80,12 +80,6 @@ Movements::Movements(CGame *game):
 
 QPointF Movements::move()
 {
-    qDebug() << "left " << turnArea.left() <<
-                "\n top" << turnArea.top() <<
-                "\n right" << turnArea.right() <<
-                "\n bottom" << turnArea.bottom() <<
-                "\n width" << turnArea.width() <<
-                "\n height" << turnArea.height();
     bool centerDirected = isCenterDirected();
     bool insideTurnArea = turnArea.contains(curPos, true);
     
