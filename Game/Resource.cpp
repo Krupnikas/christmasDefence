@@ -14,8 +14,8 @@ R::R()
     cannonSelectionBackground = QPixmap(get("cannonSelectingInfoBlockBackground"));
     cannonUpgradeBackground = QPixmap(get("cannonUpgradeInfoBlockBackground"));
 
-    buttonUpgrade = QPixmap(get("upgrade"));
-    buttonSell = QPixmap(get("sell"));
+    buttonUpgrade = QPixmap(get("upgrade.png"));
+    buttonSell = QPixmap(get("sell.png"));
     
     entireRadius = QPixmap(get("entireRadius.png"));
 

@@ -59,7 +59,7 @@ void CButton::onMousePressed(QMouseEvent *event)
     qDebug() << click << " is in " << buttonRect
              << buttonRect.contains(click);
     if (buttonRect.contains(click)
-                            && position->isVisible())
+                            && position->isVisible() && event->button() == Qt::LeftButton)
     {
         qDebug() << "One Of Buttons Pressed";
         event->accept();

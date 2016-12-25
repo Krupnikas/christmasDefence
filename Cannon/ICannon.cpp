@@ -126,7 +126,7 @@ qreal bin_search_angle_(QPointF cannonCenter,
                 left = mid;
         }
     }
-    left = right;
+    return helper::calcAngle(cannonCenter, enemyCenter);
 }
 
 qreal calc_desired_vector(QPointF cannonCenter,
@@ -276,10 +276,10 @@ void ICannon::upgrade()
 
 void ICannon::sell()
 {
+    game->user.increaseCash(getCurCost() / 2);
     remove();
     radiusItem->remove();
     game->cannons[gameCell.x()][gameCell.y()] = nullptr;
-    game->user.increaseCash(getCurCost() / 2);
 }
 
 void ICannon::showRadius()

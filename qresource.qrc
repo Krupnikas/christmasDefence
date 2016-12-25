@@ -48,5 +48,8 @@
         <file>res/christmas/waves/level1.txt</file>
         <file>res/christmas/waves/level2.txt</file>
         <file>res/christmas/waves/level3.txt</file>
+        <file>res/christmas/cannonUpgradeInfoBlockBackground.png</file>
+        <file>res/christmas/sell.png</file>
+        <file>res/christmas/upgrade.png</file>
     </qresource>
 </RCC>
