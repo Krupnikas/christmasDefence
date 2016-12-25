@@ -4,7 +4,7 @@
 #include <Enemy/IEnemy.h>
 
 
-CFastBullet::CFastBullet(CGame *game, QPointF center, double angle, SizeType type)
+CFastBullet::CFastBullet(CGame *game, QPointF center, double angle, eSizeType type)
 {
     //IGameObject fields
     this->label = "Fast Bullet";

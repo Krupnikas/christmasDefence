@@ -88,7 +88,7 @@ void CBurnCannon::upgrade()
 
 int CBurnCannon::getUpgradeCost() const
 {
-    SizeType upSizeType = getUpgradeSizeType();
+    eSizeType upSizeType = getUpgradeSizeType();
     return helper::choose(upSizeType,
                           BurnCannonSmCost,
                           BurnCannonMidCost,

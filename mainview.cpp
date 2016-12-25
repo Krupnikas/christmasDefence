@@ -92,8 +92,8 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
 {
     emit mousePressed(eventPress);
 
-    if (game.oneOfButtonPressed){
-        game.oneOfButtonPressed = false;
+    if (game.pressedButton != eBTnone){
+        game.pressedButton = eBTnone;
         return;
     }
 
@@ -112,7 +112,7 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
             {
                 QPointF cellCenterGlobal(game.scene->toGlobalPoint(game.cellCenter(selectedCell)));
                 qreal angle = helper::calcAngle(cellCenterGlobal, p);
-                game.addCannon(std::make_shared<CSlowCannon>(&game, selectedCell, angle));
+                game.addCannon(std::make_shared<CFastCannon>(&game, selectedCell, angle));
             }
             return;
         }

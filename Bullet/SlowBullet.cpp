@@ -4,19 +4,19 @@
 #include <Enemy/IEnemy.h>
 
 
-CSlowBullet::CSlowBullet(CGame *game, QPointF center, double angle, SizeType type)
+CSlowBullet::CSlowBullet(CGame *game, QPointF center, double angle, eSizeType type)
 {
     //IGameObject fields
-    this->label = "Fast Bullet";
+    this->label = "Slow Bullet";
     this->angle = angle;
     this->game = game;
     this->zOrder = 1;
     
-    this->textureSize = QSize(FastBulletSizeX, FastBulletSizeY);
+    this->textureSize = QSize(SlowBulletSizeX, SlowBulletSizeY);
     this->pixmap = helper::choose(type,
-                                  &game->r->fast_bullet_1,
-                                  &game->r->fast_bullet_2,
-                                  &game->r->fast_bullet_3);
+                                  &game->r->slow_bullet_1,
+                                  &game->r->slow_bullet_2,
+                                  &game->r->slow_bullet_3);
     this->position = game->scene->addPixmap(textureSize, pixmap);
     
     this->center = center;
@@ -24,8 +24,8 @@ CSlowBullet::CSlowBullet(CGame *game, QPointF center, double angle, SizeType typ
     this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
     
     //IBullet fields
-    this->step = FastBulletStep;
-    this->hitPower = helper::choose(type, FastBulletSmHit, FastBulletMidHit, FastBulletBigHit);
+    this->step = SlowBulletStep;
+    this->hitPower = helper::choose(type, SlowBulletSmHit, SlowBulletMidHit, SlowBulletBigHit);
 }
 
 bool CSlowBullet::move()

@@ -6,7 +6,7 @@ class CFastBullet : public IBullet
 {
 public:
     
-    CFastBullet(CGame *game, QPointF center, double angle, SizeType type);
+    CFastBullet(CGame *game, QPointF center, double angle, eSizeType type);
     
     virtual bool move();
     

@@ -2,6 +2,10 @@
 
 #include <InfoBlock/IInfoBlock.h>
 #include <Game/Button.h>
+#include <Cannon/BurnCannon.h>
+#include <Cannon/FastCannon.h>
+#include <Cannon/MonsterCannon.h>
+#include <Cannon/SlowCannon.h>
 
 class CCannonSelection : public IInfoBlock
 {
@@ -23,10 +27,10 @@ public:
 
     QPoint calculateTopLeftForButton(int i);
     
-    void show();
-    void hide();
-    void draw();
+    virtual void show();
+    virtual void hide();
+    virtual void draw();
 
 private slots:
-    void onCloseButtonPressed();
+    void onButtonPressed(eButtonTypes Type);
 };

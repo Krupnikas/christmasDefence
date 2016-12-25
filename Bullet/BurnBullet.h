@@ -6,7 +6,7 @@ class CBurnBullet : public IBullet
 {
 public:
     
-    CBurnBullet(CGame *game, QPointF center, double angle, SizeType type);
+    CBurnBullet(CGame *game, QPointF center, double angle, eSizeType type);
     
     virtual bool move();
     

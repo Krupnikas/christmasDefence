@@ -222,12 +222,12 @@ void ICannon::show()
         radiusItem->show();
 }
 
-SizeType ICannon::getSizeType() const
+eSizeType ICannon::getSizeType() const
 {
     return sizeType;
 }
 
-SizeType ICannon::getUpgradeSizeType() const
+eSizeType ICannon::getUpgradeSizeType() const
 {
     if (sizeType == SMALL)
         return MEDIUM;

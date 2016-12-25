@@ -88,7 +88,7 @@ void CFastCannon::upgrade()
 
 int CFastCannon::getUpgradeCost() const
 {
-    SizeType upSizeType = getUpgradeSizeType();
+    eSizeType upSizeType = getUpgradeSizeType();
     return helper::choose(upSizeType,
                           FastCannonSmCost,
                           FastCannonMidCost,

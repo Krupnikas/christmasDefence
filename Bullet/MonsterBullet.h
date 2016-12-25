@@ -6,7 +6,7 @@ class CMonsterBullet : public IBullet
 {
 public:
     
-    CMonsterBullet(CGame *game, QPointF center, double angle, SizeType type);
+    CMonsterBullet(CGame *game, QPointF center, double angle, eSizeType type);
     
     virtual bool move();
     

@@ -10,18 +10,20 @@ class CButton : public CGameObject
 
 public:
     CButton();
-    CButton(QRect ButtonRect, QPixmap *Pixmap,
+    CButton(eButtonTypes Type, QRect ButtonRect, QPixmap *Pixmap,
             CGame *Game,
             qreal ZOrder = 10, qreal Angle = 0);
     ~CButton();
 
+    eButtonTypes type;
+
     QRect buttonRect;
 
-    void draw();
-    void show();
-    void scaleItem();
+    virtual void draw();
+    virtual void show();
+    virtual void scaleItem();
 
-    void init(QRect ButtonRect, QPixmap *Pixmap,
+    void init(eButtonTypes Type, QRect ButtonRect, QPixmap *Pixmap,
               CGame *Game,
               qreal ZOrder = 10, qreal Angle = 0);
 
@@ -29,6 +31,6 @@ public slots:
     void onMousePressed(QMouseEvent *event);
 
 signals:
-    void pressed();
+    void pressed(eButtonTypes Type);
 
 };

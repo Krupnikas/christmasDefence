@@ -8,13 +8,13 @@
 CSlowCannon::CSlowCannon(CGame *game, QPoint cell, double angle)
 {
     //IGameObject fields
-    label = "Fast Cannon";
+    label = "Slow Cannon";
     this->angle = angle;
     this->game = game;
     zOrder = 2;
 
     textureSize = QSize(CellSize, CellSize);
-    pixmap = &game->r->fast_cannon_1;
+    pixmap = &game->r->slow_cannon_1;
     position = game->scene->addPixmap(textureSize, pixmap);
 
     leftTop = game->cellLeftTop(cell);
@@ -23,12 +23,12 @@ CSlowCannon::CSlowCannon(CGame *game, QPoint cell, double angle)
     //ICannon fields
     sizeType = SMALL;
     gameCell = cell;
-    rotationSpeed = FastCannonSmRotation;
-    fireSpeed = FastCannonSmFireSpeed;
-    fireRadius = FastCannonSmRadius;
+    rotationSpeed = SlowCannonSmRotation;
+    fireSpeed = SlowCannonSmFireSpeed;
+    fireRadius = SlowCannonSmRadius;
     radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
 
-    cost = FastCannonSmCost;
+    cost = SlowCannonSmCost;
 }
 
 CSlowCannon::~CSlowCannon(){}
@@ -57,9 +57,9 @@ void CSlowCannon::upgrade()
     this->pixmap =
             helper::choose(
                             sizeType,
-                            &game->r->fast_cannon_1,
-                            &game->r->fast_cannon_2,
-                            &game->r->fast_cannon_3);
+                            &game->r->slow_cannon_1,
+                            &game->r->slow_cannon_2,
+                            &game->r->slow_cannon_3);
 
     game->scene->removeItem(position);
     position = game->scene->addPixmap(textureSize, pixmap);
@@ -67,19 +67,19 @@ void CSlowCannon::upgrade()
 
     rotationSpeed =
             helper::choose(sizeType,
-                            FastCannonSmRotation,
-                            FastCannonMidRotation,
-                            FastCannonBigRotation);
+                            SlowCannonSmRotation,
+                            SlowCannonMidRotation,
+                            SlowCannonBigRotation);
     fireSpeed =
             helper::choose(sizeType,
-                            FastCannonSmFireSpeed,
-                            FastCannonMidFireSpeed,
-                            FastCannonBigFireSpeed);
+                            SlowCannonSmFireSpeed,
+                            SlowCannonMidFireSpeed,
+                            SlowCannonBigFireSpeed);
     fireRadius =
             helper::choose(sizeType,
-                            FastCannonSmRadius,
-                            FastCannonMidRadius,
-                            FastCannonBigRadius);
+                            SlowCannonSmRadius,
+                            SlowCannonMidRadius,
+                            SlowCannonBigRadius);
 
     radiusItem->upgrade(this);
     draw();
@@ -88,28 +88,28 @@ void CSlowCannon::upgrade()
 
 int CSlowCannon::getUpgradeCost() const
 {
-    SizeType upSizeType = getUpgradeSizeType();
+    eSizeType upSizeType = getUpgradeSizeType();
     return helper::choose(upSizeType,
-                          FastCannonSmCost,
-                          FastCannonMidCost,
-                          FastCannonBigCost);
+                          SlowCannonSmCost,
+                          SlowCannonMidCost,
+                          SlowCannonBigCost);
 }
 
 int CSlowCannon::getCurCost() const
 {
     return helper::choose(sizeType,
-                          FastCannonSmCost,
-                          FastCannonMidCost,
-                          FastCannonBigCost);
+                          SlowCannonSmCost,
+                          SlowCannonMidCost,
+                          SlowCannonBigCost);
 }
 
 qreal CSlowCannon::getBulletSpeed() const
 {
-    return FastBulletStep;
+    return SlowBulletStep;
 }
 
 qreal CSlowCannon::getBulletRadius() const
 {
-    return std::min(FastBulletSizeY / 2, FastBulletSizeX / 2);
+    return std::min(SlowBulletSizeY / 2, SlowBulletSizeX / 2);
 }
 
