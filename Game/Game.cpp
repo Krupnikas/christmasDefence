@@ -44,6 +44,10 @@ CGame::~CGame()
 void CGame::startLevel(int level)
 {
     resize();
+
+    userInformationBlock->draw();
+    userInformationBlock->show();
+
     waveManager.initialize(this, level);
     positionTimer->start(TimerInterval);
     drawTimer->start(TimerInterval);
@@ -347,6 +351,13 @@ void CGame::scaleObjects()
 
         cannonUpgradeInfoBlock->updateButtonsPositions();
         cannonUpgradeInfoBlock->draw();
+    }
+
+    if (userInformationBlock)
+    {
+        userInformationBlock->scaleItem();
+        userInformationBlock->draw();
+        userInformationBlock->show();
     }
 
     if (selectedCellItem)
