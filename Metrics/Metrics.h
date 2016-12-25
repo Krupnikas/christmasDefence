@@ -1,6 +1,9 @@
 #pragma once
 
 #include <QSize>
+#include <Metrics/ZOrderMetrics.h>
+
+const bool CloseButtonInInfoBlocksEnabled = false;
 
 //all sizes are in pixels in local coordinate system 
 
@@ -19,6 +22,8 @@ const int CellNumX = LocalWidth / CellSize - MenuButtonOffset;
 
 const int CannonSelectionButtonSize = round(1.0 * CellSize);
 const int CannonSelectionRadius = 1.1 * CellSize;
+const int CannonUpgradeButtonSize = round(1.0 * CellSize);
+const int CannonUpgradeRadius = 1.1 * CellSize;
 
 const int OffsetX = (LocalWidth - CellNumX * CellSize) / 2;
 

@@ -4,6 +4,7 @@
 #include <Cannon/FastCannon.h>
 #include <Game/Helper.h>
 #include <InfoBlock/CannonSelection.h>
+#include <InfoBlock/CannonUpgrade.h>
 #include <Wave/WaveManager.h>
 
 
@@ -166,9 +167,9 @@ void CGame::selectCell(QPoint pos)
         }
     else
     {
-        block->updatePosition(pos);
-        block->draw();
-        block->show();
+        cannonSelectionInfoBlock->updatePosition(pos);
+        cannonSelectionInfoBlock->draw();
+        cannonSelectionInfoBlock->show();
         int x = OffsetX + selX * CellSize;
         int y = OffsetY + selY * CellSize;
         QSizeF size(CellSize, CellSize);
@@ -188,8 +189,8 @@ void CGame::deselectCell()
     int selY = selectedCell.y();
     if (cannons[selX][selY])
         cannons[selX][selY]->hideRadius();
-    if (block)
-        block->hide();
+    if (cannonSelectionInfoBlock)
+        cannonSelectionInfoBlock->hide();
     if (selectedCellItem)
     {
         selectedCellItem->hide();
