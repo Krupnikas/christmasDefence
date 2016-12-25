@@ -1,9 +1,6 @@
 #pragma once
 
 #include <QSize>
-#include <Metrics/ZOrderMetrics.h>
-
-
 
 //all sizes are in pixels in local coordinate system 
 
@@ -36,6 +33,7 @@ const int TimerInterval = 16;
 const int UserCash = 200;
 const int UserHp = 300;
 
+#include <Metrics/ZOrderMetrics.h>
 #include <Metrics/CannonMetrics.h>
 #include <Metrics/EnemyMetrics.h>
 #include <Metrics/BulletMetrics.h>

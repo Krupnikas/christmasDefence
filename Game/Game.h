@@ -46,6 +46,9 @@ public:
     CGame(R *r, CScene *scene, QWidget *view);
     ~CGame();
     
+    void start(int level);
+    void end();
+
     bool isGameCell(QPoint cell);
     
     bool addCannon(std::shared_ptr<ICannon> cannon);

@@ -15,9 +15,7 @@ public:
     ICannon();
     virtual ~ICannon();
     
-    virtual void fire() = 0;
-    virtual void upgrade();
-    
+    void sell();
     void rotate();
     void count();
     void showRadius();
@@ -41,11 +39,16 @@ public:
     virtual void hide() override;
     virtual void show() override;
     
-    //ICannon own virtual methods    
-    virtual int getUpgradeCost() const;
-    virtual int getCurCost() const;
-    virtual qreal getBulletSpeed() const;
-    virtual qreal getBulletRadius() const;
+    //ICannon own virtual methods
+    //abstract
+    virtual int getUpgradeCost() const = 0;
+    virtual int getCurCost() const = 0;
+    virtual qreal getBulletSpeed() const = 0;
+    virtual qreal getBulletRadius() const = 0;
+    virtual void fire() = 0;
+
+    //non-abstract
+    virtual void upgrade();
     
     eSizeType getSizeType() const;
     eSizeType getUpgradeSizeType() const;

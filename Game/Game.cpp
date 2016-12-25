@@ -25,6 +25,7 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
 
     positionTimer = new QTimer(this);
     drawTimer = new QTimer(this);
+
     positionTimer->start(TimerInterval);
     drawTimer->start(TimerInterval);
 }
@@ -32,6 +33,19 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
 CGame::~CGame()
 {
 
+}
+
+void CGame::start(int level)
+{
+    waveManager.initialize(this, level);
+    positionTimer->start(TimerInterval);
+    drawTimer->start(TimerInterval);
+}
+
+void CGame::end()
+{
+    positionTimer->stop();
+    drawTimer->stop();
 }
 
 bool CGame::isGameCell(QPoint cell)

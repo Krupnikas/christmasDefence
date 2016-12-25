@@ -1,0 +1,33 @@
+20
+1  1.5  10 1 1 1
+10 1.5  15 1 2 2
+10 2    15 1 3 3
+10 1.5  20 1 1 4
+10 1.5  20 1 2 5
+15 2.5  20 1 1 6
+15 2.5  20 1 2 7
+15 2.5  20 1 3 8
+15 2.5  20 1 1 9
+15 2.5  20 1 2 10
+5  1.5  20 1 3 11
+10 1.5  20 1 1 12
+10 2    20 1 2 13 
+10 1.5  20 1 3 14
+10 1.5  20 1 1 15
+5  1.5  20 1 2 16
+10 1.5  20 1 3 17
+10 2    20 1 1 18
+10 1.5  20 1 2 19
+10 1.5  20 1 3 20
+
+
+//
+wave number
+
+for each wave:
+time before this wave (in seconds),
+enemy income interval (in seconds),
+enemies number,
+enemy type (1: FastEnemy, 2: StrongEnemy)
+enemy texture (1 .. number of textures for this type)
+enemy power (from 1 to 10)
