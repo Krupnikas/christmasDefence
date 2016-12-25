@@ -57,9 +57,10 @@ void MainView::resizeEvent(QResizeEvent *event)
     ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
     scene.updateGameRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene.getGraphicsScene());
-    game.scaleObjects();
 
-    QTimer::singleShot(2000, this, SLOT(setEnabled()));
+    game.resize();
+
+    //QTimer::singleShot(2000, this, SLOT(setEnabled()));
 
 }
 
@@ -67,8 +68,7 @@ void MainView::showEvent(QShowEvent*)
 {
     ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
     scene.updateGameRect(ui->gridLayout->geometry());
-    game.waveManager.initialize(&game, 1);
-    scene.updateDistances(game.distances);
+    game.resize();
     
     connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));
     connect(game.drawTimer, SIGNAL(timeout()), &game, SLOT(onDrawTimer()));

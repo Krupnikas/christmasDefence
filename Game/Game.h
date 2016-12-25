@@ -46,8 +46,10 @@ public:
     CGame(R *r, CScene *scene, QWidget *view);
     ~CGame();
     
-    void start(int level);
+    void startLevel(int level);
     void end();
+    void resize();
+
 
     bool isGameCell(QPoint cell);
     
@@ -58,7 +60,6 @@ public:
     QPointF cellCenter(QPoint cell);
     
     void updateDistances();
-    void scaleObjects();
     
     void hideObjects();
     void showObjects();
@@ -79,7 +80,8 @@ public slots:
 
 //private methods
 private:
-    
+    void scaleObjects();
+
 //private attributes
 private:
     qreal fps = 0;

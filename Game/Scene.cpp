@@ -141,10 +141,6 @@ void CScene::updateGameRect(QRect newWindowRect)
         gameRect.setTop(center.y() - newHeight / 2.0);
         gameRect.setHeight(newHeight);
     }
-    
-    
-    updateWindowBackground();
-    updateGameBackground();
 }
 
 void CScene::updateWindowBackground()
