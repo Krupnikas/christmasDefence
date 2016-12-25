@@ -32,6 +32,8 @@ public:
     
     double getFireRadius() const;
     void setFireRadius(double value);
+
+    bool isRadiusVisible();
     
     //IGameObject methods override
     virtual void scaleItem() override;

@@ -197,6 +197,11 @@ void ICannon::setFireRadius(double value)
     fireRadius = value;
 }
 
+bool ICannon::isRadiusVisible()
+{
+    return this->radiusItem->isVisible();
+}
+
 void ICannon::scaleItem()
 {
     CGameObject::scaleItem();

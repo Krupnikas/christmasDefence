@@ -35,7 +35,7 @@ MainView::MainView(QWidget *parent) :
 
     ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
     ui->graphicsView->setOptimizationFlag(QGraphicsView::DontSavePainterState, true);
-    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView->setRenderHint(QPainter::HighQualityAntialiasing);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -101,27 +101,14 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
         return;
     }
 
-
     QPointF p = game.view->mapFromGlobal(QCursor::pos());
     QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
+    
     int selX = selectedCell.x();
     int selY = selectedCell.y();
-    
-    if (eventPress->button() == Qt::LeftButton)
-    {
-        if (selectedCell == game.selectedCell)
-        {
-            game.deselectCell();
-            if (!game.cannons[selX][selY])
-            {
-                QPointF cellCenterGlobal(game.scene->toGlobalPoint(game.cellCenter(selectedCell)));
-                qreal angle = helper::calcAngle(cellCenterGlobal, p);
-                game.addCannon(std::make_shared<CFastCannon>(&game, selectedCell, angle));
-            }
-            return;
-        }
-        game.selectCell(selectedCell);
-    }
+
+    game.selectCell(selectedCell);
+
 }
 
 void MainView::setEnabled()
