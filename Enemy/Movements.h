@@ -17,7 +17,7 @@ const int dN = -1;
 //60 ++ 55 + 55 + 60, 55 - turnArea, 60 - nonturnArea = 230
 //1300*2 + 1275*2 = 5150
 const int LocalSize = 5150;
-const QRect turnArea(1299, 1299, 2550, 2550);
+const QRect turnArea(1299, 1299, 2551, 2551);
 
 const int half = 1299 + 1275;
 const QPoint CellCenter(half, half);
