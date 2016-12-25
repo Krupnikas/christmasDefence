@@ -78,6 +78,5 @@ private:
     std::shared_ptr<QGraphicsTextItem> waveInfoItem;
     std::shared_ptr<QGraphicsTextItem> userCashItem;
     std::shared_ptr<QGraphicsTextItem> userHpItem;
-
     
 };

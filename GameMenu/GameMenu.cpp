@@ -1,6 +1,7 @@
 #include <GameMenu/GameMenu.h>
 
-GameMenu::GameMenu()
+GameMenu::GameMenu(CGame *game):
+    game(game)
 {
 
 }
