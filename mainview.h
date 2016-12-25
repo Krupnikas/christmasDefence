@@ -25,10 +25,8 @@ public:
 
     explicit MainView(QWidget *parent = 0);
     ~MainView();
-    
-    #ifdef TEST
-        void resizeEvent(QResizeEvent *);
-    #endif
+
+    void resizeEvent(QResizeEvent *);
     virtual void showEvent(QShowEvent *event);
     virtual void mouseDoubleClickEvent(QMouseEvent *e);
     virtual void mousePressEvent(QMouseEvent *eventPress);
@@ -36,6 +34,9 @@ public:
 signals:
     void mousePressed(QMouseEvent *eventPress);
     
+public slots:
+    void setEnabled();
+
 private:
 
     Ui::MainView *ui;

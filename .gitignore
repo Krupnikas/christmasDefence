@@ -1,3 +1,14 @@
 christmasDefence.pro.user
 christmasDefence.pro.user*
 *autosave
+.DS_Store
+.qmake.stash
+*.o
+*.so
+moc_*
+christmasDefence.app*
+qrc_qresource.cpp
+android-*
+app_process
+*.app
+Makefile

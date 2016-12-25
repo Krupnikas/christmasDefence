@@ -50,8 +50,6 @@ public:
     
     bool addCannon(std::shared_ptr<ICannon> cannon);
     bool addEnemy(int enemyType, int enemyTexture, int enemyPower);
-
-    bool isEnemieCollision(QPoint Cell);
     
     QPointF cellLeftTop(QPoint cell);
     QPointF cellCenter(QPoint cell);

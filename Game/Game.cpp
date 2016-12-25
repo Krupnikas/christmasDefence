@@ -83,17 +83,6 @@ bool CGame::addEnemy(int enemyType, int enemyTexture, int enemyPower)
     return true;
 }
 
-bool CGame::isEnemieCollision(QPoint Cell)
-{
-    for (size_t i = 0; i < enemies.size(); ++i)
-    {
-        if (enemies[i]->getCurrentGameCell() == Cell ||
-            enemies[i]->getNextGameCell() == Cell)
-                return true;
-    }
-    return false;
-}
-
 QPointF CGame::cellLeftTop(QPoint cell)
 {
     return QPointF(OffsetX + cell.x() * CellSize, OffsetY + cell.y() * CellSize);

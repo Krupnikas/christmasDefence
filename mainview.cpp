@@ -27,7 +27,12 @@ MainView::MainView(QWidget *parent) :
     QSurfaceFormat::setDefaultFormat(fmt);
 
     ui->setupUi(this);
+
     this->setLayout(ui->gridLayout);
+
+    ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
+    //ui->graphicsView->fitInView(ui->gridLayout->geometry());
+
     ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
     ui->graphicsView->setOptimizationFlag(QGraphicsView::DontSavePainterState, true);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -38,10 +43,8 @@ MainView::MainView(QWidget *parent) :
     QGLWidget *glWidget = new QGLWidget(format);
     ui->graphicsView->setViewport(glWidget);
     
-    //setAttribute(Qt::WA_TranslucentBackground, true);
-    setAttribute(Qt::WA_TranslucentBackground);
-   // ui->graphicsView->setViewportUpdateMode(QGraphicsView::);
-   // this->showFullScreen();
+    //setAttribute(Qt::WA_TranslucentBackground);
+   // this->showFullScreen();*/
 }
 
 MainView::~MainView()
@@ -49,22 +52,22 @@ MainView::~MainView()
     delete ui;
 }
 
-#ifdef TEST
-
-void MainView::resizeEvent(QResizeEvent *)
+void MainView::resizeEvent(QResizeEvent *event)
 {
-    ui->graphicsView->setSceneRect(ui->graphicsView->geometry());
+    ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
     scene.updateGameRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene.getGraphicsScene());
     game.scaleObjects();
-}
 
-#endif
+    QTimer::singleShot(2000, this, SLOT(setEnabled()));
+
+}
 
 void MainView::showEvent(QShowEvent*)
 {
-    scene.updateGameRect(ui->graphicsView->geometry());
-    game.waveManager.initialize(&game);    
+    ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
+    scene.updateGameRect(ui->gridLayout->geometry());
+    game.waveManager.initialize(&game);
     scene.updateDistances(game.distances);
     
     connect(game.positionTimer, SIGNAL(timeout()), &game, SLOT(onPositionTimer()));
@@ -73,6 +76,7 @@ void MainView::showEvent(QShowEvent*)
             &game, SLOT(onMousePressed(QMouseEvent*)));
     game.block = std::make_shared<CCannonSelection>(&game, game.selectedCell);
     game.showObjects();
+
 }
 
 void MainView::mouseDoubleClickEvent(QMouseEvent *e)
@@ -85,7 +89,7 @@ void MainView::mouseDoubleClickEvent(QMouseEvent *e)
         int selY = selectedCell.y();
         if (game.cannons[selX][selY])
             game.cannons[selX][selY]->upgrade();
-    }     
+    }
 }
 
 void MainView::mousePressEvent(QMouseEvent *eventPress)
@@ -118,5 +122,9 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
         }
         game.selectCell(selectedCell);
     }
-    
+}
+
+void MainView::setEnabled()
+{
+    //ui->graphicsView->setVisible(true);
 }
