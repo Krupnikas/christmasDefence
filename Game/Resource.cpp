@@ -10,7 +10,12 @@ R::R()
     
     window_background = QPixmap(get("window_background"));
     game_background = QPixmap(get("game_background"));
+
     cannonSelectionBackground = QPixmap(get("cannonSelectingInfoBlockBackground"));
+    cannonUpgradeBackground = QPixmap(get("cannonUpgradeInfoBlockBackground"));
+
+    buttonUpgrade = QPixmap(get("upgrade"));
+    buttonSell = QPixmap(get("sell"));
     
     entireRadius = QPixmap(get("entireRadius.png"));
 
@@ -19,12 +24,15 @@ R::R()
     burn_cannon_1 = QPixmap(get("cannons/burn_cannon_1"));
     burn_cannon_2 = QPixmap(get("cannons/burn_cannon_2"));
     burn_cannon_3 = QPixmap(get("cannons/burn_cannon_3"));
+
     fast_cannon_1 = QPixmap(get("cannons/fast_cannon_1"));
     fast_cannon_2 = QPixmap(get("cannons/fast_cannon_2"));
     fast_cannon_3 = QPixmap(get("cannons/fast_cannon_3"));
+
     monster_cannon_1 = QPixmap(get("cannons/monster_cannon_1"));
     monster_cannon_2 = QPixmap(get("cannons/monster_cannon_2"));
     monster_cannon_3 = QPixmap(get("cannons/monster_cannon_3"));
+
     slow_cannon_1 = QPixmap(get("cannons/slow_cannon_1"));
     slow_cannon_2 = QPixmap(get("cannons/slow_cannon_2"));
     slow_cannon_3 = QPixmap(get("cannons/slow_cannon_3"));
@@ -32,12 +40,15 @@ R::R()
     burn_bullet_1 = QPixmap(get("bullets/burn_bullet_1"));
     burn_bullet_2 = QPixmap(get("bullets/burn_bullet_2"));
     burn_bullet_3 = QPixmap(get("bullets/burn_bullet_3"));
+
     fast_bullet_1 = QPixmap(get("bullets/fast_bullet_1"));
     fast_bullet_2 = QPixmap(get("bullets/fast_bullet_2"));
     fast_bullet_3 = QPixmap(get("bullets/fast_bullet_3"));
+
     monster_bullet_1 = QPixmap(get("bullets/monster_bullet_1"));
     monster_bullet_2 = QPixmap(get("bullets/monster_bullet_2"));
     monster_bullet_3 = QPixmap(get("bullets/monster_bullet_3"));
+
     slow_bullet_1 = QPixmap(get("bullets/slow_bullet_1"));
     slow_bullet_2 = QPixmap(get("bullets/slow_bullet_2"));
     slow_bullet_3 = QPixmap(get("bullets/slow_bullet_3"));

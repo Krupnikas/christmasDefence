@@ -48,11 +48,13 @@ enum eScaleCenter {
 
 enum eButtonTypes{
     eBTnone,
-    eBTcannonSelectionCloseButton,
-    eBTcannonSelectionChooseFast,
-    eBTcannonSelectionChooseMonster,
-    eBTcannonSelectionChooseSlow,
-    eBTcannonSelectionChooseBurn,
+    eBTCloseButton,
+    eBTChooseFast,
+    eBTChooseMonster,
+    eBTChooseSlow,
+    eBTChooseBurn,
+    eBTcannonUpgrade,
+    eBTcannonSell,
     eBTuiPause,
     eBTuiAccelerate
 };
@@ -65,6 +67,7 @@ struct R
     QPixmap window_background;
     QPixmap game_background;
     QPixmap cannonSelectionBackground;
+    QPixmap cannonUpgradeBackground;
 
     QPixmap cannonTypePreview[TypesOfCannon];
 
@@ -75,6 +78,8 @@ struct R
     QPixmap entireRadius;
 
     QPixmap buttonClose;
+    QPixmap buttonUpgrade;
+    QPixmap buttonSell;
     
     QPixmap burn_cannon_1;
     QPixmap burn_cannon_2;

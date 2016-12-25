@@ -12,6 +12,7 @@ class IEnemy;
 class ICannon;
 class MainView;
 class CCannonSelection;
+class CCannonUpgrade;
 
 class CGame : public QObject
 {
@@ -32,7 +33,8 @@ public:
     
     QTimer *positionTimer;
     QTimer *drawTimer;
-    std::shared_ptr<CCannonSelection> block;
+    std::shared_ptr<CCannonSelection> cannonSelectionInfoBlock;
+    std::shared_ptr<CCannonUpgrade> cannonUpgradeInfoBlock;
     std::shared_ptr<QGraphicsItem> selectedCellItem;
     QPoint selectedCell = UnselCell;
 

@@ -35,7 +35,7 @@ void CCannonSelection::updatePosition(QPoint selectedCell)
 
 void CCannonSelection::initButtons()
 {
-    closeButton.init(eBTcannonSelectionCloseButton,
+    closeButton.init(eBTCloseButton,
                      QRect(center.x() - CannonSelectionButtonSize/2,
                            center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2,
                            CannonSelectionButtonSize,
@@ -127,18 +127,18 @@ void CCannonSelection::draw()
 void CCannonSelection::onButtonPressed(eButtonTypes Type)
 {
     switch (Type){
-    case eBTcannonSelectionCloseButton:
+    case eBTCloseButton:
         break;
-    case eBTcannonSelectionChooseFast:
+    case eBTChooseFast:
         game->addCannon(std::make_shared<CFastCannon>(game, game->selectedCell, 0));
         break;
-    case eBTcannonSelectionChooseMonster:
+    case eBTChooseMonster:
         game->addCannon(std::make_shared<CMonsterCannon>(game, game->selectedCell, 0));
         break;
-    case eBTcannonSelectionChooseSlow:
+    case eBTChooseSlow:
         game->addCannon(std::make_shared<CSlowCannon>(game, game->selectedCell, 0));
         break;
-    case eBTcannonSelectionChooseBurn:
+    case eBTChooseBurn:
         game->addCannon(std::make_shared<CBurnCannon>(game, game->selectedCell, 0));
         break;
     default:
