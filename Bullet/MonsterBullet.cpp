@@ -33,11 +33,6 @@ bool CMonsterBullet::move()
     center = helper::addVector(center, game->scene->toGlobalDist(step, angle), angle);
     leftTop = helper::addVector(leftTop, game->scene->toGlobalDist(step, angle), angle);
     return game->scene->insideEnclosingRect(center);
-/*    {
-        game->scene->removeItem(position);
-    }*/
-   /* if (!game->scene->insideGameRect(center))
-        game->bullets.erase(iterator);*/
 }
 
 

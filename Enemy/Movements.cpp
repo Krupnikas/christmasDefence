@@ -82,14 +82,18 @@ QPointF Movements::move()
 {
     bool centerDirected = isCenterDirected();
     bool insideTurnArea = turnArea.contains(curPos);
-    QPoint toCenter = vectorToCenter();
-    QPoint toNext = vectorToNext();
     
     if (!insideTurnArea && centerDirected)
+    {
+        QPoint toCenter = vectorToCenter();
         queue.push(toCenter);
+    }
     else
+    {
+        QPoint toNext = vectorToNext();
         queue.push(toNext);
-    
+    }
+
     curPos += queue.curSum;
     updateCur();
     return curCenter();
@@ -176,9 +180,9 @@ void Movements::updateNext()
 
 bool Movements::isCenterDirected() const
 {
-    //if (curPos.x() != half && curPos.y() != half)
-
-        //qDebug() << "Movements: out of trajectory";
+    bool insideTurnArea = turnArea.contains(curPos);
+    if (!insideTurnArea && curPos.x() != half && curPos.y() != half)
+        qDebug() << "Movements: out of trajectory";
 
     qreal dx = queue.curSum.x();
     qreal dy = queue.curSum.y();

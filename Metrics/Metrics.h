@@ -31,7 +31,7 @@ const int EntranceY = CellNumY / 2;
 
 const int TimerInterval = 16;
 
-const int UserCash = 20;
+const int UserCash = 200;
 const int UserHp = 300;
 
 #include <Metrics/CannonMetrics.h>
