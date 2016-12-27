@@ -34,6 +34,7 @@ INPUT(
 ./release/SlowBullet.o
 ./release/CannonUpgrade.o
 ./release/GameMenu.o
+./release/ImageAndNumber.o
 ./release/qrc_qresource.o
 ./release/moc_mainview.o
 ./release/moc_IBullet.o

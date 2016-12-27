@@ -77,7 +77,8 @@ SOURCES       = main.cpp \
 		Bullet/MonsterBullet.cpp \
 		Bullet/SlowBullet.cpp \
 		InfoBlock/CannonUpgrade.cpp \
-		GameMenu/GameMenu.cpp debug/qrc_qresource.cpp \
+		GameMenu/GameMenu.cpp \
+		InfoBlock/ImageAndNumber.cpp debug/qrc_qresource.cpp \
 		debug/moc_mainview.cpp \
 		debug/moc_IBullet.cpp \
 		debug/moc_ICannon.cpp \
@@ -127,6 +128,7 @@ OBJECTS       = debug/main.o \
 		debug/SlowBullet.o \
 		debug/CannonUpgrade.o \
 		debug/GameMenu.o \
+		debug/ImageAndNumber.o \
 		debug/qrc_qresource.o \
 		debug/moc_mainview.o \
 		debug/moc_IBullet.o \
@@ -181,7 +183,8 @@ DIST          =  mainview.h \
 		Bullet/MonsterBullet.h \
 		Bullet/SlowBullet.h \
 		InfoBlock/CannonUpgrade.h \
-		GameMenu/GameMenu.h main.cpp \
+		GameMenu/GameMenu.h \
+		InfoBlock/ImageAndNumber.h main.cpp \
 		mainview.cpp \
 		Bullet/IBullet.cpp \
 		Cannon/BurnCannon.cpp \
@@ -215,7 +218,8 @@ DIST          =  mainview.h \
 		Bullet/MonsterBullet.cpp \
 		Bullet/SlowBullet.cpp \
 		InfoBlock/CannonUpgrade.cpp \
-		GameMenu/GameMenu.cpp
+		GameMenu/GameMenu.cpp \
+		InfoBlock/ImageAndNumber.cpp
 QMAKE_TARGET  = christmasDefence
 DESTDIR        = debug/ #avoid trailing-slash linebreak
 TARGET         = christmasDefence.exe
@@ -254,7 +258,7 @@ dist:
 	$(ZIP) christmasDefence.zip $(SOURCES) $(DIST) christmasDefence.pro C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/spec_pre.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/qdevice.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/device_config.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/qconfig.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dcollision.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dcollision_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dcore.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dcore_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dinput.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dinput_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dlogic.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dlogic_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dquick.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dquick_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dquickrenderer.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3dquickrenderer_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3drenderer.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_3drenderer_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_axbase.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_axbase_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_axcontainer.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_axcontainer_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_axserver.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_axserver_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_bluetooth.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_bluetooth_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_bootstrap_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_clucene_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_concurrent.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_concurrent_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_core.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_core_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_dbus.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_dbus_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_declarative.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_declarative_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_designer.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_designer_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_designercomponents_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_enginio.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_enginio_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_gui.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_gui_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_help.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_help_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_location.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_location_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_multimedia.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_multimedia_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_multimediawidgets.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_multimediawidgets_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_network.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_network_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_nfc.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_nfc_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_opengl.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_opengl_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_openglextensions.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_openglextensions_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_platformsupport_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_positioning.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_positioning_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_printsupport.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_printsupport_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_qml.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_qml_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_qmldevtools_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_qmltest.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_qmltest_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_quick.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_quick_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_quickparticles_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_quickwidgets.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_quickwidgets_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_script.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_script_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_scripttools.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_scripttools_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_sensors.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_sensors_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_serialport.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_serialport_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_sql.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_sql_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_svg.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_svg_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_testlib.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_testlib_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_uiplugin.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_uitools.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_uitools_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_webchannel.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_webchannel_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_webkit.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_webkit_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_webkitwidgets.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_webkitwidgets_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_websockets.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_websockets_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_widgets.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_widgets_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_winextras.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_winextras_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_xml.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_xml_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_xmlpatterns.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/modules/qt_lib_xmlpatterns_private.pri C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/qt_functions.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/qt_config.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/win32/qt_config.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/win32-g++/qmake.conf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/spec_post.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/exclusive_builds.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/default_pre.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/win32/default_pre.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/resolve_config.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/exclusive_builds_post.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/default_post.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/build_pass.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/c++11.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/win32/rtti.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/precompile_header.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/warn_on.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/qt.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/resources.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/moc.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/win32/opengl.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/uic.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/win32/windows.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/testcase_targets.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/exceptions.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/yacc.prf C:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/lex.prf christmasDefence.pro qresource.qrc C:/Qt/Qt5.5.1/5.5/mingw492_32/lib/qtmaind.prl C:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5OpenGLd.prl C:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5Widgetsd.prl C:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5Guid.prl C:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5Cored.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug/main.o debug/mainview.o debug/IBullet.o debug/BurnCannon.o debug/ICannon.o debug/MonsterCannon.o debug/SlowCannon.o debug/IEnemy.o debug/Game.o debug/FastCannon.o debug/Scene.o debug/Resource.o debug/Helper.o debug/FastBullet.o debug/FastEnemy.o debug/Movements.o debug/IInfoBlock.o debug/UserInfo.o debug/ControlButtons.o debug/PauseWindow.o debug/CannonSelection.o debug/CHpCurrent.o debug/CHpBackground.o debug/GameObject.o debug/Button.o debug/Wave.o debug/WaveManager.o debug/WaveInfo.o debug/CannonRadius.o debug/User.o debug/BurnBullet.o debug/MonsterBullet.o debug/SlowBullet.o debug/CannonUpgrade.o debug/GameMenu.o debug/qrc_qresource.o debug/moc_mainview.o debug/moc_IBullet.o debug/moc_ICannon.o debug/moc_IEnemy.o debug/moc_Game.o debug/moc_FastEnemy.o debug/moc_IInfoBlock.o debug/moc_CannonSelection.o debug/moc_CHpCurrent.o debug/moc_CHpBackground.o debug/moc_GameObject.o debug/moc_Button.o debug/moc_CannonRadius.o debug/moc_CannonUpgrade.o
+	-$(DEL_FILE) debug/main.o debug/mainview.o debug/IBullet.o debug/BurnCannon.o debug/ICannon.o debug/MonsterCannon.o debug/SlowCannon.o debug/IEnemy.o debug/Game.o debug/FastCannon.o debug/Scene.o debug/Resource.o debug/Helper.o debug/FastBullet.o debug/FastEnemy.o debug/Movements.o debug/IInfoBlock.o debug/UserInfo.o debug/ControlButtons.o debug/PauseWindow.o debug/CannonSelection.o debug/CHpCurrent.o debug/CHpBackground.o debug/GameObject.o debug/Button.o debug/Wave.o debug/WaveManager.o debug/WaveInfo.o debug/CannonRadius.o debug/User.o debug/BurnBullet.o debug/MonsterBullet.o debug/SlowBullet.o debug/CannonUpgrade.o debug/GameMenu.o debug/ImageAndNumber.o debug/qrc_qresource.o debug/moc_mainview.o debug/moc_IBullet.o debug/moc_ICannon.o debug/moc_IEnemy.o debug/moc_Game.o debug/moc_FastEnemy.o debug/moc_IInfoBlock.o debug/moc_CannonSelection.o debug/moc_CHpCurrent.o debug/moc_CHpBackground.o debug/moc_GameObject.o debug/moc_Button.o debug/moc_CannonRadius.o debug/moc_CannonUpgrade.o
 
 distclean: clean 
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -272,34 +276,23 @@ compiler_rcc_make_all: debug/qrc_qresource.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) debug/qrc_qresource.cpp
 debug/qrc_qresource.cpp: qresource.qrc \
-		res/christmas/clo.psd \
+		res/christmas/window_background.jpg \
 		res/christmas/hp_cur.png \
 		res/christmas/cellSelected.png \
-		res/christmas/clo.png \
 		res/christmas/mainTheme.mp3 \
-		res/christmas/enemy_comes.png \
-		res/christmas/entireRadius.png \
-		res/christmas/cannonSelectingInfoBlockBackground.png \
-		res/christmas/cell2.png \
-		res/christmas/hp_background.png \
-		res/christmas/game_background.jpg \
+		res/christmas/clo.png \
+		res/christmas/cannonUpgradeInfoBlockBackground.png \
 		res/christmas/cell1.png \
-		res/christmas/window_background.jpg \
-		res/christmas/bullets/slow_bullet_1.png \
-		res/christmas/bullets/burn_bullet_1.png \
-		res/christmas/bullets/monster_bullet_2.png \
-		res/christmas/bullets/fast_bullet_3.png \
-		res/christmas/bullets/monster_bullet_1.png \
-		res/christmas/bullets/fast_bullet_2.png \
-		res/christmas/bullets/slow_bullet_3.png \
-		res/christmas/bullets/burn_bullet_3.png \
-		res/christmas/bullets/fast_bullet_1.png \
-		res/christmas/bullets/slow_bullet_2.png \
-		res/christmas/bullets/burn_bullet_2.png \
-		res/christmas/bullets/monster_bullet_3.png \
-		res/christmas/waves/level3.txt \
-		res/christmas/waves/level2.txt \
-		res/christmas/waves/level1.txt \
+		res/christmas/sell.png \
+		res/christmas/clo.psd \
+		res/christmas/cell2.png \
+		res/christmas/cannonSelectingInfoBlockBackground.png \
+		res/christmas/enemy_comes.png \
+		res/christmas/userInfoBlock.png \
+		res/christmas/entireRadius.png \
+		res/christmas/upgrade.png \
+		res/christmas/game_background.jpg \
+		res/christmas/hp_background.png \
 		res/christmas/enemies/fast_enemy_3.png \
 		res/christmas/enemies/fast_enemy_2.png \
 		res/christmas/enemies/fast_enemy_1.png \
@@ -319,7 +312,22 @@ debug/qrc_qresource.cpp: qresource.qrc \
 		res/christmas/cannons/fast_cannon_1.png \
 		res/christmas/cannons/cannonPreviewType_1.png \
 		res/christmas/cannons/burn_cannon_2.png \
-		res/christmas/cannons/slow_cannon_2.png
+		res/christmas/cannons/slow_cannon_2.png \
+		res/christmas/waves/level3.txt \
+		res/christmas/waves/level2.txt \
+		res/christmas/waves/level1.txt \
+		res/christmas/bullets/slow_bullet_1.png \
+		res/christmas/bullets/burn_bullet_1.png \
+		res/christmas/bullets/monster_bullet_2.png \
+		res/christmas/bullets/fast_bullet_3.png \
+		res/christmas/bullets/monster_bullet_1.png \
+		res/christmas/bullets/fast_bullet_2.png \
+		res/christmas/bullets/slow_bullet_3.png \
+		res/christmas/bullets/burn_bullet_3.png \
+		res/christmas/bullets/fast_bullet_1.png \
+		res/christmas/bullets/slow_bullet_2.png \
+		res/christmas/bullets/burn_bullet_2.png \
+		res/christmas/bullets/monster_bullet_3.png
 	'C:\Qt\Qt5.5.1\5.5\mingw492_32\bin\rcc.exe' -name qresource qresource.qrc -o debug/qrc_qresource.cpp
 
 compiler_moc_header_make_all: debug/moc_mainview.cpp debug/moc_IBullet.cpp debug/moc_ICannon.cpp debug/moc_IEnemy.cpp debug/moc_Game.cpp debug/moc_FastEnemy.cpp debug/moc_IInfoBlock.cpp debug/moc_CannonSelection.cpp debug/moc_CHpCurrent.cpp debug/moc_CHpBackground.cpp debug/moc_GameObject.cpp debug/moc_Button.cpp debug/moc_CannonRadius.cpp debug/moc_CannonUpgrade.cpp
@@ -4345,7 +4353,8 @@ debug/Game.o: Game/Game.cpp Game/Game.h \
 		Cannon/BurnCannon.h \
 		Cannon/MonsterCannon.h \
 		Cannon/SlowCannon.h \
-		InfoBlock/CannonUpgrade.h
+		InfoBlock/CannonUpgrade.h \
+		InfoBlock/UserInfo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/Game.o Game/Game.cpp
 
 debug/FastCannon.o: Cannon/FastCannon.cpp mainview.h \
@@ -8653,8 +8662,178 @@ debug/CannonUpgrade.o: InfoBlock/CannonUpgrade.cpp InfoBlock/CannonUpgrade.h \
 		Cannon/ICannon.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/CannonUpgrade.o InfoBlock/CannonUpgrade.cpp
 
-debug/GameMenu.o: GameMenu/GameMenu.cpp GameMenu/GameMenu.h
+debug/GameMenu.o: GameMenu/GameMenu.cpp GameMenu/GameMenu.h \
+		Game/Game.h \
+		Game/Scene.h \
+		Game/Resource.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/QWidget \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/qwidget.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qwindowdefs.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qglobal.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qconfig.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qfeatures.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qtypetraits.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qsysinfo.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qlogging.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qflags.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_gcc.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_armv7.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_armv6.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_armv5.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_ia64.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_mips.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_x86.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_unix.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qmutex.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qnumeric.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qobjectdefs.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qnamespace.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qobject.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qstring.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qchar.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qbytearray.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qrefcount.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qarraydata.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qlist.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qalgorithms.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qiterator.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qbytearraylist.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qstringlist.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qregexp.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qstringmatcher.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qcoreevent.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qscopedpointer.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qmetatype.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qisenum.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qobject_impl.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qmargins.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qpaintdevice.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qrect.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qsize.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qpoint.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qpalette.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qcolor.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qrgb.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qbrush.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qpair.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qvector.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qmatrix.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qpolygon.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qregion.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qdatastream.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qiodevice.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qline.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qtransform.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qpainterpath.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qimage.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qpixelformat.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qpixmap.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qsharedpointer.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qshareddata.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qhash.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qfont.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qfontmetrics.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qfontinfo.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/qsizepolicy.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qcursor.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qkeysequence.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qevent.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qvariant.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qmap.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qdebug.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qtextstream.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qlocale.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qset.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qurl.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qurlquery.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qfile.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qfiledevice.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qvector2d.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qtouchdevice.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/QMainWindow \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/qmainwindow.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/qtabwidget.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qicon.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QTimer \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qtimer.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qbasictimer.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QTime \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qdatetime.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QRect \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QString \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QFile \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QDataStream \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QIODevice \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/QPixmap \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/QTransform \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/QMatrix \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/QGraphicsScene \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/qgraphicsscene.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qpen.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/QGraphicsItem \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/qgraphicsitem.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/QGraphicsPixmapItem \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/QPainter \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qpainter.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qtextoption.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/QPen \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/QPaintEvent \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QLineF \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qmath.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QDebug \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qopengl.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qt_windows.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtANGLE/GLES3/gl3.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtANGLE/GLES3/gl3platform.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtANGLE/KHR/khrplatform.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtANGLE/GLES2/gl2.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtANGLE/GLES2/gl2platform.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qopengles2ext.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qopenglext.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/QOpenGLContext \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qopenglcontext.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QObject \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QScopedPointer \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/QSurfaceFormat \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qsurfaceformat.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qopenglversionfunctions.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtOpenGL/QGLWidget \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtOpenGL/qgl.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui/qpaintengine.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtOpenGL/qglcolormap.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtOpenGL/qtopenglglobal.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtOpenGL/QGLFormat \
+		Metrics/Metrics.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QSize \
+		Metrics/ZOrderMetrics.h \
+		Metrics/CannonMetrics.h \
+		Metrics/EnemyMetrics.h \
+		Metrics/BulletMetrics.h \
+		Wave/WaveManager.h \
+		Wave/Wave.h \
+		Game/User.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/GameMenu.o GameMenu/GameMenu.cpp
+
+debug/ImageAndNumber.o: InfoBlock/ImageAndNumber.cpp InfoBlock/ImageAndNumber.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/ImageAndNumber.o InfoBlock/ImageAndNumber.cpp
 
 debug/qrc_qresource.o: debug/qrc_qresource.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/qrc_qresource.o debug/qrc_qresource.cpp

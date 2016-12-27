@@ -71,7 +71,11 @@ struct R
     QPixmap game_background;
     QPixmap cannonSelectionBackground;
     QPixmap cannonUpgradeBackground;
+    QPixmap imageAndNumberBackground;
     QPixmap userInfoBackground;
+
+    QPixmap hpIcon;
+    QPixmap coinsIcon;
 
     QPixmap cannonTypePreview[TypesOfCannon];
 

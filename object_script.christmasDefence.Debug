@@ -34,6 +34,7 @@ INPUT(
 ./debug/SlowBullet.o
 ./debug/CannonUpgrade.o
 ./debug/GameMenu.o
+./debug/ImageAndNumber.o
 ./debug/qrc_qresource.o
 ./debug/moc_mainview.o
 ./debug/moc_IBullet.o

@@ -52,5 +52,8 @@
         <file>res/christmas/sell.png</file>
         <file>res/christmas/upgrade.png</file>
         <file>res/christmas/userInfoBlock.png</file>
+        <file>res/christmas/coin.png</file>
+        <file>res/christmas/hp.png</file>
+        <file>res/christmas/SmallBlockBG.png</file>
     </qresource>
 </RCC>
