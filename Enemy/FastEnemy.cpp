@@ -12,14 +12,14 @@ CFastEnemy::CFastEnemy(CGame *game, int enemyTexture, int enemyPower)
     hpCur = hpMax = enemyPower * EnemyHpFactor;
     
     //IGameObject fields
-    label = "Fast Enimie";
+    label = "Fast Enemy";
     angle = movements->curAngle();
     center = movements->curCenter();
     leftTop.setX(center.x() - textureSize.width() / 2);
     leftTop.setY(center.y() - textureSize.height() / 2);
     
     this->game = game;
-    zOrder = 2;
+    zOrder = EnemyZOrder;
     
     textureSize = FastEnemyTextureSize;
     size = FastEnemySize;

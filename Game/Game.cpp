@@ -285,8 +285,8 @@ void CGame::onPositionTimer()
             else
                 lastBulletInd++;
         }
-    for (size_t i = lastBulletInd; i < bullets.size(); ++i)
-        bullets[i]->remove();
+        else
+            bullets[i]->remove();
     if (lastBulletInd < bullets.size())
         bullets.resize(lastBulletInd);
 
@@ -299,8 +299,8 @@ void CGame::onPositionTimer()
             else
                 lastEnemyInd++;
         }
-    for (size_t i = lastEnemyInd; i < enemies.size(); ++i)
-        enemies[i]->remove();
+        else
+            enemies[i]->remove();
     if (lastEnemyInd < enemies.size())
         enemies.resize(lastEnemyInd);
 }

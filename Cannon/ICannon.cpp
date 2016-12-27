@@ -316,12 +316,6 @@ void ICannon::rotate()
                                         game);
     if (std::abs(deltaAngle) <= rotationSpeed)
     {
-        /*if (std::abs(deltaAngle) >= Epsilon)
-        {
-            angle = helper::calcAngle(game->scene->toGlobalPoint(center), 
-                                      game->scene->toGlobalPoint(curEnemy->getCenter()));
-            draw();
-        }*/
         angle += deltaAngle;
         draw();
         if (counter == fireSpeed)
@@ -332,7 +326,6 @@ void ICannon::rotate()
     }
     else
     {
-        //helper::reconcileAngles(angle, deltaAngle, rotationSpeed);
         if (deltaAngle > 0)
             angle += rotationSpeed;
         else

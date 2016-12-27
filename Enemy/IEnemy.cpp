@@ -3,6 +3,7 @@
 #include <Enemy/Movements.h>
 #include <Enemy/CHpBackground.h>
 #include <Enemy/CHpCurrent.h>
+#include <Cannon/FastCannon.h>
 
 IEnemy::IEnemy():
     dead(false),
@@ -83,6 +84,15 @@ void IEnemy::scaleItem()
     CGameObject::scaleItem();
     hpBackgroundItem->scaleItem();
     hpCurItem->scaleItem();
+}
+
+void IEnemy::remove()
+{
+    hpBackgroundItem->remove();
+    hpCurItem->remove();
+    CGameObject::remove();
+//    game->buyCannon(std::make_shared<CFastCannon>(game, QPoint(0, 0), 0));
+//    qDebug() << "removing enemy...";
 }
 
 void IEnemy::draw()
