@@ -5,6 +5,7 @@
 
 class CUserInfo : public IInfoBlock
 {
+    Q_OBJECT
 public:
     CUserInfo(CGame *game);
 
@@ -17,6 +18,10 @@ public:
     virtual void draw();
     virtual void show();
     virtual void scaleItem();
+
+public slots:
+    void onHpChanged(int newHp);
+    void onCashChanged(int newCash);
 };
 
 

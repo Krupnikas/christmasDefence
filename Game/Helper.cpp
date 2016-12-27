@@ -226,4 +226,26 @@ qreal ticksToTime(int ticks)
     return static_cast<qreal>(ticks) * TimerInterval / 1000;
 }
 
+std::shared_ptr<QPixmap> renderPixmapFromText(QString Text)
+{
+    QPainterPath path;
+    QFont myFont("Helvetica [Cronyx]", 94);
+    int i = 0;
+    if (Text.count() == 1)
+        i++;
+    std::shared_ptr<QPixmap> pixmap = std::make_shared<QPixmap>((Text.count() + i) * myFont.pointSize() * 0.9, 100);
+
+    pixmap->fill(Qt::transparent);
+
+    QPainter painter(pixmap.get());
+    painter.setPen(QPen(QBrush(Qt::black), 4));
+    painter.setBrush(Qt::white);
+    painter.setRenderHint(QPainter::HighQualityAntialiasing);
+    path.addText(QPointF(10 + i * myFont.pointSize() * 0.4, 96), myFont, Text);
+
+    painter.drawPath(path);
+
+    return pixmap;
+}
+
 }

@@ -42,6 +42,7 @@ public:
     void setLeftTop(const QPointF &value);
     
     QPixmap *getPixmap() const;
+    void setPixmap(QPixmap *Pixmap);
     
     CGame *getGame() const;
     

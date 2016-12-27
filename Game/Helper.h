@@ -42,6 +42,8 @@ T choose(eSizeType type, T var1, T var2, T var3)
     }
 }
 
+std::shared_ptr<QPixmap> renderPixmapFromText(QString Text);
+
 void readWaves(const QString &filename, std::vector<CWave> &waves);
 
 qreal ticksToTime(int ticks);

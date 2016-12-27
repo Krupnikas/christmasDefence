@@ -14,6 +14,7 @@ int CUser::getCash() const
 void CUser::increaseCash(int value)
 {
     cash += value;
+    emit cashChanged(cash);
 }
 
 void CUser::decreaseCash(int value)
@@ -22,6 +23,7 @@ void CUser::decreaseCash(int value)
     if (cash >= value)
         cash -= value;
     cashMutex.unlock();
+    emit cashChanged(cash);
 }
 
 int CUser::getHp() const
@@ -32,6 +34,7 @@ int CUser::getHp() const
 void CUser::increaseHp(int value)
 {
     hp += value;
+    emit hpChanged(hp);
 }
 
 void CUser::decreaseHp(int value)
@@ -41,4 +44,5 @@ void CUser::decreaseHp(int value)
     if (hp < 0)
         hp = 0;
     hpMutex.unlock();
+    emit hpChanged(hp);
 }

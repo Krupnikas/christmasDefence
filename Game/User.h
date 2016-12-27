@@ -2,13 +2,12 @@
 
 #include <Game/Resource.h>
 
-class CUser
+class CUser : public QObject
 {
+    Q_OBJECT
 public:
     CUser();
-    
-    
-    
+        
     int getCash() const;
     void increaseCash(int value);
     void decreaseCash(int value);
@@ -23,4 +22,8 @@ private:
     
     std::mutex hpMutex;
     int hp;
+
+signals:
+    void hpChanged(int newHp);
+    void cashChanged(int newCash);
 };

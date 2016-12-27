@@ -27,6 +27,17 @@ CUserInfo::CUserInfo(CGame *game)
                                                                   INTERNAL_OFFSET_Y * 2 + (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2),
                                                  QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
                                                        (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2)));
+    connect(&game->user,
+            SIGNAL(hpChanged(int)),
+            this,
+            SLOT(onHpChanged(int)));
+
+    connect(&game->user,
+            SIGNAL(cashChanged(int)),
+            this,
+            SLOT(onCashChanged(int)));
+    hp->changeText(QString::number(game->user.getHp()));
+    coins->changeText(QString::number(game->user.getCash()));
 }
 
 void CUserInfo::draw()
@@ -56,4 +67,18 @@ void CUserInfo::scaleItem()
     CGameObject::scaleItem();
     hp->scaleItem();
     coins->scaleItem();
+}
+
+void CUserInfo::onHpChanged(int newHp)
+{
+    this->hp->changeText(QString::number(newHp));
+    hp->draw();
+    hp->show();
+}
+
+void CUserInfo::onCashChanged(int newCash)
+{
+    this->coins->changeText(QString::number(newCash));
+    coins->draw();
+    coins->show();
 }

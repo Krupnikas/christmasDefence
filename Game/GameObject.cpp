@@ -119,6 +119,12 @@ QPixmap *CGameObject::getPixmap() const
     return pixmap;
 }
 
+void CGameObject::setPixmap(QPixmap* Pixmap)
+{
+    pixmap = Pixmap;
+    scaleItem();
+}
+
 CGame *CGameObject::getGame() const
 {
     return game;
