@@ -208,6 +208,12 @@ void ICannon::scaleItem()
     radiusItem->scaleItem();
 }
 
+void ICannon::remove()
+{
+    CGameObject::remove();
+    radiusItem->remove();
+}
+
 void ICannon::draw()
 {
     CGameObject::draw();
@@ -252,7 +258,7 @@ void ICannon::findEnemy()
     std::shared_ptr<IEnemy> minEnemy = nullptr;
     for (std::shared_ptr<IEnemy> enemy: game->enemies)
     {
-        if (enemy->isDead())
+        if (enemy->isDead() || !game->scene->insideGameRect(enemy->getCenter()))
             continue;
         if (reachingEnemy(enemy)) 
         {
@@ -272,14 +278,6 @@ void ICannon::upgrade()
 {
     sizeType = getUpgradeSizeType();
     counter = 0;
-}
-
-void ICannon::sell()
-{
-    game->user.increaseCash(getCurCost() / 2);
-    remove();
-    radiusItem->remove();
-    game->cannons[gameCell.x()][gameCell.y()] = nullptr;
 }
 
 void ICannon::showRadius()

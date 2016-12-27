@@ -6,6 +6,7 @@
 #include <Game/Scene.h>
 #include <Wave/WaveManager.h>
 #include <Game/User.h>
+#include <Window.h>
 
 class IBullet;
 class IEnemy;
@@ -15,7 +16,7 @@ class CCannonSelection;
 class CCannonUpgrade;
 class CUserInfo;
 
-class CGame : public QObject
+class CGame : public IWindow
 {
     Q_OBJECT
     
@@ -49,15 +50,23 @@ public:
 public:
     CGame(R *r, CScene *scene, QWidget *view);
     ~CGame();
-    
+
+    //IWindow methods
+    virtual void create() override;
+    virtual void show() override;
+    virtual void hide() override;
+    virtual void resize() override;
+    virtual void close() override;
+
     void startLevel(int level);
     void end();
-    void resize();
 
 
     bool isGameCell(QPoint cell);
     
-    bool addCannon(std::shared_ptr<ICannon> cannon);
+    bool buyCannon(std::shared_ptr<ICannon> cannon);
+    void sellCannon(std::shared_ptr<ICannon> cannon);
+    void sellCannon(QPoint cell);
     bool addEnemy(int enemyType, int enemyTexture, int enemyPower);
     
     QPointF cellLeftTop(QPoint cell);
@@ -90,6 +99,5 @@ private:
 private:
     qreal fps = 0;
     
-    std::mutex cannonAddMutex;
-    bool cannonsAdded = false;
+    std::mutex cannonsMutex;
 };

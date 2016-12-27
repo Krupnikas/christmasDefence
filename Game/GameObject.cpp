@@ -1,7 +1,18 @@
 #include <Game/GameObject.h>
 #include <Game/Game.h>
 
-CGameObject::CGameObject(){}
+CGameObject::CGameObject():
+    label(""),
+    angle(0),
+    zOrder(0),
+    center(QPointF(0, 0)),
+    leftTop(QPointF(0, 0)),
+    textureSize(QSizeF(0, 0)),
+    size(QSizeF(0, 0)),
+    pixmap(nullptr),
+    game(nullptr),
+    position(nullptr)
+{}
 
 CGameObject::CGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF size, QPixmap *pixmap, CGame *game):
     angle(angle),

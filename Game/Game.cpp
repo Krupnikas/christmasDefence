@@ -41,6 +41,32 @@ CGame::~CGame()
 
 }
 
+void CGame::create()
+{
+
+}
+
+void CGame::show()
+{
+
+}
+
+void CGame::hide()
+{
+
+}
+
+void CGame::resize()
+{
+    scene->updateGameBackground();
+    scaleObjects();
+}
+
+void CGame::close()
+{
+
+}
+
 void CGame::startLevel(int level)
 {
     resize();
@@ -59,18 +85,12 @@ void CGame::end()
     drawTimer->stop();
 }
 
-void CGame::resize()
-{
-    scene->updateGameBackground();
-    scaleObjects();
-}
-
 bool CGame::isGameCell(QPoint cell)
 {
     return cell.x() >= 0 && cell.x() < CellNumX && cell.y() >= 0 && cell.y() < CellNumY;
 }
 
-bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
+bool CGame::buyCannon(std::shared_ptr<ICannon> cannon)
 {
     QPoint cell = cannon->getGameCell();
     int x = cell.x();
@@ -86,13 +106,37 @@ bool CGame::addCannon(std::shared_ptr<ICannon> cannon)
 
     user.decreaseCash(cost);
 
-    cannonAddMutex.lock();
+    cannonsMutex.lock();
     cannons[x][y] = cannon;
     helper::updateDistances(cannons, distances);
-    cannonAddMutex.unlock();
+    cannonsMutex.unlock();
     cannon->draw();
     cannon->show();
     return true;
+}
+
+void CGame::sellCannon(std::shared_ptr<ICannon> cannon)
+{
+    user.increaseCash(cannon->getCurCost() / 2);
+    cannon->remove();
+
+    QPoint cell(cannon->getGameCell());
+
+    cannonsMutex.lock();
+    cannons[cell.x()][cell.y()] = nullptr;
+    helper::updateDistances(cannons, distances);
+    cannonsMutex.unlock();
+}
+
+void CGame::sellCannon(QPoint cell)
+{
+    if (!isGameCell(cell))
+    {
+        qDebug() << "CGame: sellCannon: cell not in game";
+        return;
+    }
+
+    sellCannon(cannons[cell.x()][cell.y()]);
 }
 
 bool CGame::addEnemy(int enemyType, int enemyTexture, int enemyPower)
@@ -269,7 +313,7 @@ void CGame::onDrawTimer()
     for (auto enemy: enemies)
         enemy->draw();
 
-    cannonAddMutex.lock();
+    cannonsMutex.lock();
 
         for (int i = 0; i < CellNumX; ++i)
             for (int j = 0; j < CellNumY; ++j)
@@ -279,7 +323,7 @@ void CGame::onDrawTimer()
                     cannons[i][j]->rotate();
                 }
 
-    cannonAddMutex.unlock();
+    cannonsMutex.unlock();
 
     static QTime time;
     static int frameCnt=0;

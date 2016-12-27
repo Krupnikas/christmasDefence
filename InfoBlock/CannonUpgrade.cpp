@@ -134,7 +134,7 @@ void CCannonUpgrade::onButtonPressed(eButtonTypes Type)
         game->cannons[game->selectedCell.x()][game->selectedCell.y()]->upgrade();
         break;
     case eBTcannonSell:
-        game->cannons[game->selectedCell.x()][game->selectedCell.y()]->sell();
+        game->sellCannon(game->selectedCell);
         break;
     default:
         qDebug() << "Cannon Selection error! need type number " << Type;

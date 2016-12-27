@@ -130,16 +130,16 @@ void CCannonSelection::onButtonPressed(eButtonTypes Type)
     case eBTCloseButton:
         break;
     case eBTChooseFast:
-        game->addCannon(std::make_shared<CFastCannon>(game, game->selectedCell, 0));
+        game->buyCannon(std::make_shared<CFastCannon>(game, game->selectedCell, 0));
         break;
     case eBTChooseMonster:
-        game->addCannon(std::make_shared<CMonsterCannon>(game, game->selectedCell, 0));
+        game->buyCannon(std::make_shared<CMonsterCannon>(game, game->selectedCell, 0));
         break;
     case eBTChooseSlow:
-        game->addCannon(std::make_shared<CSlowCannon>(game, game->selectedCell, 0));
+        game->buyCannon(std::make_shared<CSlowCannon>(game, game->selectedCell, 0));
         break;
     case eBTChooseBurn:
-        game->addCannon(std::make_shared<CBurnCannon>(game, game->selectedCell, 0));
+        game->buyCannon(std::make_shared<CBurnCannon>(game, game->selectedCell, 0));
         break;
     default:
         qDebug() << "Cannon Selection error! need type number " << Type;

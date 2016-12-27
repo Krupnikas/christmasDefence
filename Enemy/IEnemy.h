@@ -41,6 +41,8 @@ protected:
     int hpCur;
     int hpMax;
     bool dead;
+    bool wasInsideGame;
+    bool wasOutsideGame;
     
     std::shared_ptr<CHpCurrent> hpCurItem;
     std::shared_ptr<CHpBackground> hpBackgroundItem;

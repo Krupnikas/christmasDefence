@@ -13,6 +13,7 @@ public:
     CScene(R* r);
     
     std::shared_ptr<QGraphicsItem> addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap);
+    std::shared_ptr<QGraphicsItem> addBackgroundPixmap(QPixmap *pixmap);
     std::shared_ptr<QGraphicsItem> addEllipse(const QPointF &centerLocal, const QSizeF &sizeLocal);
     
     void positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal, 
@@ -73,7 +74,6 @@ private:
     QPainter painter;
     
     std::vector<std::shared_ptr<QGraphicsItem>> backgroundItems;
-    std::vector<std::shared_ptr<QGraphicsItem>> textItems;
     std::shared_ptr<QGraphicsTextItem> fpsItem;
     std::shared_ptr<QGraphicsTextItem> waveInfoItem;
     std::shared_ptr<QGraphicsTextItem> userCashItem;

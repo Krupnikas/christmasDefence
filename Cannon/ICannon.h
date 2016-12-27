@@ -15,7 +15,6 @@ public:
     ICannon();
     virtual ~ICannon();
     
-    void sell();
     void rotate();
     void count();
     void showRadius();
@@ -35,6 +34,7 @@ public:
     
     //IGameObject methods override
     virtual void scaleItem() override;
+    virtual void remove() override;
     virtual void draw() override;
     virtual void hide() override;
     virtual void show() override;

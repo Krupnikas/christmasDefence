@@ -11,11 +11,6 @@ CButton::CButton(eButtonTypes Type, QRect ButtonRect, QPixmap *Pixmap, CGame *Ga
 
 CButton::~CButton(){}
 
-void CButton::draw()
-{
-    CGameObject::draw();
-}
-
 void CButton::show()
 {
     CGameObject::show();
@@ -25,11 +20,6 @@ void CButton::show()
                        game->scene->toLocalCX(position->boundingRect().height()));
     buttonRect.moveLeft(leftTop.x());
     buttonRect.moveTop(leftTop.y());
-}
-
-void CButton::scaleItem()
-{
-    CGameObject::scaleItem();
 }
 
 void CButton::init(eButtonTypes Type, QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, qreal Angle)

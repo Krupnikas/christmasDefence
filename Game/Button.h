@@ -19,9 +19,7 @@ public:
 
     QRect buttonRect;
 
-    virtual void draw();
-    virtual void show();
-    virtual void scaleItem();
+    virtual void show() override;
 
     void init(eButtonTypes Type, QRect ButtonRect, QPixmap *Pixmap,
               CGame *Game,

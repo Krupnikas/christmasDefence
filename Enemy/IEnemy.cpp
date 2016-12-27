@@ -4,7 +4,11 @@
 #include <Enemy/CHpBackground.h>
 #include <Enemy/CHpCurrent.h>
 
-IEnemy::IEnemy(){}
+IEnemy::IEnemy():
+    dead(false),
+    wasInsideGame(false),
+    wasOutsideGame(false)
+{}
 
 IEnemy::~IEnemy(){}
 
@@ -96,10 +100,16 @@ bool IEnemy::move()
 
     updateHpPos();
 
-    bool inside = game->scene->insideEnclosingRect(center);
-    if (!inside)
-        game->user.decreaseHp(hpCur);
-    return inside;
+    bool insideGame = game->scene->insideGameRect(center);
+    if (wasInsideGame && !wasOutsideGame && !insideGame)
+    {
+        game->user.decreaseHp(1);
+        wasOutsideGame = true;
+    }
+    if (!wasInsideGame && insideGame)
+        wasInsideGame = true;
+
+    return game->scene->insideEnclosingRect(center);
 }
 
 void IEnemy::hide()

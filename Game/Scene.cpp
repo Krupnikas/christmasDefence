@@ -22,6 +22,21 @@ std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixma
     return item;
 }
 
+std::shared_ptr<QGraphicsItem> CScene::addBackgroundPixmap(QPixmap *pixmap)
+{
+    qreal sizeX = windowRect.width();
+    qreal sizeY = windowRect.height();
+
+    QPixmap scaledPixmap = *pixmap;
+    if (pixmap->size() != QSize(sizeX, sizeY))
+        scaledPixmap = pixmap->scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
+    item->hide();
+    item->setFlag(QGraphicsItem::ItemHasNoContents, true);
+    item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+    return item;
+}
+
 std::shared_ptr<QGraphicsItem> CScene::addEllipse(const QPointF &centerLocal, const QSizeF &sizeLocal)
 {
     qreal sizeXGlobal = toGlobalCX(sizeLocal.width());
@@ -66,8 +81,7 @@ void CScene::positionItemByCenter(const QPointF &centerLocal, const QSizeF &size
 
 void CScene::removeItem(std::shared_ptr<QGraphicsItem> item)
 {
-    item->setEnabled(false);
-    //graphicsScene->removeItem(item.get());
+    graphicsScene->removeItem(item.get());
 }
 
 void CScene::scaleItem(QSizeF originSizeLocal, QSizeF resultSizeLocal,
@@ -97,16 +111,6 @@ std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, i
         item->setTransformOriginPoint(sizeX / 2, sizeY / 2);
         item->setRotation(angle);
     }
-    item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
-    item->setZValue(zval);
-    return item;
-}
-
-std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, const QString &text, qreal zval)
-{
-    std::shared_ptr<QGraphicsTextItem> item(graphicsScene->addText(text));
-    textItems.push_back(item);
-    item->setDefaultTextColor(Qt::red);
     item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
     item->setZValue(zval);
     return item;

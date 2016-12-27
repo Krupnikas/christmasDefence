@@ -10,7 +10,6 @@ CFastEnemy::CFastEnemy(CGame *game, int enemyTexture, int enemyPower)
     movements = std::shared_ptr<mov::Movements>(new mov::Movements(game));
     moveIter = movements->iterNum(FastEnemyStep);
     hpCur = hpMax = enemyPower * EnemyHpFactor;
-    dead = false;
     
     //IGameObject fields
     label = "Fast Enimie";

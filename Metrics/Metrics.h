@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QSize>
-#include <Metrics/ZOrderMetrics.h>
 
 const bool CloseButtonInInfoBlocksEnabled = false;
 
@@ -36,7 +35,7 @@ const int EntranceY = CellNumY / 2;
 const int TimerInterval = 16;
 
 const int UserCash = 200;
-const int UserHp = 300;
+const int UserHp = 30;
 
 #include <Metrics/ZOrderMetrics.h>
 #include <Metrics/CannonMetrics.h>
