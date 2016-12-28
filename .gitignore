@@ -4,12 +4,14 @@ christmasDefence.pro.user*
 .DS_Store
 .qmake.stash
 *.o
-*.so
 moc_*
 christmasDefence.app*
 qrc_qresource.cpp
 android-*
 app_process
-*.app
 Makefile
 debug*
+*.so
+*.app
+*.Debug
+*.Release
