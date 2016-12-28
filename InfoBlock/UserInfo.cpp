@@ -42,7 +42,7 @@ CUserInfo::CUserInfo(CGame *game)
 
 void CUserInfo::draw()
 {
-    CGameObject::draw();
+    CSceneObject::draw();
     hp->updatePosition(QRect(leftTop.toPoint() + QPoint(INTERNAL_OFFSET_X,
                                                         INTERNAL_OFFSET_Y),
                                        QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
@@ -57,14 +57,14 @@ void CUserInfo::draw()
 
 void CUserInfo::show()
 {
-    CGameObject::show();
+    CSceneObject::show();
     hp->show();
     coins->show();
 }
 
 void CUserInfo::scaleItem()
 {
-    CGameObject::scaleItem();
+    CSceneObject::scaleItem();
     hp->scaleItem();
     coins->scaleItem();
 }

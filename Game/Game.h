@@ -3,10 +3,11 @@
 //#define SHOW_DISTANCES
 #define SHOW_GRAPHICS_DEBUG
 
-#include <Game/Scene.h>
+#include <Scene.h>
+#include <Window.h>
+#include <SceneObject/SceneBackground.h>
 #include <Wave/WaveManager.h>
 #include <Game/User.h>
-#include <Window.h>
 
 class IBullet;
 class IEnemy;
@@ -39,6 +40,7 @@ public:
     std::shared_ptr<CCannonUpgrade> cannonUpgradeInfoBlock;
     std::shared_ptr<CUserInfo> userInformationBlock;
     std::shared_ptr<QGraphicsItem> selectedCellItem;
+    std::shared_ptr<CSceneBackground> background;
     QPoint selectedCell = UnselCell;
 
     std::vector<std::shared_ptr<IBullet> > bullets;
@@ -57,9 +59,11 @@ public:
     virtual void hide() override;
     virtual void resize() override;
     virtual void close() override;
+    virtual void mousePressEvent(QMouseEvent *event) override;
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
 
-    void startLevel(int level);
-    void end();
+    void startGameLevel(int level);
+    void endGame();
 
 
     bool isGameCell(QPoint cell);
@@ -75,7 +79,6 @@ public:
     void updateDistances();
     
     void hideObjects();
-    void showObjects();
 
     void selectCell(QPoint pos);
     void deselectCell();

@@ -1,24 +1,25 @@
 #pragma once
 
-#include <Game/Resource.h>
+#include <Resource.h>
 
 class CGame;
 
-class CGameObject : public QObject
+class CSceneObject : public QObject
 {
     Q_OBJECT
     
 public:
-    CGameObject();
-    CGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF textureSize, QPixmap *pixmap, CGame *game);
-    virtual ~CGameObject();
+    CSceneObject();
+    CSceneObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF textureSize, QPixmap *pixmap, CGame *game);
+    virtual ~CSceneObject();
     
-    virtual void scaleItem();
-    virtual void scaleItemWithLoss(QSizeF newSize);
+    virtual void scale();
+    virtual void scaleWithLoss(QSizeF newSize);
     virtual void remove();
     virtual void draw();
     virtual void hide();
     virtual void show();
+
     bool isVisible();
     
     QPointF getCenter() const;

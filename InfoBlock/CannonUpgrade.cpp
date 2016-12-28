@@ -94,7 +94,7 @@ void CCannonUpgrade::updateButtonsPositions()
 
 void CCannonUpgrade::show()
 {
-    CGameObject::show();
+    CSceneObject::show();
 
     if (CloseButtonInInfoBlocksEnabled)
         closeButton.show();
@@ -105,7 +105,7 @@ void CCannonUpgrade::show()
 
 void CCannonUpgrade::hide()
 {
-    CGameObject::hide();
+    CSceneObject::hide();
 
     if (CloseButtonInInfoBlocksEnabled)
         closeButton.hide();
@@ -116,7 +116,7 @@ void CCannonUpgrade::hide()
 
 void CCannonUpgrade::draw()
 {
-    CGameObject::draw();
+    CSceneObject::draw();
 
     if (CloseButtonInInfoBlocksEnabled)
         closeButton.draw();

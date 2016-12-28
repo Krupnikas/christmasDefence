@@ -1,4 +1,4 @@
-#include <Game/Resource.h>
+#include <Resource.h>
 
 R::R()
 {
@@ -9,6 +9,7 @@ R::R()
     cellSelected = QPixmap(get("cellSelected"));
     
     window_background = QPixmap(get("window_background"));
+    game_menu_background = QPixmap(get("game_menu_background"));
     game_background = QPixmap(get("game_background"));
 
     cannonSelectionBackground = QPixmap(get("cannonSelectingInfoBlockBackground"));

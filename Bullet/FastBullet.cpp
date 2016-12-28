@@ -1,6 +1,6 @@
 #include <Bullet/FastBullet.h>
 #include <Game/Game.h>
-#include <Game/Helper.h>
+#include <Helper.h>
 #include <Enemy/IEnemy.h>
 
 

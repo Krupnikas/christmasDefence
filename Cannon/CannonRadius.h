@@ -1,10 +1,10 @@
 #pragma once
 
-#include <Game/GameObject.h>
+#include <SceneObject/SceneObject.h>
 
 class ICannon;
 
-class CCannonRadius : public CGameObject
+class CCannonRadius : public CSceneObject
 {
     Q_OBJECT
     

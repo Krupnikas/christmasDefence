@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Game/Game.h>
+#include <GameMenu/GameMenu.h>
 
 #define TEST
 
@@ -23,7 +24,9 @@ public:
     
     R r;
     CScene scene;
+
     CGame game;
+    CGameMenu gameMenu;
 
     explicit MainView(QWidget *parent = 0);
     ~MainView();

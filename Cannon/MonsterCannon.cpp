@@ -3,7 +3,7 @@
 #include <Cannon/MonsterCannon.h>
 #include <Bullet/MonsterBullet.h>
 #include <Game/Game.h>
-#include <Game/Helper.h>
+#include <Helper.h>
 
 CMonsterCannon::CMonsterCannon(CGame *game, QPoint cell, double angle)
 {

@@ -1,4 +1,4 @@
-#include <Game/Scene.h>
+#include <Scene.h>
 
 //public:
 CScene::CScene(R* r) : r(r), fpsItem(nullptr), waveInfoItem(nullptr)

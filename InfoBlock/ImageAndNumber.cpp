@@ -15,7 +15,7 @@ CImageAndNumber::CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRect Boundin
     this->position = game->scene->addPixmap(textureSize, pixmap);
     this->leftTop = BoundingRect.topLeft();
 
-    icon = std::make_shared<CGameObject>(0, 4.6, QPointF(0,0),
+    icon = std::make_shared<CSceneObject>(0, 4.6, QPointF(0,0),
                                          QPointF(leftTop) + QPointF(ICON_X_OFFSET,
                                                                     ICON_Y_OFFSET),
                                          QSizeF(BoundingRect.width() - 2 * ICON_X_OFFSET,
@@ -25,7 +25,7 @@ CImageAndNumber::CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRect Boundin
 
     renderedText = helper::renderPixmapFromText("0");
 
-    text = std::make_shared<CGameObject>(0, 4.6, QPointF(0,0),
+    text = std::make_shared<CSceneObject>(0, 4.6, QPointF(0,0),
                                          QPointF(leftTop) + QPointF(TEXT_X_OFFSET,
                                                                     2 * TEXT_Y_OFFSET + icon->getTextureSize().height()),
                                          QSizeF(BoundingRect.width() - 2 * TEXT_X_OFFSET,
@@ -50,21 +50,21 @@ void CImageAndNumber::changeText(QString newText)
 
 void CImageAndNumber::draw()
 {
-    CGameObject::draw();
+    CSceneObject::draw();
     icon->draw();
     text->draw();
 }
 
 void CImageAndNumber::show()
 {
-    CGameObject::show();
+    CSceneObject::show();
     icon->show();
     text->show();
 }
 
 void CImageAndNumber::scaleItem()
 {
-    CGameObject::scaleItem();
+    CSceneObject::scaleItem();
     icon->scaleItem();
     text->scaleItem();
 }

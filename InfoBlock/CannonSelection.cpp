@@ -93,7 +93,7 @@ QPoint CCannonSelection::calculateTopLeftForButton(int i)
 
 void CCannonSelection::show()
 {
-    CGameObject::show();
+    CSceneObject::show();
     closeButton.show();
 
     for (int i = 0; i < TypesOfCannon; i++)
@@ -104,7 +104,7 @@ void CCannonSelection::show()
 
 void CCannonSelection::hide()
 {
-    CGameObject::hide();
+    CSceneObject::hide();
     closeButton.hide();
 
     for (int i = 0; i < TypesOfCannon; i++)
@@ -115,7 +115,7 @@ void CCannonSelection::hide()
 
 void CCannonSelection::draw()
 {
-    CGameObject::draw();
+    CSceneObject::draw();
     closeButton.draw();
 
     for (int i = 0; i < TypesOfCannon; i++)

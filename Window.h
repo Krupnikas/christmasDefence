@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QObject>
+#include <QMouseEvent>
+#include <QEvent>
 
 class IWindow : public QObject
 {
@@ -13,4 +15,7 @@ public:
     virtual void hide() = 0;
     virtual void resize() = 0;
     virtual void close() = 0;
+
+    virtual void mousePressEvent(QMouseEvent *event) = 0;
+    virtual void mouseMoveEvent(QMouseEvent *event) = 0;
 };

@@ -1,7 +1,7 @@
-#include <Game/GameObject.h>
+#include <SceneObject/SceneObject.h>
 #include <Game/Game.h>
 
-CGameObject::CGameObject():
+CSceneObject::CSceneObject():
     label(""),
     angle(0),
     zOrder(0),
@@ -14,7 +14,7 @@ CGameObject::CGameObject():
     position(nullptr)
 {}
 
-CGameObject::CGameObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF size, QPixmap *pixmap, CGame *game):
+CSceneObject::CSceneObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF size, QPixmap *pixmap, CGame *game):
     angle(angle),
     zOrder(zOrder),
     center(center),
@@ -22,131 +22,133 @@ CGameObject::CGameObject(qreal angle, qreal zOrder, QPointF center, QPointF left
     textureSize(size),
     pixmap(pixmap),
     game(game)
-{}
+{
+    position = game->scene->addPixmap(textureSize, pixmap);
+}
 
-CGameObject::~CGameObject(){
+CSceneObject::~CSceneObject(){
     //qDebug() <<  label << " deleted";
 }
 
-void CGameObject::scaleItem()
+void CSceneObject::scale()
 {
     if (position)
         game->scene->removeItem(position);
     position = game->scene->addPixmap(textureSize, pixmap);
 }
 
-void CGameObject::scaleItemWithLoss(QSizeF newSize)
+void CSceneObject::scaleWithLoss(QSizeF newSize)
 {
     game->scene->scaleItem(textureSize, newSize, position);
 }
 
-void CGameObject::draw()
+void CSceneObject::draw()
 {
     game->scene->positionItem(leftTop, textureSize, angle, zOrder, position);
     //show();
 }
 
-void CGameObject::remove()
+void CSceneObject::remove()
 {
     if (position)
         game->scene->removeItem(position);
 }
 
-void CGameObject::hide()
+void CSceneObject::hide()
 {
     position->hide();
     position->setFlag(QGraphicsItem::ItemHasNoContents, true);
 }
 
-void CGameObject::show()
+void CSceneObject::show()
 {
     position->setFlag(QGraphicsItem::ItemHasNoContents, false);
     position->show();
 }
 
-bool CGameObject::isVisible()
+bool CSceneObject::isVisible()
 {
     return position->isVisible();
 }
 
-QPointF CGameObject::getCenter() const
+QPointF CSceneObject::getCenter() const
 {
     return center;
 }
 
-void CGameObject::setCenter(const QPointF &value)
+void CSceneObject::setCenter(const QPointF &value)
 {
     center = value;
 }
 
-qreal CGameObject::getAngle() const
+qreal CSceneObject::getAngle() const
 {
     return angle;
 }
 
-void CGameObject::setAngle(const qreal &value)
+void CSceneObject::setAngle(const qreal &value)
 {
     angle = value;
 }
 
-std::shared_ptr<QGraphicsItem> CGameObject::getPosition() const
+std::shared_ptr<QGraphicsItem> CSceneObject::getPosition() const
 {
     return position;
 }
 
-qreal CGameObject::getZOrder() const
+qreal CSceneObject::getZOrder() const
 {
     return zOrder;
 }
 
-void CGameObject::setZOrder(const qreal &value)
+void CSceneObject::setZOrder(const qreal &value)
 {
     zOrder = value;
     position->setZValue(value);
 }
 
-QSizeF CGameObject::getTextureSize() const
+QSizeF CSceneObject::getTextureSize() const
 {
     return textureSize;
 }
 
-QSizeF CGameObject::getSize() const
+QSizeF CSceneObject::getSize() const
 {
     return size;
 }
 
-QPointF CGameObject::getLeftTop() const
+QPointF CSceneObject::getLeftTop() const
 {
     return leftTop;
 }
 
-void CGameObject::setLeftTop(const QPointF &value)
+void CSceneObject::setLeftTop(const QPointF &value)
 {
     leftTop = value;
 }
 
-QPixmap *CGameObject::getPixmap() const
+QPixmap *CSceneObject::getPixmap() const
 {
     return pixmap;
 }
 
-void CGameObject::setPixmap(QPixmap* Pixmap)
+void CSceneObject::setPixmap(QPixmap* Pixmap)
 {
     pixmap = Pixmap;
-    scaleItem();
+    scale();
 }
 
-CGame *CGameObject::getGame() const
+CGame *CSceneObject::getGame() const
 {
     return game;
 }
 
-void CGameObject::setTextureSize(const QSizeF &value)
+void CSceneObject::setTextureSize(const QSizeF &value)
 {
     textureSize = value;
 }
 
-void CGameObject::setSize(const QSizeF &value)
+void CSceneObject::setSize(const QSizeF &value)
 {
     size = value;
 }

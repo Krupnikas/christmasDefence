@@ -1,7 +1,7 @@
 #include <Cannon/ICannon.h>
 #include <Cannon/CannonRadius.h>
 #include <Enemy/FastEnemy.h>
-#include <Game/Helper.h>
+#include <Helper.h>
 #include <Game/Game.h>
 
 namespace
@@ -204,31 +204,31 @@ bool ICannon::isRadiusVisible()
 
 void ICannon::scaleItem()
 {
-    CGameObject::scaleItem();
+    CSceneObject::scaleItem();
     radiusItem->scaleItem();
 }
 
 void ICannon::remove()
 {
-    CGameObject::remove();
+    CSceneObject::remove();
     radiusItem->remove();
 }
 
 void ICannon::draw()
 {
-    CGameObject::draw();
+    CSceneObject::draw();
     radiusItem->draw();
 }
 
 void ICannon::hide()
 {
-    CGameObject::hide();
+    CSceneObject::hide();
     radiusItem->hide();
 }
 
 void ICannon::show()
 {
-    CGameObject::show();
+    CSceneObject::show();
     if (toShowRadius)
         radiusItem->show();
 }

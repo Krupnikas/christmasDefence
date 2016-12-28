@@ -1,7 +1,7 @@
 #include <queue>
 #include <utility>
 #include <limits>
-#include <Game/Helper.h>
+#include <Helper.h>
 #include <Game/Game.h>
 #include <Wave/Wave.h>
 #include <Enemy/FastEnemy.h>

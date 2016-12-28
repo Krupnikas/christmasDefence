@@ -1,13 +1,15 @@
 #pragma once
 
 #include <Window.h>
+#include <SceneObject/SceneBackground.h>
+
 class CGame;
 class CScene;
 
-class GameMenu: public IWindow
+class CGameMenu: public IWindow
 {
 public:
-    GameMenu(CGame *game);
+    CGameMenu(CGame *game);
 
     //IWindow methods
     virtual void create() override;
@@ -15,8 +17,11 @@ public:
     virtual void hide() override;
     virtual void resize() override;
     virtual void close() override;
+    virtual void mousePressEvent(QMouseEvent *event) override;
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
-    CScene *scene;
     CGame *game;
+
+    std::shared_ptr<CSceneBackground> background;
 };

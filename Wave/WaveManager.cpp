@@ -1,7 +1,7 @@
 #include <Wave/WaveManager.h>
 #include <Wave/Wave.h>
 #include <Game/Game.h>
-#include <Game/Helper.h>
+#include <Helper.h>
 #include <Enemy/IEnemy.h>
 
 CWaveManager::CWaveManager():

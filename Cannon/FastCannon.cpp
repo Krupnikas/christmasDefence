@@ -3,7 +3,7 @@
 #include <Cannon/FastCannon.h>
 #include <Bullet/FastBullet.h>
 #include <Game/Game.h>
-#include <Game/Helper.h>
+#include <Helper.h>
 
 CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
 {

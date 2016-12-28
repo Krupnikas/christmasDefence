@@ -1,7 +1,7 @@
 #pragma once
 
 #include <InfoBlock/IInfoBlock.h>
-#include <Game/Button.h>
+#include <SceneObject/Button.h>
 #include <Cannon/BurnCannon.h>
 #include <Cannon/FastCannon.h>
 #include <Cannon/MonsterCannon.h>

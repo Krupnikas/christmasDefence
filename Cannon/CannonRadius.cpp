@@ -23,5 +23,5 @@ void CCannonRadius::upgrade(ICannon *cannon)
     remove();
     this->textureSize = QSizeF(cannon->getFireRadius() * 2, cannon->getFireRadius() * 2);
     leftTop = QPointF(center.x() - textureSize.width() / 2, center.y() - textureSize.height() / 2);
-    scaleItem();
+    scale();
 }

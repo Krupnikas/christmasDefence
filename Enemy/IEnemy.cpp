@@ -50,7 +50,7 @@ void IEnemy::updateHpSize()
 {
     QSizeF hpCurSize(HpSize);
     hpCurSize.setWidth(HpSize.width() * hpCur / hpMax);
-    hpCurItem->scaleItemWithLoss(hpCurSize);
+    hpCurItem->scaleWithLoss(hpCurSize);
 }
 
 qreal IEnemy::getDistanceToFinish() const
@@ -79,18 +79,18 @@ QPointF IEnemy::getSpeed() const
 }
 
 
-void IEnemy::scaleItem()
+void IEnemy::scale()
 {
-    CGameObject::scaleItem();
-    hpBackgroundItem->scaleItem();
-    hpCurItem->scaleItem();
+    CSceneObject::scale();
+    hpBackgroundItem->scale();
+    hpCurItem->scale();
 }
 
 void IEnemy::remove()
 {
     hpBackgroundItem->remove();
     hpCurItem->remove();
-    CGameObject::remove();
+    CSceneObject::remove();
 //    game->buyCannon(std::make_shared<CFastCannon>(game, QPoint(0, 0), 0));
 //    qDebug() << "removing enemy...";
 }
@@ -124,7 +124,7 @@ bool IEnemy::move()
 
 void IEnemy::hide()
 {
-    CGameObject::hide();
+    CSceneObject::hide();
     hpBackgroundItem->hide();
     hpCurItem->hide();
 }

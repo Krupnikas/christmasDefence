@@ -1,4 +1,4 @@
-#include <Game/Button.h>
+#include <SceneObject/Button.h>
 #include <Game/Game.h>
 
 CButton::CButton(){}
@@ -13,7 +13,7 @@ CButton::~CButton(){}
 
 void CButton::show()
 {
-    CGameObject::show();
+    CSceneObject::show();
     buttonRect = QRect(0,
                        0,
                        game->scene->toLocalCX(position->boundingRect().width()),

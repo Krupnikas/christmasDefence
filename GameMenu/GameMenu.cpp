@@ -1,32 +1,44 @@
 #include <GameMenu/GameMenu.h>
 #include <Game/Game.h>
 
-GameMenu::GameMenu(CGame *game)
+CGameMenu::CGameMenu(CGame *game)
 {
     this->game = game;
 }
 
-void GameMenu::create()
+void CGameMenu::create()
+{
+    background = std::make_shared<CSceneBackground>(game, &game->r->game_menu_background);
+}
+
+void CGameMenu::show()
+{
+    background->show();
+}
+
+void CGameMenu::hide()
+{
+    background->hide();
+}
+
+void CGameMenu::resize()
+{
+    background->scaleItem();
+    background->draw();
+    background->show();
+}
+
+void CGameMenu::close()
 {
 
 }
 
-void GameMenu::show()
+void CGameMenu::mousePressEvent(QMouseEvent *event)
 {
 
 }
 
-void GameMenu::hide()
-{
-
-}
-
-void GameMenu::resize()
-{
-
-}
-
-void GameMenu::close()
+void CGameMenu::mouseMoveEvent(QMouseEvent *event)
 {
 
 }

@@ -2,7 +2,7 @@
 #include <Enemy/CHpBackground.h>
 #include <Enemy/CHpCurrent.h>
 #include <Game/Game.h>
-#include <Game/Helper.h>
+#include <Helper.h>
 
 CFastEnemy::CFastEnemy(CGame *game, int enemyTexture, int enemyPower)
 {

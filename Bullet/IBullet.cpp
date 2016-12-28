@@ -1,5 +1,5 @@
 #include "IBullet.h"
-#include <Game/Helper.h>
+#include <Helper.h>
 #include <Game/Game.h>
 #include <Enemy/IEnemy.h>
 

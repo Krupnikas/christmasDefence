@@ -1,6 +1,6 @@
 #include <Enemy/Movements.h>
 #include <Game/Game.h>
-#include <Game/Helper.h>
+#include <Helper.h>
 
 namespace mov
 {

@@ -1,6 +1,7 @@
 #include "mainview.h"
 #include "ui_mainview.h"
-#include <Game/Helper.h>
+
+#include <Helper.h>
 #include <Enemy/FastEnemy.h>
 #include <Cannon/BurnCannon.h>
 #include <Cannon/FastCannon.h>
@@ -11,7 +12,10 @@
 MainView::MainView(QWidget *parent) :
     QWidget(parent),
     gameStatus(eGameStatus::eGameMenu),
-    r(), scene(&r), game(&r, &scene, this), ui(new Ui::MainView)
+    r(), scene(&r),
+    game(&r, &scene, this),
+    gameMenu(&game),
+    ui(new Ui::MainView)
 {
     //layout setting
     ui->setupUi(this);
@@ -45,8 +49,12 @@ MainView::MainView(QWidget *parent) :
     QSurfaceFormat::setDefaultFormat(fmt);
     
     //interface connection setting
-    connect(this, SIGNAL(mousePressed(QMouseEvent*)),
+    connect(this, SIGNAL(mousePressEvent(QMouseEvent*)),
             &game, SLOT(onMousePressed(QMouseEvent*)));
+
+    //windows creating
+    game.create();
+    gameMenu.create();
 
    // this->showFullScreen();*/
 }
@@ -66,6 +74,7 @@ void MainView::resizeEvent(QResizeEvent *event)
     switch (gameStatus)
     {
     case eGameStatus::eGameMenu:
+        gameMenu.resize();
         break;
     case eGameStatus::eLevelMenu:
         break;
@@ -85,10 +94,10 @@ void MainView::showEvent(QShowEvent*)
     ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
     scene.updateGameRect(ui->gridLayout->geometry());
 
+    gameMenu.create();
+    game.create();
 
-//    game.resize();
-//    game.showObjects();
-
+    gameMenu.show();
 }
 
 void MainView::mouseDoubleClickEvent(QMouseEvent *)
@@ -110,24 +119,17 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
     switch (gameStatus)
     {
     case eGameStatus::eGameMenu:
-        game.startLevel(1);
+        game.show();
+        game.startGameLevel(1);
         gameStatus = eGameStatus::eGame;
         break;
     case eGameStatus::eLevelMenu:
         break;
     case eGameStatus::eGame:
     {
-        emit mousePressed(eventPress);
+        game.mousePressEvent(eventPress);
 
-        if (game.pressedButton != eBTnone){
-            game.pressedButton = eBTnone;
-            return;
-        }
 
-        QPointF p = game.view->mapFromGlobal(QCursor::pos());
-        QPoint selectedCell = game.findNearestCell(scene.toLocalPoint(p));
-
-        game.selectCell(selectedCell);
         break;
     }
     default:

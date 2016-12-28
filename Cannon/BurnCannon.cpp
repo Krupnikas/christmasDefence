@@ -3,7 +3,7 @@
 #include <Cannon/BurnCannon.h>
 #include <Bullet/BurnBullet.h>
 #include <Game/Game.h>
-#include <Game/Helper.h>
+#include <Helper.h>
 
 CBurnCannon::CBurnCannon(CGame *game, QPoint cell, double angle)
 {

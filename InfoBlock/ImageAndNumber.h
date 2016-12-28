@@ -1,7 +1,7 @@
 #pragma once
 
 #include <InfoBlock/IInfoBlock.h>
-#include <Game/Helper.h>
+#include <Helper.h>
 
 class CImageAndNumber : public IInfoBlock
 {
@@ -16,8 +16,8 @@ public:
     void updatePosition(QRect BoundingRect);
 
     std::shared_ptr<QPixmap> renderedText;
-    std::shared_ptr<CGameObject> icon;
-    std::shared_ptr<CGameObject> text;
+    std::shared_ptr<CSceneObject> icon;
+    std::shared_ptr<CSceneObject> text;
 
     void changeText(QString newText);
 

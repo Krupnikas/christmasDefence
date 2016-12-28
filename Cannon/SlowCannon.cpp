@@ -3,7 +3,7 @@
 #include <Cannon/SlowCannon.h>
 #include <Bullet/SlowBullet.h>
 #include <Game/Game.h>
-#include <Game/Helper.h>
+#include <Helper.h>
 
 CSlowCannon::CSlowCannon(CGame *game, QPoint cell, double angle)
 {

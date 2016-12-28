@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Game/Resource.h>
+#include <Resource.h>
 
 class CScene
 {

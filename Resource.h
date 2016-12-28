@@ -68,6 +68,7 @@ struct R
     QString res_dir;
     
     QPixmap window_background;
+    QPixmap game_menu_background;
     QPixmap game_background;
     QPixmap cannonSelectionBackground;
     QPixmap cannonUpgradeBackground;

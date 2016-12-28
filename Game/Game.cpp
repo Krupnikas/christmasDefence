@@ -1,8 +1,8 @@
+#include <Helper.h>
 #include <Game/Game.h>
 #include <Bullet/FastBullet.h>
 #include <Enemy/FastEnemy.h>
 #include <Cannon/FastCannon.h>
-#include <Game/Helper.h>
 #include <InfoBlock/CannonSelection.h>
 #include <InfoBlock/CannonUpgrade.h>
 #include <InfoBlock/UserInfo.h>
@@ -21,16 +21,11 @@ CGame::CGame(R *r, CScene *scene, QWidget *view):
         cannons[i].resize(CellNumY);
         distances[i].resize(CellNumY);
     }
-    helper::updateDistances(cannons, distances);
 
     pressedButton = eBTnone;
 
-
     positionTimer = new QTimer(this);
     drawTimer = new QTimer(this);
-
-    cannonSelectionInfoBlock = std::make_shared<CCannonSelection>(this, UnselCell);
-    userInformationBlock = std::make_shared<CUserInfo>(this);
 
     connect(positionTimer, SIGNAL(timeout()), this, SLOT(onPositionTimer()));
     connect(drawTimer, SIGNAL(timeout()), this, SLOT(onDrawTimer()));
@@ -43,17 +38,44 @@ CGame::~CGame()
 
 void CGame::create()
 {
-
+    //TODO load background
+    background = std::make_shared<CSceneBackground>(this, &r->game_background);
+    cannonSelectionInfoBlock = std::make_shared<CCannonSelection>(this, UnselCell);
+    userInformationBlock = std::make_shared<CUserInfo>(this);
 }
 
 void CGame::show()
 {
+    //TODO show background
+    background->show();
 
+    userInformationBlock->draw();
+    userInformationBlock->show();
+
+    for (size_t i = 0; i < bullets.size(); ++i)
+        bullets[i]->show();
+    for (size_t i = 0; i < enemies.size(); ++i)
+        enemies[i]->show();
+    for (int i = 0; i < CellNumX; ++i)
+        for (int j = 0; j < CellNumY; ++j)
+            if (cannons[i][j])
+                cannons[i][j]->show();
 }
 
 void CGame::hide()
 {
+    //TODO hide background
+    background->hide();
+    userInformationBlock->hide();
 
+    for (size_t i = 0; i < bullets.size(); ++i)
+        bullets[i]->hide();
+    for (size_t i = 0; i < enemies.size(); ++i)
+        enemies[i]->hide();
+    for (int i = 0; i < CellNumX; ++i)
+        for (int j = 0; j < CellNumY; ++j)
+            if (cannons[i][j])
+                cannons[i][j]->hide();
 }
 
 void CGame::resize()
@@ -64,22 +86,57 @@ void CGame::resize()
 
 void CGame::close()
 {
+    //TODO remove background
+    userInformationBlock->remove();
+
+    for (size_t i = 0; i < bullets.size(); ++i)
+        bullets[i]->remove();
+    bullets.clear();
+
+    for (size_t i = 0; i < enemies.size(); ++i)
+        enemies[i]->remove();
+    enemies.clear();
+
+    for (int i = 0; i < CellNumX; ++i)
+        for (int j = 0; j < CellNumY; ++j)
+            if (cannons[i][j])
+            {
+                cannons[i][j]->remove();
+                cannons[i][j] = nullptr;
+            }
 
 }
 
-void CGame::startLevel(int level)
+void CGame::mousePressEvent(QMouseEvent *event)
 {
-    resize();
+    if (pressedButton != eBTnone){
+        pressedButton = eBTnone;
+        return;
+    }
 
-    userInformationBlock->draw();
-    userInformationBlock->show();
+    QPointF p = view->mapFromGlobal(QCursor::pos());
+    QPoint selectedCell = findNearestCell(scene->toLocalPoint(p));
 
+    selectCell(selectedCell);
+
+    emit mousePressed(event);
+}
+
+void CGame::mouseMoveEvent(QMouseEvent *event)
+{
+
+}
+
+void CGame::startGameLevel(int level)
+{
     waveManager.initialize(this, level);
+    helper::updateDistances(cannons, distances);
+
     positionTimer->start(TimerInterval);
     drawTimer->start(TimerInterval);
 }
 
-void CGame::end()
+void CGame::endGame()
 {
     positionTimer->stop();
     drawTimer->stop();
@@ -171,26 +228,7 @@ QPointF CGame::cellCenter(QPoint cell)
 
 void CGame::hideObjects()
 {
-    for (size_t i = 0; i < bullets.size(); ++i)
-        bullets[i]->hide();
-    for (size_t i = 0; i < enemies.size(); ++i)
-        enemies[i]->hide();
-    for (int i = 0; i < CellNumX; ++i)
-        for (int j = 0; j < CellNumY; ++j)
-            if (cannons[i][j])
-                cannons[i][j]->hide();
-}
 
-void CGame::showObjects()
-{
-    for (size_t i = 0; i < bullets.size(); ++i)
-        bullets[i]->show();
-    for (size_t i = 0; i < enemies.size(); ++i)
-        enemies[i]->show();
-    for (int i = 0; i < CellNumX; ++i)
-        for (int j = 0; j < CellNumY; ++j)
-            if (cannons[i][j])
-                cannons[i][j]->show();
 }
 
 void CGame::selectCell(QPoint pos)
@@ -349,6 +387,10 @@ void CGame::onMousePressed(QMouseEvent *pressEvent)
 
 void CGame::scaleObjects()
 {
+    background->scaleItem();
+    background->draw();
+    background->show();
+
     for (size_t i = 0; i < bullets.size(); ++i)
     {
         bullets[i]->scaleItem();
