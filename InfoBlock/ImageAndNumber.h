@@ -23,6 +23,6 @@ public:
 
     virtual void draw();
     virtual void show();
-    virtual void scaleItem();
+    virtual void scale();
 };
 

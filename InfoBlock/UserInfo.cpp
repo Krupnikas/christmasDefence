@@ -62,11 +62,11 @@ void CUserInfo::show()
     coins->show();
 }
 
-void CUserInfo::scaleItem()
+void CUserInfo::scale()
 {
-    CSceneObject::scaleItem();
-    hp->scaleItem();
-    coins->scaleItem();
+    CSceneObject::scale();
+    hp->scale();
+    coins->scale();
 }
 
 void CUserInfo::onHpChanged(int newHp)

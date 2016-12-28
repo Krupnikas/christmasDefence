@@ -10,7 +10,7 @@ class CSceneObject : public QObject
     
 public:
     CSceneObject();
-    CSceneObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF textureSize, QPixmap *pixmap, CGame *game);
+    CSceneObject(qreal angle, qreal zOrder, QPointF leftTop, QSizeF textureSize, QPixmap *pixmap, CGame *game);
     virtual ~CSceneObject();
     
     virtual void scale();

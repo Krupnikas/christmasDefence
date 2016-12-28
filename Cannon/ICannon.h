@@ -33,7 +33,7 @@ public:
     bool isRadiusVisible();
     
     //IGameObject methods override
-    virtual void scaleItem() override;
+    virtual void scale() override;
     virtual void remove() override;
     virtual void draw() override;
     virtual void hide() override;

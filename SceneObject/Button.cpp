@@ -48,8 +48,9 @@ void CButton::onMousePressed(QMouseEvent *event)
     QPoint click = game->scene->toLocalPoint(event->localPos()).toPoint();
     qDebug() << click << " is in " << buttonRect
              << buttonRect.contains(click);
+    bool visible = isVisible();
     if (buttonRect.contains(click)
-                            && position->isVisible() && event->button() == Qt::LeftButton)
+                            && visible && event->button() == Qt::LeftButton)
     {
         qDebug() << "One Of Buttons Pressed";
         event->accept();

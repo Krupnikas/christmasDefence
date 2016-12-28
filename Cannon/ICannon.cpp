@@ -202,10 +202,10 @@ bool ICannon::isRadiusVisible()
     return this->radiusItem->isVisible();
 }
 
-void ICannon::scaleItem()
+void ICannon::scale()
 {
-    CSceneObject::scaleItem();
-    radiusItem->scaleItem();
+    CSceneObject::scale();
+    radiusItem->scale();
 }
 
 void ICannon::remove()

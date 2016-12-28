@@ -8,9 +8,9 @@ R::R()
     cell2 = QPixmap(get("cell2"));
     cellSelected = QPixmap(get("cellSelected"));
     
-    window_background = QPixmap(get("window_background"));
-    game_menu_background = QPixmap(get("game_menu_background"));
     game_background = QPixmap(get("game_background"));
+    game_menu_background = QPixmap(get("game_menu_background"));
+    field_background = QPixmap(get("field_background"));
 
     cannonSelectionBackground = QPixmap(get("cannonSelectingInfoBlockBackground"));
     cannonUpgradeBackground = QPixmap(get("cannonUpgradeInfoBlockBackground"));

@@ -11,7 +11,7 @@
 
 MainView::MainView(QWidget *parent) :
     QWidget(parent),
-    gameStatus(eGameStatus::eGameMenu),
+    gameStatus(eGameStatus::eNotInited),
     r(), scene(&r),
     game(&r, &scene, this),
     gameMenu(&game),
@@ -51,10 +51,8 @@ MainView::MainView(QWidget *parent) :
     //interface connection setting
     connect(this, SIGNAL(mousePressEvent(QMouseEvent*)),
             &game, SLOT(onMousePressed(QMouseEvent*)));
-
-    //windows creating
-    game.create();
-    gameMenu.create();
+//    connect(this, SIGNAL(mouseMoveEvent(QMouseEvent*)),
+//            &game, SLOT(onMouseMoved(QMouseEvent*)));
 
    // this->showFullScreen();*/
 }
@@ -73,6 +71,8 @@ void MainView::resizeEvent(QResizeEvent *event)
 
     switch (gameStatus)
     {
+    case eGameStatus::eNotInited:
+        break;
     case eGameStatus::eGameMenu:
         gameMenu.resize();
         break;
@@ -98,6 +98,7 @@ void MainView::showEvent(QShowEvent*)
     game.create();
 
     gameMenu.show();
+    gameStatus = eGameStatus::eGameMenu;
 }
 
 void MainView::mouseDoubleClickEvent(QMouseEvent *)
@@ -119,6 +120,7 @@ void MainView::mousePressEvent(QMouseEvent *eventPress)
     switch (gameStatus)
     {
     case eGameStatus::eGameMenu:
+        gameMenu.hide();
         game.show();
         game.startGameLevel(1);
         gameStatus = eGameStatus::eGame;

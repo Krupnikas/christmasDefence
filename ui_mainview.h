@@ -34,7 +34,7 @@ public:
         MainView->resize(800, 450);
         gridLayoutWidget = new QWidget(MainView);
         gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(-470, 29, 0, 0));
+        gridLayoutWidget->setGeometry(QRect(-470, 29, 81, 81));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);

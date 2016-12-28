@@ -38,7 +38,7 @@
 #include <Metrics/Metrics.h>
 
 enum class eGameStatus {
-    eGameMenu, eLevelMenu, eGame
+    eNotInited, eGameMenu, eLevelMenu, eGame
 };
 
 enum eSizeType {
@@ -67,9 +67,9 @@ struct R
     
     QString res_dir;
     
-    QPixmap window_background;
-    QPixmap game_menu_background;
     QPixmap game_background;
+    QPixmap game_menu_background;
+    QPixmap field_background;
     QPixmap cannonSelectionBackground;
     QPixmap cannonUpgradeBackground;
     QPixmap imageAndNumberBackground;

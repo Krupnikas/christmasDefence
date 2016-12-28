@@ -64,6 +64,8 @@ public:
     bool insideEnclosingRect(QPointF point);
     bool insideGameRect(QPointF point);
 
+    QRect getGameRect() const;
+    
 private:
     
     R* r;

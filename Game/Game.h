@@ -5,7 +5,7 @@
 
 #include <Scene.h>
 #include <Window.h>
-#include <SceneObject/SceneBackground.h>
+#include <SceneObject/GameBackground.h>
 #include <Wave/WaveManager.h>
 #include <Game/User.h>
 
@@ -40,7 +40,7 @@ public:
     std::shared_ptr<CCannonUpgrade> cannonUpgradeInfoBlock;
     std::shared_ptr<CUserInfo> userInformationBlock;
     std::shared_ptr<QGraphicsItem> selectedCellItem;
-    std::shared_ptr<CSceneBackground> background;
+    std::shared_ptr<CGameBackground> background;
     QPoint selectedCell = UnselCell;
 
     std::vector<std::shared_ptr<IBullet> > bullets;
@@ -78,8 +78,6 @@ public:
     
     void updateDistances();
     
-    void hideObjects();
-
     void selectCell(QPoint pos);
     void deselectCell();
 

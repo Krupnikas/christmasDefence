@@ -150,7 +150,7 @@ void CScene::updateGameRect(QRect newWindowRect)
 void CScene::updateGameBackground()
 {
     //update Window background
-    QPixmap scaledPixmap = r->window_background.scaled(windowRect.size(),
+    QPixmap scaledPixmap = r->game_background.scaled(windowRect.size(),
                                                        Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
     backgroundItems.push_back(item);
@@ -341,5 +341,10 @@ bool CScene::insideGameRect(QPointF point)
     int y = toGlobalY(point.y());
     QPoint pointInt(x, y);
     return gameRect.contains(pointInt);
+}
+
+QRect CScene::getGameRect() const
+{
+    return gameRect;
 }
 

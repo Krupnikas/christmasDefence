@@ -17,7 +17,7 @@ public:
 
     virtual void draw();
     virtual void show();
-    virtual void scaleItem();
+    virtual void scale();
 
 public slots:
     void onHpChanged(int newHp);

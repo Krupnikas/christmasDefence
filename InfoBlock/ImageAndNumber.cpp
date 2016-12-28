@@ -15,24 +15,21 @@ CImageAndNumber::CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRect Boundin
     this->position = game->scene->addPixmap(textureSize, pixmap);
     this->leftTop = BoundingRect.topLeft();
 
-    icon = std::make_shared<CSceneObject>(0, 4.6, QPointF(0,0),
-                                         QPointF(leftTop) + QPointF(ICON_X_OFFSET,
-                                                                    ICON_Y_OFFSET),
-                                         QSizeF(BoundingRect.width() - 2 * ICON_X_OFFSET,
-                                                BoundingRect.width() - 2 * ICON_X_OFFSET),
-                                         IconPixmap,
-                                         game);
+    icon = std::make_shared<CSceneObject>(0, 4.6,
+                                          QPointF(leftTop) + QPointF(ICON_X_OFFSET, ICON_Y_OFFSET),
+                                          QSizeF(BoundingRect.width() - 2 * ICON_X_OFFSET,
+                                                 BoundingRect.width() - 2 * ICON_X_OFFSET),
+                                          IconPixmap, game);
 
     renderedText = helper::renderPixmapFromText("0");
 
-    text = std::make_shared<CSceneObject>(0, 4.6, QPointF(0,0),
-                                         QPointF(leftTop) + QPointF(TEXT_X_OFFSET,
-                                                                    2 * TEXT_Y_OFFSET + icon->getTextureSize().height()),
-                                         QSizeF(BoundingRect.width() - 2 * TEXT_X_OFFSET,
+    text = std::make_shared<CSceneObject>(0, 4.6,
+                                          QPointF(leftTop) +
+                                          QPointF(TEXT_X_OFFSET, 2 * TEXT_Y_OFFSET + icon->getTextureSize().height()),
+                                          QSizeF(BoundingRect.width() - 2 * TEXT_X_OFFSET,
                                                 (BoundingRect.width() - 2 * TEXT_X_OFFSET)
                                                 * renderedText->height() / renderedText->width()),
-                                         renderedText.get(),
-                                         game);
+                                          renderedText.get(), game);
 }
 
 void CImageAndNumber::updatePosition(QRect BoundingRect)
@@ -62,10 +59,10 @@ void CImageAndNumber::show()
     text->show();
 }
 
-void CImageAndNumber::scaleItem()
+void CImageAndNumber::scale()
 {
-    CSceneObject::scaleItem();
-    icon->scaleItem();
-    text->scaleItem();
+    CSceneObject::scale();
+    icon->scale();
+    text->scale();
 }
 

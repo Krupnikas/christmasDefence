@@ -14,15 +14,18 @@ CSceneObject::CSceneObject():
     position(nullptr)
 {}
 
-CSceneObject::CSceneObject(qreal angle, qreal zOrder, QPointF center, QPointF leftTop, QSizeF size, QPixmap *pixmap, CGame *game):
+CSceneObject::CSceneObject(qreal angle,qreal zOrder,
+                           QPointF leftTop, QSizeF size,
+                           QPixmap *pixmap, CGame *game):
     angle(angle),
     zOrder(zOrder),
-    center(center),
     leftTop(leftTop),
     textureSize(size),
+    size(size),
     pixmap(pixmap),
     game(game)
 {
+    center = QPointF(leftTop + QPointF(size.width() / 2.0, size.height() / 2.0));
     position = game->scene->addPixmap(textureSize, pixmap);
 }
 

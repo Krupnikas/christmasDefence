@@ -58,9 +58,9 @@ SOURCES += \
     Scene.cpp \
     Helper.cpp \
     SceneObject/Button.cpp \
-    SceneObject/GameObject.cpp \
     SceneObject/SceneBackground.cpp \
-    SceneObject/GameBackground.cpp
+    SceneObject/GameBackground.cpp \
+    SceneObject/SceneObject.cpp
 
 
 HEADERS  += \

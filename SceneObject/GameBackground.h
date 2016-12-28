@@ -2,10 +2,10 @@
 
 #include <SceneObject/SceneBackground.h>
 
-class CGameBackground: CSceneBackground
+class CGameBackground: public CSceneBackground
 {
 public:
-    CGameBackground();
+    CGameBackground(CGame *game);
 
     virtual void scale() override;
     virtual void scaleWithLoss(QSizeF newSize) override;
@@ -16,4 +16,5 @@ public:
 
 private:
     std::shared_ptr<CSceneObject> fieldBackground;
+    std::vector<std::vector<std::shared_ptr<CSceneObject>>> cells;
 };

@@ -38,15 +38,14 @@ CGame::~CGame()
 
 void CGame::create()
 {
-    //TODO load background
-    background = std::make_shared<CSceneBackground>(this, &r->game_background);
+    background = std::make_shared<CGameBackground>(this);
     cannonSelectionInfoBlock = std::make_shared<CCannonSelection>(this, UnselCell);
     userInformationBlock = std::make_shared<CUserInfo>(this);
 }
 
 void CGame::show()
 {
-    //TODO show background
+    background->draw();
     background->show();
 
     userInformationBlock->draw();
@@ -64,7 +63,6 @@ void CGame::show()
 
 void CGame::hide()
 {
-    //TODO hide background
     background->hide();
     userInformationBlock->hide();
 
@@ -86,7 +84,6 @@ void CGame::resize()
 
 void CGame::close()
 {
-    //TODO remove background
     userInformationBlock->remove();
 
     for (size_t i = 0; i < bullets.size(); ++i)
@@ -109,17 +106,17 @@ void CGame::close()
 
 void CGame::mousePressEvent(QMouseEvent *event)
 {
+    emit mousePressed(event);
+    
     if (pressedButton != eBTnone){
         pressedButton = eBTnone;
         return;
     }
 
     QPointF p = view->mapFromGlobal(QCursor::pos());
-    QPoint selectedCell = findNearestCell(scene->toLocalPoint(p));
+    QPoint curSelectedCell = findNearestCell(scene->toLocalPoint(p));
 
-    selectCell(selectedCell);
-
-    emit mousePressed(event);
+    selectCell(curSelectedCell);
 }
 
 void CGame::mouseMoveEvent(QMouseEvent *event)
@@ -226,11 +223,6 @@ QPointF CGame::cellCenter(QPoint cell)
     return QPointF(leftTop.x() + CellSize / 2.0, leftTop.y() + CellSize / 2.0);
 }
 
-void CGame::hideObjects()
-{
-
-}
-
 void CGame::selectCell(QPoint pos)
 {
     if (!isGameCell(pos))
@@ -285,7 +277,7 @@ void CGame::deselectCell()
 {
     int selX = selectedCell.x();
     int selY = selectedCell.y();
-    if (cannons[selX][selY])
+    if (isGameCell(selectedCell) && cannons[selX][selY])
     {
         cannons[selX][selY]->hideRadius();
         cannonUpgradeInfoBlock->hide();
@@ -387,19 +379,19 @@ void CGame::onMousePressed(QMouseEvent *pressEvent)
 
 void CGame::scaleObjects()
 {
-    background->scaleItem();
+    background->scale();
     background->draw();
     background->show();
 
     for (size_t i = 0; i < bullets.size(); ++i)
     {
-        bullets[i]->scaleItem();
+        bullets[i]->scale();
         bullets[i]->draw();
         bullets[i]->show();
     }
     for (size_t i = 0; i < enemies.size(); ++i)
     {
-        enemies[i]->scaleItem();
+        enemies[i]->scale();
         enemies[i]->draw();
         enemies[i]->show();
     }
@@ -407,19 +399,19 @@ void CGame::scaleObjects()
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
             {
-                cannons[i][j]->scaleItem();
+                cannons[i][j]->scale();
                 cannons[i][j]->draw();
                 cannons[i][j]->show();
             }
 
     if (cannonSelectionInfoBlock)
     {
-        cannonSelectionInfoBlock->scaleItem();
-        cannonSelectionInfoBlock->closeButton.scaleItem();
+        cannonSelectionInfoBlock->scale();
+        cannonSelectionInfoBlock->closeButton.scale();
 
         for (int i = 0; i < TypesOfCannon; i++)
         {
-            cannonSelectionInfoBlock->cannonButton[i].scaleItem();
+            cannonSelectionInfoBlock->cannonButton[i].scale();
         }
 
         cannonSelectionInfoBlock->updateButtonsPositions();
@@ -428,12 +420,12 @@ void CGame::scaleObjects()
 
     if (cannonUpgradeInfoBlock)
     {
-        cannonUpgradeInfoBlock->scaleItem();
+        cannonUpgradeInfoBlock->scale();
 
         if (CloseButtonInInfoBlocksEnabled)
-            cannonUpgradeInfoBlock->closeButton.scaleItem();
-        cannonUpgradeInfoBlock->upgradeButton.scaleItem();
-        cannonUpgradeInfoBlock->sellButton.scaleItem();
+            cannonUpgradeInfoBlock->closeButton.scale();
+        cannonUpgradeInfoBlock->upgradeButton.scale();
+        cannonUpgradeInfoBlock->sellButton.scale();
 
         cannonUpgradeInfoBlock->updateButtonsPositions();
         cannonUpgradeInfoBlock->draw();
@@ -441,7 +433,7 @@ void CGame::scaleObjects()
 
     if (userInformationBlock)
     {
-        userInformationBlock->scaleItem();
+        userInformationBlock->scale();
         userInformationBlock->draw();
         userInformationBlock->show();
     }

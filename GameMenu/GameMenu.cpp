@@ -23,7 +23,7 @@ void CGameMenu::hide()
 
 void CGameMenu::resize()
 {
-    background->scaleItem();
+    background->scale();
     background->draw();
     background->show();
 }
