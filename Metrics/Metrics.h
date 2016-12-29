@@ -34,6 +34,8 @@ const int EntranceY = CellNumY / 2;
 
 const int TimerInterval = 16;
 
+const int GameMenuButtonNum = 4;
+
 const int UserCash = 200;
 const int UserHp = 30;
 

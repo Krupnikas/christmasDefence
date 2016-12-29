@@ -68,13 +68,15 @@ struct R
     QString res_dir;
     
     QPixmap game_background;
-    QPixmap game_menu_background;
     QPixmap field_background;
     QPixmap cannonSelectionBackground;
     QPixmap cannonUpgradeBackground;
     QPixmap imageAndNumberBackground;
     QPixmap userInfoBackground;
-
+    
+    QPixmap game_menu_background;
+    QPixmap game_menu_caption;
+    
     QPixmap hpIcon;
     QPixmap coinsIcon;
 

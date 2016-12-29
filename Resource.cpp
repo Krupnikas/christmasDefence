@@ -9,13 +9,15 @@ R::R()
     cellSelected = QPixmap(get("cellSelected"));
     
     game_background = QPixmap(get("game_background"));
-    game_menu_background = QPixmap(get("game_menu_background"));
     field_background = QPixmap(get("field_background"));
 
     cannonSelectionBackground = QPixmap(get("cannonSelectingInfoBlockBackground"));
     cannonUpgradeBackground = QPixmap(get("cannonUpgradeInfoBlockBackground"));
     imageAndNumberBackground = QPixmap(get("SmallBlockBG.png"));
     userInfoBackground = QPixmap(get("userInfoBlock.png"));
+    
+    game_menu_background = QPixmap(get("game_menu/background"));
+    game_menu_caption = QPixmap(get("game_menu/caption"));
 
     hpIcon = QPixmap(get("hp.png"));
     coinsIcon = QPixmap(get("coin.png"));

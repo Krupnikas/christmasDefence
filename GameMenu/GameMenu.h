@@ -24,4 +24,5 @@ private:
     CGame *game;
 
     std::shared_ptr<CSceneBackground> background;
+    std::shared_ptr<CSceneObject> caption;
 };

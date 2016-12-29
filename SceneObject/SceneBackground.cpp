@@ -9,4 +9,11 @@ CSceneBackground::CSceneBackground(CGame *game, QPixmap *pixmap)
     this->position = game->scene->addBackgroundPixmap(pixmap);
 }
 
+void CSceneBackground::scale()
+{
+    if (position)
+        game->scene->removeItem(position);
+    position = game->scene->addBackgroundPixmap(pixmap);
+}
+
 void CSceneBackground::draw(){}
