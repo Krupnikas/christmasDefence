@@ -2,12 +2,15 @@
 
 #include <Window.h>
 #include <SceneObject/SceneBackground.h>
+#include <SceneObject/Button.h>
 
 class CGame;
 class CScene;
 
 class CGameMenu: public IWindow
 {
+    Q_OBJECT
+    
 public:
     CGameMenu(CGame *game);
 
@@ -19,10 +22,15 @@ public:
     virtual void close() override;
     virtual void mousePressEvent(QMouseEvent *event) override;
     virtual void mouseMoveEvent(QMouseEvent *event) override;
+    
+private slots:
+    void onButtonPressed(eButtonType type);
 
 private:
     CGame *game;
 
     std::shared_ptr<CSceneBackground> background;
     std::shared_ptr<CSceneObject> caption;
+    
+    std::vector<std::shared_ptr<CButton>> buttons;
 };

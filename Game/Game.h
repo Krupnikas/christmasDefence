@@ -3,6 +3,7 @@
 //#define SHOW_DISTANCES
 #define SHOW_GRAPHICS_DEBUG
 
+
 #include <Scene.h>
 #include <Window.h>
 #include <SceneObject/GameBackground.h>
@@ -12,10 +13,10 @@
 class IBullet;
 class IEnemy;
 class ICannon;
-class MainView;
 class CCannonSelection;
 class CCannonUpgrade;
 class CUserInfo;
+class MainView;
 
 class CGame : public IWindow
 {
@@ -27,12 +28,12 @@ public:
     
     R *r;
     CScene *scene;
-    QWidget *view;
+    MainView *view;
     
     CWaveManager waveManager;
     CUser user;   
 
-    eButtonTypes pressedButton;
+    eButtonType pressedButton;
     
     QTimer *positionTimer;
     QTimer *drawTimer;
@@ -50,7 +51,7 @@ public:
     
 //public methods
 public:
-    CGame(R *r, CScene *scene, QWidget *view);
+    CGame(R *r, CScene *scene, MainView *view);
     ~CGame();
 
     //IWindow methods

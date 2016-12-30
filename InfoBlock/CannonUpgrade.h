@@ -11,9 +11,9 @@ public:
     CCannonUpgrade(CGame *game, QPoint selectedCell);
 
 
-    CButton upgradeButton;
-    CButton sellButton;
-    CButton closeButton;
+    std::shared_ptr<CButton> upgradeButton;
+    std::shared_ptr<CButton> sellButton;
+    std::shared_ptr<CButton> closeButton;
 
     qreal backgroundImageSize;
 
@@ -26,6 +26,6 @@ public:
     virtual void draw();
 
 private slots:
-    void onButtonPressed(eButtonTypes Type);
+    void onButtonPressed(eButtonType Type);
 };
 

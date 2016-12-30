@@ -49,7 +49,7 @@ enum eScaleCenter {
     LeftTop, Center
 };
 
-enum eButtonTypes{
+enum eButtonType{
     eBTnone,
     eBTCloseButton,
     eBTChooseFast,
@@ -59,13 +59,17 @@ enum eButtonTypes{
     eBTcannonUpgrade,
     eBTcannonSell,
     eBTuiPause,
-    eBTuiAccelerate
+    eBTuiAccelerate,
+    eBTgmCampaign,
+    eBTgmQuickPlay,
+    eBTgmDev,
+    eBTgmExit,
 };
 
 struct R
 {
-    
     QString res_dir;
+    QString gm_dir;
     
     QPixmap game_background;
     QPixmap field_background;
@@ -76,6 +80,9 @@ struct R
     
     QPixmap game_menu_background;
     QPixmap game_menu_caption;
+    std::vector<QPixmap> gm_buttons;
+    std::vector<QPixmap> gm_focused_buttons;
+    std::vector<QPixmap> gm_pressed_buttons;
     
     QPixmap hpIcon;
     QPixmap coinsIcon;
@@ -129,6 +136,11 @@ struct R
     QString waves;
     
     QString get(QString val);
+    QString getWithPrefix(QString prefix, int num);
+    
+    QString getGm(QString val);
+    QString getGmWithPrefix(QString prefix, int num);
+    
     QString getNameOfTypePreview(int num);
     
     R();

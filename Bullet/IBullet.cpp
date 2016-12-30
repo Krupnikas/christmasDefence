@@ -2,6 +2,7 @@
 #include <Helper.h>
 #include <Game/Game.h>
 #include <Enemy/IEnemy.h>
+#include <mainview.h>
 
 QPointF IBullet::getCenter() const
 {

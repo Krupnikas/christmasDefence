@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/gm">
+        <file>res/christmas/game_menu/button_1.png</file>
+        <file>res/christmas/game_menu/button_2.png</file>
+        <file>res/christmas/game_menu/button_3.png</file>
+        <file>res/christmas/game_menu/button_4.png</file>
+        <file>res/christmas/game_menu/button_play.png</file>
+        <file>res/christmas/game_menu/caption.png</file>
+        <file>res/christmas/game_menu/focused_button_1.png</file>
+        <file>res/christmas/game_menu/focused_button_2.png</file>
+        <file>res/christmas/game_menu/focused_button_3.png</file>
+        <file>res/christmas/game_menu/focused_button_4.png</file>
+        <file>res/christmas/game_menu/pressed_button_1.png</file>
+        <file>res/christmas/game_menu/pressed_button_2.png</file>
+        <file>res/christmas/game_menu/pressed_button_3.png</file>
+        <file>res/christmas/game_menu/pressed_button_4.png</file>
+        <file>res/christmas/game_menu/background.jpg</file>
+    </qresource>
+</RCC>

@@ -35,44 +35,49 @@ void CCannonSelection::updatePosition(QPoint selectedCell)
 
 void CCannonSelection::initButtons()
 {
-    closeButton.init(eBTCloseButton,
-                     QRect(center.x() - CannonSelectionButtonSize/2,
-                           center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2,
-                           CannonSelectionButtonSize,
-                           CannonSelectionButtonSize),
-                     &game->r->buttonClose,
-                     game,
-                     ButtonZOrder,
-                     0);
+    QRectF closeRect(center.x() - CannonSelectionButtonSize/2,
+                     center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2,
+                     CannonSelectionButtonSize,
+                     CannonSelectionButtonSize);
+    closeButton = std::make_shared<CButton>(
+                ButtonZOrder, closeRect.center(),
+                closeRect.size(),
+                &game->r->buttonClose, &game->r->buttonClose, &game->r->buttonClose,
+                game, eBTCloseButton);
+    
+    connect(closeButton.get(), SIGNAL(pressed(eButtonType)),
+            this, SLOT(onButtonPressed(eButtonType)));
 
-    connect(&closeButton, SIGNAL(pressed(eButtonTypes)),
-            this, SLOT(onButtonPressed(eButtonTypes)));
-
+    cannonButton.resize(TypesOfCannon);
     for (int i = 0; i < TypesOfCannon; i++)
     {
-        cannonButton[i].init(static_cast<eButtonTypes>(i + 2),
-                             QRect(calculateTopLeftForButton(i),
-                             QSize(CannonSelectionButtonSize,
-                                   CannonSelectionButtonSize)),
-                             &game->r->cannonTypePreview[i],
-                             game,
-                             ButtonZOrder,
-                             0);
-        connect(&cannonButton[i], SIGNAL(pressed(eButtonTypes)),
-                this, SLOT(onButtonPressed(eButtonTypes)));
+        QRectF buttonRect(calculateTopLeftForButton(i),
+                          QSize(CannonSelectionButtonSize,
+                                CannonSelectionButtonSize));
+        
+        cannonButton[i] = std::make_shared<CButton>(
+                    ButtonZOrder, buttonRect.center(),
+                    buttonRect.size(),
+                    &game->r->cannonTypePreview[i],
+                    &game->r->cannonTypePreview[i],
+                    &game->r->cannonTypePreview[i],
+                    game, static_cast<eButtonType>(i + 2));
+        
+        connect(cannonButton[i].get(), SIGNAL(pressed(eButtonType)),
+                this, SLOT(onButtonPressed(eButtonType)));
     }
 }
 
 void CCannonSelection::updateButtonsPositions()
 {
-    closeButton.setLeftTop(QPointF(center.x() - CannonSelectionButtonSize/2,
+    closeButton->setLeftTop(QPointF(center.x() - CannonSelectionButtonSize/2,
                                   center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2));
-    closeButton.draw();
+    closeButton->draw();
 
     for (int i = 0; i < TypesOfCannon; i++)
     {
-       cannonButton[i].setLeftTop(calculateTopLeftForButton(i));
-       cannonButton[i].draw();
+       cannonButton[i]->setLeftTop(calculateTopLeftForButton(i));
+       cannonButton[i]->draw();
     }
 }
 
@@ -94,37 +99,37 @@ QPoint CCannonSelection::calculateTopLeftForButton(int i)
 void CCannonSelection::show()
 {
     CSceneObject::show();
-    closeButton.show();
+    closeButton->show();
 
     for (int i = 0; i < TypesOfCannon; i++)
     {
-        cannonButton[i].show();
+        cannonButton[i]->show();
     }
 }
 
 void CCannonSelection::hide()
 {
     CSceneObject::hide();
-    closeButton.hide();
+    closeButton->hide();
 
     for (int i = 0; i < TypesOfCannon; i++)
     {
-        cannonButton[i].hide();
+        cannonButton[i]->hide();
     }
 }
 
 void CCannonSelection::draw()
 {
     CSceneObject::draw();
-    closeButton.draw();
+    closeButton->draw();
 
     for (int i = 0; i < TypesOfCannon; i++)
     {
-        cannonButton[i].draw();
+        cannonButton[i]->draw();
     }
 }
 
-void CCannonSelection::onButtonPressed(eButtonTypes Type)
+void CCannonSelection::onButtonPressed(eButtonType Type)
 {
     switch (Type){
     case eBTCloseButton:

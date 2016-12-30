@@ -2,8 +2,26 @@
 
 R::R()
 {
-    res_dir = "://res/christmas";
+    res_dir = "://res/christmas/";
+    gm_dir = "://gm/res/christmas/game_menu/";
+    
+    //GameMenu resources
+    game_menu_background = QPixmap(getGm("background"));
+    game_menu_caption = QPixmap(getGm("caption"));
+    
+    gm_buttons.resize(GameMenuButtonNum);
+    for (int i = 0; i < GameMenuButtonNum; ++i)
+        gm_buttons[i] = QPixmap(getGmWithPrefix("button_", i + 1));
+    
+    gm_focused_buttons.resize(GameMenuButtonNum);
+    for (int i = 0; i < GameMenuButtonNum; ++i)
+        gm_focused_buttons[i] = QPixmap(getGmWithPrefix("focused_button_", i + 1));
+    
+    gm_pressed_buttons.resize(GameMenuButtonNum);    
+    for (int i = 0; i < GameMenuButtonNum; ++i)
+        gm_pressed_buttons[i] = QPixmap(getGmWithPrefix("pressed_button_", i + 1));
 
+    //Game resources
     cell1 = QPixmap(get("cell1"));
     cell2 = QPixmap(get("cell2"));
     cellSelected = QPixmap(get("cellSelected"));
@@ -16,9 +34,6 @@ R::R()
     imageAndNumberBackground = QPixmap(get("SmallBlockBG.png"));
     userInfoBackground = QPixmap(get("userInfoBlock.png"));
     
-    game_menu_background = QPixmap(get("game_menu/background"));
-    game_menu_caption = QPixmap(get("game_menu/caption"));
-
     hpIcon = QPixmap(get("hp.png"));
     coinsIcon = QPixmap(get("coin.png"));
 
@@ -79,8 +94,24 @@ R::R()
 
 QString R::get(QString val)
 {
-    QString str = res_dir + "/" + val;
+    QString str = res_dir + val;
     return str;
+}
+
+QString R::getWithPrefix(QString prefix, int num)
+{
+    return get(prefix + QString::number(num));
+}
+
+QString R::getGm(QString val)
+{
+    QString str = gm_dir + val;
+    return str;
+}
+
+QString R::getGmWithPrefix(QString prefix, int num)
+{
+    return getGm(prefix + QString::number(num));
 }
 
 QString R::getNameOfTypePreview(int num)

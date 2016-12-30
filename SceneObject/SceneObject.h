@@ -17,33 +17,33 @@ public:
     virtual void scaleWithLoss(QSizeF newSize);
     virtual void remove();
     virtual void draw();
+    virtual void drawByCenter();
     virtual void hide();
     virtual void show();
-
-    bool isVisible();
+    virtual bool isVisible();
     
-    QPointF getCenter() const;
-    void setCenter(const QPointF &value);
+    virtual QPointF getCenter() const;
+    virtual void setCenter(const QPointF &value);
     
-    qreal getAngle() const;
-    void setAngle(const qreal &value);
+    virtual qreal getAngle() const;
+    virtual void setAngle(const qreal &value);
     
-    std::shared_ptr<QGraphicsItem> getPosition() const;
+    virtual std::shared_ptr<QGraphicsItem> getPosition() const;
     
-    qreal getZOrder() const;
-    void setZOrder(const qreal &value);
+    virtual qreal getZOrder() const;
+    virtual void setZOrder(const qreal &value);
     
-    QSizeF getTextureSize() const;
-    void setTextureSize(const QSizeF &value);
+    virtual QSizeF getTextureSize() const;
+    virtual void setTextureSize(const QSizeF &value);
     
-    QSizeF getSize() const;
-    void setSize(const QSizeF &value);
+    virtual QSizeF getSize() const;
+    virtual void setSize(const QSizeF &value);
     
-    QPointF getLeftTop() const;
-    void setLeftTop(const QPointF &value);
+    virtual QPointF getLeftTop() const;
+    virtual void setLeftTop(const QPointF &value);
     
-    QPixmap *getPixmap() const;
-    void setPixmap(QPixmap *Pixmap);
+    virtual QPixmap *getPixmap() const;
+    virtual void setPixmap(QPixmap *Pixmap);
     
     CGame *getGame() const;
     

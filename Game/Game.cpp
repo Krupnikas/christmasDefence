@@ -1,3 +1,4 @@
+#include <mainview.h>
 #include <Helper.h>
 #include <Game/Game.h>
 #include <Bullet/FastBullet.h>
@@ -9,7 +10,7 @@
 #include <Wave/WaveManager.h>
 
 
-CGame::CGame(R *r, CScene *scene, QWidget *view):
+CGame::CGame(R *r, CScene *scene, MainView *view):
     r(r),
     scene(scene),
     view(view)
@@ -40,6 +41,7 @@ void CGame::create()
 {
     background = std::make_shared<CGameBackground>(this);
     cannonSelectionInfoBlock = std::make_shared<CCannonSelection>(this, UnselCell);
+    cannonUpgradeInfoBlock = std::make_shared<CCannonUpgrade>(this, UnselCell);
     userInformationBlock = std::make_shared<CUserInfo>(this);
 }
 
@@ -106,8 +108,6 @@ void CGame::close()
 
 void CGame::mousePressEvent(QMouseEvent *event)
 {
-    emit mousePressed(event);
-    
     if (pressedButton != eBTnone){
         pressedButton = eBTnone;
         return;
@@ -237,10 +237,7 @@ void CGame::selectCell(QPoint pos)
     }
 
     if (selectedCell == pos)
-        return;
-
-    if (!cannonUpgradeInfoBlock)
-        cannonUpgradeInfoBlock = std::make_shared<CCannonUpgrade>(this, pos);
+        return;      
 
     int selX = pos.x();
     int selY = pos.y();
@@ -407,11 +404,11 @@ void CGame::scaleObjects()
     if (cannonSelectionInfoBlock)
     {
         cannonSelectionInfoBlock->scale();
-        cannonSelectionInfoBlock->closeButton.scale();
+        cannonSelectionInfoBlock->closeButton->scale();
 
         for (int i = 0; i < TypesOfCannon; i++)
         {
-            cannonSelectionInfoBlock->cannonButton[i].scale();
+            cannonSelectionInfoBlock->cannonButton[i]->scale();
         }
 
         cannonSelectionInfoBlock->updateButtonsPositions();
@@ -423,9 +420,9 @@ void CGame::scaleObjects()
         cannonUpgradeInfoBlock->scale();
 
         if (CloseButtonInInfoBlocksEnabled)
-            cannonUpgradeInfoBlock->closeButton.scale();
-        cannonUpgradeInfoBlock->upgradeButton.scale();
-        cannonUpgradeInfoBlock->sellButton.scale();
+            cannonUpgradeInfoBlock->closeButton->scale();
+        cannonUpgradeInfoBlock->upgradeButton->scale();
+        cannonUpgradeInfoBlock->sellButton->scale();
 
         cannonUpgradeInfoBlock->updateButtonsPositions();
         cannonUpgradeInfoBlock->draw();

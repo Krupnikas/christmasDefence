@@ -2,7 +2,7 @@
 
 #include <SceneObject/SceneObject.h>
 #include <Game/Game.h>
-#include <SceneObject/Button.h>
+#include <SceneObject/ButtonDepr.h>
 
 class CGame;
 

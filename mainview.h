@@ -33,11 +33,19 @@ public:
 
     void resizeEvent(QResizeEvent *);
     virtual void showEvent(QShowEvent *event);
-    virtual void mouseDoubleClickEvent(QMouseEvent *e);
-    virtual void mousePressEvent(QMouseEvent *eventPress);
+    
+    void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    
+    bool eventFilter(QObject *obj, QEvent *event);
 
 signals:
-    void mousePressed(QMouseEvent *eventPress);
+    void mousePressed(QMouseEvent *event);
+    void mouseMoved(QMouseEvent *event);
+    void mouseDown(QMouseEvent *event);
+    void mouseUp(QMouseEvent *event);
     
 public slots:
     void setEnabled();

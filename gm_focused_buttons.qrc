@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/gm">
+        <file>res/christmas/game_menu/focused_button_1.png</file>
+        <file>res/christmas/game_menu/focused_button_2.png</file>
+        <file>res/christmas/game_menu/focused_button_3.png</file>
+        <file>res/christmas/game_menu/focused_button_4.png</file>
+    </qresource>
+</RCC>

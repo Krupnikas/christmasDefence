@@ -33,63 +33,63 @@ void CCannonUpgrade::initButtons()
 {
     if (CloseButtonInInfoBlocksEnabled)
     {
-        closeButton.init(eBTCloseButton,
-                         QRect(center.x() - CannonUpgradeButtonSize/2,
-                               center.y() + CannonUpgradeRadius - CannonUpgradeButtonSize/2,
-                               CannonUpgradeButtonSize,
-                               CannonUpgradeButtonSize),
-                         &game->r->buttonClose,
-                         game,
-                         ButtonZOrder,
-                         0);
+        QRectF rect(center.x() - CannonUpgradeButtonSize/2,
+                    center.y() + CannonUpgradeRadius - CannonUpgradeButtonSize/2,
+                    CannonUpgradeButtonSize,
+                    CannonUpgradeButtonSize);
+        closeButton = std::make_shared<CButton>(
+                    ButtonZOrder, rect.center(),
+                    rect.size(),
+                    &game->r->buttonClose, &game->r->buttonClose, &game->r->buttonClose,
+                    game, eBTCloseButton);
 
-        connect(&closeButton, SIGNAL(pressed(eButtonTypes)),
-                this, SLOT(onButtonPressed(eButtonTypes)));
+        connect(closeButton.get(), SIGNAL(pressed(eButtonType)),
+                this, SLOT(onButtonPressed(eButtonType)));
     }
 
-    upgradeButton.init(eBTcannonUpgrade,
-                     QRect(center.x() - cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
-                           center.y() - sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
-                           CannonUpgradeButtonSize,
-                           CannonUpgradeButtonSize),
-                     &game->r->buttonUpgrade,
-                     game,
-                     ButtonZOrder,
-                     0);
+    QRectF rect(center.x() - cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
+                center.y() - sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
+                CannonUpgradeButtonSize,
+                CannonUpgradeButtonSize);
+    upgradeButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
+                  rect.size(),
+                  &game->r->buttonUpgrade, &game->r->buttonUpgrade, &game->r->buttonUpgrade,
+                  game, eBTcannonUpgrade);
+    connect(upgradeButton.get(), SIGNAL(pressed(eButtonType)),
+            this, SLOT(onButtonPressed(eButtonType)));
+    
+    
+    rect = QRectF(center.x() + cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
+                  center.y() - sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
+                  CannonUpgradeButtonSize,
+                  CannonUpgradeButtonSize);
 
-    connect(&upgradeButton, SIGNAL(pressed(eButtonTypes)),
-            this, SLOT(onButtonPressed(eButtonTypes)));
 
-    sellButton.init(eBTcannonSell,
-                     QRect(center.x() + cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
-                           center.y() - sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
-                           CannonUpgradeButtonSize,
-                           CannonUpgradeButtonSize),
-                     &game->r->buttonSell,
-                     game,
-                     ButtonZOrder,
-                     0);
+    sellButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
+                    rect.size(),
+                    &game->r->buttonSell, &game->r->buttonSell, &game->r->buttonSell,
+                    game, eBTcannonSell);
 
-    connect(&sellButton, SIGNAL(pressed(eButtonTypes)),
-            this, SLOT(onButtonPressed(eButtonTypes)));
+    connect(sellButton.get(), SIGNAL(pressed(eButtonType)),
+            this, SLOT(onButtonPressed(eButtonType)));
 }
 
 void CCannonUpgrade::updateButtonsPositions()
 {
     if (CloseButtonInInfoBlocksEnabled)
     {
-        closeButton.setLeftTop(QPointF(center.x() - CannonUpgradeButtonSize/2,
+        closeButton->setLeftTop(QPointF(center.x() - CannonUpgradeButtonSize/2,
                                       center.y() + CannonUpgradeRadius - CannonUpgradeButtonSize/2));
-        closeButton.draw();
+        closeButton->draw();
     }
 
-    upgradeButton.setLeftTop(QPointF(center.x() - cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
+    upgradeButton->setLeftTop(QPointF(center.x() - cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
                                      center.y() - sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2));
-    upgradeButton.draw();
+    upgradeButton->draw();
 
-    sellButton.setLeftTop(QPointF(center.x() + cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
+    sellButton->setLeftTop(QPointF(center.x() + cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
                                   center.y() - sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2));
-    sellButton.draw();
+    sellButton->draw();
 }
 
 void CCannonUpgrade::show()
@@ -97,10 +97,10 @@ void CCannonUpgrade::show()
     CSceneObject::show();
 
     if (CloseButtonInInfoBlocksEnabled)
-        closeButton.show();
+        closeButton->show();
 
-    upgradeButton.show();
-    sellButton.show();
+    upgradeButton->show();
+    sellButton->show();
 }
 
 void CCannonUpgrade::hide()
@@ -108,10 +108,10 @@ void CCannonUpgrade::hide()
     CSceneObject::hide();
 
     if (CloseButtonInInfoBlocksEnabled)
-        closeButton.hide();
+        closeButton->hide();
 
-    upgradeButton.hide();
-    sellButton.hide();
+    upgradeButton->hide();
+    sellButton->hide();
 }
 
 void CCannonUpgrade::draw()
@@ -119,13 +119,13 @@ void CCannonUpgrade::draw()
     CSceneObject::draw();
 
     if (CloseButtonInInfoBlocksEnabled)
-        closeButton.draw();
+        closeButton->draw();
 
-    upgradeButton.draw();
-    sellButton.draw();
+    upgradeButton->draw();
+    sellButton->draw();
 }
 
-void CCannonUpgrade::onButtonPressed(eButtonTypes Type)
+void CCannonUpgrade::onButtonPressed(eButtonType Type)
 {
     switch (Type){
     case eBTCloseButton:

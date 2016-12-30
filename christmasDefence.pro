@@ -57,10 +57,11 @@ SOURCES += \
     Resource.cpp \
     Scene.cpp \
     Helper.cpp \
-    SceneObject/Button.cpp \
     SceneObject/SceneBackground.cpp \
     SceneObject/GameBackground.cpp \
-    SceneObject/SceneObject.cpp
+    SceneObject/SceneObject.cpp \
+    SceneObject/ButtonDepr.cpp \
+    SceneObject/Button.cpp
 
 
 HEADERS  += \
@@ -111,14 +112,19 @@ HEADERS  += \
     Resource.h \
     Scene.h \
     Helper.h \
-    SceneObject/Button.h \
     SceneObject/SceneBackground.h \
     SceneObject/SceneObject.h \
-    SceneObject/GameBackground.h
+    SceneObject/GameBackground.h \
+    SceneObject/ButtonDepr.h \
+    SceneObject/Button.h
 
 FORMS    += mainview.ui
 
 RESOURCES += \
-    qresource.qrc
+    qresource.qrc \
+    gm_focused_buttons.qrc \
+    gm_buttons.qrc \
+    gm_pressed_buttons.qrc \
+    gm.qrc
 
 DISTFILES +=

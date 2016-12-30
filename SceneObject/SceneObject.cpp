@@ -14,7 +14,7 @@ CSceneObject::CSceneObject():
     position(nullptr)
 {}
 
-CSceneObject::CSceneObject(qreal angle,qreal zOrder,
+CSceneObject::CSceneObject(qreal angle, qreal zOrder,
                            QPointF leftTop, QSizeF size,
                            QPixmap *pixmap, CGame *game):
     angle(angle),
@@ -49,6 +49,11 @@ void CSceneObject::draw()
 {
     game->scene->positionItem(leftTop, textureSize, angle, zOrder, position);
     //show();
+}
+
+void CSceneObject::drawByCenter()
+{
+    game->scene->positionItemByCenter(center, textureSize, angle, zOrder, position);
 }
 
 void CSceneObject::remove()

@@ -2,7 +2,7 @@
 
 #include <QSize>
 
-const bool CloseButtonInInfoBlocksEnabled = false;
+const bool CloseButtonInInfoBlocksEnabled = true;
 
 //all sizes are in pixels in local coordinate system 
 

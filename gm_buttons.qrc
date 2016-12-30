@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/gm">
+        <file>res/christmas/game_menu/button_1.png</file>
+        <file>res/christmas/game_menu/button_2.png</file>
+        <file>res/christmas/game_menu/button_3.png</file>
+        <file>res/christmas/game_menu/button_4.png</file>
+    </qresource>
+</RCC>

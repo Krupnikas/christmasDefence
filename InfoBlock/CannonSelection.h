@@ -13,8 +13,8 @@ class CCannonSelection : public IInfoBlock
     
 public:
 
-    CButton cannonButton[TypesOfCannon];
-    CButton closeButton;
+    std::vector<std::shared_ptr<CButton>> cannonButton;
+    std::shared_ptr<CButton> closeButton;
 
     qreal backgroundImageSize;
 
@@ -32,5 +32,5 @@ public:
     virtual void draw();
 
 private slots:
-    void onButtonPressed(eButtonTypes Type);
+    void onButtonPressed(eButtonType Type);
 };
