@@ -19,7 +19,7 @@ const qreal BurnCannonSmRadius = 300;
 const qreal BurnCannonMidRadius = 350;
 const qreal BurnCannonBigRadius = 400;
 
-const int BurnCannonSmCost = 7;
+const int BurnCannonSmCost = 13;
 const int BurnCannonMidCost = 14;
 const int BurnCannonBigCost = 25;
 
@@ -61,7 +61,7 @@ const qreal MonsterCannonSmRadius = 300;
 const qreal MonsterCannonMidRadius = 350;
 const qreal MonsterCannonBigRadius = 400;
 
-const int MonsterCannonSmCost = 7;
+const int MonsterCannonSmCost = 9;
 const int MonsterCannonMidCost = 14;
 const int MonsterCannonBigCost = 25;
 
@@ -83,6 +83,6 @@ const qreal SlowCannonSmRadius = 300;
 const qreal SlowCannonMidRadius = 350;
 const qreal SlowCannonBigRadius = 400;
 
-const int SlowCannonSmCost = 7;
+const int SlowCannonSmCost = 11;
 const int SlowCannonMidCost = 14;
 const int SlowCannonBigCost = 25;

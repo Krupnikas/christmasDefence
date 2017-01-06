@@ -90,6 +90,7 @@ struct R
     QPixmap coinsIcon;
 
     QPixmap cannonTypePreview[TypesOfCannon];
+    QPixmap cannonUnableTypePreview[TypesOfCannon];
 
     QPixmap cell1;
     QPixmap cell2;
@@ -144,6 +145,7 @@ struct R
     QString getGmWithPrefix(QString prefix, int num);
     
     QString getNameOfTypePreview(int num);
+    QString getNameOfUnableTypePreview(int num);
     
     R();
     

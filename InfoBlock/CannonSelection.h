@@ -28,6 +28,7 @@ public:
     void updateButtonsPositions();
 
     QPoint calculateTopLeftForButton(int i);
+    int getCannonPrice(int i);
     
     virtual void show();
     virtual void hide();
@@ -35,4 +36,5 @@ public:
 
 private slots:
     void onButtonPressed(eButtonType Type);
+    void onCashChanged(int newCash);
 };

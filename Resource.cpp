@@ -89,6 +89,7 @@ R::R()
     for (int i = 0; i < TypesOfCannon; i++)
     {
         cannonTypePreview[i] = QPixmap(get(getNameOfTypePreview(i)));
+        cannonUnableTypePreview[i] = QPixmap(get(getNameOfUnableTypePreview(i)));
     }
 }
 
@@ -117,5 +118,11 @@ QString R::getGmWithPrefix(QString prefix, int num)
 QString R::getNameOfTypePreview(int num)
 {
     QString str = "cannons/cannonPreviewType_" + QString::number(num) + ".png";
+    return str;
+}
+
+QString R::getNameOfUnableTypePreview(int num)
+{
+    QString str = "cannons/cannonPreviewUnableType_" + QString::number(num) + ".png";
     return str;
 }

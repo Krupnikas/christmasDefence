@@ -53,5 +53,9 @@
         <file>res/christmas/SmallBlockBG.png</file>
         <file>res/christmas/game_background.jpg</file>
         <file>res/christmas/field_background.jpg</file>
+        <file>res/christmas/cannons/cannonPreviewUnableType_0.png</file>
+        <file>res/christmas/cannons/cannonPreviewUnableType_1.png</file>
+        <file>res/christmas/cannons/cannonPreviewUnableType_2.png</file>
+        <file>res/christmas/cannons/cannonPreviewUnableType_3.png</file>
     </qresource>
 </RCC>

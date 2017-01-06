@@ -21,6 +21,10 @@ CCannonSelection::CCannonSelection(CGame *game, QPoint SelectedCell)
     initButtons();
     updatePosition(SelectedCell);
 
+    connect(&game->user,
+            SIGNAL(cashChanged(int)),
+            this,
+            SLOT(onCashChanged(int)));
 }
 
 CCannonSelection::~CCannonSelection()
@@ -151,6 +155,22 @@ QPoint CCannonSelection::calculateTopLeftForButton(int i)
     return topLeft;
 }
 
+int CCannonSelection::getCannonPrice(int i)
+{
+    switch (i){
+    case 0:
+        return FastCannonSmCost;
+    case 1:
+        return MonsterCannonSmCost;
+    case 2:
+        return SlowCannonSmCost;
+    case 3:
+        return BurnCannonSmCost;
+    default:
+        return 0;
+    }
+}
+
 void CCannonSelection::show()
 {
     CSceneObject::show();
@@ -209,4 +229,19 @@ void CCannonSelection::onButtonPressed(eButtonType Type)
         qDebug() << "Cannon Selection error! need type number " << Type;
     }
     game->deselectCell();
+}
+
+void CCannonSelection::onCashChanged(int newCash)
+{/*
+    for (int i = 0; i < TypesOfCannon; i++)
+    {
+        if (newCash < getCannonPrice(i))
+        {
+            //qDebug() << newCash << " trying to change pixmap to unable " << game->r->cannonUnableTypePreview[i];
+            cannonButton[i]->setPixmap(&game->r->cannonUnableTypePreview[i]);
+        } else {
+            cannonButton[i]->setPixmap(&game->r->cannonTypePreview[i]);
+        }
+        cannonButton[i]->draw();
+    }*/
 }
