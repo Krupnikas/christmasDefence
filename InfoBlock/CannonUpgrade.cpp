@@ -40,8 +40,9 @@ void CCannonUpgrade::initButtons()
         closeButton = std::make_shared<CButton>(
                     ButtonZOrder, rect.center(),
                     rect.size(),
-                    &game->r->buttonClose, &game->r->buttonClose, &game->r->buttonClose,
-                    game, eBTCloseButton);
+                    game, eBTCloseButton,
+                    &game->r->buttonClose
+                    );
 
         connect(closeButton.get(), SIGNAL(pressed(eButtonType)),
                 this, SLOT(onButtonPressed(eButtonType)));
@@ -53,8 +54,8 @@ void CCannonUpgrade::initButtons()
                 CannonUpgradeButtonSize);
     upgradeButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
                   rect.size(),
-                  &game->r->buttonUpgrade, &game->r->buttonUpgrade, &game->r->buttonUpgrade,
-                  game, eBTcannonUpgrade);
+                  game, eBTcannonUpgrade,
+                  &game->r->buttonUpgrade);
     connect(upgradeButton.get(), SIGNAL(pressed(eButtonType)),
             this, SLOT(onButtonPressed(eButtonType)));
     
@@ -67,8 +68,9 @@ void CCannonUpgrade::initButtons()
 
     sellButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
                     rect.size(),
-                    &game->r->buttonSell, &game->r->buttonSell, &game->r->buttonSell,
-                    game, eBTcannonSell);
+                    game, eBTcannonSell,
+                    &game->r->buttonSell
+                    );
 
     connect(sellButton.get(), SIGNAL(pressed(eButtonType)),
             this, SLOT(onButtonPressed(eButtonType)));

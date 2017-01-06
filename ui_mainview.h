@@ -31,7 +31,7 @@ public:
     {
         if (MainView->objectName().isEmpty())
             MainView->setObjectName(QStringLiteral("MainView"));
-        MainView->resize(800, 450);
+        MainView->resize(1000, 500);
         gridLayoutWidget = new QWidget(MainView);
         gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
         gridLayoutWidget->setGeometry(QRect(-470, 29, 81, 81));

@@ -36,7 +36,7 @@ const int TimerInterval = 16;
 
 const int GameMenuButtonNum = 4;
 
-const int UserCash = 200;
+const int UserCash = 20;
 const int UserHp = 30;
 
 #include <Metrics/ZOrderMetrics.h>

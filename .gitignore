@@ -6,7 +6,7 @@ christmasDefence.pro.user*
 *.o
 moc_*
 christmasDefence.app*
-qrc_qresource.cpp
+qrc*
 android-*
 app_process
 Makefile
@@ -15,3 +15,4 @@ debug*
 *.app
 *.Debug
 *.Release
+*cannon_?_*

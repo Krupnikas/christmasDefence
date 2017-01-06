@@ -42,8 +42,9 @@ void CCannonSelection::initButtons()
     closeButton = std::make_shared<CButton>(
                 ButtonZOrder, closeRect.center(),
                 closeRect.size(),
-                &game->r->buttonClose, &game->r->buttonClose, &game->r->buttonClose,
-                game, eBTCloseButton);
+                game, eBTCloseButton,
+                &game->r->buttonClose
+                );
     
     connect(closeButton.get(), SIGNAL(pressed(eButtonType)),
             this, SLOT(onButtonPressed(eButtonType)));
@@ -58,10 +59,9 @@ void CCannonSelection::initButtons()
         cannonButton[i] = std::make_shared<CButton>(
                     ButtonZOrder, buttonRect.center(),
                     buttonRect.size(),
-                    &game->r->cannonTypePreview[i],
-                    &game->r->cannonTypePreview[i],
-                    &game->r->cannonTypePreview[i],
-                    game, static_cast<eButtonType>(i + 2));
+                    game, static_cast<eButtonType>(eBTCloseButton + i + 1),
+                    &game->r->cannonTypePreview[i]
+                    );
         
         connect(cannonButton[i].get(), SIGNAL(pressed(eButtonType)),
                 this, SLOT(onButtonPressed(eButtonType)));

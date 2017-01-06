@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include <QMainWindow>
+#include <QEventLoop>
 #include <QTimer>
 #include <QTime>
 #include <QRect>
@@ -21,6 +22,7 @@
 #include <QLineF>
 #include <QtCore/qmath.h>
 #include <QDebug>
+#include <QThread>
 #include <qopengl.h>
 #include <QOpenGLContext>
 #include <QtOpenGL/QGLWidget>

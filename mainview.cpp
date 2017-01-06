@@ -118,28 +118,28 @@ void MainView::mouseMoveEvent(QMouseEvent *event)
 
 void MainView::mousePressEvent(QMouseEvent *event)
 {
-    //emit mouseDown(event);
-    /*
     switch (gameStatus)
     {
     case eGameStatus::eGameMenu:
-        gameMenu.hide();
-        game.show();
-        game.startGameLevel(1);
-        gameStatus = eGameStatus::eGame;
+        emit mouseDown(event);
         break;
     case eGameStatus::eLevelMenu:
         break;
     case eGameStatus::eGame:
     {
-        game.mousePressEvent(eventPress);
+        //QThread::msleep(500);
+        bool iv = game.cannonSelectionInfoBlock->isVisible();
+        bool sv = game.cannonUpgradeInfoBlock->isVisible();
+        if (!iv && !sv)
+            game.mousePressEvent(event);
 
-
+        emit mouseDown(event);
+        
         break;
     }
     default:
         qDebug() << "MainView: resizeEvent: invalid gameStatus";
-    }*/
+    }
 }
 
 void MainView::mouseReleaseEvent(QMouseEvent *event)
@@ -151,6 +151,8 @@ bool MainView::eventFilter(QObject *, QEvent *event)
 {
     if (gameStatus == eGameStatus::eNotInited)
         return false;
+    
+    QEventLoop loop;
     
     switch (event->type())
     {

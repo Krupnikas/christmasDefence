@@ -31,15 +31,15 @@ public:
     explicit MainView(QWidget *parent = 0);
     ~MainView();
 
-    void resizeEvent(QResizeEvent *);
-    virtual void showEvent(QShowEvent *event);
+    void resizeEvent(QResizeEvent *) override;
+    virtual void showEvent(QShowEvent *event) override;
     
     void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     
-    bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
 signals:
     void mousePressed(QMouseEvent *event);

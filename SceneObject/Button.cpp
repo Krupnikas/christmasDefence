@@ -3,10 +3,13 @@
 #include <mainview.h>
 
 CButton::CButton(qreal zOrder, QPointF center, QSizeF size,
-                 QPixmap *normalPixmap, QPixmap *focusedPixmap, QPixmap *pressedPixmap,
-                 CGame *game, eButtonType type):
+                 CGame *game, eButtonType type,
+                 QPixmap *normalPixmap, QPixmap *focusedPixmap,
+                 QPixmap *pressedPixmap, QPixmap *disabledPixmap,
+                 bool mouseTracking):
     type(type),
-    mouseDown(false)
+    mouseDown(false),
+    mouseTracking(mouseTracking)
 {
     this->zOrder = zOrder;
     
@@ -23,14 +26,20 @@ CButton::CButton(qreal zOrder, QPointF center, QSizeF size,
     focusedItem = std::make_shared<CSceneObject>(
                 0, zOrder,
                 leftTop, size,
-                focusedPixmap, game);
+                (focusedPixmap ? focusedPixmap: normalPixmap),
+                game);
     
     pressedItem = std::make_shared<CSceneObject>(
                 0, zOrder,
                 leftTop, size,
-                pressedPixmap, game);
+                (pressedPixmap ? pressedPixmap : normalPixmap),
+                game);
     
-
+    disabledItem = std::make_shared<CSceneObject>(
+                0, zOrder,
+                leftTop, size,
+                (disabledPixmap ? disabledPixmap : normalPixmap),
+                game);
 }
 
 void CButton::scale()
@@ -135,6 +144,9 @@ void CButton::setLeftTop(const QPointF &value)
 
 void CButton::onMouseMove(QMouseEvent *event)
 {
+    if (!mouseTracking)
+        return;
+    
     QPointF p(game->scene->toLocalPoint(event->localPos()));
     
     if (!isVisible())
@@ -164,14 +176,24 @@ void CButton::onMouseDown(QMouseEvent *event)
     if (!isVisible() || !checkInside(p))
         return;
     
-    mouseDown = true;
-    normalItem->hide();
-    focusedItem->hide();
-    pressedItem->show();
+    if (mouseTracking)
+    {
+        mouseDown = true;
+        normalItem->hide();
+        focusedItem->hide();
+        pressedItem->show();
+    }
+    else
+    {
+        emit pressed(type);
+    }
 }
 
 void CButton::onMouseUp(QMouseEvent *event)
 {
+    if (!mouseTracking)
+        return;
+    
     QPointF p(game->scene->toLocalPoint(event->localPos()));
     
     if (!isVisible())
@@ -197,7 +219,7 @@ void CButton::onMouseUp(QMouseEvent *event)
     }
 }
 
-CButton::checkInside(QPointF p)
+bool CButton::checkInside(QPointF p)
 {
     QRectF buttonRect(leftTop, size);
     return buttonRect.contains(p);

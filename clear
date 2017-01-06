@@ -5,6 +5,6 @@ rm *.so
 rm *.Debug
 rm *.Release
 rm app_process
-rm qrc_qresource.cpp
+rm qrc*
 rm -r *.app
 rm -r android-*

@@ -9,8 +9,11 @@ class CButton: public CSceneObject
     
 public:
     CButton(qreal zOrder, QPointF center, QSizeF size,
-            QPixmap *normalPixmap, QPixmap *focusedPixmap, QPixmap *pressedPixmap,
-            CGame *game, eButtonType type);
+            CGame *game, eButtonType type,
+            QPixmap *normalPixmap, QPixmap *focusedPixmap = nullptr,
+            QPixmap *pressedPixmap = nullptr, QPixmap *disabledPixmap = nullptr,
+            bool mouseTracking = false
+            );
     
     virtual void scale();
     virtual void scaleWithLoss(QSizeF newSize);
@@ -37,15 +40,17 @@ signals:
     
 //private methods
 private:
-    checkInside(QPointF p);
+    bool checkInside(QPointF p);
     
 //private fields
 private:
     std::shared_ptr<CSceneObject> normalItem;
     std::shared_ptr<CSceneObject> focusedItem;
     std::shared_ptr<CSceneObject> pressedItem;
+    std::shared_ptr<CSceneObject> disabledItem;
     
     eButtonType type;
     
     bool mouseDown;
+    bool mouseTracking;
 };
