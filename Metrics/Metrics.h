@@ -2,7 +2,7 @@
 
 #include <QSize>
 
-const bool CloseButtonInInfoBlocksEnabled = true;
+const bool CloseButtonInInfoBlocksEnabled = false;
 
 //all sizes are in pixels in local coordinate system 
 
@@ -10,8 +10,6 @@ const int LocalWidth = 1600;
 const int LocalHeight = 900;
 
 const int MenuButtonOffset = 1;
-const int CannonSelectionOffsetX = 20;
-const int CannonSelectionOffsetY = 20;
 
 const int OffsetY = 15;
 

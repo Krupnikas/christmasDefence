@@ -47,7 +47,7 @@ void CBurnCannon::upgrade()
     int upgradeCost = getUpgradeCost();
     if (upgradeCost > game->user.getCash())
     {
-        qDebug() << "Too expensive to upgrage FastCannon";
+        qDebug() << "Too expensive to upgrage BurnCannon";
         return;
     }
     game->user.decreaseCash(upgradeCost);

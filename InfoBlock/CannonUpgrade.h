@@ -8,7 +8,7 @@ class CCannonUpgrade : public IInfoBlock
 {
       Q_OBJECT
 public:
-    CCannonUpgrade(CGame *game, QPoint selectedCell);
+    CCannonUpgrade(CGame *game, QPoint SelectedCell);
 
 
     std::shared_ptr<CButton> upgradeButton;
@@ -16,8 +16,9 @@ public:
     std::shared_ptr<CButton> closeButton;
 
     qreal backgroundImageSize;
+    QPoint selectedCell;
 
-    void updatePosition(QPoint selectedCell);
+    void updatePosition(QPoint SelectedCell);
     void initButtons();
     void updateButtonsPositions();
 

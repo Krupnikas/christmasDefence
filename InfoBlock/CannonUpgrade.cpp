@@ -1,6 +1,6 @@
 #include "CannonUpgrade.h"
 
-CCannonUpgrade::CCannonUpgrade(CGame *game, QPoint selectedCell)
+CCannonUpgrade::CCannonUpgrade(CGame *game, QPoint SelectedCell)
 {
     //IGameObject fields
     this->label = "Cannon Upgrade Block";
@@ -15,17 +15,20 @@ CCannonUpgrade::CCannonUpgrade(CGame *game, QPoint selectedCell)
     this->pixmap = &game->r->cannonUpgradeBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
 
-    this->center = game->cellCenter(selectedCell);
+    this->center = game->cellCenter(SelectedCell);
+
+    this->selectedCell = SelectedCell;
 
     initButtons();
-    updatePosition(selectedCell);
+    updatePosition(SelectedCell);
 }
 
-void CCannonUpgrade::updatePosition(QPoint selectedCell)
+void CCannonUpgrade::updatePosition(QPoint SelectedCell)
 {
-    center = game->cellCenter(selectedCell);
+    center = game->cellCenter(SelectedCell);
     setLeftTop(center - QPointF(backgroundImageSize/2,
                                 backgroundImageSize/2));
+    selectedCell = SelectedCell;
     updateButtonsPositions();
 }
 
@@ -85,12 +88,21 @@ void CCannonUpgrade::updateButtonsPositions()
         closeButton->draw();
     }
 
+    if (selectedCell.y() == 0) {
+        upgradeButton->setLeftTop(QPointF(center.x() - cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
+                                         center.y() + sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2));
+
+        sellButton->setLeftTop(QPointF(center.x() + cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
+                                      center.y() + sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2));
+    } else {
     upgradeButton->setLeftTop(QPointF(center.x() - cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
                                      center.y() - sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2));
-    upgradeButton->draw();
 
     sellButton->setLeftTop(QPointF(center.x() + cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
                                   center.y() - sin(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2));
+    }
+
+    upgradeButton->draw();
     sellButton->draw();
 }
 
