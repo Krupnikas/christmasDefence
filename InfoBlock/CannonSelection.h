@@ -18,10 +18,12 @@ public:
 
     qreal backgroundImageSize;
 
-    CCannonSelection(CGame *game, QPoint selectedCell);
+    QPoint selectedCell;
+
+    CCannonSelection(CGame *game, QPoint SelectedCell);
     ~CCannonSelection();
 
-    void updatePosition(QPoint selectedCell);
+    void updatePosition(QPoint SelectedCell);
     void initButtons();
     void updateButtonsPositions();
 
