@@ -7,6 +7,7 @@
 #include <InfoBlock/CannonSelection.h>
 #include <InfoBlock/CannonUpgrade.h>
 #include <InfoBlock/UserInfo.h>
+#include <InfoBlock/WaveInfoBlock.h>
 #include <Wave/WaveManager.h>
 #include <SceneObject/Button.h>
 
@@ -44,6 +45,7 @@ void CGame::create()
     cannonSelectionInfoBlock = std::make_shared<CCannonSelection>(this, UnselCell);
     cannonUpgradeInfoBlock = std::make_shared<CCannonUpgrade>(this, UnselCell);
     userInformationBlock = std::make_shared<CUserInfo>(this);
+    waveInformationBlock = std::make_shared<CWaveInfoBlock>(this);
     
     
     menuButton = std::make_shared<CButton>(
@@ -65,6 +67,9 @@ void CGame::show()
 
     userInformationBlock->draw();
     userInformationBlock->show();
+
+    waveInformationBlock->draw();
+    waveInformationBlock->show();
     
     menuButton->draw();
     menuButton->show();
@@ -87,6 +92,7 @@ void CGame::hide()
     
     background->hide();
     userInformationBlock->hide();
+    waveInformationBlock->hide();
     menuButton->hide();
 
     for (size_t i = 0; i < bullets.size(); ++i)
@@ -113,6 +119,7 @@ void CGame::close()
     
     background->remove();
     userInformationBlock->remove();
+    waveInformationBlock->remove();
     menuButton->remove();
 
     endGame();
@@ -477,6 +484,13 @@ void CGame::scaleObjects()
         userInformationBlock->scale();
         userInformationBlock->draw();
         userInformationBlock->show();
+    }
+
+    if (waveInformationBlock)
+    {
+        waveInformationBlock->scale();
+        waveInformationBlock->draw();
+        waveInformationBlock->show();
     }
     
     menuButton->scale();

@@ -100,6 +100,8 @@ struct R
     
     QPixmap hp_icon;
     QPixmap coins_icon;
+    QPixmap current_wave_icon;
+    QPixmap wave_counter_icon;
     QPixmap game_menu_button;
 
     QPixmap cannonTypePreview[TypesOfCannon];

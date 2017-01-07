@@ -56,6 +56,8 @@ R::R()
     
     hp_icon = QPixmap(get("hp.png"));
     coins_icon = QPixmap(get("coin.png"));
+    wave_counter_icon = QPixmap(get("waveCounterIcon"));
+    current_wave_icon = QPixmap(get("currentWaveIcon"));
     game_menu_button = QPixmap(get("menu_button"));
 
     buttonUpgrade = QPixmap(get("upgrade.png"));

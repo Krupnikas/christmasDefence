@@ -238,7 +238,7 @@ std::shared_ptr<QPixmap> renderPixmapFromText(QString Text)
     pixmap->fill(Qt::transparent);
 
     QPainter painter(pixmap.get());
-    painter.setPen(QPen(QBrush(Qt::black), 4));
+    painter.setPen(QPen(QBrush(Qt::black), 2));
     painter.setBrush(Qt::white);
     painter.setRenderHint(QPainter::HighQualityAntialiasing);
     path.addText(QPointF(10 + i * myFont.pointSize() * 0.4, 96), myFont, Text);

@@ -48,7 +48,6 @@ SOURCES += \
     InfoBlock/PauseWindow.cpp \
     InfoBlock/CannonSelection.cpp \
     \
-    InfoBlock/WaveInfo/WaveInfo.cpp \
     InfoBlock/CannonUpgrade.cpp \
     InfoBlock/ImageAndNumber.cpp \
     \
@@ -62,7 +61,8 @@ SOURCES += \
     SceneObject/SceneObject.cpp \
     SceneObject/ButtonDepr.cpp \
     SceneObject/Button.cpp \
-    Menu/LevelMenu.cpp
+    Menu/LevelMenu.cpp \
+    InfoBlock/WaveInfoBlock.cpp
 
 
 HEADERS  += \
@@ -99,7 +99,6 @@ HEADERS  += \
     InfoBlock/ControlButtons.h \
     InfoBlock/PauseWindow.h \
     InfoBlock/CannonSelection.h \
-    InfoBlock/WaveInfo/WaveInfo.h \
     InfoBlock/CannonUpgrade.h \
     InfoBlock/ImageAndNumber.h \
     \
@@ -118,7 +117,8 @@ HEADERS  += \
     SceneObject/SceneObject.h \
     SceneObject/GameBackground.h \
     SceneObject/ButtonDepr.h \
-    SceneObject/Button.h
+    SceneObject/Button.h \
+    InfoBlock/WaveInfoBlock.h
 
 FORMS    += mainview.ui
 
