@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/lm">
+        <file>res/christmas/level_menu/1.png</file>
+        <file>res/christmas/level_menu/2.png</file>
+        <file>res/christmas/level_menu/3.png</file>
+        <file>res/christmas/level_menu/background.jpg</file>
+        <file>res/christmas/level_menu/caption.png</file>
+        <file>res/christmas/level_menu/back.png</file>
+    </qresource>
+</RCC>

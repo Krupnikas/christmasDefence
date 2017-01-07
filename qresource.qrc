@@ -57,5 +57,6 @@
         <file>res/christmas/cannons/cannonPreviewUnableType_1.png</file>
         <file>res/christmas/cannons/cannonPreviewUnableType_2.png</file>
         <file>res/christmas/cannons/cannonPreviewUnableType_3.png</file>
+        <file>res/christmas/menu_button.png</file>
     </qresource>
 </RCC>

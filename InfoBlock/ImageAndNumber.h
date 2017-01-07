@@ -21,8 +21,10 @@ public:
 
     void changeText(QString newText);
 
-    virtual void draw();
-    virtual void show();
-    virtual void scale();
+    virtual void scale() override;
+    virtual void remove() override;
+    virtual void draw() override;
+    virtual void hide() override;
+    virtual void show() override;
 };
 

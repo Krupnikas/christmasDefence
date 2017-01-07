@@ -16,13 +16,13 @@ CUserInfo::CUserInfo(CGame *game)
     this->leftTop = QPointF(0, 0);
 
     hp = std::make_shared<CImageAndNumber>(game,
-                                           &game->r->hpIcon,
+                                           &game->r->hp_icon,
                                            QRect(leftTop.toPoint() + QPoint(INTERNAL_OFFSET_X,
                                                                   INTERNAL_OFFSET_Y),
                                                  QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
                                                        (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2)));
     coins = std::make_shared<CImageAndNumber>(game,
-                                           &game->r->coinsIcon,
+                                           &game->r->coins_icon,
                                            QRect(leftTop.toPoint() + QPoint(INTERNAL_OFFSET_X,
                                                                   INTERNAL_OFFSET_Y * 2 + (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2),
                                                  QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
@@ -55,6 +55,13 @@ void CUserInfo::draw()
     coins->draw();
 }
 
+void CUserInfo::hide()
+{
+    CSceneObject::hide();
+    hp->hide();
+    coins->hide();
+}
+
 void CUserInfo::show()
 {
     CSceneObject::show();
@@ -67,6 +74,13 @@ void CUserInfo::scale()
     CSceneObject::scale();
     hp->scale();
     coins->scale();
+}
+
+void CUserInfo::remove()
+{
+    hp->remove();
+    coins->remove();
+    CSceneObject::remove();
 }
 
 void CUserInfo::onHpChanged(int newHp)

@@ -40,7 +40,7 @@ SOURCES += \
     Game/Game.cpp \
     Game/User.cpp \
     \
-    GameMenu/GameMenu.cpp \
+    Menu/GameMenu.cpp \
     \
     InfoBlock/IInfoBlock.cpp \
     InfoBlock/UserInfo.cpp \
@@ -61,7 +61,8 @@ SOURCES += \
     SceneObject/GameBackground.cpp \
     SceneObject/SceneObject.cpp \
     SceneObject/ButtonDepr.cpp \
-    SceneObject/Button.cpp
+    SceneObject/Button.cpp \
+    Menu/LevelMenu.cpp
 
 
 HEADERS  += \
@@ -90,7 +91,8 @@ HEADERS  += \
     Game/Game.h \
     Game/User.h \
     \
-    GameMenu/GameMenu.h \
+    Menu/GameMenu.h \
+    Menu/LevelMenu.h \
     \
     InfoBlock/IInfoBlock.h \
     InfoBlock/UserInfo.h \
@@ -125,6 +127,8 @@ RESOURCES += \
     gm_focused_buttons.qrc \
     gm_buttons.qrc \
     gm_pressed_buttons.qrc \
-    gm.qrc
+    gm.qrc \
+    level_menu.qrc \
+    lm_buttons.qrc
 
 DISTFILES +=

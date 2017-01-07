@@ -2,7 +2,7 @@
 
 #include <QSize>
 
-const bool CloseButtonInInfoBlocksEnabled = false;
+const bool CloseButtonInInfoBlocksEnabled = true;
 
 //all sizes are in pixels in local coordinate system 
 
@@ -33,6 +33,7 @@ const int EntranceY = CellNumY / 2;
 const int TimerInterval = 16;
 
 const int GameMenuButtonNum = 4;
+const int LevelNum = 3;
 
 const int UserCash = 20;
 const int UserHp = 30;

@@ -3,7 +3,7 @@
 #include <mainview.h>
 
 CButton::CButton(qreal zOrder, QPointF center, QSizeF size,
-                 CGame *game, eButtonType type,
+                 CGame *game, int type,
                  QPixmap *normalPixmap, QPixmap *focusedPixmap,
                  QPixmap *pressedPixmap, QPixmap *disabledPixmap,
                  bool mouseTracking):
@@ -191,13 +191,10 @@ void CButton::onMouseDown(QMouseEvent *event)
 
 void CButton::onMouseUp(QMouseEvent *event)
 {
-    if (!mouseTracking)
+    if (!mouseTracking || !isVisible())
         return;
     
     QPointF p(game->scene->toLocalPoint(event->localPos()));
-    
-    if (!isVisible())
-        return;
     
     if (mouseDown)
     {

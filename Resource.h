@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QApplication>
 #include <QWidget>
 #include <QMainWindow>
 #include <QEventLoop>
@@ -66,12 +67,15 @@ enum eButtonType{
     eBTgmQuickPlay,
     eBTgmDev,
     eBTgmExit,
+    eBTgMenu
 };
 
 struct R
 {
+    QString dir;
     QString res_dir;
     QString gm_dir;
+    QString lm_dir;
     
     QPixmap game_background;
     QPixmap field_background;
@@ -86,8 +90,17 @@ struct R
     std::vector<QPixmap> gm_focused_buttons;
     std::vector<QPixmap> gm_pressed_buttons;
     
-    QPixmap hpIcon;
-    QPixmap coinsIcon;
+    QPixmap level_menu_background;
+    QPixmap level_menu_caption;
+    QPixmap level_menu_back;
+    std::vector<QPixmap> lm_levels;
+    std::vector<QPixmap> lm_focused_levels;
+    std::vector<QPixmap> lm_pressed_levels;
+    std::vector<QPixmap> lm_disabled_levels;
+    
+    QPixmap hp_icon;
+    QPixmap coins_icon;
+    QPixmap game_menu_button;
 
     QPixmap cannonTypePreview[TypesOfCannon];
     QPixmap cannonUnableTypePreview[TypesOfCannon];
@@ -138,11 +151,16 @@ struct R
     QPixmap enemy_comes;
     QString waves;
     
+    //QString get(QString file, QString root = QString("/"), QString subdir = QString(""));
+    
     QString get(QString val);
     QString getWithPrefix(QString prefix, int num);
     
     QString getGm(QString val);
     QString getGmWithPrefix(QString prefix, int num);
+    
+    QString getLm(QString val);
+    QString getLmWithPrefix(QString prefix, int num);
     
     QString getNameOfTypePreview(int num);
     QString getNameOfUnableTypePreview(int num);

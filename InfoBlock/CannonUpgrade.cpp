@@ -47,8 +47,8 @@ void CCannonUpgrade::initButtons()
                     &game->r->buttonClose
                     );
 
-        connect(closeButton.get(), SIGNAL(pressed(eButtonType)),
-                this, SLOT(onButtonPressed(eButtonType)));
+        connect(closeButton.get(), SIGNAL(pressed(int)),
+                this, SLOT(onButtonPressed(int)));
     }
 
     QRectF rect(center.x() - cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
@@ -59,8 +59,8 @@ void CCannonUpgrade::initButtons()
                   rect.size(),
                   game, eBTcannonUpgrade,
                   &game->r->buttonUpgrade);
-    connect(upgradeButton.get(), SIGNAL(pressed(eButtonType)),
-            this, SLOT(onButtonPressed(eButtonType)));
+    connect(upgradeButton.get(), SIGNAL(pressed(int)),
+            this, SLOT(onButtonPressed(int)));
     
     
     rect = QRectF(center.x() + cos(1) * CannonUpgradeRadius - CannonUpgradeButtonSize/2,
@@ -75,8 +75,8 @@ void CCannonUpgrade::initButtons()
                     &game->r->buttonSell
                     );
 
-    connect(sellButton.get(), SIGNAL(pressed(eButtonType)),
-            this, SLOT(onButtonPressed(eButtonType)));
+    connect(sellButton.get(), SIGNAL(pressed(int)),
+            this, SLOT(onButtonPressed(int)));
 }
 
 void CCannonUpgrade::updateButtonsPositions()
@@ -139,9 +139,11 @@ void CCannonUpgrade::draw()
     sellButton->draw();
 }
 
-void CCannonUpgrade::onButtonPressed(eButtonType Type)
+void CCannonUpgrade::onButtonPressed(int type)
 {
-    switch (Type){
+    eButtonType eType = static_cast<eButtonType>(type);
+    
+    switch (eType){
     case eBTCloseButton:
         break;
     case eBTcannonUpgrade:
@@ -151,7 +153,7 @@ void CCannonUpgrade::onButtonPressed(eButtonType Type)
         game->sellCannon(game->selectedCell);
         break;
     default:
-        qDebug() << "Cannon Selection error! need type number " << Type;
+        qDebug() << "Cannon Selection error! need type number " << type;
     }
     game->deselectCell();
 }

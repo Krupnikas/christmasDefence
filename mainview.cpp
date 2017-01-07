@@ -10,14 +10,19 @@
 #include <InfoBlock/CannonSelection.h>
 #include <InfoBlock/CannonUpgrade.h>
 
-MainView::MainView(QWidget *parent) :
+MainView::MainView(QApplication *app, QWidget *parent):
     QWidget(parent),
+    app(app),
     gameStatus(eGameStatus::eNotInited),
     r(), scene(&r),
     game(&r, &scene, this),
     gameMenu(&game),
+    levelMenu(&game),
     ui(new Ui::MainView)
 {
+    //app setting
+    app->installEventFilter(this);
+    
     //layout setting
     ui->setupUi(this);
     this->setLayout(ui->gridLayout);
@@ -49,14 +54,7 @@ MainView::MainView(QWidget *parent) :
 
     QSurfaceFormat::setDefaultFormat(fmt);
     
-    //interface connection setting
-    connect(this, SIGNAL(mousePressEvent(QMouseEvent*)),
-            &game, SLOT(onMousePressed(QMouseEvent*)));
-//    connect(this, SIGNAL(mouseMoveEvent(QMouseEvent*)),
-//            &game, SLOT(onMouseMoved(QMouseEvent*)));
-
    // this->showFullScreen();*/
-    setMouseTracking(true);
 }
 
 MainView::~MainView()
@@ -82,7 +80,6 @@ void MainView::resizeEvent(QResizeEvent *event)
     }
 
     //QTimer::singleShot(2000, this, SLOT(setEnabled()));
-
 }
 
 void MainView::showEvent(QShowEvent*)
@@ -91,6 +88,7 @@ void MainView::showEvent(QShowEvent*)
     scene.updateGameRect(ui->gridLayout->geometry());
 
     gameMenu.create();
+    levelMenu.create();
     game.create();
 
     gameMenu.show();
@@ -121,7 +119,7 @@ void MainView::mousePressEvent(QMouseEvent *event)
     switch (gameStatus)
     {
     case eGameStatus::eGameMenu:
-        emit mouseDown(event);
+        //emit mouseDown(event);
         break;
     case eGameStatus::eLevelMenu:
         break;
@@ -149,6 +147,7 @@ void MainView::mouseReleaseEvent(QMouseEvent *event)
 
 bool MainView::eventFilter(QObject *, QEvent *event)
 {
+    QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
     if (gameStatus == eGameStatus::eNotInited)
         return false;
     
@@ -156,18 +155,23 @@ bool MainView::eventFilter(QObject *, QEvent *event)
     
     switch (event->type())
     {
-    /*case QEvent::MouseMove:
-        emit mouseMoved(dynamic_cast<QMouseEvent*>(event));
-        return true;*/
-    case QEvent::MouseButtonPress:
-        emit mouseDown(dynamic_cast<QMouseEvent*>(event));
-        if (gameStatus == eGameStatus::eGame &&
-                !game.cannonSelectionInfoBlock->isVisible() &&
-                !game.cannonUpgradeInfoBlock->isVisible())
-            game.mousePressEvent(dynamic_cast<QMouseEvent*>(event));
+    case QEvent::MouseMove:
+        emit mouseMoved(mouseEvent);
         return true;
+    case QEvent::MouseButtonPress:
+    {
+
+        bool iv = game.cannonSelectionInfoBlock->isVisible();
+        bool sv = game.cannonUpgradeInfoBlock->isVisible();
+        if (gameStatus == eGameStatus::eGame && !iv && !sv)
+            game.mousePressEvent(mouseEvent);
+
+        emit mouseDown(mouseEvent);
+
+        return true;
+    }
     case QEvent::MouseButtonRelease:
-        emit mouseUp(dynamic_cast<QMouseEvent*>(event));
+        emit mouseUp(mouseEvent);
         return true;
     default:
         return false;

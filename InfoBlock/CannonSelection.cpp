@@ -55,8 +55,8 @@ void CCannonSelection::initButtons()
                     &game->r->buttonClose
                     );
 
-        connect(closeButton.get(), SIGNAL(pressed(eButtonType)),
-                this, SLOT(onButtonPressed(eButtonType)));
+        connect(closeButton.get(), SIGNAL(pressed(int)),
+                this, SLOT(onButtonPressed(int)));
     }
     cannonButton.resize(TypesOfCannon);    
     for (int i = 0; i < TypesOfCannon; i++)
@@ -72,8 +72,8 @@ void CCannonSelection::initButtons()
                     &game->r->cannonTypePreview[i]
                     );
         
-        connect(cannonButton[i].get(), SIGNAL(pressed(eButtonType)),
-                this, SLOT(onButtonPressed(eButtonType)));
+        connect(cannonButton[i].get(), SIGNAL(pressed(int)),
+                this, SLOT(onButtonPressed(int)));
     }
 }
 
@@ -208,9 +208,11 @@ void CCannonSelection::draw()
     }
 }
 
-void CCannonSelection::onButtonPressed(eButtonType Type)
+void CCannonSelection::onButtonPressed(int type)
 {
-    switch (Type){
+    eButtonType eType = static_cast<eButtonType>(type);
+    
+    switch (eType){
     case eBTCloseButton:
         break;
     case eBTChooseFast:
@@ -226,12 +228,12 @@ void CCannonSelection::onButtonPressed(eButtonType Type)
         game->buyCannon(std::make_shared<CBurnCannon>(game, game->selectedCell, 0));
         break;
     default:
-        qDebug() << "Cannon Selection error! need type number " << Type;
+        qDebug() << "Cannon Selection error! need type number " << type;
     }
     game->deselectCell();
 }
 
-void CCannonSelection::onCashChanged(int newCash)
+void CCannonSelection::onCashChanged(int)
 {/*
     for (int i = 0; i < TypesOfCannon; i++)
     {

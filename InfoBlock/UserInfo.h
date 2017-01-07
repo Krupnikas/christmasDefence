@@ -15,9 +15,11 @@ public:
     std::shared_ptr<CImageAndNumber> hp;
     std::shared_ptr<CImageAndNumber> coins;
 
-    virtual void draw();
-    virtual void show();
-    virtual void scale();
+    virtual void scale() override;
+    virtual void remove() override;
+    virtual void draw() override;
+    virtual void hide() override;
+    virtual void show() override;
 
 public slots:
     void onHpChanged(int newHp);

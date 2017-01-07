@@ -27,6 +27,6 @@ public:
     virtual void draw();
 
 private slots:
-    void onButtonPressed(eButtonType Type);
+    void onButtonPressed(int type);
 };
 

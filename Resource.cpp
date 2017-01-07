@@ -2,8 +2,10 @@
 
 R::R()
 {
+    dir = "res/christmas/";
     res_dir = "://res/christmas/";
     gm_dir = "://gm/res/christmas/game_menu/";
+    lm_dir = "://lm/res/christmas/level_menu/";
     
     //GameMenu resources
     game_menu_background = QPixmap(getGm("background"));
@@ -21,6 +23,24 @@ R::R()
     for (int i = 0; i < GameMenuButtonNum; ++i)
         gm_pressed_buttons[i] = QPixmap(getGmWithPrefix("pressed_button_", i + 1));
 
+    //LevelMenu resources
+    level_menu_background = QPixmap(getLm("background"));
+    level_menu_caption = QPixmap(getLm("caption"));
+    level_menu_back = QPixmap(getLm("back"));
+    
+    lm_levels.resize(LevelNum);
+    for (int i = 0; i < LevelNum; ++i)
+        lm_levels[i] = QPixmap(getLmWithPrefix("", i + 1));
+    
+    lm_focused_levels.resize(LevelNum);
+    for (int i = 0; i < LevelNum; ++i)
+        lm_focused_levels[i] = QPixmap(getLmWithPrefix("focused_", i + 1));
+
+    lm_pressed_levels.resize(LevelNum);
+    for (int i = 0; i < LevelNum; ++i)
+        lm_pressed_levels[i] = QPixmap(getLmWithPrefix("pressed_", i + 1));
+    
+    
     //Game resources
     cell1 = QPixmap(get("cell1"));
     cell2 = QPixmap(get("cell2"));
@@ -34,8 +54,9 @@ R::R()
     imageAndNumberBackground = QPixmap(get("SmallBlockBG.png"));
     userInfoBackground = QPixmap(get("userInfoBlock.png"));
     
-    hpIcon = QPixmap(get("hp.png"));
-    coinsIcon = QPixmap(get("coin.png"));
+    hp_icon = QPixmap(get("hp.png"));
+    coins_icon = QPixmap(get("coin.png"));
+    game_menu_button = QPixmap(get("menu_button"));
 
     buttonUpgrade = QPixmap(get("upgrade.png"));
     buttonSell = QPixmap(get("sell.png"));
@@ -93,6 +114,12 @@ R::R()
     }
 }
 
+/*QString R::get(QString file, QString root, QString subdir)
+{
+    QString result = QString(":/") + root + dir + subdir;
+    return result;
+}*/
+
 QString R::get(QString val)
 {
     QString str = res_dir + val;
@@ -113,6 +140,17 @@ QString R::getGm(QString val)
 QString R::getGmWithPrefix(QString prefix, int num)
 {
     return getGm(prefix + QString::number(num));
+}
+
+QString R::getLm(QString val)
+{
+    QString str = lm_dir + val;
+    return str;
+}
+
+QString R::getLmWithPrefix(QString prefix, int num)
+{
+    return getLm(prefix + QString::number(num));
 }
 
 QString R::getNameOfTypePreview(int num)

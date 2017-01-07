@@ -9,10 +9,12 @@ public:
     CUser();
         
     int getCash() const;
+    void setCash(int value);
     void increaseCash(int value);
     void decreaseCash(int value);
     
     int getHp() const;
+    void setHp(int value);
     void increaseHp(int value);
     void decreaseHp(int value);
     

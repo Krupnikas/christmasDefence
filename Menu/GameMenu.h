@@ -20,11 +20,9 @@ public:
     virtual void hide() override;
     virtual void resize() override;
     virtual void close() override;
-    virtual void mousePressEvent(QMouseEvent *event) override;
-    virtual void mouseMoveEvent(QMouseEvent *event) override;
     
 private slots:
-    void onButtonPressed(eButtonType type);
+    void onButtonPressed(int type);
 
 private:
     CGame *game;

@@ -9,7 +9,7 @@ class CButton: public CSceneObject
     
 public:
     CButton(qreal zOrder, QPointF center, QSizeF size,
-            CGame *game, eButtonType type,
+            CGame *game, int type,
             QPixmap *normalPixmap, QPixmap *focusedPixmap = nullptr,
             QPixmap *pressedPixmap = nullptr, QPixmap *disabledPixmap = nullptr,
             bool mouseTracking = false
@@ -36,7 +36,7 @@ public slots:
     void onMouseUp(QMouseEvent *event);
     
 signals:
-    void pressed(eButtonType Type);
+    void pressed(int Type);
     
 //private methods
 private:
@@ -49,7 +49,7 @@ private:
     std::shared_ptr<CSceneObject> pressedItem;
     std::shared_ptr<CSceneObject> disabledItem;
     
-    eButtonType type;
+    int type;
     
     bool mouseDown;
     bool mouseTracking;

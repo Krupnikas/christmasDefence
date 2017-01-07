@@ -45,11 +45,32 @@ void CImageAndNumber::changeText(QString newText)
     text->setPixmap(renderedText.get());
 }
 
+void CImageAndNumber::scale()
+{
+    CSceneObject::scale();
+    icon->scale();
+    text->scale();
+}
+
+void CImageAndNumber::remove()
+{
+    icon->remove();
+    text->remove();
+    CSceneObject::remove();
+}
+
 void CImageAndNumber::draw()
 {
     CSceneObject::draw();
     icon->draw();
     text->draw();
+}
+
+void CImageAndNumber::hide()
+{
+    CSceneObject::hide();
+    icon->hide();
+    text->hide();
 }
 
 void CImageAndNumber::show()
@@ -59,10 +80,5 @@ void CImageAndNumber::show()
     text->show();
 }
 
-void CImageAndNumber::scale()
-{
-    CSceneObject::scale();
-    icon->scale();
-    text->scale();
-}
+
 

@@ -8,6 +8,7 @@
 #include <InfoBlock/CannonUpgrade.h>
 #include <InfoBlock/UserInfo.h>
 #include <Wave/WaveManager.h>
+#include <SceneObject/Button.h>
 
 
 CGame::CGame(R *r, CScene *scene, MainView *view):
@@ -43,15 +44,30 @@ void CGame::create()
     cannonSelectionInfoBlock = std::make_shared<CCannonSelection>(this, UnselCell);
     cannonUpgradeInfoBlock = std::make_shared<CCannonUpgrade>(this, UnselCell);
     userInformationBlock = std::make_shared<CUserInfo>(this);
+    
+    
+    menuButton = std::make_shared<CButton>(
+                BackgroundZOrder + 0.1,
+                QPointF(OffsetX / 2, LocalHeight - CellSize / 2),
+                QSizeF(CellSize, CellSize),
+                this, static_cast<int>(eButtonType::eBTgMenu),
+                &r->game_menu_button
+                );
+    connect(menuButton.get(), SIGNAL(pressed(int)), this, SLOT(onButtonPressed(int)));
 }
 
 void CGame::show()
 {
+    view->app->removeEventFilter(view);
+    
     background->draw();
     background->show();
 
     userInformationBlock->draw();
     userInformationBlock->show();
+    
+    menuButton->draw();
+    menuButton->show();
 
     for (size_t i = 0; i < bullets.size(); ++i)
         bullets[i]->show();
@@ -61,12 +77,17 @@ void CGame::show()
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
                 cannons[i][j]->show();
+    
+    view->gameStatus = eGameStatus::eGame;
 }
 
 void CGame::hide()
 {
+    deselectCell();
+    
     background->hide();
     userInformationBlock->hide();
+    menuButton->hide();
 
     for (size_t i = 0; i < bullets.size(); ++i)
         bullets[i]->hide();
@@ -76,6 +97,8 @@ void CGame::hide()
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
                 cannons[i][j]->hide();
+    
+    view->app->installEventFilter(view);
 }
 
 void CGame::resize()
@@ -86,8 +109,43 @@ void CGame::resize()
 
 void CGame::close()
 {
+    deselectCell();
+    
+    background->remove();
     userInformationBlock->remove();
+    menuButton->remove();
 
+    endGame();
+}
+
+void CGame::mousePressEvent(QMouseEvent *)
+{
+    if (pressedButton != eBTnone){
+        pressedButton = eBTnone;
+        return;
+    }
+
+    QPointF p = view->mapFromGlobal(QCursor::pos());
+    QPoint curSelectedCell = findNearestCell(scene->toLocalPoint(p));
+
+    selectCell(curSelectedCell);
+}
+
+
+void CGame::startGameLevel(int level)
+{
+    user.setHp(UserHp);
+    user.setCash(UserCash);
+    
+    waveManager.initialize(this, level);
+    helper::updateDistances(cannons, distances);
+
+    positionTimer->start(TimerInterval);
+    drawTimer->start(TimerInterval);
+}
+
+void CGame::endGame()
+{
     for (size_t i = 0; i < bullets.size(); ++i)
         bullets[i]->remove();
     bullets.clear();
@@ -103,38 +161,9 @@ void CGame::close()
                 cannons[i][j]->remove();
                 cannons[i][j] = nullptr;
             }
-
-}
-
-void CGame::mousePressEvent(QMouseEvent *event)
-{
-    if (pressedButton != eBTnone){
-        pressedButton = eBTnone;
-        return;
-    }
-
-    QPointF p = view->mapFromGlobal(QCursor::pos());
-    QPoint curSelectedCell = findNearestCell(scene->toLocalPoint(p));
-
-    selectCell(curSelectedCell);
-}
-
-void CGame::mouseMoveEvent(QMouseEvent *event)
-{
-
-}
-
-void CGame::startGameLevel(int level)
-{
-    waveManager.initialize(this, level);
-    helper::updateDistances(cannons, distances);
-
-    positionTimer->start(TimerInterval);
-    drawTimer->start(TimerInterval);
-}
-
-void CGame::endGame()
-{
+    
+    view->app->installEventFilter(view);
+            
     positionTimer->stop();
     drawTimer->stop();
 }
@@ -299,6 +328,22 @@ QPoint CGame::findNearestCell(QPointF from)
     return nearestCell;
 }
 
+void CGame::onButtonPressed(int type)
+{
+    eButtonType eType = static_cast<eButtonType>(type);
+    
+    switch (eType)
+    {
+    case eBTgMenu:
+        hide();
+        endGame();
+        view->gameMenu.show();
+        break;
+    default:
+        break;
+    }
+}
+
 void CGame::onPositionTimer()
 {
     waveManager.onTimer();
@@ -366,7 +411,6 @@ void CGame::onDrawTimer()
        frameCnt = 0;
     }
     scene->updateFPS(fps);
-    scene->updateUserInfo(user.getCash(), user.getHp());
 }
 
 void CGame::onMousePressed(QMouseEvent *pressEvent)
@@ -434,6 +478,10 @@ void CGame::scaleObjects()
         userInformationBlock->draw();
         userInformationBlock->show();
     }
+    
+    menuButton->scale();
+    menuButton->draw();
+    menuButton->show();
 
     if (selectedCellItem)
     {

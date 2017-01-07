@@ -12,7 +12,7 @@ const qreal BurnCannonBigRotation = 2;
 //fire speed in game tacts
 const qreal BurnCannonSmFireSpeed = 60;
 const qreal BurnCannonMidFireSpeed = 50;
-const qreal BurnCannonBigFireSpeed = 40;
+const qreal BurnCannonBigFireSpeed = 45;
 
 //fire radius, in local points
 const qreal BurnCannonSmRadius = 300;

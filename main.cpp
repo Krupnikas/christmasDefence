@@ -5,8 +5,7 @@ int main(int argc, char *argv[])
 {
 
     QApplication a(argc, argv);
-    MainView w;
-    //a.installEventFilter(&w);
+    MainView w(&a);
     w.show();
 
     return a.exec();

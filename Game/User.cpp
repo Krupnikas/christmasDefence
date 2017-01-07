@@ -11,6 +11,12 @@ int CUser::getCash() const
     return cash;
 }
 
+void CUser::setCash(int value)
+{
+    cash = value;
+    emit cashChanged(cash);
+}
+
 void CUser::increaseCash(int value)
 {
     cash += value;
@@ -29,6 +35,12 @@ void CUser::decreaseCash(int value)
 int CUser::getHp() const
 {
     return hp;
+}
+
+void CUser::setHp(int value)
+{
+    hp = value;
+    emit hpChanged(hp);
 }
 
 void CUser::increaseHp(int value)

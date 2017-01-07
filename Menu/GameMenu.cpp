@@ -1,4 +1,4 @@
-#include <GameMenu/GameMenu.h>
+#include <Menu/GameMenu.h>
 #include <Game/Game.h>
 #include <mainview.h>
 
@@ -38,11 +38,11 @@ void CGameMenu::create()
                     game, static_cast<eButtonType>(eBTgmCampaign + i),
                     &game->r->gm_buttons[i], &game->r->gm_focused_buttons[i],
                     &game->r->gm_pressed_buttons[i], &game->r->gm_buttons[i],
-                    false
+                    true
                     );
+        connect(buttons[i].get(), SIGNAL(pressed(int)), this, SLOT(onButtonPressed(int)));
     }
     
-    connect(buttons[1].get(), SIGNAL(pressed(eButtonType)), this, SLOT(onButtonPressed(eButtonType)));
     
 }
 
@@ -58,6 +58,8 @@ void CGameMenu::show()
         button->draw();
         button->show();
     }
+    
+    game->view->gameStatus = eGameStatus::eGameMenu;
 }
 
 void CGameMenu::hide()
@@ -89,29 +91,30 @@ void CGameMenu::resize()
 
 void CGameMenu::close()
 {
-
+    background->remove();
+    caption->remove();
+    for (auto button: buttons)
+        button->remove();
 }
 
-void CGameMenu::mousePressEvent(QMouseEvent *event)
+void CGameMenu::onButtonPressed(int type)
 {
-
-}
-
-void CGameMenu::mouseMoveEvent(QMouseEvent *event)
-{
-    
-}
-
-void CGameMenu::onButtonPressed(eButtonType type)
-{
-    switch (type)
+    eButtonType eType = static_cast<eButtonType>(type);
+    switch (eType)
     {
+    case eButtonType::eBTgmCampaign:
+        hide();
+        game->view->levelMenu.show();
+        break;   
     case eButtonType::eBTgmQuickPlay:
         hide();
         game->show();
         game->startGameLevel(1);
-        game->view->gameStatus = eGameStatus::eGame;
         break;
+    case eButtonType::eBTgmDev:
+        break;
+    case eButtonType::eBTgmExit:
+        QApplication::quit();
     default:
         break;
     }

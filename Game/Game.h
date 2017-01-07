@@ -15,6 +15,7 @@ class IEnemy;
 class ICannon;
 class CCannonSelection;
 class CCannonUpgrade;
+class CButton;
 class CUserInfo;
 class MainView;
 
@@ -37,11 +38,16 @@ public:
     
     QTimer *positionTimer;
     QTimer *drawTimer;
+    
+    std::shared_ptr<CGameBackground> background;
     std::shared_ptr<CCannonSelection> cannonSelectionInfoBlock;
     std::shared_ptr<CCannonUpgrade> cannonUpgradeInfoBlock;
     std::shared_ptr<CUserInfo> userInformationBlock;
+    std::shared_ptr<CButton> menuButton;
+    
+    //TODO - remove this shit!
     std::shared_ptr<QGraphicsItem> selectedCellItem;
-    std::shared_ptr<CGameBackground> background;
+    
     QPoint selectedCell = UnselCell;
 
     std::vector<std::shared_ptr<IBullet> > bullets;
@@ -60,8 +66,8 @@ public:
     virtual void hide() override;
     virtual void resize() override;
     virtual void close() override;
-    virtual void mousePressEvent(QMouseEvent *event) override;
-    virtual void mouseMoveEvent(QMouseEvent *event) override;
+
+    void mousePressEvent(QMouseEvent *event);
 
     void startGameLevel(int level);
     void endGame();
@@ -87,7 +93,9 @@ public:
 signals:
     void mousePressed(QMouseEvent *pressEvent);
 
-
+private slots:
+    void onButtonPressed(int type);
+    
 public slots:
     virtual void onPositionTimer();
     virtual void onDrawTimer();

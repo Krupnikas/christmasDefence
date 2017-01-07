@@ -1,7 +1,8 @@
 #pragma once
 
 #include <Game/Game.h>
-#include <GameMenu/GameMenu.h>
+#include <Menu/GameMenu.h>
+#include <Menu/LevelMenu.h>
 
 #define TEST
 
@@ -20,15 +21,18 @@ class MainView : public QWidget
     
 public:
 
-    eGameStatus gameStatus;
+    QApplication *app;
     
+    eGameStatus gameStatus;
+        
     R r;
     CScene scene;
 
     CGame game;
     CGameMenu gameMenu;
+    CLevelMenu levelMenu;
 
-    explicit MainView(QWidget *parent = 0);
+    explicit MainView(QApplication *app, QWidget *parent = 0);
     ~MainView();
 
     void resizeEvent(QResizeEvent *) override;
