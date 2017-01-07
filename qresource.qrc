@@ -58,5 +58,7 @@
         <file>res/christmas/cannons/cannonPreviewUnableType_2.png</file>
         <file>res/christmas/cannons/cannonPreviewUnableType_3.png</file>
         <file>res/christmas/menu_button.png</file>
+        <file>res/christmas/currentWaveIcon.png</file>
+        <file>res/christmas/waveCounterIcon.png</file>
     </qresource>
 </RCC>

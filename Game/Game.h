@@ -17,6 +17,7 @@ class CCannonSelection;
 class CCannonUpgrade;
 class CButton;
 class CUserInfo;
+class CWaveInfoBlock;
 class MainView;
 
 class CGame : public IWindow
@@ -43,6 +44,7 @@ public:
     std::shared_ptr<CCannonSelection> cannonSelectionInfoBlock;
     std::shared_ptr<CCannonUpgrade> cannonUpgradeInfoBlock;
     std::shared_ptr<CUserInfo> userInformationBlock;
+    std::shared_ptr<CWaveInfoBlock> waveInformationBlock;
     std::shared_ptr<CButton> menuButton;
     
     //TODO - remove this shit!

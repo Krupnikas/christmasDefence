@@ -3,6 +3,7 @@
 #include <Game/Game.h>
 #include <Helper.h>
 #include <Enemy/IEnemy.h>
+#include <InfoBlock/WaveInfoBlock.h>
 
 CWaveManager::CWaveManager():
     waveGoing(false),
@@ -19,6 +20,12 @@ void CWaveManager::initialize(CGame *game, int level)
     
     QString filename = game->r->waves + QString::number(level) + QString(".txt");
     helper::readWaves(filename, waves);
+}
+
+void CWaveManager::setCurWave(int newCurWave)
+{
+    curWave = newCurWave;
+    emit curWaveChanged(curWave);
 }
 
 void CWaveManager::onTimer()
@@ -56,7 +63,7 @@ void CWaveManager::onTimer()
                 {
                     waveGoing = false;
                     counter = 0;
-                    ++curWave;
+                    setCurWave(curWave + 1);
                 }
 
             }
@@ -80,4 +87,9 @@ void CWaveManager::onTimer()
 QString CWaveManager::getWaveInfo()
 {
     return QString("Keep your head up and your ass down");
+}
+
+int CWaveManager::getNumberOfWaves()
+{
+    return static_cast<int>(waves.size());
 }
