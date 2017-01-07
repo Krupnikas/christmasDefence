@@ -74,7 +74,7 @@ Movements::Movements(CGame *game):
     {
         curGameCell = QPoint(-1, EntranceY);
         nextGameCell = QPoint(0, EntranceY);
-        curPos = QPoint(0, half);
+        curPos = QPoint(-1, half);
     }
 }
 
@@ -82,15 +82,13 @@ QPointF Movements::move()
 {
     if (beforeTurnArea())
     {
+        if (onTurnArea())
+            updateNext();
         QPoint toCenter = vectorToCenter();
         queue.push(toCenter);
     }
     else
     {
-        if (onTurnArea())
-        {
-            updateNext();
-        }
         QPoint toNext = vectorToNext();
         queue.push(toNext);
     }
@@ -135,12 +133,22 @@ qreal Movements::getDistanceToFinish() const
 {
     if (curGameCell.x() < 0)
     {
-        return -(curLocalCell.localRect.width() - curPos.x()) / curLocalCell.localRect.width();
+        qreal dist = game->distances[0][CellNumY / 2];
+        qreal localDist = (curLocalCell.localRect.width() - curPos.x()) / curLocalCell.localRect.width();
+        if (ExitLeft)
+            localDist *= -1;
+        
+        return dist + localDist;
     }
     
     if (curGameCell.x() >= CellNumX)
     {
-        return game->distances[CellNumX - 1][CellNumY / 2] + curPos.x() / curLocalCell.localRect.width();
+        qreal dist = game->distances[CellNumX - 1][CellNumY / 2];
+        qreal localDist = curPos.x() / curLocalCell.localRect.width();
+        if (!ExitLeft)
+            localDist *= -1;
+        
+        return dist + localDist;
     }
     
     qreal dist = game->distances[curGameCell.x()][curGameCell.y()];
@@ -185,13 +193,13 @@ bool Movements::beforeTurnArea() const
 //private methods:
 bool Movements::isCenterDirected() const
 {
-    bool insideTurnArea = turnArea.contains(curPos);
+    bool insideTurnArea = turnArea.contains(curPos, true);
     if (!insideTurnArea && curPos.x() != half && curPos.y() != half)
         qDebug() << "Movements: out of trajectory";
 
     qreal dx = queue.curSum.x();
     qreal dy = queue.curSum.y();
-    if (curPos.x() == half)
+    if (std::abs(dx) < std::abs(dy))
         return (curPos.y() <= half && dy >= 0) ||
                 (curPos.y() >= half && dy <= 0);
     return (curPos.x() <= half && dx >= 0) ||
@@ -277,7 +285,7 @@ void Movements::updateNext()
 {
     nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
 
-    if (nextGameCell.x() < 0 || curGameCell.x() >= CellNumX)
+    if (nextGameCell.x() < 0 || nextGameCell.x() >= CellNumX)
         nextLocalCell = EdgeLocalCell;
     else
         nextLocalCell = NormalLocalCell;

@@ -24,7 +24,7 @@ const int CannonUpgradeRadius = 1.1 * CellSize;
 
 const int OffsetX = (LocalWidth - CellNumX * CellSize) / 2;
 
-const bool ExitLeft = true;
+const bool ExitLeft = false;
 const int ExitX = ExitLeft ? 0 : CellNumX - 1;
 const int ExitY = CellNumY / 2;
 const int EntranceX = ExitLeft ? CellNumX - 1 : 0;
