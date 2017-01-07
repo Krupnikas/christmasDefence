@@ -60,5 +60,22 @@
         <file>res/christmas/menu_button.png</file>
         <file>res/christmas/currentWaveIcon.png</file>
         <file>res/christmas/waveCounterIcon.png</file>
+        <file>res/christmas/waves/level4.txt</file>
+        <file>res/christmas/waves/level5.txt</file>
+        <file>res/christmas/waves/level6.txt</file>
+        <file>res/christmas/waves/level7.txt</file>
+        <file>res/christmas/waves/level8.txt</file>
+        <file>res/christmas/waves/level9.txt</file>
+        <file>res/christmas/waves/level10.txt</file>
+        <file>res/christmas/waves/level11.txt</file>
+        <file>res/christmas/waves/level12.txt</file>
+        <file>res/christmas/waves/level13.txt</file>
+        <file>res/christmas/waves/level14.txt</file>
+        <file>res/christmas/waves/level15.txt</file>
+        <file>res/christmas/waves/level16.txt</file>
+        <file>res/christmas/waves/level17.txt</file>
+        <file>res/christmas/waves/level18.txt</file>
+        <file>res/christmas/waves/level19.txt</file>
+        <file>res/christmas/waves/level20.txt</file>
     </qresource>
 </RCC>
