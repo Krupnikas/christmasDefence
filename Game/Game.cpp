@@ -49,7 +49,7 @@ void CGame::create()
     menuButton = std::make_shared<CButton>(
                 BackgroundZOrder + 0.1,
                 QPointF(OffsetX / 2, LocalHeight - CellSize / 2),
-                QSizeF(CellSize, CellSize),
+                QSizeF(CellSize * 0.7, CellSize * 0.7),
                 this, static_cast<int>(eButtonType::eBTgMenu),
                 &r->game_menu_button
                 );
@@ -98,6 +98,9 @@ void CGame::hide()
             if (cannons[i][j])
                 cannons[i][j]->hide();
     
+    scene->removeFPS();
+    scene->removeWaveInfo();
+    
     view->app->installEventFilter(view);
 }
 
@@ -114,6 +117,9 @@ void CGame::close()
     background->remove();
     userInformationBlock->remove();
     menuButton->remove();
+    
+    scene->removeFPS();
+    scene->removeWaveInfo();
 
     endGame();
 }

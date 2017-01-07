@@ -1,6 +1,6 @@
 #include "ImageAndNumber.h"
 
-CImageAndNumber::CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRect BoundingRect)
+CImageAndNumber::CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRectF BoundingRect, QString numberText)
 {
     //IGameObject fields
     this->label = "Image and number block";
@@ -21,7 +21,7 @@ CImageAndNumber::CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRect Boundin
                                                  BoundingRect.width() - 2 * ICON_X_OFFSET),
                                           IconPixmap, game);
 
-    renderedText = helper::renderPixmapFromText("0");
+    renderedText = helper::renderPixmapFromText(numberText);
 
     text = std::make_shared<CSceneObject>(0, 4.6,
                                           QPointF(leftTop) +

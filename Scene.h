@@ -37,7 +37,9 @@ public:
 
     void updateDistances(std::vector<std::vector<int>> &distances);
     void updateFPS(int fps);
+    void removeFPS();
     void updateWaveInfo(QString info);
+    void removeWaveInfo();
     void updateItems();
     
     int getWidth() { return gameRect.width(); }

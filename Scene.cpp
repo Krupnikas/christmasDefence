@@ -215,6 +215,15 @@ void CScene::updateWaveInfo(QString info)
     waveInfoItem->setZValue(10);
 }
 
+void CScene::removeWaveInfo()
+{
+    if (waveInfoItem)
+    {
+        graphicsScene->removeItem(waveInfoItem.get());
+        waveInfoItem = nullptr;
+    }
+}
+
 void CScene::updateFPS(int fps)
 {
 #ifdef SHOW_FPS
@@ -227,6 +236,17 @@ void CScene::updateFPS(int fps)
     fpsItem->setZValue(10);
 #endif
 }
+
+void CScene::removeFPS()
+{
+    if (fpsItem)
+    {
+        graphicsScene->removeItem(fpsItem.get());
+        fpsItem = nullptr;
+    }
+}
+
+
 
 void CScene::updateItems()
 {

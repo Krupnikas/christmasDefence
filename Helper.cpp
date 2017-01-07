@@ -203,6 +203,7 @@ void readWaves(const QString &filename, std::vector<CWave> &waves)
     line = textStream.readLine();
     int waveNum(line.toInt());
     
+    waves.clear();
     for (int i = 0; i < waveNum; ++i)
     {
         CWave wave;        

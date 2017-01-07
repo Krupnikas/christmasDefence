@@ -12,7 +12,11 @@ CWaveManager::CWaveManager():
 
 void CWaveManager::initialize(CGame *game, int level)
 {
+    waveGoing = false;
+    curWave = 0;
+    counter = 0;
     this->game = game;
+    
     QString filename = game->r->waves + QString::number(level) + QString(".txt");
     helper::readWaves(filename, waves);
 }

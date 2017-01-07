@@ -6,5 +6,40 @@
         <file>res/christmas/level_menu/pressed_1.png</file>
         <file>res/christmas/level_menu/pressed_2.png</file>
         <file>res/christmas/level_menu/pressed_3.png</file>
+        <file>res/christmas/level_menu/focused_4.png</file>
+        <file>res/christmas/level_menu/focused_5.png</file>
+        <file>res/christmas/level_menu/focused_6.png</file>
+        <file>res/christmas/level_menu/focused_7.png</file>
+        <file>res/christmas/level_menu/focused_8.png</file>
+        <file>res/christmas/level_menu/focused_9.png</file>
+        <file>res/christmas/level_menu/focused_10.png</file>
+        <file>res/christmas/level_menu/focused_11.png</file>
+        <file>res/christmas/level_menu/focused_12.png</file>
+        <file>res/christmas/level_menu/focused_13.png</file>
+        <file>res/christmas/level_menu/focused_14.png</file>
+        <file>res/christmas/level_menu/focused_15.png</file>
+        <file>res/christmas/level_menu/focused_16.png</file>
+        <file>res/christmas/level_menu/focused_17.png</file>
+        <file>res/christmas/level_menu/focused_18.png</file>
+        <file>res/christmas/level_menu/focused_19.png</file>
+        <file>res/christmas/level_menu/focused_20.png</file>
+        <file>res/christmas/level_menu/focused_range.png</file>
+        <file>res/christmas/level_menu/pressed_4.png</file>
+        <file>res/christmas/level_menu/pressed_5.png</file>
+        <file>res/christmas/level_menu/pressed_6.png</file>
+        <file>res/christmas/level_menu/pressed_7.png</file>
+        <file>res/christmas/level_menu/pressed_8.png</file>
+        <file>res/christmas/level_menu/pressed_9.png</file>
+        <file>res/christmas/level_menu/pressed_10.png</file>
+        <file>res/christmas/level_menu/pressed_11.png</file>
+        <file>res/christmas/level_menu/pressed_12.png</file>
+        <file>res/christmas/level_menu/pressed_13.png</file>
+        <file>res/christmas/level_menu/pressed_14.png</file>
+        <file>res/christmas/level_menu/pressed_15.png</file>
+        <file>res/christmas/level_menu/pressed_16.png</file>
+        <file>res/christmas/level_menu/pressed_17.png</file>
+        <file>res/christmas/level_menu/pressed_18.png</file>
+        <file>res/christmas/level_menu/pressed_19.png</file>
+        <file>res/christmas/level_menu/pressed_20.png</file>
     </qresource>
 </RCC>
