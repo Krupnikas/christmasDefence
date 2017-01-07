@@ -39,7 +39,7 @@ const int SlowBulletSizeY = CellSize / 3.0;
 
 const qreal SlowBulletStep = CellSize / 10.0; // in local points
 
-const int SlowBulletSmHit = 15;
-const int SlowBulletMidHit = 25;
-const int SlowBulletBigHit = 35;
+const int SlowBulletSmHit = 19;
+const int SlowBulletMidHit = 29;
+const int SlowBulletBigHit = 39;
 

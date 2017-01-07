@@ -47,4 +47,5 @@ protected:
     
     std::shared_ptr<CHpCurrent> hpCurItem;
     std::shared_ptr<CHpBackground> hpBackgroundItem;
+
 };

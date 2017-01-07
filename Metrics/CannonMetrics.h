@@ -69,19 +69,19 @@ const int MonsterCannonBigCost = 25;
 
 //Slow cannon
 // rotation speed, in angles
-const qreal SlowCannonSmRotation = 2;
-const qreal SlowCannonMidRotation = 2;
-const qreal SlowCannonBigRotation = 2;
+const qreal SlowCannonSmRotation = 3;
+const qreal SlowCannonMidRotation = 3.5;
+const qreal SlowCannonBigRotation = 4;
 
 //fire speed in game tacts
-const qreal SlowCannonSmFireSpeed = 60;
-const qreal SlowCannonMidFireSpeed = 50;
-const qreal SlowCannonBigFireSpeed = 40;
+const qreal SlowCannonSmFireSpeed = 57;
+const qreal SlowCannonMidFireSpeed = 47;
+const qreal SlowCannonBigFireSpeed = 37;
 
 //fire radius, in local points
-const qreal SlowCannonSmRadius = 300;
-const qreal SlowCannonMidRadius = 350;
-const qreal SlowCannonBigRadius = 400;
+const qreal SlowCannonSmRadius = 320;
+const qreal SlowCannonMidRadius = 370;
+const qreal SlowCannonBigRadius = 420;
 
 const int SlowCannonSmCost = 11;
 const int SlowCannonMidCost = 14;

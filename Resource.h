@@ -167,6 +167,7 @@ struct R
     QSoundEffect s_button_pressed;
     
     std::vector<QUrl> url_gunshots;
+    QUrl url_cash;
     
     //QString get(QString file, QString root = QString("/"), QString subdir = QString(""));
     

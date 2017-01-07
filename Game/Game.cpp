@@ -17,7 +17,8 @@ CGame::CGame(MainView *view, R *r, CScene *scene, QMediaPlaylist *playlist, QMed
     r(r),
     scene(scene),
     playlist(playlist),
-    player(player)
+    player(player),
+    user(r)
 {
     cannons.resize(CellNumX);
     distances.resize(CellNumX);

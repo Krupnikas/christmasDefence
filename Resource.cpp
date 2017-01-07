@@ -119,6 +119,8 @@ R::R()
         url_gunshots[i] = QUrl(path);
     }
     
+    url_cash = QUrl(getSound("cash.wav"));
+    
     for (int i = 0; i < TypesOfCannon; i++)
     {
         cannonTypePreview[i] = QPixmap(get(getNameOfTypePreview(i)));

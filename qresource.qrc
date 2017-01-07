@@ -83,5 +83,6 @@
         <file>res/christmas/sounds/gunshot2.wav</file>
         <file>res/christmas/sounds/gunshot4.wav</file>
         <file>res/christmas/sounds/gunshot3.wav</file>
+        <file>res/christmas/sounds/cash.wav</file>
     </qresource>
 </RCC>

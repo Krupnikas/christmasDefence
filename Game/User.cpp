@@ -1,9 +1,11 @@
 #include <Game/User.h>
 
-CUser::CUser():
+CUser::CUser(R *r):
+    r(r),
     cash(UserCash),
     hp(UserHp)
 {
+    cashSound.setSource(r->url_cash);
 }
 
 int CUser::getCash() const
@@ -20,6 +22,7 @@ void CUser::setCash(int value)
 void CUser::increaseCash(int value)
 {
     cash += value;
+    cashSound.play();
     emit cashChanged(cash);
 }
 

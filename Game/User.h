@@ -6,7 +6,7 @@ class CUser : public QObject
 {
     Q_OBJECT
 public:
-    CUser();
+    CUser(R *r);
         
     int getCash() const;
     void setCash(int value);
@@ -18,14 +18,18 @@ public:
     void increaseHp(int value);
     void decreaseHp(int value);
     
+signals:
+    void hpChanged(int newHp);
+    void cashChanged(int newCash);
+    
 private:
+    R *r;
+    
     std::mutex cashMutex;
     int cash;
     
     std::mutex hpMutex;
     int hp;
-
-signals:
-    void hpChanged(int newHp);
-    void cashChanged(int newCash);
+    
+    QSoundEffect cashSound;
 };
