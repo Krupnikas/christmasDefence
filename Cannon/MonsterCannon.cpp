@@ -29,6 +29,7 @@ CMonsterCannon::CMonsterCannon(CGame *game, QPoint cell, double angle)
     radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
 
     cost = MonsterCannonSmCost;
+    sGunshot.setSource(game->r->url_gunshots[2]);
 }
 
 CMonsterCannon::~CMonsterCannon(){}
@@ -40,6 +41,7 @@ void CMonsterCannon::fire()
     game->bullets.push_back(bullet);
     bullet->draw();
     bullet->show();
+    sGunshot.play();
 }
 
 void CMonsterCannon::upgrade()

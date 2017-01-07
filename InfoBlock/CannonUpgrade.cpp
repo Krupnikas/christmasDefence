@@ -43,7 +43,7 @@ void CCannonUpgrade::initButtons()
         closeButton = std::make_shared<CButton>(
                     ButtonZOrder, rect.center(),
                     rect.size(),
-                    game, eBTCloseButton,
+                    game, static_cast<int>(eButtonType::eBTCloseButton),
                     &game->r->buttonClose
                     );
 
@@ -57,7 +57,7 @@ void CCannonUpgrade::initButtons()
                 CannonUpgradeButtonSize);
     upgradeButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
                   rect.size(),
-                  game, eBTcannonUpgrade,
+                  game, static_cast<int>(eButtonType::eBTcannonUpgrade),
                   &game->r->buttonUpgrade);
     connect(upgradeButton.get(), SIGNAL(pressed(int)),
             this, SLOT(onButtonPressed(int)));
@@ -71,7 +71,7 @@ void CCannonUpgrade::initButtons()
 
     sellButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
                     rect.size(),
-                    game, eBTcannonSell,
+                    game, static_cast<int>(eButtonType::eBTcannonSell),
                     &game->r->buttonSell
                     );
 
@@ -144,12 +144,12 @@ void CCannonUpgrade::onButtonPressed(int type)
     eButtonType eType = static_cast<eButtonType>(type);
     
     switch (eType){
-    case eBTCloseButton:
+    case eButtonType::eBTCloseButton:
         break;
-    case eBTcannonUpgrade:
+    case eButtonType::eBTcannonUpgrade:
         game->cannons[game->selectedCell.x()][game->selectedCell.y()]->upgrade();
         break;
-    case eBTcannonSell:
+    case eButtonType::eBTcannonSell:
         game->sellCannon(game->selectedCell);
         break;
     default:

@@ -154,7 +154,7 @@ void CButton::onMouseMove(QMouseEvent *event)
     
     if (!mouseDown)
     {
-        if (checkInside(p))
+        if (check_inside_(p))
         {
             normalItem->hide();
             pressedItem->hide();
@@ -173,7 +173,7 @@ void CButton::onMouseDown(QMouseEvent *event)
 {
     QPointF p(game->scene->toLocalPoint(event->localPos()));
     
-    if (!isVisible() || !checkInside(p))
+    if (!isVisible() || !check_inside_(p))
         return;
     
     if (mouseTracking)
@@ -185,7 +185,7 @@ void CButton::onMouseDown(QMouseEvent *event)
     }
     else
     {
-        emit pressed(type);
+        press_button_();
     }
 }
 
@@ -200,12 +200,12 @@ void CButton::onMouseUp(QMouseEvent *event)
     {
         mouseDown = false;
 
-        if (checkInside(p))
+        if (check_inside_(p))
         {
             normalItem->hide();
             pressedItem->hide();
             focusedItem->show();
-            emit pressed(type);
+            press_button_();
         }
         else
         {
@@ -216,7 +216,14 @@ void CButton::onMouseUp(QMouseEvent *event)
     }
 }
 
-bool CButton::checkInside(QPointF p)
+void CButton::press_button_()
+{
+    game->r->s_button_pressed.play();
+    
+    emit pressed(type);
+}
+
+bool CButton::check_inside_(QPointF p)
 {
     QRectF buttonRect(leftTop, size);
     return buttonRect.contains(p);

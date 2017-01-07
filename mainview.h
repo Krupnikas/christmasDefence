@@ -27,6 +27,8 @@ public:
         
     R r;
     CScene scene;
+    QMediaPlaylist playlist;
+    QMediaPlayer player;
 
     CGame game;
     CGameMenu gameMenu;

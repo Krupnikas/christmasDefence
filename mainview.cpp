@@ -15,7 +15,7 @@ MainView::MainView(QApplication *app, QWidget *parent):
     app(app),
     gameStatus(eGameStatus::eNotInited),
     r(), scene(&r),
-    game(&r, &scene, this),
+    game(this, &r, &scene, &playlist, &player),
     gameMenu(&game),
     levelMenu(&game),
     ui(new Ui::MainView)
@@ -53,6 +53,21 @@ MainView::MainView(QApplication *app, QWidget *parent):
     }
 
     QSurfaceFormat::setDefaultFormat(fmt);
+    
+    //playlist setting
+    QString sound = r.getSound("mainTheme.mp3");//"qrc:/res/christmas/sounds/mainTheme.mp3";
+    bool success = playlist.addMedia(QUrl(sound/*r.getSound("mainTheme.mp3")*/));
+    if (!success)
+        qDebug() << "failed to load mp3";
+    
+    playlist.setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);    
+
+    playlist.setCurrentIndex(0);
+    
+    player.setPlaylist(&playlist);
+    player.setVolume(1);
+    player.play();
+    
     
    // this->showFullScreen();*/
 }

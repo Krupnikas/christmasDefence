@@ -28,9 +28,12 @@ class CGame : public IWindow
 public:
     const QPoint UnselCell = QPoint(-1, -1);
     
+    MainView *view;
     R *r;
     CScene *scene;
-    MainView *view;
+    QMediaPlaylist *playlist;
+    QMediaPlayer *player;
+    
     
     CWaveManager waveManager;
     CUser user;   
@@ -59,7 +62,7 @@ public:
     
 //public methods
 public:
-    CGame(R *r, CScene *scene, MainView *view);
+    CGame(MainView *view, R *r, CScene *scene, QMediaPlaylist *playlist, QMediaPlayer *player);
     ~CGame();
 
     //IWindow methods

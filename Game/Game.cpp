@@ -12,10 +12,12 @@
 #include <SceneObject/Button.h>
 
 
-CGame::CGame(R *r, CScene *scene, MainView *view):
+CGame::CGame(MainView *view, R *r, CScene *scene, QMediaPlaylist *playlist, QMediaPlayer *player):
+    view(view),
     r(r),
     scene(scene),
-    view(view)
+    playlist(playlist),
+    player(player)
 {
     cannons.resize(CellNumX);
     distances.resize(CellNumX);
@@ -25,7 +27,7 @@ CGame::CGame(R *r, CScene *scene, MainView *view):
         distances[i].resize(CellNumY);
     }
 
-    pressedButton = eBTnone;
+    pressedButton = eButtonType::eBTnone;
 
     positionTimer = new QTimer(this);
     drawTimer = new QTimer(this);
@@ -133,8 +135,8 @@ void CGame::close()
 
 void CGame::mousePressEvent(QMouseEvent *)
 {
-    if (pressedButton != eBTnone){
-        pressedButton = eBTnone;
+    if (pressedButton != eButtonType::eBTnone){
+        pressedButton = eButtonType::eBTnone;
         return;
     }
 
@@ -347,7 +349,7 @@ void CGame::onButtonPressed(int type)
     
     switch (eType)
     {
-    case eBTgMenu:
+    case eButtonType::eBTgMenu:
         hide();
         endGame();
         view->gameMenu.show();

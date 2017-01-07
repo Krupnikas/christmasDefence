@@ -29,6 +29,7 @@ CBurnCannon::CBurnCannon(CGame *game, QPoint cell, double angle)
     radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
 
     cost = BurnCannonSmCost;
+    sGunshot.setSource(game->r->url_gunshots[0]);
 }
 
 CBurnCannon::~CBurnCannon(){}
@@ -40,6 +41,7 @@ void CBurnCannon::fire()
     game->bullets.push_back(bullet);
     bullet->draw();
     bullet->show();
+    sGunshot.play();
 }
 
 void CBurnCannon::upgrade()

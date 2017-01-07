@@ -108,7 +108,17 @@ R::R()
 
     enemy_comes = QPixmap(get("enemy_comes"));
     waves = get("waves/level");
-
+    
+    s_button_pressed.setSource(QUrl(getSound("button.wav")));
+    s_button_pressed.setVolume(SoundLevel);
+    
+    url_gunshots.resize(TypesOfCannon);
+    for (int i = 0; i < TypesOfCannon; ++i)
+    {
+        QString path = getSound("gunshot") + QString::number(i + 1) + ".wav";
+        url_gunshots[i] = QUrl(path);
+    }
+    
     for (int i = 0; i < TypesOfCannon; i++)
     {
         cannonTypePreview[i] = QPixmap(get(getNameOfTypePreview(i)));
@@ -165,4 +175,9 @@ QString R::getNameOfUnableTypePreview(int num)
 {
     QString str = "cannons/cannonPreviewUnableType_" + QString::number(num) + ".png";
     return str;
+}
+
+QString R::getSound(QString val)
+{
+    return "qrc:/" + dir + "sounds/" + val;
 }

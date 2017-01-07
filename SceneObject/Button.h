@@ -40,7 +40,8 @@ signals:
     
 //private methods
 private:
-    bool checkInside(QPointF p);
+    void press_button_();
+    bool check_inside_(QPointF p);
     
 //private fields
 private:

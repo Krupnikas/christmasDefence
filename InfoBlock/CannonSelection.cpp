@@ -51,7 +51,7 @@ void CCannonSelection::initButtons()
         closeButton = std::make_shared<CButton>(
                     ButtonZOrder + 0.1, closeRect.center(),
                     closeRect.size(),
-                    game, eBTCloseButton,
+                    game, static_cast<int>(eButtonType::eBTCloseButton),
                     &game->r->buttonClose
                     );
 
@@ -68,7 +68,7 @@ void CCannonSelection::initButtons()
         cannonButton[i] = std::make_shared<CButton>(
                     ButtonZOrder, buttonRect.center(),
                     buttonRect.size(),
-                    game, static_cast<eButtonType>(eBTCloseButton + i + 1),
+                    game, static_cast<int>(eButtonType::eBTCloseButton) + i + 1,
                     &game->r->cannonTypePreview[i]
                     );
         
@@ -213,18 +213,18 @@ void CCannonSelection::onButtonPressed(int type)
     eButtonType eType = static_cast<eButtonType>(type);
     
     switch (eType){
-    case eBTCloseButton:
+    case eButtonType::eBTCloseButton:
         break;
-    case eBTChooseFast:
+    case eButtonType::eBTChooseFast:
         game->buyCannon(std::make_shared<CFastCannon>(game, game->selectedCell, 0));
         break;
-    case eBTChooseMonster:
+    case eButtonType::eBTChooseMonster:
         game->buyCannon(std::make_shared<CMonsterCannon>(game, game->selectedCell, 0));
         break;
-    case eBTChooseSlow:
+    case eButtonType::eBTChooseSlow:
         game->buyCannon(std::make_shared<CSlowCannon>(game, game->selectedCell, 0));
         break;
-    case eBTChooseBurn:
+    case eButtonType::eBTChooseBurn:
         game->buyCannon(std::make_shared<CBurnCannon>(game, game->selectedCell, 0));
         break;
     default:

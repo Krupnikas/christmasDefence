@@ -35,7 +35,7 @@ void CGameMenu::create()
                     itemZOrder,
                     QPointF(LocalWidth / 2, buttonTop + buttonDist * (i + 1) + buttonHeight * (i + 0.5)),
                     QSizeF(buttonWidth, buttonHeight),
-                    game, static_cast<eButtonType>(eBTgmCampaign + i),
+                    game, static_cast<int>(eButtonType::eBTgmCampaign) + i,
                     &game->r->gm_buttons[i], &game->r->gm_focused_buttons[i],
                     &game->r->gm_pressed_buttons[i], &game->r->gm_buttons[i],
                     true

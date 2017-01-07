@@ -65,8 +65,8 @@ protected:
     bool toShowRadius = false;
     
     std::shared_ptr<IEnemy> curEnemy;
-    
     int cost;
+    QSoundEffect sGunshot;
     
 private:
     bool reachingEnemy(std::shared_ptr<IEnemy> enemy);

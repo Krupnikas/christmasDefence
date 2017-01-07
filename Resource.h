@@ -24,6 +24,11 @@
 #include <QtCore/qmath.h>
 #include <QDebug>
 #include <QThread>
+
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QSoundEffect>
+
 #include <qopengl.h>
 #include <QOpenGLContext>
 #include <QtOpenGL/QGLWidget>
@@ -52,7 +57,7 @@ enum eScaleCenter {
     LeftTop, Center
 };
 
-enum eButtonType{
+enum class eButtonType{
     eBTnone,
     eBTCloseButton,
     eBTChooseFast,
@@ -68,6 +73,12 @@ enum eButtonType{
     eBTgmDev,
     eBTgmExit,
     eBTgMenu
+};
+
+enum class eSound {
+    eSoundtrack,
+    eButtonPress,
+    eShot
 };
 
 struct R
@@ -153,6 +164,10 @@ struct R
     QPixmap enemy_comes;
     QString waves;
     
+    QSoundEffect s_button_pressed;
+    
+    std::vector<QUrl> url_gunshots;
+    
     //QString get(QString file, QString root = QString("/"), QString subdir = QString(""));
     
     QString get(QString val);
@@ -166,6 +181,8 @@ struct R
     
     QString getNameOfTypePreview(int num);
     QString getNameOfUnableTypePreview(int num);
+    
+    QString getSound(QString val);
     
     R();
     

@@ -38,6 +38,8 @@ const int LevelNum = 20;
 const int UserCash = 20;
 const int UserHp = 30;
 
+const qreal SoundLevel = 0.5;
+
 #include <Metrics/ZOrderMetrics.h>
 #include <Metrics/CannonMetrics.h>
 #include <Metrics/EnemyMetrics.h>

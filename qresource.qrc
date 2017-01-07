@@ -3,7 +3,6 @@
         <file>res/christmas/cannonSelectingInfoBlockBackground.png</file>
         <file>res/christmas/cellSelected.png</file>
         <file>res/christmas/clo.png</file>
-        <file>res/christmas/mainTheme.mp3</file>
         <file>res/christmas/cell1.png</file>
         <file>res/christmas/cell2.png</file>
         <file>res/christmas/enemy_comes.png</file>
@@ -77,5 +76,12 @@
         <file>res/christmas/waves/level18.txt</file>
         <file>res/christmas/waves/level19.txt</file>
         <file>res/christmas/waves/level20.txt</file>
+        <file>res/christmas/sounds/button.mp3</file>
+        <file>res/christmas/sounds/mainTheme.mp3</file>
+        <file>res/christmas/sounds/button.wav</file>
+        <file>res/christmas/sounds/gunshot1.wav</file>
+        <file>res/christmas/sounds/gunshot2.wav</file>
+        <file>res/christmas/sounds/gunshot4.wav</file>
+        <file>res/christmas/sounds/gunshot3.wav</file>
     </qresource>
 </RCC>

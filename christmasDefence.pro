@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl
+QT       += core gui opengl multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -62,7 +62,8 @@ SOURCES += \
     SceneObject/ButtonDepr.cpp \
     SceneObject/Button.cpp \
     Menu/LevelMenu.cpp \
-    InfoBlock/WaveInfoBlock.cpp
+    InfoBlock/WaveInfoBlock.cpp \
+    Sound.cpp
 
 
 HEADERS  += \
@@ -118,7 +119,8 @@ HEADERS  += \
     SceneObject/GameBackground.h \
     SceneObject/ButtonDepr.h \
     SceneObject/Button.h \
-    InfoBlock/WaveInfoBlock.h
+    InfoBlock/WaveInfoBlock.h \
+    Sound.h
 
 FORMS    += mainview.ui
 

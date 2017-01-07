@@ -29,6 +29,8 @@ CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
     radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
     
     cost = FastCannonSmCost;
+    
+    sGunshot.setSource(game->r->url_gunshots[1]);
 }
 
 CFastCannon::~CFastCannon(){}
@@ -40,6 +42,9 @@ void CFastCannon::fire()
     game->bullets.push_back(bullet);
     bullet->draw();
     bullet->show();
+    
+    QSoundEffect::Status status = sGunshot.status();
+    sGunshot.play();
 }
 
 void CFastCannon::upgrade()
