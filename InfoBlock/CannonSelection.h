@@ -13,6 +13,7 @@ class CCannonSelection : public IInfoBlock
     
 public:
 
+    std::shared_ptr<CSceneObject> cellSelection;
     std::vector<std::shared_ptr<CButton>> cannonButton;
     std::shared_ptr<CButton> closeButton;
 
@@ -30,9 +31,12 @@ public:
     QPoint calculateTopLeftForButton(int i);
     int getCannonPrice(int i);
     
-    virtual void show();
-    virtual void hide();
-    virtual void draw();
+    virtual void scale() override;
+    virtual void scaleWithLoss(QSizeF newSize) override;
+    virtual void remove() override;
+    virtual void draw() override;
+    virtual void hide() override;
+    virtual void show() override;
 
 private slots:
     void onButtonPressed(int type);

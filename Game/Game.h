@@ -26,7 +26,7 @@ class CGame : public IWindow
     
 //public attributes
 public:
-    const QPoint UnselCell = QPoint(-1, -1);
+    const QPoint UnselCell = QPoint(0, 0);
     
     MainView *view;
     R *r;
@@ -38,7 +38,7 @@ public:
     CWaveManager waveManager;
     CUser user;   
 
-    eButtonType pressedButton;
+    EButtonType pressedButton;
     
     QTimer *positionTimer;
     QTimer *drawTimer;
@@ -50,10 +50,7 @@ public:
     std::shared_ptr<CWaveInfoBlock> waveInformationBlock;
     std::shared_ptr<CButton> menuButton;
     
-    //TODO - remove this shit!
-    std::shared_ptr<QGraphicsItem> selectedCellItem;
-    
-    QPoint selectedCell = UnselCell;
+    ESelectionStatus selectionStatus;
 
     std::vector<std::shared_ptr<IBullet> > bullets;
     std::vector<std::shared_ptr<IEnemy> > enemies;

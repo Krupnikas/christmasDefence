@@ -77,7 +77,7 @@ void CLevelMenu::show()
         level->show();
     }
     
-    game->view->gameStatus = eGameStatus::eLevelMenu;
+    game->view->gameStatus = EGameStatus::eLevelMenu;
 }
 
 void CLevelMenu::hide()
@@ -93,23 +93,10 @@ void CLevelMenu::hide()
 void CLevelMenu::resize()
 {
     background->scale();
-    background->draw();
-    background->show();
-    
     caption->scale();
-    caption->draw();
-    caption->show();
-    
     back->scale();
-    back->draw();
-    back->show();
-    
     for (auto level: levels)
-    {
         level->scale();
-        level->draw();
-        level->show();
-    }
 }
 
 void CLevelMenu::close()
@@ -140,6 +127,6 @@ void CLevelMenu::onButtonPressed(int level)
     hide();
     game->show();
     game->startGameLevel(level + 1);
-    game->view->gameStatus = eGameStatus::eGame;
+    game->view->gameStatus = EGameStatus::eGame;
     
 }

@@ -6,7 +6,7 @@ class CSlowBullet : public IBullet
 {
 public:
     
-    CSlowBullet(CGame *game, QPointF center, double angle, eSizeType type);
+    CSlowBullet(CGame *game, QPointF center, double angle, ESizeType type);
     
     virtual bool move();
     

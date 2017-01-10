@@ -35,7 +35,7 @@ void CGameMenu::create()
                     itemZOrder,
                     QPointF(LocalWidth / 2, buttonTop + buttonDist * (i + 1) + buttonHeight * (i + 0.5)),
                     QSizeF(buttonWidth, buttonHeight),
-                    game, static_cast<int>(eButtonType::eBTgmCampaign) + i,
+                    game, static_cast<int>(EButtonType::eBTgmCampaign) + i,
                     &game->r->gm_buttons[i], &game->r->gm_focused_buttons[i],
                     &game->r->gm_pressed_buttons[i], &game->r->gm_buttons[i],
                     true
@@ -59,7 +59,7 @@ void CGameMenu::show()
         button->show();
     }
     
-    game->view->gameStatus = eGameStatus::eGameMenu;
+    game->view->gameStatus = EGameStatus::eGameMenu;
 }
 
 void CGameMenu::hide()
@@ -74,19 +74,11 @@ void CGameMenu::hide()
 void CGameMenu::resize()
 {
     background->scale();
-    background->draw();
-    background->show();
     
     caption->scale();
-    caption->draw();
-    caption->show();
     
     for (auto button: buttons)
-    {
         button->scale();
-        button->draw();
-        button->show();
-    }
 }
 
 void CGameMenu::close()
@@ -99,21 +91,21 @@ void CGameMenu::close()
 
 void CGameMenu::onButtonPressed(int type)
 {
-    eButtonType eType = static_cast<eButtonType>(type);
+    EButtonType eType = static_cast<EButtonType>(type);
     switch (eType)
     {
-    case eButtonType::eBTgmCampaign:
+    case EButtonType::eBTgmCampaign:
         hide();
         game->view->levelMenu.show();
         break;   
-    case eButtonType::eBTgmQuickPlay:
+    case EButtonType::eBTgmQuickPlay:
         hide();
         game->show();
         game->startGameLevel(1);
         break;
-    case eButtonType::eBTgmDev:
+    case EButtonType::eBTgmDev:
         break;
-    case eButtonType::eBTgmExit:
+    case EButtonType::eBTgmExit:
         QApplication::quit();
     default:
         break;

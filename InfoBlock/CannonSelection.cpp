@@ -1,12 +1,12 @@
 #include "CannonSelection.h"
 
-CCannonSelection::CCannonSelection(CGame *game, QPoint SelectedCell)
+CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
 {
     //IGameObject fields
     this->label = "Cannon Selection Block";
     this->angle = 0;
     this->game = game;
-    this->zOrder = 5;
+    this->zOrder = GameInfoblockZOrder;
     
     backgroundImageSize = CannonSelectionRadius * 8.0 / 3;
     this->textureSize = QSize(backgroundImageSize,
@@ -14,12 +14,16 @@ CCannonSelection::CCannonSelection(CGame *game, QPoint SelectedCell)
     this->pixmap = &game->r->cannonSelectionBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
     
-    this->center = game->cellCenter(SelectedCell);
+    this->center = game->cellCenter(selectedCell);
 
-    this->selectedCell = SelectedCell;
+    this->selectedCell = selectedCell;
 
+    cellSelection = std::make_shared<CSceneObject>(
+                0, GameBackgroundZOrder,
+                QPointF(0, 0), QSizeF(CellSize, CellSize),
+                &game->r->cellSelected, game);
     initButtons();
-    updatePosition(SelectedCell);
+    updatePosition(selectedCell);
 
     connect(&game->user,
             SIGNAL(cashChanged(int)),
@@ -31,51 +35,21 @@ CCannonSelection::~CCannonSelection()
 {
 }
 
-void CCannonSelection::updatePosition(QPoint SelectedCell)
+void CCannonSelection::updatePosition(QPoint selectedCell)
 {
-    center = game->cellCenter(SelectedCell);
-    setLeftTop(center - QPointF(backgroundImageSize/2,
-                                backgroundImageSize/2));
-    selectedCell = SelectedCell;
+    this->selectedCell = selectedCell;
+    
+    center = game->cellCenter(selectedCell);
+    leftTop = center - QPointF(backgroundImageSize/2,
+                               backgroundImageSize/2);
+    
+    QSizeF cellSize = cellSelection->getSize();
+    cellSelection->setLeftTop(center - QPointF(cellSize.width(), cellSize.height()));
     updateButtonsPositions();
+    
+    draw();
 }
 
-void CCannonSelection::initButtons()
-{
-    if (CloseButtonInInfoBlocksEnabled)
-    {
-        QRectF closeRect(center.x() - CannonSelectionButtonSize/2,
-                         center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2,
-                         CannonSelectionButtonSize,
-                         CannonSelectionButtonSize);
-        closeButton = std::make_shared<CButton>(
-                    ButtonZOrder + 0.1, closeRect.center(),
-                    closeRect.size(),
-                    game, static_cast<int>(eButtonType::eBTCloseButton),
-                    &game->r->buttonClose
-                    );
-
-        connect(closeButton.get(), SIGNAL(pressed(int)),
-                this, SLOT(onButtonPressed(int)));
-    }
-    cannonButton.resize(TypesOfCannon);    
-    for (int i = 0; i < TypesOfCannon; i++)
-    {
-        QRectF buttonRect(calculateTopLeftForButton(i),
-                          QSize(CannonSelectionButtonSize,
-                                CannonSelectionButtonSize));
-        
-        cannonButton[i] = std::make_shared<CButton>(
-                    ButtonZOrder, buttonRect.center(),
-                    buttonRect.size(),
-                    game, static_cast<int>(eButtonType::eBTCloseButton) + i + 1,
-                    &game->r->cannonTypePreview[i]
-                    );
-        
-        connect(cannonButton[i].get(), SIGNAL(pressed(int)),
-                this, SLOT(onButtonPressed(int)));
-    }
-}
 
 void CCannonSelection::updateButtonsPositions()
 {
@@ -105,13 +79,47 @@ void CCannonSelection::updateButtonsPositions()
                                           center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2);
         }
         closeButton->setLeftTop(topLeft);
-        closeButton->draw();
     }
 
     for (int i = 0; i < TypesOfCannon; i++)
-    {
        cannonButton[i]->setLeftTop(calculateTopLeftForButton(i));
-       cannonButton[i]->draw();
+}
+
+void CCannonSelection::initButtons()
+{
+    if (CloseButtonInInfoBlocksEnabled)
+    {
+        QRectF closeRect(center.x() - CannonSelectionButtonSize/2,
+                         center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2,
+                         CannonSelectionButtonSize,
+                         CannonSelectionButtonSize);
+        closeButton = std::make_shared<CButton>(
+                    ButtonZOrder + 0.1, closeRect.center(),
+                    closeRect.size(),
+                    game, static_cast<int>(EButtonType::eBTCloseButton),
+                    &game->r->buttonClose
+                    );
+
+        connect(closeButton.get(), SIGNAL(pressed(int)),
+                this, SLOT(onButtonPressed(int)));
+    }
+    
+    cannonButton.resize(TypesOfCannon);    
+    for (int i = 0; i < TypesOfCannon; i++)
+    {
+        QRectF buttonRect(calculateTopLeftForButton(i),
+                          QSize(CannonSelectionButtonSize,
+                                CannonSelectionButtonSize));
+        
+        cannonButton[i] = std::make_shared<CButton>(
+                    ButtonZOrder, buttonRect.center(),
+                    buttonRect.size(),
+                    game, static_cast<int>(EButtonType::eBTCloseButton) + i + 1,
+                    &game->r->cannonTypePreview[i]
+                    );
+        
+        connect(cannonButton[i].get(), SIGNAL(pressed(int)),
+                this, SLOT(onButtonPressed(int)));
     }
 }
 
@@ -171,22 +179,68 @@ int CCannonSelection::getCannonPrice(int i)
     }
 }
 
+void CCannonSelection::scale()
+{
+    CSceneObject::scale();
+    cellSelection->scale();
+    
+    if (CloseButtonInInfoBlocksEnabled)
+        closeButton->scale();
+    
+    for (int i = 0; i < TypesOfCannon; i++)
+    {
+        cannonButton[i]->scale();
+    }    
+}
+
+void CCannonSelection::scaleWithLoss(QSizeF newSize)
+{
+    CSceneObject::scaleWithLoss(newSize);
+    cellSelection->scaleWithLoss(newSize);
+    
+    if (CloseButtonInInfoBlocksEnabled)
+        closeButton->scaleWithLoss(newSize);
+    
+    for (int i = 0; i < TypesOfCannon; i++)
+    {
+        cannonButton[i]->scaleWithLoss(newSize);
+    }
+}
+
+void CCannonSelection::remove()
+{
+    CSceneObject::remove();
+    cellSelection->remove();
+    
+    if (CloseButtonInInfoBlocksEnabled)
+        closeButton->remove();
+    
+    for (int i = 0; i < TypesOfCannon; i++)
+    {
+        cannonButton[i]->remove();
+    }   
+}
+
 void CCannonSelection::show()
 {
     CSceneObject::show();
-
+    cellSelection->show();
+    
     if (CloseButtonInInfoBlocksEnabled)
         closeButton->show();
-
+    
     for (int i = 0; i < TypesOfCannon; i++)
     {
         cannonButton[i]->show();
     }
+    game->selectionStatus = ESelectionStatus::eCannonSelection;
 }
 
 void CCannonSelection::hide()
 {
-    CSceneObject::hide();
+    CSceneObject::hide();    
+    cellSelection->hide();    
+    
     if (CloseButtonInInfoBlocksEnabled)
         closeButton->hide();
 
@@ -194,43 +248,46 @@ void CCannonSelection::hide()
     {
         cannonButton[i]->hide();
     }
+    
+    game->selectionStatus = ESelectionStatus::eNone;
 }
 
 void CCannonSelection::draw()
 {
     CSceneObject::draw();
+    cellSelection->draw();
+    
     if (CloseButtonInInfoBlocksEnabled)
         closeButton->draw();
 
     for (int i = 0; i < TypesOfCannon; i++)
-    {
         cannonButton[i]->draw();
-    }
 }
 
 void CCannonSelection::onButtonPressed(int type)
 {
-    eButtonType eType = static_cast<eButtonType>(type);
+    EButtonType eType = static_cast<EButtonType>(type);
     
     switch (eType){
-    case eButtonType::eBTCloseButton:
+    case EButtonType::eBTCloseButton:
         break;
-    case eButtonType::eBTChooseFast:
-        game->buyCannon(std::make_shared<CFastCannon>(game, game->selectedCell, 0));
+    case EButtonType::eBTChooseFast:
+        game->buyCannon(std::make_shared<CFastCannon>(game, selectedCell, 0));
         break;
-    case eButtonType::eBTChooseMonster:
-        game->buyCannon(std::make_shared<CMonsterCannon>(game, game->selectedCell, 0));
+    case EButtonType::eBTChooseMonster:
+        game->buyCannon(std::make_shared<CMonsterCannon>(game, selectedCell, 0));
         break;
-    case eButtonType::eBTChooseSlow:
-        game->buyCannon(std::make_shared<CSlowCannon>(game, game->selectedCell, 0));
+    case EButtonType::eBTChooseSlow:
+        game->buyCannon(std::make_shared<CSlowCannon>(game, selectedCell, 0));
         break;
-    case eButtonType::eBTChooseBurn:
-        game->buyCannon(std::make_shared<CBurnCannon>(game, game->selectedCell, 0));
+    case EButtonType::eBTChooseBurn:
+        game->buyCannon(std::make_shared<CBurnCannon>(game, selectedCell, 0));
         break;
     default:
         qDebug() << "Cannon Selection error! need type number " << type;
     }
-    game->deselectCell();
+    
+    hide();
 }
 
 void CCannonSelection::onCashChanged(int)

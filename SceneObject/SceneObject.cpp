@@ -51,11 +51,6 @@ void CSceneObject::draw()
     //show();
 }
 
-void CSceneObject::drawByCenter()
-{
-    game->scene->positionItemByCenter(center, textureSize, angle, zOrder, position);
-}
-
 void CSceneObject::remove()
 {
     if (position)

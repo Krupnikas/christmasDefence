@@ -21,7 +21,7 @@ CMonsterCannon::CMonsterCannon(CGame *game, QPoint cell, double angle)
     center = game->cellCenter(cell);
 
     //ICannon fields
-    sizeType = SMALL;
+    sizeType = ESizeType::eSmall;
     gameCell = cell;
     rotationSpeed = MonsterCannonSmRotation;
     fireSpeed = MonsterCannonSmFireSpeed;
@@ -90,7 +90,7 @@ void CMonsterCannon::upgrade()
 
 int CMonsterCannon::getUpgradeCost() const
 {
-    eSizeType upSizeType = getUpgradeSizeType();
+    ESizeType upSizeType = getUpgradeSizeType();
     return helper::choose(upSizeType,
                           MonsterCannonSmCost,
                           MonsterCannonMidCost,

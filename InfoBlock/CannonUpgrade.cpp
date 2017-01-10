@@ -30,6 +30,7 @@ void CCannonUpgrade::updatePosition(QPoint SelectedCell)
                                 backgroundImageSize/2));
     selectedCell = SelectedCell;
     updateButtonsPositions();
+    draw();
 }
 
 void CCannonUpgrade::initButtons()
@@ -43,7 +44,7 @@ void CCannonUpgrade::initButtons()
         closeButton = std::make_shared<CButton>(
                     ButtonZOrder, rect.center(),
                     rect.size(),
-                    game, static_cast<int>(eButtonType::eBTCloseButton),
+                    game, static_cast<int>(EButtonType::eBTCloseButton),
                     &game->r->buttonClose
                     );
 
@@ -57,7 +58,7 @@ void CCannonUpgrade::initButtons()
                 CannonUpgradeButtonSize);
     upgradeButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
                   rect.size(),
-                  game, static_cast<int>(eButtonType::eBTcannonUpgrade),
+                  game, static_cast<int>(EButtonType::eBTcannonUpgrade),
                   &game->r->buttonUpgrade);
     connect(upgradeButton.get(), SIGNAL(pressed(int)),
             this, SLOT(onButtonPressed(int)));
@@ -71,7 +72,7 @@ void CCannonUpgrade::initButtons()
 
     sellButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
                     rect.size(),
-                    game, static_cast<int>(eButtonType::eBTcannonSell),
+                    game, static_cast<int>(EButtonType::eBTcannonSell),
                     &game->r->buttonSell
                     );
 
@@ -106,32 +107,43 @@ void CCannonUpgrade::updateButtonsPositions()
     sellButton->draw();
 }
 
-void CCannonUpgrade::show()
+void CCannonUpgrade::scale()
 {
-    CSceneObject::show();
-
+    CSceneObject::scale();
+    
     if (CloseButtonInInfoBlocksEnabled)
-        closeButton->show();
+        closeButton->scale();
 
-    upgradeButton->show();
-    sellButton->show();
+    upgradeButton->scale();
+    sellButton->scale();
 }
 
-void CCannonUpgrade::hide()
+void CCannonUpgrade::scaleWithLoss(QSizeF newSize)
 {
-    CSceneObject::hide();
-
+    CSceneObject::scaleWithLoss(newSize);
+    
     if (CloseButtonInInfoBlocksEnabled)
-        closeButton->hide();
+        closeButton->scaleWithLoss(newSize);
 
-    upgradeButton->hide();
-    sellButton->hide();
+    upgradeButton->scaleWithLoss(newSize);
+    sellButton->scaleWithLoss(newSize);
+}
+
+void CCannonUpgrade::remove()
+{
+    CSceneObject::remove();
+    
+    if (CloseButtonInInfoBlocksEnabled)
+        closeButton->remove();
+
+    upgradeButton->remove();
+    sellButton->remove();
 }
 
 void CCannonUpgrade::draw()
 {
     CSceneObject::draw();
-
+    
     if (CloseButtonInInfoBlocksEnabled)
         closeButton->draw();
 
@@ -139,18 +151,58 @@ void CCannonUpgrade::draw()
     sellButton->draw();
 }
 
+void CCannonUpgrade::hide()
+{
+    CSceneObject::hide();
+
+    int posX = selectedCell.x();
+    int posY = selectedCell.y();
+    if (!game->cannons[posX][posY])
+        qDebug() << "CCannonUpgrade: hide: no cannon at selectedCell";
+    else
+        game->cannons[posX][posY]->hideRadius();
+    
+    if (CloseButtonInInfoBlocksEnabled)
+        closeButton->hide();
+
+    upgradeButton->hide();
+    sellButton->hide();
+    
+    game->selectionStatus = ESelectionStatus::eNone;
+}
+
+void CCannonUpgrade::show()
+{
+    CSceneObject::show();
+    
+    int posX = selectedCell.x();
+    int posY = selectedCell.y();
+    if (!game->cannons[posX][posY])
+        qDebug() << "CCannonUpgrade: show: no cannon at selectedCell";
+    else
+        game->cannons[posX][posY]->showRadius();
+    
+    if (CloseButtonInInfoBlocksEnabled)
+        closeButton->show();
+
+    upgradeButton->show();
+    sellButton->show();
+    
+    game->selectionStatus = ESelectionStatus::eCannonUpgrade;
+}
+
 void CCannonUpgrade::onButtonPressed(int type)
 {
-    eButtonType eType = static_cast<eButtonType>(type);
+    EButtonType eType = static_cast<EButtonType>(type);
     
     switch (eType){
-    case eButtonType::eBTCloseButton:
+    case EButtonType::eBTCloseButton:
         break;
-    case eButtonType::eBTcannonUpgrade:
-        game->cannons[game->selectedCell.x()][game->selectedCell.y()]->upgrade();
+    case EButtonType::eBTcannonUpgrade:
+        game->cannons[selectedCell.x()][selectedCell.y()]->upgrade();
         break;
-    case eButtonType::eBTcannonSell:
-        game->sellCannon(game->selectedCell);
+    case EButtonType::eBTcannonSell:
+        game->sellCannon(selectedCell);
         break;
     default:
         qDebug() << "Cannon Selection error! need type number " << type;

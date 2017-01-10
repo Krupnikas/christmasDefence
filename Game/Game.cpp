@@ -18,7 +18,8 @@ CGame::CGame(MainView *view, R *r, CScene *scene, QMediaPlaylist *playlist, QMed
     scene(scene),
     playlist(playlist),
     player(player),
-    user(r)
+    user(r),
+    selectionStatus(ESelectionStatus::eNone)
 {
     cannons.resize(CellNumX);
     distances.resize(CellNumX);
@@ -28,7 +29,7 @@ CGame::CGame(MainView *view, R *r, CScene *scene, QMediaPlaylist *playlist, QMed
         distances[i].resize(CellNumY);
     }
 
-    pressedButton = eButtonType::eBTnone;
+    pressedButton = EButtonType::eBTnone;
 
     positionTimer = new QTimer(this);
     drawTimer = new QTimer(this);
@@ -49,15 +50,16 @@ void CGame::create()
     cannonUpgradeInfoBlock = std::make_shared<CCannonUpgrade>(this, UnselCell);
     userInformationBlock = std::make_shared<CUserInfo>(this);
     waveInformationBlock = std::make_shared<CWaveInfoBlock>(this);
-    
-    
+        
     menuButton = std::make_shared<CButton>(
                 BackgroundZOrder + 0.1,
                 QPointF(OffsetX / 2, LocalHeight - CellSize / 2),
                 QSizeF(CellSize * 0.7, CellSize * 0.7),
-                this, static_cast<int>(eButtonType::eBTgMenu),
+                this, static_cast<int>(EButtonType::eBTgMenu),
                 &r->game_menu_button
                 );
+    
+    selectionStatus = ESelectionStatus::eNone;
     connect(menuButton.get(), SIGNAL(pressed(int)), this, SLOT(onButtonPressed(int)));
 }
 
@@ -86,7 +88,21 @@ void CGame::show()
             if (cannons[i][j])
                 cannons[i][j]->show();
     
-    view->gameStatus = eGameStatus::eGame;
+    switch (selectionStatus)
+    {
+    case ESelectionStatus::eCannonSelection:
+        cannonSelectionInfoBlock->draw();
+        cannonSelectionInfoBlock->show();
+        break;
+    case ESelectionStatus::eCannonUpgrade:
+        cannonUpgradeInfoBlock->draw();
+        cannonUpgradeInfoBlock->show();
+        break;
+    default:
+        break;
+    }
+    
+    view->gameStatus = EGameStatus::eGame;
 }
 
 void CGame::hide()
@@ -115,7 +131,6 @@ void CGame::hide()
 
 void CGame::resize()
 {
-    scene->updateGameBackground();
     scaleObjects();
 }
 
@@ -124,6 +139,8 @@ void CGame::close()
     deselectCell();
     
     background->remove();
+    cannonSelectionInfoBlock->remove();
+    cannonUpgradeInfoBlock->remove();
     userInformationBlock->remove();
     waveInformationBlock->remove();
     menuButton->remove();
@@ -136,8 +153,8 @@ void CGame::close()
 
 void CGame::mousePressEvent(QMouseEvent *)
 {
-    if (pressedButton != eButtonType::eBTnone){
-        pressedButton = eButtonType::eBTnone;
+    if (pressedButton != EButtonType::eBTnone){
+        pressedButton = EButtonType::eBTnone;
         return;
     }
 
@@ -146,7 +163,6 @@ void CGame::mousePressEvent(QMouseEvent *)
 
     selectCell(curSelectedCell);
 }
-
 
 void CGame::startGameLevel(int level)
 {
@@ -275,65 +291,42 @@ void CGame::selectCell(QPoint pos)
         qDebug() << "CGame: selecteCell: cell is outside the field";
         return;
     }
-    if (selectedCell != UnselCell)
+    
+    if (cannonSelectionInfoBlock->isVisible())
+        cannonSelectionInfoBlock->hide();
+    if (cannonUpgradeInfoBlock->isVisible())
+        cannonUpgradeInfoBlock->hide();
+    
+    /*if (selectedCell != UnselCell)
     {
         deselectCell();
         return;
-    }
+    }*/
 
-    if (selectedCell == pos)
-        return;      
+//    if (selectedCell == pos)
+//        return;      
 
     int selX = pos.x();
     int selY = pos.y();
     if (cannons[selX][selY])
-        if(cannons[selX][selY]->isRadiusVisible())
+        if (cannonUpgradeInfoBlock->isVisible())
         {
-            cannons[selX][selY]->hideRadius();
             cannonUpgradeInfoBlock->hide();
         } else {
-            cannons[selX][selY]->showRadius();
             cannonUpgradeInfoBlock->updatePosition(pos);
-            cannonUpgradeInfoBlock->draw();
             cannonUpgradeInfoBlock->show();
         }
     else
     {
         cannonSelectionInfoBlock->updatePosition(pos);
-        cannonSelectionInfoBlock->draw();
         cannonSelectionInfoBlock->show();
-        int x = OffsetX + selX * CellSize;
-        int y = OffsetY + selY * CellSize;
-        QSizeF size(CellSize, CellSize);
-        if (!selectedCellItem)
-            selectedCellItem = scene->addPixmap(size, &(r->cellSelected));
-
-        scene->positionItem(QPointF(x, y), size, 0, 0.5, selectedCellItem);
-        selectedCellItem->setFlag(QGraphicsItem::ItemHasNoContents, false);
-        selectedCellItem->show();
     }
-    selectedCell = pos;
 }
 
 void CGame::deselectCell()
 {
-    int selX = selectedCell.x();
-    int selY = selectedCell.y();
-    if (isGameCell(selectedCell) && cannons[selX][selY])
-    {
-        cannons[selX][selY]->hideRadius();
-        cannonUpgradeInfoBlock->hide();
-    }
-    if (cannonUpgradeInfoBlock)
-        cannonUpgradeInfoBlock->hide();
-    if (cannonSelectionInfoBlock)
-        cannonSelectionInfoBlock->hide();
-    if (selectedCellItem)
-    {
-        selectedCellItem->hide();
-        selectedCellItem->setFlag(QGraphicsItem::ItemHasNoContents, true);
-    }
-    selectedCell = QPoint(-1, -1);
+    cannonSelectionInfoBlock->hide();
+    cannonUpgradeInfoBlock->hide();
 }
 
 QPoint CGame::findNearestCell(QPointF from)
@@ -346,11 +339,11 @@ QPoint CGame::findNearestCell(QPointF from)
 
 void CGame::onButtonPressed(int type)
 {
-    eButtonType eType = static_cast<eButtonType>(type);
+    EButtonType eType = static_cast<EButtonType>(type);
     
     switch (eType)
     {
-    case eButtonType::eBTgMenu:
+    case EButtonType::eBTgMenu:
         hide();
         endGame();
         view->gameMenu.show();
@@ -437,81 +430,25 @@ void CGame::onMousePressed(QMouseEvent *pressEvent)
 void CGame::scaleObjects()
 {
     background->scale();
-    background->draw();
-    background->show();
 
     for (size_t i = 0; i < bullets.size(); ++i)
-    {
         bullets[i]->scale();
-        bullets[i]->draw();
-        bullets[i]->show();
-    }
+
     for (size_t i = 0; i < enemies.size(); ++i)
-    {
         enemies[i]->scale();
-        enemies[i]->draw();
-        enemies[i]->show();
-    }
+
     for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
-            {
                 cannons[i][j]->scale();
-                cannons[i][j]->draw();
-                cannons[i][j]->show();
-            }
 
-    if (cannonSelectionInfoBlock)
-    {
-        cannonSelectionInfoBlock->scale();
-        cannonSelectionInfoBlock->closeButton->scale();
+    cannonSelectionInfoBlock->scale();
 
-        for (int i = 0; i < TypesOfCannon; i++)
-        {
-            cannonSelectionInfoBlock->cannonButton[i]->scale();
-        }
+    cannonUpgradeInfoBlock->scale();
 
-        cannonSelectionInfoBlock->updateButtonsPositions();
-        cannonSelectionInfoBlock->draw();
-    }
+    userInformationBlock->scale();
 
-    if (cannonUpgradeInfoBlock)
-    {
-        cannonUpgradeInfoBlock->scale();
-
-        if (CloseButtonInInfoBlocksEnabled)
-            cannonUpgradeInfoBlock->closeButton->scale();
-        cannonUpgradeInfoBlock->upgradeButton->scale();
-        cannonUpgradeInfoBlock->sellButton->scale();
-
-        cannonUpgradeInfoBlock->updateButtonsPositions();
-        cannonUpgradeInfoBlock->draw();
-    }
-
-    if (userInformationBlock)
-    {
-        userInformationBlock->scale();
-        userInformationBlock->draw();
-        userInformationBlock->show();
-    }
-
-    if (waveInformationBlock)
-    {
-        waveInformationBlock->scale();
-        waveInformationBlock->draw();
-        waveInformationBlock->show();
-    }
+    waveInformationBlock->scale();
     
     menuButton->scale();
-    menuButton->draw();
-    menuButton->show();
-
-    if (selectedCellItem)
-    {
-        scene->removeItem(selectedCellItem);
-        selectedCellItem = nullptr;
-    }
-    QPoint s = selectedCell;
-    selectedCell = UnselCell;
-    selectCell(s);
 }

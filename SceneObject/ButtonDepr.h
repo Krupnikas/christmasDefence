@@ -10,18 +10,18 @@ class CButtonDepr : public CSceneObject
 
 public:
     CButtonDepr();
-    CButtonDepr(eButtonType Type, QRect ButtonRect, QPixmap *Pixmap,
+    CButtonDepr(EButtonType Type, QRect ButtonRect, QPixmap *Pixmap,
             CGame *Game,
             qreal ZOrder = 10, qreal Angle = 0);
     ~CButtonDepr();
 
-    eButtonType type;
+    EButtonType type;
 
     QRect buttonRect;
 
     virtual void show() override;
 
-    void init(eButtonType Type, QRect ButtonRect, QPixmap *Pixmap,
+    void init(EButtonType Type, QRect ButtonRect, QPixmap *Pixmap,
               CGame *Game,
               qreal ZOrder = 10, qreal Angle = 0);
 
@@ -29,6 +29,6 @@ public slots:
     void onMousePressed(QMouseEvent *event);
 
 signals:
-    void pressed(eButtonType Type);
+    void pressed(EButtonType Type);
 
 };

@@ -21,7 +21,7 @@ CSlowCannon::CSlowCannon(CGame *game, QPoint cell, double angle)
     center = game->cellCenter(cell);
 
     //ICannon fields
-    sizeType = SMALL;
+    sizeType = ESizeType::eSmall;
     gameCell = cell;
     rotationSpeed = SlowCannonSmRotation;
     fireSpeed = SlowCannonSmFireSpeed;
@@ -92,7 +92,7 @@ void CSlowCannon::upgrade()
 
 int CSlowCannon::getUpgradeCost() const
 {
-    eSizeType upSizeType = getUpgradeSizeType();
+    ESizeType upSizeType = getUpgradeSizeType();
     return helper::choose(upSizeType,
                           SlowCannonSmCost,
                           SlowCannonMidCost,

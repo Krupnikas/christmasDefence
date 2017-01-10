@@ -45,19 +45,19 @@
 
 #include <Metrics/Metrics.h>
 
-enum class eGameStatus {
+enum class EGameStatus {
     eNotInited, eGameMenu, eLevelMenu, eGame
 };
 
-enum eSizeType {
-    SMALL, MEDIUM, BIG
+enum class ESizeType {
+    eSmall, eMedium, eBig
 };
 
-enum eScaleCenter {
-    LeftTop, Center
+enum class EScaleCenter {
+    eLeftTop, eCenter
 };
 
-enum class eButtonType{
+enum class EButtonType{
     eBTnone,
     eBTCloseButton,
     eBTChooseFast,
@@ -75,10 +75,16 @@ enum class eButtonType{
     eBTgMenu
 };
 
-enum class eSound {
+enum class ESound {
     eSoundtrack,
     eButtonPress,
     eShot
+};
+
+enum class ESelectionStatus {
+    eNone,
+    eCannonSelection,
+    eCannonUpgrade
 };
 
 struct R

@@ -50,11 +50,11 @@ public:
     //non-abstract
     virtual void upgrade();
     
-    eSizeType getSizeType() const;
-    eSizeType getUpgradeSizeType() const;
+    ESizeType getSizeType() const;
+    ESizeType getUpgradeSizeType() const;
     
 protected:
-    eSizeType sizeType;
+    ESizeType sizeType;
     QPoint gameCell;
     qreal hp;
     qreal rotationSpeed;

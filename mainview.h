@@ -23,7 +23,7 @@ public:
 
     QApplication *app;
     
-    eGameStatus gameStatus;
+    EGameStatus gameStatus;
         
     R r;
     CScene scene;

@@ -233,17 +233,17 @@ void ICannon::show()
         radiusItem->show();
 }
 
-eSizeType ICannon::getSizeType() const
+ESizeType ICannon::getSizeType() const
 {
     return sizeType;
 }
 
-eSizeType ICannon::getUpgradeSizeType() const
+ESizeType ICannon::getUpgradeSizeType() const
 {
-    if (sizeType == SMALL)
-        return MEDIUM;
+    if (sizeType == ESizeType::eSmall)
+        return ESizeType::eMedium;
     else
-        return BIG;
+        return ESizeType::eBig;
 }
 
 bool ICannon::reachingEnemy(std::shared_ptr<IEnemy> enemy)

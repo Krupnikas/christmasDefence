@@ -4,7 +4,7 @@
 #include <Enemy/IEnemy.h>
 
 
-CBurnBullet::CBurnBullet(CGame *game, QPointF center, double angle, eSizeType type)
+CBurnBullet::CBurnBullet(CGame *game, QPointF center, double angle, ESizeType type)
 {
     //IGameObject fields
     this->label = "Burn Bullet";

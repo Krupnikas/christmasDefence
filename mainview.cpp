@@ -13,7 +13,7 @@
 MainView::MainView(QApplication *app, QWidget *parent):
     QWidget(parent),
     app(app),
-    gameStatus(eGameStatus::eNotInited),
+    gameStatus(EGameStatus::eNotInited),
     r(), scene(&r),
     game(this, &r, &scene, &playlist, &player),
     gameMenu(&game),
@@ -84,13 +84,26 @@ void MainView::resizeEvent(QResizeEvent *event)
     scene.updateGameRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene.getGraphicsScene());
 
-    switch (gameStatus)
+    if (gameStatus != EGameStatus::eNotInited)
     {
-    case eGameStatus::eNotInited:
-        break;
-    default:
         gameMenu.resize();
         game.resize();
+    }
+    
+    switch (gameStatus)
+    {
+    case EGameStatus::eNotInited:
+        break;
+    case EGameStatus::eGameMenu:
+        gameMenu.show();
+        break;
+    case EGameStatus::eLevelMenu:
+        levelMenu.show();
+        break;
+    case EGameStatus::eGame:
+        game.show();
+        break;
+    default:
         qDebug() << "MainView: resizeEvent: invalid gameStatus";
     }
 
@@ -107,7 +120,7 @@ void MainView::showEvent(QShowEvent*)
     game.create();
 
     gameMenu.show();
-    gameStatus = eGameStatus::eGameMenu;
+    gameStatus = EGameStatus::eGameMenu;
 }
 
 void MainView::mouseDoubleClickEvent(QMouseEvent *)
@@ -133,12 +146,12 @@ void MainView::mousePressEvent(QMouseEvent *event)
 {
     switch (gameStatus)
     {
-    case eGameStatus::eGameMenu:
+    case EGameStatus::eGameMenu:
         //emit mouseDown(event);
         break;
-    case eGameStatus::eLevelMenu:
+    case EGameStatus::eLevelMenu:
         break;
-    case eGameStatus::eGame:
+    case EGameStatus::eGame:
     {
         //QThread::msleep(500);
         bool iv = game.cannonSelectionInfoBlock->isVisible();
@@ -163,7 +176,7 @@ void MainView::mouseReleaseEvent(QMouseEvent *event)
 bool MainView::eventFilter(QObject *, QEvent *event)
 {
     QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
-    if (gameStatus == eGameStatus::eNotInited)
+    if (gameStatus == EGameStatus::eNotInited)
         return false;
     
     QEventLoop loop;
@@ -178,7 +191,7 @@ bool MainView::eventFilter(QObject *, QEvent *event)
 
         bool iv = game.cannonSelectionInfoBlock->isVisible();
         bool sv = game.cannonUpgradeInfoBlock->isVisible();
-        if (gameStatus == eGameStatus::eGame && !iv && !sv)
+        if (gameStatus == EGameStatus::eGame && !iv && !sv)
             game.mousePressEvent(mouseEvent);
 
         emit mouseDown(mouseEvent);

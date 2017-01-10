@@ -21,7 +21,7 @@ CBurnCannon::CBurnCannon(CGame *game, QPoint cell, double angle)
     center = game->cellCenter(cell);
 
     //ICannon fields
-    sizeType = SMALL;
+    sizeType = ESizeType::eSmall;
     gameCell = cell;
     rotationSpeed = BurnCannonSmRotation;
     fireSpeed = BurnCannonSmFireSpeed;
@@ -90,7 +90,7 @@ void CBurnCannon::upgrade()
 
 int CBurnCannon::getUpgradeCost() const
 {
-    eSizeType upSizeType = getUpgradeSizeType();
+    ESizeType upSizeType = getUpgradeSizeType();
     return helper::choose(upSizeType,
                           BurnCannonSmCost,
                           BurnCannonMidCost,

@@ -17,7 +17,6 @@ public:
     virtual void scaleWithLoss(QSizeF newSize);
     virtual void remove();
     virtual void draw();
-    virtual void drawByCenter();
     virtual void hide();
     virtual void show();
     virtual bool isVisible();

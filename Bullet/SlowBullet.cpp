@@ -4,7 +4,7 @@
 #include <Enemy/IEnemy.h>
 
 
-CSlowBullet::CSlowBullet(CGame *game, QPointF center, double angle, eSizeType type)
+CSlowBullet::CSlowBullet(CGame *game, QPointF center, double angle, ESizeType type)
 {
     //IGameObject fields
     this->label = "Slow Bullet";

@@ -4,7 +4,7 @@
 #include <Enemy/IEnemy.h>
 
 
-CMonsterBullet::CMonsterBullet(CGame *game, QPointF center, double angle, eSizeType type)
+CMonsterBullet::CMonsterBullet(CGame *game, QPointF center, double angle, ESizeType type)
 {
     //IGameObject fields
     this->label = "Monster Bullet";
