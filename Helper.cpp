@@ -231,18 +231,25 @@ std::shared_ptr<QPixmap> renderPixmapFromText(QString Text)
 {
     QPainterPath path;
     QFont myFont("Helvetica [Cronyx]", 94);
-    int i = 0;
-    if (Text.count() == 1)
-        i++;
-    std::shared_ptr<QPixmap> pixmap = std::make_shared<QPixmap>((Text.count() + i) * myFont.pointSize() * 0.9, 100);
+
+    int  width;
+
+    double sc = 0.725;
+
+    width = Text.count() * myFont.pointSize() * sc;
+
+    if (width < 150)
+            width = 150;
+
+    std::shared_ptr<QPixmap> pixmap = std::make_shared<QPixmap>(width, 100);
 
     pixmap->fill(Qt::transparent);
 
     QPainter painter(pixmap.get());
-    painter.setPen(QPen(QBrush(Qt::black), 2));
+    painter.setPen(QPen(QBrush(QColor(255,255,255,255)), 2));
     painter.setBrush(Qt::white);
     painter.setRenderHint(QPainter::HighQualityAntialiasing);
-    path.addText(QPointF(10 + i * myFont.pointSize() * 0.4, 96), myFont, Text);
+    path.addText(QPointF((width / 2.0) - Text.count() * myFont.pointSize() * sc / 2.0, 96), myFont, Text);
 
     painter.drawPath(path);
 

@@ -9,8 +9,8 @@ class CWaveInfoBlock : public IInfoBlock
 public:
     CWaveInfoBlock(CGame *game);
 
-    const int INTERNAL_OFFSET_X = 15;
-    const int INTERNAL_OFFSET_Y = 15;
+    const int InternalOffsetX = 15;
+    const int InternalOffsetY = 15;
 
     std::shared_ptr<CImageAndNumber> waveCounter;
     std::shared_ptr<CImageAndNumber> currentWave;

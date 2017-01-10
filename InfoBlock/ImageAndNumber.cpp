@@ -16,18 +16,18 @@ CImageAndNumber::CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRectF Boundi
     this->leftTop = BoundingRect.topLeft();
 
     icon = std::make_shared<CSceneObject>(0, 4.6,
-                                          QPointF(leftTop) + QPointF(ICON_X_OFFSET, ICON_Y_OFFSET),
-                                          QSizeF(BoundingRect.width() - 2 * ICON_X_OFFSET,
-                                                 BoundingRect.width() - 2 * ICON_X_OFFSET),
+                                          QPointF(leftTop) + QPointF(IconOffsetX, IconOffsetY),
+                                          QSizeF(BoundingRect.width() - 2 * IconOffsetX,
+                                                 BoundingRect.width() - 2 * IconOffsetX),
                                           IconPixmap, game);
 
     renderedText = helper::renderPixmapFromText(numberText);
 
     text = std::make_shared<CSceneObject>(0, 4.6,
                                           QPointF(leftTop) +
-                                          QPointF(TEXT_X_OFFSET, 2 * TEXT_Y_OFFSET + icon->getTextureSize().height()),
-                                          QSizeF(BoundingRect.width() - 2 * TEXT_X_OFFSET,
-                                                (BoundingRect.width() - 2 * TEXT_X_OFFSET)
+                                          QPointF(TextOffsetX, 2 * TextOffsetY + icon->getTextureSize().height()),
+                                          QSizeF(BoundingRect.width() - 2 * TextOffsetX,
+                                                (BoundingRect.width() - 2 * TextOffsetX)
                                                 * renderedText->height() / renderedText->width()),
                                           renderedText.get(), game);
 }
