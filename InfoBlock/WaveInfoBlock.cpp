@@ -17,16 +17,16 @@ CWaveInfoBlock::CWaveInfoBlock(CGame *game)
 
     waveCounter = std::make_shared<CImageAndNumber>(game,
                                            &game->r->wave_counter_icon,
-                                           QRect(leftTop.toPoint() + QPoint(INTERNAL_OFFSET_X,
-                                                                  INTERNAL_OFFSET_Y),
-                                                 QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
-                                                       (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2)));
+                                           QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
+                                                                  InternalOffsetY),
+                                                 QSize(textureSize.width() - 2 * InternalOffsetX,
+                                                       (textureSize.height() - 3 * InternalOffsetY)/2)));
     currentWave = std::make_shared<CImageAndNumber>(game,
                                            &game->r->current_wave_icon,
-                                           QRect(leftTop.toPoint() + QPoint(INTERNAL_OFFSET_X,
-                                                                  INTERNAL_OFFSET_Y * 2 + (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2),
-                                                 QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
-                                                       (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2)));
+                                           QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
+                                                                  InternalOffsetY * 2 + (textureSize.height() - 3 * InternalOffsetY)/2),
+                                                 QSize(textureSize.width() - 2 * InternalOffsetX,
+                                                       (textureSize.height() - 3 * InternalOffsetY)/2)));
 
     connect(&game->user,
             SIGNAL(cashChanged(int)),
@@ -45,15 +45,15 @@ CWaveInfoBlock::CWaveInfoBlock(CGame *game)
 void CWaveInfoBlock::draw()
 {
     CSceneObject::draw();
-    waveCounter->updatePosition(QRect(leftTop.toPoint() + QPoint(INTERNAL_OFFSET_X,
-                                                        INTERNAL_OFFSET_Y),
-                                       QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
-                                             (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2)));
+    waveCounter->updatePosition(QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
+                                                        InternalOffsetY),
+                                       QSize(textureSize.width() - 2 * InternalOffsetX,
+                                             (textureSize.height() - 3 * InternalOffsetY)/2)));
     waveCounter->draw();
-    currentWave->updatePosition(QRect(leftTop.toPoint() + QPoint(INTERNAL_OFFSET_X,
-                                                           INTERNAL_OFFSET_Y * 2 + (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2),
-                                          QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
-                                                (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2)));
+    currentWave->updatePosition(QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
+                                                           InternalOffsetY * 2 + (textureSize.height() - 3 * InternalOffsetY)/2),
+                                          QSize(textureSize.width() - 2 * InternalOffsetX,
+                                                (textureSize.height() - 3 * InternalOffsetY)/2)));
     currentWave->draw();
 }
 

@@ -2,16 +2,17 @@
 
 #include <InfoBlock/IInfoBlock.h>
 #include <Helper.h>
+#include "math.h"
 
 class CImageAndNumber : public IInfoBlock
 {
 public:
     CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRectF BoundingRect, QString text = QString("0"));
 
-    const int ICON_X_OFFSET = 20;
-    const int ICON_Y_OFFSET = 25;
-    const int TEXT_X_OFFSET = 2;
-    const int TEXT_Y_OFFSET = 25;
+    const int IconOffsetX = 20;
+    const int IconOffsetY = 25;
+    const int TextOffsetX = 5;
+    const int TextOffsetY = 25;
 
     void updatePosition(QRect BoundingRect);
 
