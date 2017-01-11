@@ -14,9 +14,9 @@ CBurnBullet::CBurnBullet(CGame *game, QPointF center, double angle, ESizeType ty
     
     this->textureSize = QSize(BurnBulletSizeX, BurnBulletSizeY);
     this->pixmap = helper::choose(type,
-                                  &game->r->burn_bullet_1,
-                                  &game->r->burn_bullet_2,
-                                  &game->r->burn_bullet_3);
+                                  game->r->burn_bullet_1,
+                                  game->r->burn_bullet_2,
+                                  game->r->burn_bullet_3);
     this->position = game->scene->addPixmap(textureSize, pixmap);
     
     this->center = center;

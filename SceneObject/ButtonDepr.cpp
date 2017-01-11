@@ -3,7 +3,7 @@
 
 CButtonDepr::CButtonDepr(){}
 
-CButtonDepr::CButtonDepr(EButtonType Type, QRect ButtonRect, QPixmap *Pixmap, CGame *Game,
+CButtonDepr::CButtonDepr(EButtonType Type, QRect ButtonRect, std::shared_ptr<QPixmap> Pixmap, CGame *Game,
                  qreal ZOrder, qreal Angle)
 {
     qDebug() << "Button Created";
@@ -23,7 +23,7 @@ void CButtonDepr::show()
     buttonRect.moveTop(leftTop.y());
 }
 
-void CButtonDepr::init(EButtonType Type, QRect ButtonRect, QPixmap *Pixmap, CGame *Game, qreal ZOrder, qreal Angle)
+void CButtonDepr::init(EButtonType Type, QRect ButtonRect, std::shared_ptr<QPixmap> Pixmap, CGame *Game, qreal ZOrder, qreal Angle)
 {
     label = "Button";
     type = Type;

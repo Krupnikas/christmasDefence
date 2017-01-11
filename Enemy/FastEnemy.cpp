@@ -31,18 +31,18 @@ CFastEnemy::CFastEnemy(CGame *game, int enemyTexture, int enemyPower)
     hpCurItem = std::make_shared<CHpCurrent>(this);
 }
 
-QPixmap *CFastEnemy::getTexture(int enemyTexture)
+std::shared_ptr<QPixmap> CFastEnemy::getTexture(int enemyTexture)
 {
     switch (enemyTexture)
     {
     case 1:
-        return &game->r->fast_enemy_1;
+        return game->r->fast_enemy_1;
     case 2:
-        return &game->r->fast_enemy_2;
+        return game->r->fast_enemy_2;
     case 3:
-        return &game->r->fast_enemy_3;
+        return game->r->fast_enemy_3;
     default:
         qDebug() << "incorrect enemy texture";
-        return &game->r->fast_enemy_2;
+        return game->r->fast_enemy_2;
     }
 }

@@ -14,7 +14,7 @@ CMonsterCannon::CMonsterCannon(CGame *game, QPoint cell, double angle)
     zOrder = 2;
 
     textureSize = QSize(CellSize, CellSize);
-    pixmap = &game->r->monster_cannon_1;
+    pixmap = game->r->monster_cannon_1;
     position = game->scene->addPixmap(textureSize, pixmap);
 
     leftTop = game->cellLeftTop(cell);
@@ -30,6 +30,7 @@ CMonsterCannon::CMonsterCannon(CGame *game, QPoint cell, double angle)
 
     cost = MonsterCannonSmCost;
     sGunshot.setSource(game->r->url_gunshots[2]);
+    sGunshot.setVolume(SoundLevel);
 }
 
 CMonsterCannon::~CMonsterCannon(){}
@@ -59,9 +60,9 @@ void CMonsterCannon::upgrade()
     this->pixmap =
             helper::choose(
                             sizeType,
-                            &game->r->monster_cannon_1,
-                            &game->r->monster_cannon_2,
-                            &game->r->monster_cannon_3);
+                            game->r->monster_cannon_1,
+                            game->r->monster_cannon_2,
+                            game->r->monster_cannon_3);
 
     game->scene->removeItem(position);
     position = game->scene->addPixmap(textureSize, pixmap);

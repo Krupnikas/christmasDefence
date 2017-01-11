@@ -15,6 +15,6 @@ CHpCurrent::CHpCurrent(IEnemy *enemy)
     
     textureSize = HpSize;
     size = HpSize;
-    pixmap = &game->r->hp_cur;
+    pixmap = game->r->hp_cur;
     position = game->scene->addPixmap(textureSize, pixmap);
 }

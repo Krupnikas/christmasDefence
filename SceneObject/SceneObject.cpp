@@ -16,7 +16,7 @@ CSceneObject::CSceneObject():
 
 CSceneObject::CSceneObject(qreal angle, qreal zOrder,
                            QPointF leftTop, QSizeF size,
-                           QPixmap *pixmap, CGame *game):
+                           std::shared_ptr<QPixmap> pixmap, CGame *game):
     angle(angle),
     zOrder(zOrder),
     leftTop(leftTop),
@@ -130,14 +130,14 @@ void CSceneObject::setLeftTop(const QPointF &value)
     leftTop = value;
 }
 
-QPixmap *CSceneObject::getPixmap() const
+std::shared_ptr<QPixmap> CSceneObject::getPixmap() const
 {
     return pixmap;
 }
 
-void CSceneObject::setPixmap(QPixmap* Pixmap)
+void CSceneObject::setPixmap(std::shared_ptr<QPixmap> pixmap)
 {
-    pixmap = Pixmap;
+    this->pixmap = pixmap;
     scale();
 }
 

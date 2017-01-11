@@ -10,19 +10,19 @@ CWaveInfoBlock::CWaveInfoBlock(CGame *game)
 
     this->textureSize = QSize(OffsetX,
                               OffsetY + CellSize * (CellNumY / 2));
-    this->pixmap = &game->r->userInfoBackground;
+    this->pixmap = game->r->userInfoBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
 
     this->leftTop = QPoint(OffsetX + CellSize * CellNumX, 0);
 
     waveCounter = std::make_shared<CImageAndNumber>(game,
-                                           &game->r->wave_counter_icon,
+                                           game->r->wave_counter_icon,
                                            QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
                                                                   InternalOffsetY),
                                                  QSize(textureSize.width() - 2 * InternalOffsetX,
                                                        (textureSize.height() - 3 * InternalOffsetY)/2)));
     currentWave = std::make_shared<CImageAndNumber>(game,
-                                           &game->r->current_wave_icon,
+                                           game->r->current_wave_icon,
                                            QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
                                                                   InternalOffsetY * 2 + (textureSize.height() - 3 * InternalOffsetY)/2),
                                                  QSize(textureSize.width() - 2 * InternalOffsetX,
@@ -87,7 +87,7 @@ void CWaveInfoBlock::remove()
 
 void CWaveInfoBlock::onCurWaveChanged(int newCurWave)
 {
-    this->waveCounter->changeText(QString::number(newCurWave)
+    this->waveCounter->changeText(QString::number(newCurWave + 1)
                                   + QString("/")
                                   + QString::number(game->waveManager.getNumberOfWaves()));
     waveCounter->draw();

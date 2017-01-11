@@ -15,6 +15,6 @@ CHpBackground::CHpBackground(IEnemy *enemy)
     
     textureSize = HpSize;
     size = HpSize;
-    pixmap = &game->r->hp_background;
+    pixmap = std::shared_ptr<QPixmap>(game->r->hp_background);
     position = game->scene->addPixmap(textureSize, pixmap);
 }

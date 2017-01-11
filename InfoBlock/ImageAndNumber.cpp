@@ -1,6 +1,6 @@
 #include "ImageAndNumber.h"
 
-CImageAndNumber::CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRectF BoundingRect, QString numberText)
+CImageAndNumber::CImageAndNumber(CGame *game, std::shared_ptr<QPixmap> IconPixmap, QRectF BoundingRect, QString numberText)
 {
     //IGameObject fields
     this->label = "Image and number block";
@@ -11,7 +11,7 @@ CImageAndNumber::CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRectF Boundi
     this->textureSize = QSize(BoundingRect.width(),
                               BoundingRect.height());
 
-    this->pixmap = &game->r->imageAndNumberBackground;
+    this->pixmap = game->r->imageAndNumberBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
     this->leftTop = BoundingRect.topLeft();
 
@@ -29,7 +29,7 @@ CImageAndNumber::CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRectF Boundi
                                           QSizeF(BoundingRect.width() - 2 * TextOffsetX,
                                                 (BoundingRect.width() - 2 * TextOffsetX)
                                                 * renderedText->height() / renderedText->width()),
-                                          renderedText.get(), game);
+                                          renderedText, game);
 }
 
 void CImageAndNumber::updatePosition(QRect BoundingRect)
@@ -42,7 +42,8 @@ void CImageAndNumber::updatePosition(QRect BoundingRect)
 void CImageAndNumber::changeText(QString newText)
 {
     renderedText = helper::renderPixmapFromText(newText);
-    text->setPixmap(renderedText.get());
+    text->setPixmap(renderedText);
+    
 }
 
 void CImageAndNumber::scale()

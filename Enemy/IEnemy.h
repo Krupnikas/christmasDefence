@@ -33,7 +33,7 @@ public:
     virtual void hide() override;
 
 protected:
-    virtual QPixmap *getTexture(int enemyTexture) = 0;
+    virtual std::shared_ptr<QPixmap> getTexture(int enemyTexture) = 0;
     
 protected:
     std::shared_ptr<mov::Movements> movements;

@@ -1,7 +1,7 @@
 #include <SceneObject/SceneBackground.h>
 #include <Game/Game.h>
 
-CSceneBackground::CSceneBackground(CGame *game, QPixmap *pixmap)
+CSceneBackground::CSceneBackground(CGame *game, std::shared_ptr<QPixmap> pixmap)
 {
     this->zOrder = BackgroundZOrder;
     this->game = game;

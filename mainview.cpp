@@ -87,6 +87,7 @@ void MainView::resizeEvent(QResizeEvent *event)
     if (gameStatus != EGameStatus::eNotInited)
     {
         gameMenu.resize();
+        levelMenu.resize();
         game.resize();
     }
     

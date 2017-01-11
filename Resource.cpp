@@ -8,105 +8,105 @@ R::R()
     lm_dir = "://lm/res/christmas/level_menu/";
     
     //GameMenu resources
-    game_menu_background = QPixmap(getGm("background"));
-    game_menu_caption = QPixmap(getGm("caption"));
+    game_menu_background = std::make_shared<QPixmap>(getGm("background"));
+    game_menu_caption = std::make_shared<QPixmap>(getGm("caption"));
     
     gm_buttons.resize(GameMenuButtonNum);
     for (int i = 0; i < GameMenuButtonNum; ++i)
-        gm_buttons[i] = QPixmap(getGmWithPrefix("button_", i + 1));
+        gm_buttons[i] = std::make_shared<QPixmap>(getGmWithPrefix("button_", i + 1));
     
     gm_focused_buttons.resize(GameMenuButtonNum);
     for (int i = 0; i < GameMenuButtonNum; ++i)
-        gm_focused_buttons[i] = QPixmap(getGmWithPrefix("focused_button_", i + 1));
+        gm_focused_buttons[i] = std::make_shared<QPixmap>(getGmWithPrefix("focused_button_", i + 1));
     
     gm_pressed_buttons.resize(GameMenuButtonNum);    
     for (int i = 0; i < GameMenuButtonNum; ++i)
-        gm_pressed_buttons[i] = QPixmap(getGmWithPrefix("pressed_button_", i + 1));
+        gm_pressed_buttons[i] = std::make_shared<QPixmap>(getGmWithPrefix("pressed_button_", i + 1));
 
     //LevelMenu resources
-    level_menu_background = QPixmap(getLm("background"));
-    level_menu_caption = QPixmap(getLm("caption"));
-    level_menu_back = QPixmap(getLm("back"));
+    level_menu_background = std::make_shared<QPixmap>(getLm("background"));
+    level_menu_caption = std::make_shared<QPixmap>(getLm("caption"));
+    level_menu_back = std::make_shared<QPixmap>(getLm("back"));
     
     lm_levels.resize(LevelNum);
     for (int i = 0; i < LevelNum; ++i)
-        lm_levels[i] = QPixmap(getLmWithPrefix("", i + 1));
+        lm_levels[i] = std::make_shared<QPixmap>(getLmWithPrefix("", i + 1));
     
     lm_focused_levels.resize(LevelNum);
     for (int i = 0; i < LevelNum; ++i)
-        lm_focused_levels[i] = QPixmap(getLmWithPrefix("focused_", i + 1));
+        lm_focused_levels[i] = std::make_shared<QPixmap>(getLmWithPrefix("focused_", i + 1));
 
     lm_pressed_levels.resize(LevelNum);
     for (int i = 0; i < LevelNum; ++i)
-        lm_pressed_levels[i] = QPixmap(getLmWithPrefix("pressed_", i + 1));
+        lm_pressed_levels[i] = std::make_shared<QPixmap>(getLmWithPrefix("pressed_", i + 1));
     
     
     //Game resources
-    cell1 = QPixmap(get("cell1"));
-    cell2 = QPixmap(get("cell2"));
-    cellSelected = QPixmap(get("cellSelected"));
+    cell1 = std::make_shared<QPixmap>(get("cell1"));
+    cell2 = std::make_shared<QPixmap>(get("cell2"));
+    cellSelected = std::make_shared<QPixmap>(get("cellSelected"));
     
-    game_background = QPixmap(get("game_background"));
-    field_background = QPixmap(get("field_background"));
+    game_background = std::make_shared<QPixmap>(get("game_background"));
+    field_background = std::make_shared<QPixmap>(get("field_background"));
 
-    cannonSelectionBackground = QPixmap(get("cannonSelectingInfoBlockBackground"));
-    cannonUpgradeBackground = QPixmap(get("cannonUpgradeInfoBlockBackground"));
-    imageAndNumberBackground = QPixmap(get("SmallBlockBG.png"));
-    userInfoBackground = QPixmap(get("userInfoBlock.png"));
+    cannonSelectionBackground = std::make_shared<QPixmap>(get("cannonSelectingInfoBlockBackground"));
+    cannonUpgradeBackground = std::make_shared<QPixmap>(get("cannonUpgradeInfoBlockBackground"));
+    imageAndNumberBackground = std::make_shared<QPixmap>(get("SmallBlockBG.png"));
+    userInfoBackground = std::make_shared<QPixmap>(get("userInfoBlock.png"));
     
-    hp_icon = QPixmap(get("hp.png"));
-    coins_icon = QPixmap(get("coin.png"));
-    wave_counter_icon = QPixmap(get("waveCounterIcon"));
-    current_wave_icon = QPixmap(get("currentWaveIcon"));
-    game_menu_button = QPixmap(get("menu_button"));
+    hp_icon = std::make_shared<QPixmap>(get("hp.png"));
+    coins_icon = std::make_shared<QPixmap>(get("coin.png"));
+    wave_counter_icon = std::make_shared<QPixmap>(get("waveCounterIcon"));
+    current_wave_icon = std::make_shared<QPixmap>(get("currentWaveIcon"));
+    game_menu_button = std::make_shared<QPixmap>(get("menu_button"));
 
-    buttonUpgrade = QPixmap(get("upgrade.png"));
-    buttonSell = QPixmap(get("sell.png"));
+    buttonUpgrade = std::make_shared<QPixmap>(get("upgrade.png"));
+    buttonSell = std::make_shared<QPixmap>(get("sell.png"));
     
-    entireRadius = QPixmap(get("entireRadius.png"));
+    entireRadius = std::make_shared<QPixmap>(get("entireRadius.png"));
 
-    buttonClose = QPixmap(get("clo.png"));
+    buttonClose = std::make_shared<QPixmap>(get("clo.png"));
+   
+    burn_cannon_1 = std::make_shared<QPixmap>(get("cannons/burn_cannon_1"));
+    burn_cannon_2 = std::make_shared<QPixmap>(get("cannons/burn_cannon_2"));
+    burn_cannon_3 = std::make_shared<QPixmap>(get("cannons/burn_cannon_3"));
+
+    fast_cannon_1 = std::make_shared<QPixmap>(get("cannons/fast_cannon_1"));
+    fast_cannon_2 = std::make_shared<QPixmap>(get("cannons/fast_cannon_2"));
+    fast_cannon_3 = std::make_shared<QPixmap>(get("cannons/fast_cannon_3"));
+
+    monster_cannon_1 = std::make_shared<QPixmap>(get("cannons/monster_cannon_1"));
+    monster_cannon_2 = std::make_shared<QPixmap>(get("cannons/monster_cannon_2"));
+    monster_cannon_3 = std::make_shared<QPixmap>(get("cannons/monster_cannon_3"));
+
+    slow_cannon_1 = std::make_shared<QPixmap>(get("cannons/slow_cannon_1"));
+    slow_cannon_2 = std::make_shared<QPixmap>(get("cannons/slow_cannon_2"));
+    slow_cannon_3 = std::make_shared<QPixmap>(get("cannons/slow_cannon_3"));
     
-    burn_cannon_1 = QPixmap(get("cannons/burn_cannon_1"));
-    burn_cannon_2 = QPixmap(get("cannons/burn_cannon_2"));
-    burn_cannon_3 = QPixmap(get("cannons/burn_cannon_3"));
+    burn_bullet_1 = std::make_shared<QPixmap>(get("bullets/burn_bullet_1"));
+    burn_bullet_2 = std::make_shared<QPixmap>(get("bullets/burn_bullet_2"));
+    burn_bullet_3 = std::make_shared<QPixmap>(get("bullets/burn_bullet_3"));
 
-    fast_cannon_1 = QPixmap(get("cannons/fast_cannon_1"));
-    fast_cannon_2 = QPixmap(get("cannons/fast_cannon_2"));
-    fast_cannon_3 = QPixmap(get("cannons/fast_cannon_3"));
+    fast_bullet_1 = std::make_shared<QPixmap>(get("bullets/fast_bullet_1"));
+    fast_bullet_2 = std::make_shared<QPixmap>(get("bullets/fast_bullet_2"));
+    fast_bullet_3 = std::make_shared<QPixmap>(get("bullets/fast_bullet_3"));
 
-    monster_cannon_1 = QPixmap(get("cannons/monster_cannon_1"));
-    monster_cannon_2 = QPixmap(get("cannons/monster_cannon_2"));
-    monster_cannon_3 = QPixmap(get("cannons/monster_cannon_3"));
+    monster_bullet_1 = std::make_shared<QPixmap>(get("bullets/monster_bullet_1"));
+    monster_bullet_2 = std::make_shared<QPixmap>(get("bullets/monster_bullet_2"));
+    monster_bullet_3 = std::make_shared<QPixmap>(get("bullets/monster_bullet_3"));
 
-    slow_cannon_1 = QPixmap(get("cannons/slow_cannon_1"));
-    slow_cannon_2 = QPixmap(get("cannons/slow_cannon_2"));
-    slow_cannon_3 = QPixmap(get("cannons/slow_cannon_3"));
+    slow_bullet_1 = std::make_shared<QPixmap>(get("bullets/slow_bullet_1"));
+    slow_bullet_2 = std::make_shared<QPixmap>(get("bullets/slow_bullet_2"));
+    slow_bullet_3 = std::make_shared<QPixmap>(get("bullets/slow_bullet_3"));
     
-    burn_bullet_1 = QPixmap(get("bullets/burn_bullet_1"));
-    burn_bullet_2 = QPixmap(get("bullets/burn_bullet_2"));
-    burn_bullet_3 = QPixmap(get("bullets/burn_bullet_3"));
-
-    fast_bullet_1 = QPixmap(get("bullets/fast_bullet_1"));
-    fast_bullet_2 = QPixmap(get("bullets/fast_bullet_2"));
-    fast_bullet_3 = QPixmap(get("bullets/fast_bullet_3"));
-
-    monster_bullet_1 = QPixmap(get("bullets/monster_bullet_1"));
-    monster_bullet_2 = QPixmap(get("bullets/monster_bullet_2"));
-    monster_bullet_3 = QPixmap(get("bullets/monster_bullet_3"));
-
-    slow_bullet_1 = QPixmap(get("bullets/slow_bullet_1"));
-    slow_bullet_2 = QPixmap(get("bullets/slow_bullet_2"));
-    slow_bullet_3 = QPixmap(get("bullets/slow_bullet_3"));
+    fast_enemy_1 = std::make_shared<QPixmap>(get("enemies/fast_enemy_1"));
+    fast_enemy_2 = std::make_shared<QPixmap>(get("enemies/fast_enemy_2"));
+    fast_enemy_3 = std::make_shared<QPixmap>(get("enemies/fast_enemy_3"));
     
-    fast_enemy_1 = QPixmap(get("enemies/fast_enemy_1"));
-    fast_enemy_2 = QPixmap(get("enemies/fast_enemy_2"));
-    fast_enemy_3 = QPixmap(get("enemies/fast_enemy_3"));
-    
-    hp_cur = QPixmap(get("hp_cur"));
-    hp_background = QPixmap(get("hp_background"));
+    hp_cur = std::make_shared<QPixmap>(get("hp_cur"));
+    hp_background = std::make_shared<QPixmap>(get("hp_background"));
 
-    enemy_comes = QPixmap(get("enemy_comes"));
+    enemy_comes = std::make_shared<QPixmap>(get("enemy_comes"));
     waves = get("waves/level");
     
     s_button_pressed.setSource(QUrl(getSound("button.wav")));
@@ -123,8 +123,8 @@ R::R()
     
     for (int i = 0; i < TypesOfCannon; i++)
     {
-        cannonTypePreview[i] = QPixmap(get(getNameOfTypePreview(i)));
-        cannonUnableTypePreview[i] = QPixmap(get(getNameOfUnableTypePreview(i)));
+        cannonTypePreview[i] = std::make_shared<QPixmap>(get(getNameOfTypePreview(i)));
+        cannonUnableTypePreview[i] = std::make_shared<QPixmap>(get(getNameOfUnableTypePreview(i)));
     }
 }
 

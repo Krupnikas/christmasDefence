@@ -10,8 +10,8 @@ class CButton: public CSceneObject
 public:
     CButton(qreal zOrder, QPointF center, QSizeF size,
             CGame *game, int type,
-            QPixmap *normalPixmap, QPixmap *focusedPixmap = nullptr,
-            QPixmap *pressedPixmap = nullptr, QPixmap *disabledPixmap = nullptr,
+            std::shared_ptr<QPixmap> normalPixmap, std::shared_ptr<QPixmap> focusedPixmap = nullptr,
+            std::shared_ptr<QPixmap> pressedPixmap = nullptr, std::shared_ptr<QPixmap> disabledPixmap = nullptr,
             bool mouseTracking = false
             );
     

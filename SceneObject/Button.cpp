@@ -4,8 +4,8 @@
 
 CButton::CButton(qreal zOrder, QPointF center, QSizeF size,
                  CGame *game, int type,
-                 QPixmap *normalPixmap, QPixmap *focusedPixmap,
-                 QPixmap *pressedPixmap, QPixmap *disabledPixmap,
+                 std::shared_ptr<QPixmap> normalPixmap, std::shared_ptr<QPixmap> focusedPixmap,
+                 std::shared_ptr<QPixmap> pressedPixmap, std::shared_ptr<QPixmap> disabledPixmap,
                  bool mouseTracking):
     type(type),
     mouseDown(false),

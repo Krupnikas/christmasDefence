@@ -10,7 +10,7 @@ class CButtonDepr : public CSceneObject
 
 public:
     CButtonDepr();
-    CButtonDepr(EButtonType Type, QRect ButtonRect, QPixmap *Pixmap,
+    CButtonDepr(EButtonType Type, QRect ButtonRect, std::shared_ptr<QPixmap> Pixmap,
             CGame *Game,
             qreal ZOrder = 10, qreal Angle = 0);
     ~CButtonDepr();
@@ -21,7 +21,7 @@ public:
 
     virtual void show() override;
 
-    void init(EButtonType Type, QRect ButtonRect, QPixmap *Pixmap,
+    void init(EButtonType Type, QRect ButtonRect, std::shared_ptr<QPixmap> Pixmap,
               CGame *Game,
               qreal ZOrder = 10, qreal Angle = 0);
 

@@ -14,9 +14,9 @@ CMonsterBullet::CMonsterBullet(CGame *game, QPointF center, double angle, ESizeT
     
     this->textureSize = QSize(MonsterBulletSizeX, MonsterBulletSizeY);
     this->pixmap = helper::choose(type,
-                                  &game->r->monster_bullet_1,
-                                  &game->r->monster_bullet_2,
-                                  &game->r->monster_bullet_3);
+                                  game->r->monster_bullet_1,
+                                  game->r->monster_bullet_2,
+                                  game->r->monster_bullet_3);
     this->position = game->scene->addPixmap(textureSize, pixmap);
     
     this->center = center;

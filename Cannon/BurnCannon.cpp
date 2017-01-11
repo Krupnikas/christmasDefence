@@ -14,7 +14,7 @@ CBurnCannon::CBurnCannon(CGame *game, QPoint cell, double angle)
     zOrder = 2;
 
     textureSize = QSize(CellSize, CellSize);
-    pixmap = &game->r->burn_cannon_1;
+    pixmap = game->r->burn_cannon_1;
     position = game->scene->addPixmap(textureSize, pixmap);
 
     leftTop = game->cellLeftTop(cell);
@@ -30,6 +30,7 @@ CBurnCannon::CBurnCannon(CGame *game, QPoint cell, double angle)
 
     cost = BurnCannonSmCost;
     sGunshot.setSource(game->r->url_gunshots[0]);
+    sGunshot.setVolume(SoundLevel);
 }
 
 CBurnCannon::~CBurnCannon(){}
@@ -59,9 +60,9 @@ void CBurnCannon::upgrade()
     this->pixmap =
             helper::choose(
                             sizeType,
-                            &game->r->burn_cannon_1,
-                            &game->r->burn_cannon_2,
-                            &game->r->burn_cannon_3);
+                            game->r->burn_cannon_1,
+                            game->r->burn_cannon_2,
+                            game->r->burn_cannon_3);
 
     game->scene->removeItem(position);
     position = game->scene->addPixmap(textureSize, pixmap);

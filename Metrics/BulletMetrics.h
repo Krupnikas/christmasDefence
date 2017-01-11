@@ -6,9 +6,9 @@ const int BurnBulletSizeY = CellSize / 3.0;
 
 const qreal BurnBulletStep = CellSize / 10.0; // in local points
 
-const int BurnBulletSmHit = 15;
-const int BurnBulletMidHit = 25;
-const int BurnBulletBigHit = 35;
+const int BurnBulletSmHit = 23;
+const int BurnBulletMidHit = 33;
+const int BurnBulletBigHit = 42;
 
 
 //Fast bullet
@@ -28,9 +28,9 @@ const int MonsterBulletSizeY = CellSize / 3.0;
 
 const qreal MonsterBulletStep = CellSize / 10.0; // in local points
 
-const int MonsterBulletSmHit = 15;
-const int MonsterBulletMidHit = 25;
-const int MonsterBulletBigHit = 35;
+const int MonsterBulletSmHit = 18;
+const int MonsterBulletMidHit = 27;
+const int MonsterBulletBigHit = 37;
 
 
 //Slow bullet
@@ -39,7 +39,7 @@ const int SlowBulletSizeY = CellSize / 3.0;
 
 const qreal SlowBulletStep = CellSize / 10.0; // in local points
 
-const int SlowBulletSmHit = 19;
-const int SlowBulletMidHit = 29;
-const int SlowBulletBigHit = 39;
+const int SlowBulletSmHit = 21;
+const int SlowBulletMidHit = 31;
+const int SlowBulletBigHit = 40;
 

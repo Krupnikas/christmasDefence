@@ -14,7 +14,7 @@ CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
     zOrder = 2;
     
     textureSize = QSize(CellSize, CellSize);
-    pixmap = &game->r->fast_cannon_1;
+    pixmap = game->r->fast_cannon_1;
     position = game->scene->addPixmap(textureSize, pixmap);
     
     leftTop = game->cellLeftTop(cell);
@@ -31,6 +31,7 @@ CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
     cost = FastCannonSmCost;
     
     sGunshot.setSource(game->r->url_gunshots[1]);
+    sGunshot.setVolume(SoundLevel);
 }
 
 CFastCannon::~CFastCannon(){}
@@ -62,9 +63,9 @@ void CFastCannon::upgrade()
     this->pixmap = 
             helper::choose(
                             sizeType, 
-                            &game->r->fast_cannon_1, 
-                            &game->r->fast_cannon_2, 
-                            &game->r->fast_cannon_3);
+                            game->r->fast_cannon_1, 
+                            game->r->fast_cannon_2, 
+                            game->r->fast_cannon_3);
                 
     game->scene->removeItem(position);
     position = game->scene->addPixmap(textureSize, pixmap);

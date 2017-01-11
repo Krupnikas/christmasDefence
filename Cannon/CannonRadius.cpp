@@ -11,7 +11,7 @@ CCannonRadius::CCannonRadius(ICannon *cannon)
     zOrder = cannon->getZOrder() - 0.1;
     
     size = textureSize = QSizeF(cannon->getFireRadius() * 2, cannon->getFireRadius() * 2);
-    pixmap = &game->r->entireRadius;
+    pixmap = game->r->entireRadius;
     position = game->scene->addPixmap(textureSize, pixmap);
     
     center = cannon->getCenter();

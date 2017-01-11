@@ -9,7 +9,7 @@ CGameMenu::CGameMenu(CGame *game)
 
 void CGameMenu::create()
 {
-    background = std::make_shared<CSceneBackground>(game, &game->r->game_menu_background);
+    background = std::make_shared<CSceneBackground>(game, game->r->game_menu_background);
     
     qreal itemZOrder = BackgroundZOrder + 0.1;
     
@@ -17,7 +17,7 @@ void CGameMenu::create()
                 0, itemZOrder,
                 QPointF(LocalWidth / 5.0, 0),
                 QSizeF(LocalWidth / 5.0 * 3, LocalHeight / 3.0),
-                &game->r->game_menu_caption, game);
+                game->r->game_menu_caption, game);
     
     
     
@@ -36,8 +36,8 @@ void CGameMenu::create()
                     QPointF(LocalWidth / 2, buttonTop + buttonDist * (i + 1) + buttonHeight * (i + 0.5)),
                     QSizeF(buttonWidth, buttonHeight),
                     game, static_cast<int>(EButtonType::eBTgmCampaign) + i,
-                    &game->r->gm_buttons[i], &game->r->gm_focused_buttons[i],
-                    &game->r->gm_pressed_buttons[i], &game->r->gm_buttons[i],
+                    game->r->gm_buttons[i], game->r->gm_focused_buttons[i],
+                    game->r->gm_pressed_buttons[i], game->r->gm_buttons[i],
                     true
                     );
         connect(buttons[i].get(), SIGNAL(pressed(int)), this, SLOT(onButtonPressed(int)));

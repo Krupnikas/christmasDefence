@@ -7,7 +7,7 @@
 class CImageAndNumber : public IInfoBlock
 {
 public:
-    CImageAndNumber(CGame *game, QPixmap *IconPixmap, QRectF BoundingRect, QString text = QString("0"));
+    CImageAndNumber(CGame *game, std::shared_ptr<QPixmap> IconPixmap, QRectF BoundingRect, QString text = QString("0"));
 
     const int IconOffsetX = 20;
     const int IconOffsetY = 25;

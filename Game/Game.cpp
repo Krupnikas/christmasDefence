@@ -56,7 +56,7 @@ void CGame::create()
                 QPointF(OffsetX / 2, LocalHeight - CellSize / 2),
                 QSizeF(CellSize * 0.7, CellSize * 0.7),
                 this, static_cast<int>(EButtonType::eBTgMenu),
-                &r->game_menu_button
+                r->game_menu_button
                 );
     
     selectionStatus = ESelectionStatus::eNone;
@@ -86,7 +86,10 @@ void CGame::show()
     for (int i = 0; i < CellNumX; ++i)
         for (int j = 0; j < CellNumY; ++j)
             if (cannons[i][j])
+            {
+                cannons[i][j]->draw();
                 cannons[i][j]->show();
+            }
     
     switch (selectionStatus)
     {
@@ -232,7 +235,7 @@ bool CGame::buyCannon(std::shared_ptr<ICannon> cannon)
 
 void CGame::sellCannon(std::shared_ptr<ICannon> cannon)
 {
-    user.increaseCash(cannon->getCurCost() / 2);
+    user.increaseCash(cannon->getCurCost() / 4.0 * 3);
     cannon->remove();
 
     QPoint cell(cannon->getGameCell());

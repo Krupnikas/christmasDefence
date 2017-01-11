@@ -10,7 +10,7 @@ class CSceneObject : public QObject
     
 public:
     CSceneObject();
-    CSceneObject(qreal angle, qreal zOrder, QPointF leftTop, QSizeF textureSize, QPixmap *pixmap, CGame *game);
+    CSceneObject(qreal angle, qreal zOrder, QPointF leftTop, QSizeF textureSize, std::shared_ptr<QPixmap> pixmap, CGame *game);
     virtual ~CSceneObject();
     
     virtual void scale();
@@ -41,8 +41,8 @@ public:
     virtual QPointF getLeftTop() const;
     virtual void setLeftTop(const QPointF &value);
     
-    virtual QPixmap *getPixmap() const;
-    virtual void setPixmap(QPixmap *Pixmap);
+    virtual std::shared_ptr<QPixmap> getPixmap() const;
+    virtual void setPixmap(std::shared_ptr<QPixmap> pixmap);
     
     CGame *getGame() const;
     
@@ -58,7 +58,7 @@ protected:
     QSizeF textureSize;
     QSizeF size;
     
-    QPixmap *pixmap;
+    std::shared_ptr<QPixmap> pixmap;
     CGame *game;
     std::shared_ptr<QGraphicsItem> position;
 

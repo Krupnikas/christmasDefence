@@ -14,9 +14,9 @@ CFastBullet::CFastBullet(CGame *game, QPointF center, double angle, ESizeType ty
     
     this->textureSize = QSize(FastBulletSizeX, FastBulletSizeY);
     this->pixmap = helper::choose(type,
-                                  &game->r->fast_bullet_1,
-                                  &game->r->fast_bullet_2,
-                                  &game->r->fast_bullet_3);
+                                  game->r->fast_bullet_1,
+                                  game->r->fast_bullet_2,
+                                  game->r->fast_bullet_3);
     this->position = game->scene->addPixmap(textureSize, pixmap);
     
     this->center = center;

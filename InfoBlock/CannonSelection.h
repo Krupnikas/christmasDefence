@@ -24,7 +24,7 @@ public:
     CCannonSelection(CGame *game, QPoint SelectedCell);
     ~CCannonSelection();
 
-    void updatePosition(QPoint SelectedCell);
+    void updatePosition(QPoint selectedCell);
     void initButtons();
     void updateButtonsPositions();
 

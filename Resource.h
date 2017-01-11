@@ -94,80 +94,80 @@ struct R
     QString gm_dir;
     QString lm_dir;
     
-    QPixmap game_background;
-    QPixmap field_background;
-    QPixmap cannonSelectionBackground;
-    QPixmap cannonUpgradeBackground;
-    QPixmap imageAndNumberBackground;
-    QPixmap userInfoBackground;
+    std::shared_ptr<QPixmap> game_background;
+    std::shared_ptr<QPixmap> field_background;
+    std::shared_ptr<QPixmap> cannonSelectionBackground;
+    std::shared_ptr<QPixmap> cannonUpgradeBackground;
+    std::shared_ptr<QPixmap> imageAndNumberBackground;
+    std::shared_ptr<QPixmap> userInfoBackground;
     
-    QPixmap game_menu_background;
-    QPixmap game_menu_caption;
-    std::vector<QPixmap> gm_buttons;
-    std::vector<QPixmap> gm_focused_buttons;
-    std::vector<QPixmap> gm_pressed_buttons;
+    std::shared_ptr<QPixmap> game_menu_background;
+    std::shared_ptr<QPixmap> game_menu_caption;
+    std::vector<std::shared_ptr<QPixmap>> gm_buttons;
+    std::vector<std::shared_ptr<QPixmap>> gm_focused_buttons;
+    std::vector<std::shared_ptr<QPixmap>> gm_pressed_buttons;
     
-    QPixmap level_menu_background;
-    QPixmap level_menu_caption;
-    QPixmap level_menu_back;
-    std::vector<QPixmap> lm_levels;
-    std::vector<QPixmap> lm_focused_levels;
-    std::vector<QPixmap> lm_pressed_levels;
-    std::vector<QPixmap> lm_disabled_levels;
+    std::shared_ptr<QPixmap> level_menu_background;
+    std::shared_ptr<QPixmap> level_menu_caption;
+    std::shared_ptr<QPixmap> level_menu_back;
+    std::vector<std::shared_ptr<QPixmap>> lm_levels;
+    std::vector<std::shared_ptr<QPixmap>> lm_focused_levels;
+    std::vector<std::shared_ptr<QPixmap>> lm_pressed_levels;
+    std::vector<std::shared_ptr<QPixmap>> lm_disabled_levels;
     
-    QPixmap hp_icon;
-    QPixmap coins_icon;
-    QPixmap current_wave_icon;
-    QPixmap wave_counter_icon;
-    QPixmap game_menu_button;
+    std::shared_ptr<QPixmap> hp_icon;
+    std::shared_ptr<QPixmap> coins_icon;
+    std::shared_ptr<QPixmap> current_wave_icon;
+    std::shared_ptr<QPixmap> wave_counter_icon;
+    std::shared_ptr<QPixmap> game_menu_button;
 
-    QPixmap cannonTypePreview[TypesOfCannon];
-    QPixmap cannonUnableTypePreview[TypesOfCannon];
+    std::shared_ptr<QPixmap> cannonTypePreview[TypesOfCannon];
+    std::shared_ptr<QPixmap> cannonUnableTypePreview[TypesOfCannon];
 
-    QPixmap cell1;
-    QPixmap cell2;
-    QPixmap cellSelected;
+    std::shared_ptr<QPixmap> cell1;
+    std::shared_ptr<QPixmap> cell2;
+    std::shared_ptr<QPixmap> cellSelected;
 
-    QPixmap entireRadius;
+    std::shared_ptr<QPixmap> entireRadius;
 
-    QPixmap buttonClose;
-    QPixmap buttonUpgrade;
-    QPixmap buttonSell;
+    std::shared_ptr<QPixmap> buttonClose;
+    std::shared_ptr<QPixmap> buttonUpgrade;
+    std::shared_ptr<QPixmap> buttonSell;
     
-    QPixmap burn_cannon_1;
-    QPixmap burn_cannon_2;
-    QPixmap burn_cannon_3;
-    QPixmap fast_cannon_1;
-    QPixmap fast_cannon_2;
-    QPixmap fast_cannon_3;
-    QPixmap monster_cannon_1;
-    QPixmap monster_cannon_2;
-    QPixmap monster_cannon_3;
-    QPixmap slow_cannon_1;
-    QPixmap slow_cannon_2;
-    QPixmap slow_cannon_3;
+    std::shared_ptr<QPixmap> burn_cannon_1;
+    std::shared_ptr<QPixmap> burn_cannon_2;
+    std::shared_ptr<QPixmap> burn_cannon_3;
+    std::shared_ptr<QPixmap> fast_cannon_1;
+    std::shared_ptr<QPixmap> fast_cannon_2;
+    std::shared_ptr<QPixmap> fast_cannon_3;
+    std::shared_ptr<QPixmap> monster_cannon_1;
+    std::shared_ptr<QPixmap> monster_cannon_2;
+    std::shared_ptr<QPixmap> monster_cannon_3;
+    std::shared_ptr<QPixmap> slow_cannon_1;
+    std::shared_ptr<QPixmap> slow_cannon_2;
+    std::shared_ptr<QPixmap> slow_cannon_3;
     
-    QPixmap burn_bullet_1;
-    QPixmap burn_bullet_2;
-    QPixmap burn_bullet_3;
-    QPixmap fast_bullet_1;
-    QPixmap fast_bullet_2;
-    QPixmap fast_bullet_3;
-    QPixmap monster_bullet_1;
-    QPixmap monster_bullet_2;
-    QPixmap monster_bullet_3;
-    QPixmap slow_bullet_1;
-    QPixmap slow_bullet_2;
-    QPixmap slow_bullet_3;
+    std::shared_ptr<QPixmap> burn_bullet_1;
+    std::shared_ptr<QPixmap> burn_bullet_2;
+    std::shared_ptr<QPixmap> burn_bullet_3;
+    std::shared_ptr<QPixmap> fast_bullet_1;
+    std::shared_ptr<QPixmap> fast_bullet_2;
+    std::shared_ptr<QPixmap> fast_bullet_3;
+    std::shared_ptr<QPixmap> monster_bullet_1;
+    std::shared_ptr<QPixmap> monster_bullet_2;
+    std::shared_ptr<QPixmap> monster_bullet_3;
+    std::shared_ptr<QPixmap> slow_bullet_1;
+    std::shared_ptr<QPixmap> slow_bullet_2;
+    std::shared_ptr<QPixmap> slow_bullet_3;
     
-    QPixmap fast_enemy_1;
-    QPixmap fast_enemy_2;
-    QPixmap fast_enemy_3;
+    std::shared_ptr<QPixmap> fast_enemy_1;
+    std::shared_ptr<QPixmap> fast_enemy_2;
+    std::shared_ptr<QPixmap> fast_enemy_3;
     
-    QPixmap hp_cur;
-    QPixmap hp_background;
+    std::shared_ptr<QPixmap> hp_cur;
+    std::shared_ptr<QPixmap> hp_background;
     
-    QPixmap enemy_comes;
+    std::shared_ptr<QPixmap> enemy_comes;
     QString waves;
     
     QSoundEffect s_button_pressed;

@@ -11,11 +11,11 @@ const int LocalHeight = 900;
 
 const int MenuButtonOffset = 1;
 
-const int OffsetY = 15;
+const int OffsetY = LocalHeight / 15;
 
-const int CellNumY = 7; //always odd
+const int CellNumY = 9; //always odd
 const int CellSize = (LocalHeight - 2 * OffsetY) / CellNumY;
-const int CellNumX = LocalWidth / CellSize - MenuButtonOffset;
+const int CellNumX = (LocalWidth - 2 * OffsetY) / CellSize - MenuButtonOffset;
 
 const int CannonSelectionButtonSize = round(1.0 * CellSize);
 const int CannonSelectionRadius = 1.1 * CellSize;
@@ -36,9 +36,9 @@ const int GameMenuButtonNum = 4;
 const int LevelNum = 20;
 
 const int UserCash = 20;
-const int UserHp = 30;
+const int UserHp = 20;
 
-const qreal SoundLevel = 0.5;
+const qreal SoundLevel = 0.1;
 
 #include <Metrics/ZOrderMetrics.h>
 #include <Metrics/CannonMetrics.h>

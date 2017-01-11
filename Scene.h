@@ -12,8 +12,8 @@ public:
     
     CScene(R* r);
     
-    std::shared_ptr<QGraphicsItem> addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap);
-    std::shared_ptr<QGraphicsItem> addBackgroundPixmap(QPixmap *pixmap);
+    std::shared_ptr<QGraphicsItem> addPixmap(const QSizeF &sizeLocal, std::shared_ptr<QPixmap> pixmap);
+    std::shared_ptr<QGraphicsItem> addBackgroundPixmap(std::shared_ptr<QPixmap> pixmap);
     std::shared_ptr<QGraphicsItem> addEllipse(const QPointF &centerLocal, const QSizeF &sizeLocal);
     
     void positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal, 
@@ -24,16 +24,16 @@ public:
     void scaleItem(QSizeF originSizeLocal, QSizeF resultSizeLocal,
                    std::shared_ptr<QGraphicsItem> item);
     
-    std::shared_ptr<QGraphicsItem> drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal,
-                         QPixmap *pixmap, qreal angle = 0, qreal zval = 0);
-    std::shared_ptr<QGraphicsItem> drawAndPosition(int xLocal, int yLocal, const QString &text, qreal zval = 0);
+    //std::shared_ptr<QGraphicsItem> drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal,
+      //                   std::shared_ptr<QPixmap> pixmap, qreal angle = 0, qreal zval = 0);
+    //std::shared_ptr<QGraphicsItem> drawAndPosition(int xLocal, int yLocal, const QString &text, qreal zval = 0);
 
     
     void updateGameRect(QRect geometry);
 
-    void updateGameMenuBackground();
-    void updateLevelMenuBackground();
-    void updateGameBackground();
+    //void updateGameMenuBackground();
+    //void updateLevelMenuBackground();
+    //void updateGameBackground();
 
     void updateDistances(std::vector<std::vector<int>> &distances);
     void updateFPS(int fps);

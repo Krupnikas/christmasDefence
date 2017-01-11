@@ -9,7 +9,7 @@ CLevelMenu::CLevelMenu(CGame *game)
 
 void CLevelMenu::create()
 {
-    background = std::make_shared<CSceneBackground>(game, &game->r->level_menu_background);
+    background = std::make_shared<CSceneBackground>(game, game->r->level_menu_background);
     
     qreal itemZOrder = BackgroundZOrder + 0.1;
     
@@ -17,7 +17,7 @@ void CLevelMenu::create()
                 0, itemZOrder,
                 QPointF(LocalWidth / 5.0, 0),
                 QSizeF(LocalWidth / 5.0 * 3, LocalHeight / 4.0),
-                &game->r->level_menu_caption, game);
+                game->r->level_menu_caption, game);
     
     levels.resize(LevelNum);
     int width = 5;
@@ -41,9 +41,9 @@ void CLevelMenu::create()
                                 buttonTopOffset + buttonDistTop * (i + 1) + buttonHeight * (i + 0.5)),
                         QSizeF(buttonWidth, buttonHeight),
                         game, ind,
-                        &game->r->lm_levels[ind],
-                        &game->r->lm_focused_levels[ind],
-                        &game->r->lm_pressed_levels[ind],
+                        game->r->lm_levels[ind],
+                        game->r->lm_focused_levels[ind],
+                        game->r->lm_pressed_levels[ind],
                         nullptr,
                         true
                         );
@@ -52,10 +52,10 @@ void CLevelMenu::create()
         
     back = std::make_shared<CButton>(
                 itemZOrder,
-                QPointF(0, LocalHeight - buttonHeight),
+                QPointF(buttonWidth / 2, LocalHeight - buttonHeight / 2),
                 QSizeF(buttonWidth, buttonHeight),
                 game, LevelNum,
-                &game->r->level_menu_back
+                game->r->level_menu_back
                 );
     connect(back.get(), SIGNAL(pressed(int)), this, SLOT(onButtonPressed(int)));
     

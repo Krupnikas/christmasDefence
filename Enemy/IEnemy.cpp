@@ -26,7 +26,7 @@ void IEnemy::hit(int hpDiff)
         dead = true;
         hide();
         
-        int cash = hpMax / 400 + 2;
+        int cash = hpMax / EnemyCostFactor + 2;
         game->user.increaseCash(cash);
     }
 

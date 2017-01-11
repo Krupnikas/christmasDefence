@@ -14,7 +14,7 @@ CSlowCannon::CSlowCannon(CGame *game, QPoint cell, double angle)
     zOrder = 2;
 
     textureSize = QSize(CellSize, CellSize);
-    pixmap = &game->r->slow_cannon_1;
+    pixmap = game->r->slow_cannon_1;
     position = game->scene->addPixmap(textureSize, pixmap);
 
     leftTop = game->cellLeftTop(cell);
@@ -30,6 +30,7 @@ CSlowCannon::CSlowCannon(CGame *game, QPoint cell, double angle)
 
     cost = SlowCannonSmCost;
     sGunshot.setSource(game->r->url_gunshots[3]);
+    sGunshot.setVolume(SoundLevel);
 }
 
 CSlowCannon::~CSlowCannon(){}
@@ -61,9 +62,9 @@ void CSlowCannon::upgrade()
     this->pixmap =
             helper::choose(
                             sizeType,
-                            &game->r->slow_cannon_1,
-                            &game->r->slow_cannon_2,
-                            &game->r->slow_cannon_3);
+                            game->r->slow_cannon_1,
+                            game->r->slow_cannon_2,
+                            game->r->slow_cannon_3);
 
     game->scene->removeItem(position);
     position = game->scene->addPixmap(textureSize, pixmap);

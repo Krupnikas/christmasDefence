@@ -6,6 +6,7 @@ CUser::CUser(R *r):
     hp(UserHp)
 {
     cashSound.setSource(r->url_cash);
+    cashSound.setVolume(SoundLevel);
 }
 
 int CUser::getCash() const

@@ -7,30 +7,32 @@ CScene::CScene(R* r) : r(r), fpsItem(nullptr), waveInfoItem(nullptr)
     graphicsScene->setItemIndexMethod(QGraphicsScene::NoIndex);
 }
 
-std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, QPixmap *pixmap)
+std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, std::shared_ptr<QPixmap> pixmap)
 {
     qreal sizeXGlobal = toGlobalCX(sizeLocal.width());
     qreal sizeYGlobal = toGlobalCY(sizeLocal.height());
     
-    QPixmap scaledPixmap = *pixmap;
+    std::shared_ptr<QPixmap> scaledPixmap = pixmap;
     if (pixmap->size() != QSize(sizeXGlobal, sizeYGlobal))
-        scaledPixmap = pixmap->scaled(sizeXGlobal, sizeYGlobal, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
+        scaledPixmap = std::make_shared<QPixmap>(
+                    pixmap->scaled(sizeXGlobal, sizeYGlobal, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(*scaledPixmap));
     item->hide();
     item->setFlag(QGraphicsItem::ItemHasNoContents, true);
     item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
     return item;
 }
 
-std::shared_ptr<QGraphicsItem> CScene::addBackgroundPixmap(QPixmap *pixmap)
+std::shared_ptr<QGraphicsItem> CScene::addBackgroundPixmap(std::shared_ptr<QPixmap> pixmap)
 {
     qreal sizeX = windowRect.width();
     qreal sizeY = windowRect.height();
 
-    QPixmap scaledPixmap = *pixmap;
+    std::shared_ptr<QPixmap> scaledPixmap = pixmap;
     if (pixmap->size() != QSize(sizeX, sizeY))
-        scaledPixmap = pixmap->scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
+        scaledPixmap = std::make_shared<QPixmap>(
+                    pixmap->scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(*scaledPixmap));
     item->hide();
     item->setFlag(QGraphicsItem::ItemHasNoContents, true);
     item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
@@ -94,12 +96,13 @@ void CScene::scaleItem(QSizeF originSizeLocal, QSizeF resultSizeLocal,
     item->setTransform(transform);
 }
 
+/*
 std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal,
-                            QPixmap *pixmap, qreal angle /*=0*/, qreal zval/*=0*/)
+                            std::shared_ptr<QPixmap> pixmap, qreal angle, qreal zval)
 {
     int sizeX = toGlobalCX(xSizeLocal);
     int sizeY = toGlobalCY(ySizeLocal);
-    QPixmap scaledPixmap = *pixmap;
+    QPixmap scaledpixmap = pixmap;
     if (pixmap->size() != QSize(sizeX, sizeY))
         scaledPixmap = pixmap->scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     
@@ -114,7 +117,7 @@ std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, i
     item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
     item->setZValue(zval);
     return item;
-}
+}*/
 
 void CScene::updateGameRect(QRect newWindowRect)
 {
@@ -147,46 +150,47 @@ void CScene::updateGameRect(QRect newWindowRect)
     }
 }
 
-void CScene::updateGameBackground()
-{
-    //update Window background
-    QPixmap scaledPixmap = r->game_background.scaled(windowRect.size(),
-                                                       Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
-    backgroundItems.push_back(item);
-    item->setZValue(0);
+
+//void CScene::updateGameBackground()
+//{
+//    //update Window background
+//    QPixmap scaledPixmap = r->game_background.scaled(windowRect.size(),
+//                                                       Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+//    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
+//    backgroundItems.push_back(item);
+//    item->setZValue(0);
 
 
-    //update game background
-    drawAndPosition(0, 0, LocalWidth, LocalHeight, &r->game_background);
+//    //update game background
+//    drawAndPosition(0, 0, LocalWidth, LocalHeight, &r->game_background);
     
-    //draw chess-like field
-    for (int i = 0; i < CellNumX; ++i)
-    {
-        for (int j = 0; j < CellNumY; ++j)
-        {
-            int x = OffsetX + i * CellSize;
-            int y = OffsetY + j * CellSize;
-            if ((i+j)%2 == 0)
-            {
-                drawAndPosition(x, y, CellSize, CellSize, &(r->cell1));
-            }
-            else
-                drawAndPosition(x, y, CellSize, CellSize, &(r->cell2));
-        }
-    }
+//    //draw chess-like field
+//    for (int i = 0; i < CellNumX; ++i)
+//    {
+//        for (int j = 0; j < CellNumY; ++j)
+//        {
+//            int x = OffsetX + i * CellSize;
+//            int y = OffsetY + j * CellSize;
+//            if ((i+j)%2 == 0)
+//            {
+//                drawAndPosition(x, y, CellSize, CellSize, &(r->cell1));
+//            }
+//            else
+//                drawAndPosition(x, y, CellSize, CellSize, &(r->cell2));
+//        }
+//    }
     
-    //draw path inside and outside the field
-    int y = (CellNumY / 2) * CellSize + OffsetY;
-    int xLeft = 0;
-    int xRight = OffsetX + CellNumX * CellSize;
+//    //draw path inside and outside the field
+//    int y = (CellNumY / 2) * CellSize + OffsetY;
+//    int xLeft = 0;
+//    int xRight = OffsetX + CellNumX * CellSize;
     
-    drawAndPosition(xLeft, y, OffsetX, CellSize, &r->cell1);
-    if (CellNumX % 2)
-        drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell1);
-    else
-        drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell2);
-}
+//    drawAndPosition(xLeft, y, OffsetX, CellSize, &r->cell1);
+//    if (CellNumX % 2)
+//        drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell1);
+//    else
+//        drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell2);
+//}
 
 void CScene::updateDistances(std::vector<std::vector<int>>&)
 {

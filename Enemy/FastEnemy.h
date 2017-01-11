@@ -15,5 +15,5 @@ public:
     CFastEnemy(CGame *game, int enemyTexture, int enemyPower);
     
 protected:
-    virtual QPixmap *getTexture(int enemyTexture);
+    virtual std::shared_ptr<QPixmap> getTexture(int enemyTexture);
 };

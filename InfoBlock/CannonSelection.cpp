@@ -11,7 +11,7 @@ CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
     backgroundImageSize = CannonSelectionRadius * 8.0 / 3;
     this->textureSize = QSize(backgroundImageSize,
                               backgroundImageSize);
-    this->pixmap = &game->r->cannonSelectionBackground;
+    this->pixmap = game->r->cannonSelectionBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
     
     this->center = game->cellCenter(selectedCell);
@@ -21,7 +21,8 @@ CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
     cellSelection = std::make_shared<CSceneObject>(
                 0, GameBackgroundZOrder,
                 QPointF(0, 0), QSizeF(CellSize, CellSize),
-                &game->r->cellSelected, game);
+                game->r->cellSelected, game);
+    
     initButtons();
     updatePosition(selectedCell);
 
@@ -97,7 +98,7 @@ void CCannonSelection::initButtons()
                     ButtonZOrder + 0.1, closeRect.center(),
                     closeRect.size(),
                     game, static_cast<int>(EButtonType::eBTCloseButton),
-                    &game->r->buttonClose
+                    game->r->buttonClose
                     );
 
         connect(closeButton.get(), SIGNAL(pressed(int)),
@@ -115,7 +116,7 @@ void CCannonSelection::initButtons()
                     ButtonZOrder, buttonRect.center(),
                     buttonRect.size(),
                     game, static_cast<int>(EButtonType::eBTCloseButton) + i + 1,
-                    &game->r->cannonTypePreview[i]
+                    game->r->cannonTypePreview[i]
                     );
         
         connect(cannonButton[i].get(), SIGNAL(pressed(int)),
@@ -297,9 +298,9 @@ void CCannonSelection::onCashChanged(int)
         if (newCash < getCannonPrice(i))
         {
             //qDebug() << newCash << " trying to change pixmap to unable " << game->r->cannonUnableTypePreview[i];
-            cannonButton[i]->setPixmap(&game->r->cannonUnableTypePreview[i]);
+            cannonButton[i]->setPixmap(game->r->cannonUnableTypePreview[i]);
         } else {
-            cannonButton[i]->setPixmap(&game->r->cannonTypePreview[i]);
+            cannonButton[i]->setPixmap(game->r->cannonTypePreview[i]);
         }
         cannonButton[i]->draw();
     }*/

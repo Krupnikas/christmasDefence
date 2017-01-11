@@ -2,12 +2,12 @@
 #include <Game/Game.h>
 
 CGameBackground::CGameBackground(CGame *game):
-    CSceneBackground(game, &game->r->game_background)
+    CSceneBackground(game, game->r->game_background)
 {
     fieldBackground = std::make_shared<CSceneObject>(
                 0, BackgroundZOrder + 0.1,
                 QPointF(0, 0), QSizeF(LocalWidth, LocalHeight),
-                &game->r->field_background, game);
+                game->r->field_background, game);
 
     cells.assign(CellNumX, std::vector<std::shared_ptr<CSceneObject>>(CellNumY));
     for (int i = 0; i < CellNumX; ++i)
@@ -15,7 +15,7 @@ CGameBackground::CGameBackground(CGame *game):
         {
             int x = OffsetX + i * CellSize;
             int y = OffsetY + j * CellSize;
-            QPixmap *cellPixmap = ((i + j) % 2 == 0) ? &game->r->cell1 : &game->r->cell2;
+            std::shared_ptr<QPixmap> cellPixmap = ((i + j) % 2 == 0) ? game->r->cell1 : game->r->cell2;
             cells[i][j] = std::make_shared<CSceneObject>(
                         0, BackgroundZOrder + 0.2,
                         QPointF(x, y), QSizeF(CellSize, CellSize),

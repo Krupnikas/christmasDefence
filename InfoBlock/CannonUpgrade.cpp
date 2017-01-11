@@ -12,7 +12,7 @@ CCannonUpgrade::CCannonUpgrade(CGame *game, QPoint SelectedCell)
 
     this->textureSize = QSize(backgroundImageSize,
                               backgroundImageSize);
-    this->pixmap = &game->r->cannonUpgradeBackground;
+    this->pixmap = game->r->cannonUpgradeBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
 
     this->center = game->cellCenter(SelectedCell);
@@ -45,7 +45,7 @@ void CCannonUpgrade::initButtons()
                     ButtonZOrder, rect.center(),
                     rect.size(),
                     game, static_cast<int>(EButtonType::eBTCloseButton),
-                    &game->r->buttonClose
+                    game->r->buttonClose
                     );
 
         connect(closeButton.get(), SIGNAL(pressed(int)),
@@ -59,7 +59,7 @@ void CCannonUpgrade::initButtons()
     upgradeButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
                   rect.size(),
                   game, static_cast<int>(EButtonType::eBTcannonUpgrade),
-                  &game->r->buttonUpgrade);
+                  game->r->buttonUpgrade);
     connect(upgradeButton.get(), SIGNAL(pressed(int)),
             this, SLOT(onButtonPressed(int)));
     
@@ -73,7 +73,7 @@ void CCannonUpgrade::initButtons()
     sellButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
                     rect.size(),
                     game, static_cast<int>(EButtonType::eBTcannonSell),
-                    &game->r->buttonSell
+                    game->r->buttonSell
                     );
 
     connect(sellButton.get(), SIGNAL(pressed(int)),
