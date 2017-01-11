@@ -157,6 +157,7 @@ void MainView::mousePressEvent(QMouseEvent *event)
         //QThread::msleep(500);
         bool iv = game.cannonSelectionInfoBlock->isVisible();
         bool sv = game.cannonUpgradeInfoBlock->isVisible();
+
         if (!iv && !sv)
             game.mousePressEvent(event);
 
@@ -165,7 +166,7 @@ void MainView::mousePressEvent(QMouseEvent *event)
         break;
     }
     default:
-        qDebug() << "MainView: resizeEvent: invalid gameStatus";
+        qDebug() << "MainView: mousePressEvent: invalid gameStatus";
     }
 }
 
@@ -192,6 +193,7 @@ bool MainView::eventFilter(QObject *, QEvent *event)
 
         bool iv = game.cannonSelectionInfoBlock->isVisible();
         bool sv = game.cannonUpgradeInfoBlock->isVisible();
+
         if (gameStatus == EGameStatus::eGame && !iv && !sv)
             game.mousePressEvent(mouseEvent);
 
