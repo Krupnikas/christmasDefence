@@ -42,7 +42,11 @@ T choose(ESizeType type, T var1, T var2, T var3)
     }
 }
 
-std::shared_ptr<QPixmap> renderPixmapFromText(QString Text);
+std::shared_ptr<QPixmap> renderPixmapFromText(QString text,
+                                              QPen pen = QPen(QBrush(QColor(153, 199, 255, 255)), 2),
+                                              QBrush brush = QBrush(Qt::white),
+                                              QFont font = QFont("Helvetica [Cronyx]", 376),
+                                              QColor backgroundColor = Qt::transparent);
 
 void readWaves(const QString &filename, std::vector<CWave> &waves);
 

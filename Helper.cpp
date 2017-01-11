@@ -227,29 +227,30 @@ qreal ticksToTime(int ticks)
     return static_cast<qreal>(ticks) * TimerInterval / 1000;
 }
 
-std::shared_ptr<QPixmap> renderPixmapFromText(QString Text)
+std::shared_ptr<QPixmap> renderPixmapFromText(QString text, QPen pen, QBrush brush, QFont font, QColor backgroundColor)
 {
     QPainterPath path;
-    QFont myFont("Helvetica [Cronyx]", 94);
+    QFontMetrics fm(font);
 
-    int  width;
+    int  width, minWidth, height;
 
-    double sc = 0.725;
+    height = 400;
+    minWidth = height * 16.0 / 9;    //соотношение сторон картинки 16*9 или шире
 
-    width = Text.count() * myFont.pointSize() * sc;
+    width = fm.width(text);
 
-    if (width < 150)
-            width = 150;
+    if (width < minWidth)
+            width = minWidth;
 
-    std::shared_ptr<QPixmap> pixmap = std::make_shared<QPixmap>(width, 100);
+    std::shared_ptr<QPixmap> pixmap = std::make_shared<QPixmap>(width, height);
 
-    pixmap->fill(Qt::transparent);
+    pixmap->fill(backgroundColor);
 
     QPainter painter(pixmap.get());
-    painter.setPen(QPen(QBrush(QColor(255,255,255,255)), 2));
-    painter.setBrush(Qt::white);
+    painter.setPen(pen);
+    painter.setBrush(brush);
     painter.setRenderHint(QPainter::HighQualityAntialiasing);
-    path.addText(QPointF((width / 2.0) - Text.count() * myFont.pointSize() * sc / 2.0, 96), myFont, Text);
+    path.addText(QPointF((width / 2.0) - fm.width(text) / 2.0, height * 0.96), font, text);
 
     painter.drawPath(path);
 
