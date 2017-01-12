@@ -125,8 +125,6 @@ void CLevelMenu::onButtonPressed(int level)
     }
     
     hide();
-    game->show();
     game->startGameLevel(level + 1);
-    game->view->gameStatus = EGameStatus::eGame;
     
 }

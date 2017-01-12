@@ -82,6 +82,8 @@ void CWaveInfoBlock::onEnemyNumChanged(int newEnemyNum)
 
 void CWaveInfoBlock::onCurWaveChanged(int newCurWave)
 {
+    if (newCurWave > totalWaveNum)
+        newCurWave = totalWaveNum;
     this->waveCounter->changeText(QString::number(newCurWave + 1)
                                   + QString("/")
                                   + QString::number(totalWaveNum));
