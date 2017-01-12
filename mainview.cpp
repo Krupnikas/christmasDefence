@@ -118,7 +118,7 @@ void MainView::showEvent(QShowEvent*)
 
     gameMenu.create();
     levelMenu.create();
-    game.create();
+    //game.create();
 
     gameMenu.show();
     gameStatus = EGameStatus::eGameMenu;
@@ -190,11 +190,9 @@ bool MainView::eventFilter(QObject *, QEvent *event)
         return true;
     case QEvent::MouseButtonPress:
     {
-
-        bool iv = game.cannonSelectionInfoBlock->isVisible();
-        bool sv = game.cannonUpgradeInfoBlock->isVisible();
-
-        if (gameStatus == EGameStatus::eGame && !iv && !sv)
+        if (gameStatus == EGameStatus::eGame &&
+                !game.cannonSelectionInfoBlock->isVisible() &&
+                !game.cannonUpgradeInfoBlock->isVisible())
             game.mousePressEvent(mouseEvent);
 
         emit mouseDown(mouseEvent);

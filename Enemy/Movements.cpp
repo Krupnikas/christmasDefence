@@ -62,18 +62,32 @@ Cell::Cell(const Cell &cell):
 Movements::Movements(CGame *game):
     game(game)
 {
+    ExitWidth = game->OffsetX * 2;
+    LocalExitSize = LocalSize * ExitWidth / game->CellSize / QueueSize * QueueSize;
+    
+    NormalRect = QRect(0, 0, LocalSize, LocalSize);
+    NormalSize = QSize(game->CellSize, game->CellSize);
+    
+    EdgeRect = QRect(0, 0, LocalExitSize, LocalSize);
+    EdgeSize = QSize(ExitWidth, game->CellSize);
+    
+    NormalLocalCell = Cell(NormalSize, NormalRect, false);
+    EdgeLocalCell = Cell(EdgeSize, EdgeRect, true);
+    
+    
     curLocalCell = EdgeLocalCell;
     nextLocalCell = NormalLocalCell;
+    
     if (ExitLeft)
     {
-        curGameCell = QPoint(EntranceX + 1, EntranceY);
-        nextGameCell = QPoint(EntranceX, EntranceY);
+        curGameCell = QPoint(game->startCell.x() + 1, game->startCell.y());
+        nextGameCell = QPoint(game->startCell.x(), game->startCell.y());
         curPos = QPoint(LocalExitSize - 1, half);
     }
     else
     {
-        curGameCell = QPoint(-1, EntranceY);
-        nextGameCell = QPoint(0, EntranceY);
+        curGameCell = QPoint(-1, game->startCell.y());
+        nextGameCell = QPoint(0, game->startCell.y());
         curPos = QPoint(-1, half);
     }
 }
@@ -104,10 +118,10 @@ QPointF Movements::curCenter() const
     if (curGameCell.x() < 0)
         curPoint.setX((curGameCell.x() + 0.5) * ExitWidth + static_cast<qreal>(curPos.x()) * ExitWidth / LocalExitSize);
     else
-        curPoint.setX(OffsetX + curGameCell.x() * CellSize + static_cast<qreal>(curPos.x()) * 
+        curPoint.setX(game->OffsetX + curGameCell.x() * game->CellSize + static_cast<qreal>(curPos.x()) * 
                   curLocalCell.cellGameSize.width() / curLocalCell.localRect.width());
     
-    curPoint.setY(OffsetY + curGameCell.y() * CellSize + static_cast<qreal>(curPos.y()) * 
+    curPoint.setY(game->OffsetY + curGameCell.y() * game->CellSize + static_cast<qreal>(curPos.y()) * 
                   curLocalCell.cellGameSize.height() / curLocalCell.localRect.height());
     return curPoint;
 }
@@ -119,7 +133,7 @@ qreal Movements::curAngle() const
 
 int Movements::iterNum(qreal step) const
 {
-    qreal pointsOnMove = static_cast<qreal>(QueueSize) * CellSize / LocalSize;
+    qreal pointsOnMove = static_cast<qreal>(QueueSize) * game->CellSize / LocalSize;
     if (step < pointsOnMove)
     {
         //qDebug() << "Movements: too small step:(";
@@ -133,7 +147,7 @@ qreal Movements::getDistanceToFinish() const
 {
     if (curGameCell.x() < 0)
     {
-        qreal dist = game->distances[0][CellNumY / 2];
+        qreal dist = game->distances[0][game->CellNumY / 2];
         qreal localDist = (curLocalCell.localRect.width() - curPos.x()) / curLocalCell.localRect.width();
         if (ExitLeft)
             localDist *= -1;
@@ -141,9 +155,9 @@ qreal Movements::getDistanceToFinish() const
         return dist + localDist;
     }
     
-    if (curGameCell.x() >= CellNumX)
+    if (curGameCell.x() >= game->CellNumX)
     {
-        qreal dist = game->distances[CellNumX - 1][CellNumY / 2];
+        qreal dist = game->distances[game->CellNumX - 1][game->CellNumY / 2];
         qreal localDist = curPos.x() / curLocalCell.localRect.width();
         if (!ExitLeft)
             localDist *= -1;
@@ -272,7 +286,7 @@ void Movements::updateCur()
     
     if (update)
     {
-        if (curGameCell.x() < 0 || curGameCell.x() >= CellNumX)
+        if (curGameCell.x() < 0 || curGameCell.x() >= game->CellNumX)
             curLocalCell = EdgeLocalCell;
         else
             curLocalCell = NormalLocalCell;
@@ -283,9 +297,9 @@ void Movements::updateCur()
 
 void Movements::updateNext()
 {
-    nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
+    nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell, game);
 
-    if (nextGameCell.x() < 0 || nextGameCell.x() >= CellNumX)
+    if (nextGameCell.x() < 0 || nextGameCell.x() >= game->CellNumX)
         nextLocalCell = EdgeLocalCell;
     else
         nextLocalCell = NormalLocalCell;

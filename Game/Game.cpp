@@ -8,9 +8,51 @@
 #include <InfoBlock/CannonUpgrade.h>
 #include <InfoBlock/UserInfo.h>
 #include <InfoBlock/WaveInfoBlock.h>
-#include <Wave/WaveManager.h>
+#include <Game/WaveManager.h>
 #include <SceneObject/Button.h>
 
+namespace
+{
+    
+QPoint generate_cell_(int edge, int pos, int cellNumX, int cellNumY)
+{
+    int x = -1;
+    int y = -1;
+    
+    int xMid = (cellNumX - 1) / 2;
+    int xLess = rand() % xMid;
+    int xGr = xMid + rand() % (cellNumX - xMid - 1) + 1;
+    
+    int yMid = (cellNumY - 1) / 2;
+    int yLess = rand() % yMid;
+    int yGr = yMid + rand() & (cellNumY - yMid) + 1;
+
+    
+    switch (edge) {
+    case 0: //left
+        x = 0;
+        y = (pos == 1) ? yMid : ((pos == 0) ? yGr : yLess);
+        break;
+    case 1: //top
+        y = 0;
+        x = (pos == 1) ? xMid : ((pos == 0) ? xLess : xGr);
+        break;
+    case 2: //right
+        x = cellNumX - 1;
+        y = (pos == 1) ? yMid : ((pos == 0) ? yLess : yGr);
+        break;
+    case 3: //bottom
+        y = cellNumY - 1;
+        x = (pos == 1) ? xMid : ((pos == 0) ? xGr : xLess);
+        break;
+    default:
+        break;
+    }
+    
+    return QPoint(x, y);
+}
+
+}
 
 CGame::CGame(MainView *view, R *r, CScene *scene, QMediaPlaylist *playlist, QMediaPlayer *player):
     view(view),
@@ -18,17 +60,10 @@ CGame::CGame(MainView *view, R *r, CScene *scene, QMediaPlaylist *playlist, QMed
     scene(scene),
     playlist(playlist),
     player(player),
-    user(r),
+    waveManager(this),
+    userManager(this),
     selectionStatus(ESelectionStatus::eNone)
 {
-    cannons.resize(CellNumX);
-    distances.resize(CellNumX);
-    for (int i = 0; i < CellNumX; ++i)
-    {
-        cannons[i].resize(CellNumY);
-        distances[i].resize(CellNumY);
-    }
-
     pressedButton = EButtonType::eBTnone;
 
     positionTimer = new QTimer(this);
@@ -134,7 +169,7 @@ void CGame::hide()
 
 void CGame::resize()
 {
-    scaleObjects();
+    scale_objects_();
 }
 
 void CGame::close()
@@ -169,14 +204,27 @@ void CGame::mousePressEvent(QMouseEvent *)
 
 void CGame::startGameLevel(int level)
 {
-    user.setHp(UserHp);
-    user.setCash(UserCash);
+    //waveManager and userManager's fields are initialized here
+    QString filename = r->levels + QString::number(level) + QString(".txt");
+    read_level_(filename);
     
-    waveManager.initialize(this, level);
-    helper::updateDistances(cannons, distances);
+    create();
+
+    cannons.resize(CellNumX);
+    distances.resize(CellNumX);
+    for (int i = 0; i < CellNumX; ++i)
+    {
+        cannons[i].assign(CellNumY, nullptr);
+        distances[i].resize(CellNumY);
+    }
+    
+    waveManager.initialize();
+    helper::updateDistances(cannons, distances, this);
 
     positionTimer->start(TimerInterval);
     drawTimer->start(TimerInterval);
+    
+    show();
 }
 
 void CGame::endGame()
@@ -218,15 +266,15 @@ bool CGame::buyCannon(std::shared_ptr<ICannon> cannon)
 
     if (x < 0 || x > CellNumX   ||
         y < 0 || y > CellNumY   ||
-        !helper::okToAdd(x, y, distances, enemies) ||
-        cost > user.getCash())
+        !helper::okToAdd(x, y, distances, enemies, this) ||
+        cost > userManager.getCash())
         return false;
 
-    user.decreaseCash(cost);
+    userManager.decreaseCash(cost);
 
     cannonsMutex.lock();
     cannons[x][y] = cannon;
-    helper::updateDistances(cannons, distances);
+    helper::updateDistances(cannons, distances, this);
     cannonsMutex.unlock();
     cannon->draw();
     cannon->show();
@@ -235,14 +283,14 @@ bool CGame::buyCannon(std::shared_ptr<ICannon> cannon)
 
 void CGame::sellCannon(std::shared_ptr<ICannon> cannon)
 {
-    user.increaseCash(cannon->getCurCost() / 4.0 * 3);
+    userManager.increaseCash(cannon->getCurCost() / 4.0 * 3);
     cannon->remove();
 
     QPoint cell(cannon->getGameCell());
 
     cannonsMutex.lock();
     cannons[cell.x()][cell.y()] = nullptr;
-    helper::updateDistances(cannons, distances);
+    helper::updateDistances(cannons, distances, this);
     cannonsMutex.unlock();
 }
 
@@ -430,7 +478,7 @@ void CGame::onMousePressed(QMouseEvent *pressEvent)
     emit mousePressed(pressEvent);
 }
 
-void CGame::scaleObjects()
+void CGame::scale_objects_()
 {
     background->scale();
 
@@ -454,4 +502,128 @@ void CGame::scaleObjects()
     waveInformationBlock->scale();
     
     menuButton->scale();
+}
+
+void CGame::read_level_(QString filename)
+{
+    QFile levelFile(filename);
+    if (!levelFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "CLevelManager: read_file_: failed to open " << filename;
+        return;
+    }
+    QTextStream textStream(&levelFile);
+    QString line;
+    
+    //field size init
+    line = textStream.readLine();
+    CellNumY = line.toInt();
+    
+    //init game metrics
+
+    
+
+    //start cell
+    line = textStream.readLine();
+    std::stringstream in(line.toStdString());
+    int edge, pos;
+    in >> edge >> pos;
+    startCell = generate_cell_(edge, pos, CellNumX, CellNumY);
+    
+    //end cell
+    line = textStream.readLine();
+    in.clear();
+    in.str(line.toStdString());
+    in >> edge >> pos;
+    endCell = generate_cell_(edge, pos, CellNumX, CellNumY);
+    
+    //TODO : init field with items
+    line = textStream.readLine();
+    
+    //waves init
+    line = textStream.readLine();
+    int waveNum(line.toInt());
+    
+    waveManager.waves.clear();
+    for (int i = 0; i < waveNum; ++i)
+    {
+        CWave wave;        
+        line = textStream.readLine();
+        std::stringstream in(line.toStdString());
+        
+        in >> wave.timeBeforeStart;
+        in >> wave.enemyIncomeInterval;
+        in >> wave.totalEnemyNum;
+        in >> wave.enemyType;
+        in >> wave.enemyTexture;
+        in >> wave.enemyPower;
+        waveManager.waves.push_back(wave);        
+    }
+    
+    //user init
+    line = textStream.readLine();
+    in.clear();
+    in.str(line.toStdString());
+    int cash, hp;
+    in >> cash >> hp;
+    userManager.setCash(cash);
+    userManager.setHp(hp);
+    
+    levelFile.close();
+}
+
+void CGame::init_metrics_()
+{
+    //general
+    CellSize = LocalHeight / (CellNumY + 2);
+    OffsetY = CellSize;
+    CellNumX = (LocalWidth - 2 * CellSize) / CellSize;
+    OffsetX = (LocalWidth - CellNumX * CellSize) / 2;
+    
+    //bullet
+    BurnBulletSizeX = CellSize / 3.0;
+    BurnBulletSizeY = CellSize / 3.0;
+    BurnBulletStep = CellSize / 10.0; // in local points
+    
+    FastBulletSizeX = CellSize / 3.0;
+    FastBulletSizeY = CellSize / 3.0;
+    FastBulletStep = CellSize / 10.0; // in local points
+    
+    MonsterBulletSizeX = CellSize / 3.0;
+    MonsterBulletSizeY = CellSize / 3.0;    
+    MonsterBulletStep = CellSize / 10.0; // in local points
+    
+    SlowBulletSizeX = CellSize / 3.0;
+    SlowBulletSizeY = CellSize / 3.0;
+    SlowBulletStep = CellSize / 10.0; // in local points
+    
+    
+    
+    //cannon
+    CannonSelectionButtonSize = round(1.0 * CellSize);
+    CannonSelectionRadius = 1.1 * CellSize;
+    CannonUpgradeButtonSize = round(1.0 * CellSize);
+    CannonUpgradeRadius = 1.1 * CellSize;
+    
+    BurnCannonSmRadius = CellSize * 2.6;
+    BurnCannonMidRadius = CellSize * 3;
+    BurnCannonBigRadius = CellSize * 3.4;
+    
+    FastCannonSmRadius = CellSize * 2;
+    FastCannonMidRadius = CellSize * 2.3;
+    FastCannonBigRadius = CellSize * 2.6;
+    
+    MonsterCannonSmRadius = CellSize * 2.2;
+    MonsterCannonMidRadius = CellSize * 2.5;
+    MonsterCannonBigRadius = CellSize * 2.7;
+    
+    SlowCannonSmRadius = CellSize * 2.4;
+    SlowCannonMidRadius = CellSize * 2.7;
+    SlowCannonBigRadius = CellSize * 3;
+    
+    //enemy
+    FastEnemyStep = CellSize / 500.0;
+    FastEnemyTextureSize = QSizeF(CellSize * 0.8, CellSize * 0.8);
+    FastEnemySize = QSizeF(FastEnemyTextureSize * 1/*0.4*/);
+    HpSize = QSizeF(CellSize * 0.7, CellSize * 0.05);
 }

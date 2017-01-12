@@ -38,7 +38,6 @@ SOURCES += \
     Enemy/CHpBackground.cpp \
     \
     Game/Game.cpp \
-    Game/User.cpp \
     \
     Menu/GameMenu.cpp \
     \
@@ -51,8 +50,6 @@ SOURCES += \
     InfoBlock/CannonUpgrade.cpp \
     InfoBlock/ImageAndNumber.cpp \
     \
-    Wave/Wave.cpp \
-    Wave/WaveManager.cpp \
     Resource.cpp \
     Scene.cpp \
     Helper.cpp \
@@ -63,7 +60,11 @@ SOURCES += \
     SceneObject/Button.cpp \
     Menu/LevelMenu.cpp \
     InfoBlock/WaveInfoBlock.cpp \
-    Sound.cpp
+    Sound.cpp \
+    Game/Wave.cpp \
+    Game/WaveManager.cpp \
+    Game/UserManager.cpp \
+    Game/FieldItem.cpp
 
 
 HEADERS  += \
@@ -90,7 +91,6 @@ HEADERS  += \
     Enemy/CHpBackground.h \
     \
     Game/Game.h \
-    Game/User.h \
     \
     Menu/GameMenu.h \
     Menu/LevelMenu.h \
@@ -109,8 +109,6 @@ HEADERS  += \
     Metrics/BulletMetrics.h \
     Metrics/ZOrderMetrics.h \
     \
-    Wave/Wave.h \
-    Wave/WaveManager.h \
     Resource.h \
     Scene.h \
     Helper.h \
@@ -120,7 +118,11 @@ HEADERS  += \
     SceneObject/ButtonDepr.h \
     SceneObject/Button.h \
     InfoBlock/WaveInfoBlock.h \
-    Sound.h
+    Sound.h \
+    Game/Wave.h \
+    Game/WaveManager.h \
+    Game/UserManager.h \
+    Game/FieldItem.h
 
 FORMS    += mainview.ui
 

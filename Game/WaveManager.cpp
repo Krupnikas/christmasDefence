@@ -1,31 +1,41 @@
-#include <Wave/WaveManager.h>
-#include <Wave/Wave.h>
+#include <Game/WaveManager.h>
+#include <Game/Wave.h>
 #include <Game/Game.h>
 #include <Helper.h>
 #include <Enemy/IEnemy.h>
 #include <InfoBlock/WaveInfoBlock.h>
 
-CWaveManager::CWaveManager():
+CWaveManager::CWaveManager(CGame *game):
+    game(game),
     waveGoing(false),
     curWave(0),
     counter(0)
 {}
 
-void CWaveManager::initialize(CGame *game, int level)
+void CWaveManager::initialize()
 {
     waveGoing = false;
-    curWave = 0;
     counter = 0;
-    this->game = game;
+    curWave = 0;
+ 
+    if (static_cast<int>(waves.size()) <= curWave)
+        qDebug() << "CWaveManager: initialize: too few waves";
     
-    QString filename = game->r->waves + QString::number(level) + QString(".txt");
-    helper::readWaves(filename, waves);
+    //initialize waveInfoBlock
+    game->waveInformationBlock->setTotalWaveNum(waves.size());
+    game->waveInformationBlock->onCurWaveChanged(curWave);
+    
+    if (static_cast<int>(waves.size()) > curWave)
+        game->waveInformationBlock->onEnemyNumChanged(waves[curWave].totalEnemyNum);
+    else
+        game->waveInformationBlock->onEnemyNumChanged(0);
+    
 }
 
 void CWaveManager::setCurWave(int newCurWave)
 {
     curWave = newCurWave;
-    emit curWaveChanged(curWave);
+    game->waveInformationBlock->onCurWaveChanged(curWave);
 }
 
 void CWaveManager::onTimer()
@@ -64,14 +74,15 @@ void CWaveManager::onTimer()
                     waveGoing = false;
                     counter = 0;
                     setCurWave(curWave + 1);
+                    game->waveInformationBlock->onEnemyNumChanged(waves[curWave].totalEnemyNum);
                 }
-
             }
 
             int outside = 0;
             for (auto enemy: game->enemies)
-                if (!game->scene->insideGameRect(enemy->getCenter()))
+                if (!enemy->getWasInsideGame())
                     ++outside;
+            game->waveInformationBlock->onEnemyNumChanged(wave.totalEnemyNum - wave.curEnemyNum + outside);
             info = "Left: " + QString::number(wave.totalEnemyNum - wave.curEnemyNum + outside);
         }
 

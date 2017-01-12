@@ -13,7 +13,7 @@ public:
     const int InternalOffsetY = 15;
 
     std::shared_ptr<CImageAndNumber> waveCounter;
-    std::shared_ptr<CImageAndNumber> currentWave;
+    std::shared_ptr<CImageAndNumber> enemyCounter;
 
     virtual void scale() override;
     virtual void remove() override;
@@ -21,8 +21,13 @@ public:
     virtual void hide() override;
     virtual void show() override;
 
-public slots:
+    void onEnemyNumChanged(int enemyNum);
     void onCurWaveChanged(int newCurWave);
-    void onCashChanged(int newCash);
+    
+    int getTotalWaveNum() const;
+    void setTotalWaveNum(int value);
+    
+private:
+    int totalWaveNum;
 };
 

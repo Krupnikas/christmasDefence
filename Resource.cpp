@@ -42,6 +42,7 @@ R::R()
     
     
     //Game resources
+    border_cell = std::make_shared<QPixmap>(get("border"));
     cell1 = std::make_shared<QPixmap>(get("cell1"));
     cell2 = std::make_shared<QPixmap>(get("cell2"));
     cellSelected = std::make_shared<QPixmap>(get("cellSelected"));
@@ -107,7 +108,7 @@ R::R()
     hp_background = std::make_shared<QPixmap>(get("hp_background"));
 
     enemy_comes = std::make_shared<QPixmap>(get("enemy_comes"));
-    waves = get("waves/level");
+    levels = get("levels/level");
     
     s_button_pressed.setSource(QUrl(getSound("button.wav")));
     s_button_pressed.setVolume(SoundLevel);

@@ -40,9 +40,6 @@
         <file>res/christmas/enemies/fast_enemy_1.png</file>
         <file>res/christmas/enemies/fast_enemy_2.png</file>
         <file>res/christmas/enemies/fast_enemy_3.png</file>
-        <file>res/christmas/waves/level1.txt</file>
-        <file>res/christmas/waves/level2.txt</file>
-        <file>res/christmas/waves/level3.txt</file>
         <file>res/christmas/cannonUpgradeInfoBlockBackground.png</file>
         <file>res/christmas/sell.png</file>
         <file>res/christmas/upgrade.png</file>
@@ -59,23 +56,6 @@
         <file>res/christmas/menu_button.png</file>
         <file>res/christmas/currentWaveIcon.png</file>
         <file>res/christmas/waveCounterIcon.png</file>
-        <file>res/christmas/waves/level4.txt</file>
-        <file>res/christmas/waves/level5.txt</file>
-        <file>res/christmas/waves/level6.txt</file>
-        <file>res/christmas/waves/level7.txt</file>
-        <file>res/christmas/waves/level8.txt</file>
-        <file>res/christmas/waves/level9.txt</file>
-        <file>res/christmas/waves/level10.txt</file>
-        <file>res/christmas/waves/level11.txt</file>
-        <file>res/christmas/waves/level12.txt</file>
-        <file>res/christmas/waves/level13.txt</file>
-        <file>res/christmas/waves/level14.txt</file>
-        <file>res/christmas/waves/level15.txt</file>
-        <file>res/christmas/waves/level16.txt</file>
-        <file>res/christmas/waves/level17.txt</file>
-        <file>res/christmas/waves/level18.txt</file>
-        <file>res/christmas/waves/level19.txt</file>
-        <file>res/christmas/waves/level20.txt</file>
         <file>res/christmas/sounds/button.mp3</file>
         <file>res/christmas/sounds/mainTheme.mp3</file>
         <file>res/christmas/sounds/button.wav</file>
@@ -84,5 +64,26 @@
         <file>res/christmas/sounds/gunshot4.wav</file>
         <file>res/christmas/sounds/gunshot3.wav</file>
         <file>res/christmas/sounds/cash.wav</file>
+        <file>res/christmas/levels/level1.txt</file>
+        <file>res/christmas/levels/level2.txt</file>
+        <file>res/christmas/levels/level3.txt</file>
+        <file>res/christmas/levels/level4.txt</file>
+        <file>res/christmas/levels/level5.txt</file>
+        <file>res/christmas/levels/level6.txt</file>
+        <file>res/christmas/levels/level7.txt</file>
+        <file>res/christmas/levels/level8.txt</file>
+        <file>res/christmas/levels/level9.txt</file>
+        <file>res/christmas/levels/level10.txt</file>
+        <file>res/christmas/levels/level11.txt</file>
+        <file>res/christmas/levels/level12.txt</file>
+        <file>res/christmas/levels/level13.txt</file>
+        <file>res/christmas/levels/level14.txt</file>
+        <file>res/christmas/levels/level15.txt</file>
+        <file>res/christmas/levels/level16.txt</file>
+        <file>res/christmas/levels/level17.txt</file>
+        <file>res/christmas/levels/level18.txt</file>
+        <file>res/christmas/levels/level19.txt</file>
+        <file>res/christmas/levels/level20.txt</file>
+        <file>res/christmas/border.png</file>
     </qresource>
 </RCC>

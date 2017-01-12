@@ -13,7 +13,7 @@ CSlowCannon::CSlowCannon(CGame *game, QPoint cell, double angle)
     this->game = game;
     zOrder = 2;
 
-    textureSize = QSize(CellSize, CellSize);
+    textureSize = QSize(game->CellSize, game->CellSize);
     pixmap = game->r->slow_cannon_1;
     position = game->scene->addPixmap(textureSize, pixmap);
 
@@ -50,12 +50,12 @@ void CSlowCannon::fire()
 void CSlowCannon::upgrade()
 {
     int upgradeCost = getUpgradeCost();
-    if (upgradeCost > game->user.getCash())
+    if (upgradeCost > game->userManager.getCash())
     {
         qDebug() << "Too expensive to upgrage SlowCannon";
         return;
     }
-    game->user.decreaseCash(upgradeCost);
+    game->userManager.decreaseCash(upgradeCost);
 
     ICannon::upgrade();
 

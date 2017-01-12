@@ -1,33 +1,35 @@
-#include <Game/User.h>
+#include <Game/UserManager.h>
+#include <Game/Game.h>
+#include <InfoBlock/UserInfo.h>
 
-CUser::CUser(R *r):
-    r(r),
+CUserManager::CUserManager(CGame *game):
+    game(game),
     cash(UserCash),
     hp(UserHp)
 {
-    cashSound.setSource(r->url_cash);
+    cashSound.setSource(game->r->url_cash);
     cashSound.setVolume(SoundLevel);
 }
 
-int CUser::getCash() const
+int CUserManager::getCash() const
 {
     return cash;
 }
 
-void CUser::setCash(int value)
+void CUserManager::setCash(int value)
 {
     cash = value;
     emit cashChanged(cash);
 }
 
-void CUser::increaseCash(int value)
+void CUserManager::increaseCash(int value)
 {
     cash += value;
     cashSound.play();
     emit cashChanged(cash);
 }
 
-void CUser::decreaseCash(int value)
+void CUserManager::decreaseCash(int value)
 {
     cashMutex.lock();
     if (cash >= value)
@@ -36,24 +38,24 @@ void CUser::decreaseCash(int value)
     emit cashChanged(cash);
 }
 
-int CUser::getHp() const
+int CUserManager::getHp() const
 {
     return hp;
 }
 
-void CUser::setHp(int value)
+void CUserManager::setHp(int value)
 {
     hp = value;
     emit hpChanged(hp);
 }
 
-void CUser::increaseHp(int value)
+void CUserManager::increaseHp(int value)
 {
     hp += value;
     emit hpChanged(hp);
 }
 
-void CUser::decreaseHp(int value)
+void CUserManager::decreaseHp(int value)
 {
     hpMutex.lock();    
     hp -= value;

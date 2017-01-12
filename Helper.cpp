@@ -3,7 +3,7 @@
 #include <limits>
 #include <Helper.h>
 #include <Game/Game.h>
-#include <Wave/Wave.h>
+#include <Game/Wave.h>
 #include <Enemy/FastEnemy.h>
 
 namespace
@@ -17,11 +17,11 @@ const int Inf = std::numeric_limits<int>::max();
 
 std::mutex distancesMutex;
 
-void breadth_first_search_(std::vector<std::vector<int> > &distances)
+void breadth_first_search_(std::vector<std::vector<int> > &distances, CGame *game)
 {
     std::queue<std::pair<int, int>> queue;
-    queue.push(std::make_pair(ExitX, ExitY));
-    distances[ExitX][ExitY] = 0;
+    queue.push(std::make_pair(game->endCell.x(), game->endCell.y()));
+    distances[game->endCell.x()][game->endCell.y()] = 0;
     
     while (!queue.empty())
     {
@@ -35,7 +35,7 @@ void breadth_first_search_(std::vector<std::vector<int> > &distances)
             int xNext = x + dx[i];
             int yNext = y + dy[i];
             if (xNext < 0 || yNext < 0 || 
-                    xNext >= CellNumX || yNext >= CellNumY || 
+                    xNext >= game->CellNumX || yNext >= game->CellNumY || 
                     distances[xNext][yNext] > -1)
                 continue;
             
@@ -88,12 +88,13 @@ void reconcileAngles(qreal &angle, const qreal &deltaAngle, const qreal &step)
 
 void updateDistances(
         std::vector<std::vector<std::shared_ptr<ICannon> > > &cannons,
-        std::vector<std::vector<int> > &distances)
+        std::vector<std::vector<int> > &distances,
+        CGame *game)
 {
     distancesMutex.lock();
     //here we expect cannons to be correct array
-    for (int x = 0; x < CellNumX; ++x)
-        for (int y = 0; y < CellNumY; ++y)
+    for (size_t x = 0; x < cannons.size(); ++x)
+        for (size_t y = 0; y < cannons[x].size(); ++y)
         {
             if (cannons[x][y])
                 distances[x][y] = Inf;    
@@ -101,13 +102,14 @@ void updateDistances(
                 distances[x][y] = -1;
         }
     
-    breadth_first_search_(distances);
+    breadth_first_search_(distances, game);
     distancesMutex.unlock();
 }
 
 
 bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int> > &distances,
-             std::vector<std::shared_ptr<IEnemy> > &enemies)
+             std::vector<std::shared_ptr<IEnemy> > &enemies,
+             CGame *game)
 {
     for (size_t i = 0; i < enemies.size(); ++i)
     {
@@ -118,7 +120,7 @@ bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int> > &distances
     }
 
     distancesMutex.lock();
-        if ((xInd == ExitX && yInd == ExitY) || (xInd == EntranceX && yInd == EntranceY))
+        if ((xInd == game->endCell.x() && yInd == game->endCell.y()) || (xInd == game->startCell.x() && yInd == game->startCell.y()))
         {
             distancesMutex.unlock();
             return false;
@@ -127,28 +129,28 @@ bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int> > &distances
     distancesMutex.unlock();
     
     distCheck[xInd][yInd] = Inf;
-    for (int x = 0; x < CellNumX; ++x)
-        for (int y = 0; y < CellNumY; ++y)
+    for (size_t x = 0; x < distCheck.size(); ++x)
+        for (size_t y = 0; y < distCheck[x].size(); ++y)
             if (distCheck[x][y] != Inf)
                 distCheck[x][y] = -1;
     
-    breadth_first_search_(distCheck);
+    breadth_first_search_(distCheck, game);
     
     /*    bool connected = true;
         for (int x = 0; x < CellNumX; ++x)
             for (int y = 0; y < CellNumY; ++y)
                 if (distances[x][y] == -1)
                     connected = false;*/
-    return /*connected && */(distCheck[EntranceX][EntranceY] > -1);
+    return /*connected && */(distCheck[game->startCell.x()][game->startCell.y()] > -1);
 }
 
 
-QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoint& curPoint)
-{
+QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoint& curPoint, CGame *game)
+{        
     QPoint ans(curPoint);
     if (ExitLeft)
     {
-        if (ans.y() == CellNumY / 2 && (ans.x() <= 0 || ans.x() >= CellNumX))
+        if (ans.x() <= 0 || ans.x() >= game->CellNumX)
         {
             ans.setX(ans.x() - 1);
             return ans;
@@ -156,7 +158,7 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
     }
     else
     {
-        if (ans.y() == CellNumY / 2 && (ans.x() < 0 || ans.x() >= CellNumX - 1))
+        if (ans.x() < 0 || ans.x() >= game->CellNumX - 1)
         {
             ans.setX(ans.x() + 1);        
             return ans;
@@ -175,7 +177,7 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
         int xNext = curPoint.x() + dx[randomInd[i]];
         int yNext = curPoint.y() + dy[randomInd[i]];
         if (xNext < 0 || yNext < 0 || 
-                xNext >= CellNumX || yNext >= CellNumY)
+                xNext >= game->CellNumX || yNext >= game->CellNumY)
             continue;
         if (distances[xNext][yNext] + 1 == curVal)
             return QPoint(xNext, yNext);
@@ -190,7 +192,7 @@ qreal manhattanLength(QPointF p1, QPointF p2)
     return pow(pow(std::abs(p1.x() - p2.x()), 2.0) + pow(std::abs(p1.y() - p2.y()), 2.0), 0.5);
 }
 
-void readWaves(const QString &filename, std::vector<CWave> &waves)
+void readLevel(const QString &filename, std::vector<CWave> &waves)
 {
     QFile waveFile(filename);
     if (!waveFile.open(QIODevice::ReadOnly | QIODevice::Text))

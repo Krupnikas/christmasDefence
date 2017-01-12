@@ -83,17 +83,17 @@ private:
     
     Queue queue;
     
-    const int ExitWidth = OffsetX * 2;
-    const int LocalExitSize = LocalSize * ExitWidth / CellSize / QueueSize * QueueSize;
+    int ExitWidth;
+    int LocalExitSize;
     
-    const QRect NormalRect = QRect(0, 0, LocalSize, LocalSize);
-    const QSize NormalSize = QSize(CellSize, CellSize);
+    QRect NormalRect;
+    QSize NormalSize;
     
-    const QRect EdgeRect = QRect(0, 0, LocalExitSize, LocalSize);
-    const QSize EdgeSize = QSize(ExitWidth, CellSize);
+    QRect EdgeRect;
+    QSize EdgeSize;
     
-    const Cell NormalLocalCell = Cell(NormalSize, NormalRect, false);
-    const Cell EdgeLocalCell = Cell(EdgeSize, EdgeRect, true);
+    Cell NormalLocalCell;
+    Cell EdgeLocalCell;
     
 };
 

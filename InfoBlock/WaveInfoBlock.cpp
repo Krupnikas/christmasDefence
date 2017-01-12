@@ -1,6 +1,7 @@
 #include "WaveInfoBlock.h"
 
-CWaveInfoBlock::CWaveInfoBlock(CGame *game)
+CWaveInfoBlock::CWaveInfoBlock(CGame *game):
+    totalWaveNum(0)
 {
     //IGameObject fields
     this->label = "Wave Information Block";
@@ -8,12 +9,12 @@ CWaveInfoBlock::CWaveInfoBlock(CGame *game)
     this->game = game;
     this->zOrder = UserInfoOnSides;
 
-    this->textureSize = QSize(OffsetX,
-                              OffsetY + CellSize * (CellNumY / 2));
+    this->textureSize = QSize(game->OffsetX,
+                              game->OffsetY + game->CellSize * (game->CellNumY / 2));
     this->pixmap = game->r->userInfoBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
 
-    this->leftTop = QPoint(OffsetX + CellSize * CellNumX, 0);
+    this->leftTop = QPoint(game->OffsetX + game->CellSize * game->CellNumX, 0);
 
     waveCounter = std::make_shared<CImageAndNumber>(game,
                                            game->r->wave_counter_icon,
@@ -21,25 +22,12 @@ CWaveInfoBlock::CWaveInfoBlock(CGame *game)
                                                                   InternalOffsetY),
                                                  QSize(textureSize.width() - 2 * InternalOffsetX,
                                                        (textureSize.height() - 3 * InternalOffsetY)/2)));
-    currentWave = std::make_shared<CImageAndNumber>(game,
+    enemyCounter = std::make_shared<CImageAndNumber>(game,
                                            game->r->current_wave_icon,
                                            QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
                                                                   InternalOffsetY * 2 + (textureSize.height() - 3 * InternalOffsetY)/2),
                                                  QSize(textureSize.width() - 2 * InternalOffsetX,
                                                        (textureSize.height() - 3 * InternalOffsetY)/2)));
-
-    connect(&game->user,
-            SIGNAL(cashChanged(int)),
-            this,
-            SLOT(onCashChanged(int)));
-
-    connect(&game->waveManager,
-            SIGNAL(curWaveChanged(int)),
-            this,
-            SLOT(onCurWaveChanged(int)));
-
-    waveCounter->changeText(QString::number(0));
-    currentWave->changeText(QString::number(game->user.getCash()));
 }
 
 void CWaveInfoBlock::draw()
@@ -50,53 +38,63 @@ void CWaveInfoBlock::draw()
                                        QSize(textureSize.width() - 2 * InternalOffsetX,
                                              (textureSize.height() - 3 * InternalOffsetY)/2)));
     waveCounter->draw();
-    currentWave->updatePosition(QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
+    enemyCounter->updatePosition(QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
                                                            InternalOffsetY * 2 + (textureSize.height() - 3 * InternalOffsetY)/2),
                                           QSize(textureSize.width() - 2 * InternalOffsetX,
                                                 (textureSize.height() - 3 * InternalOffsetY)/2)));
-    currentWave->draw();
+    enemyCounter->draw();
 }
 
 void CWaveInfoBlock::hide()
 {
     CSceneObject::hide();
     waveCounter->hide();
-    currentWave->hide();
+    enemyCounter->hide();
 }
 
 void CWaveInfoBlock::show()
 {
     CSceneObject::show();
     waveCounter->show();
-    currentWave->show();
+    enemyCounter->show();
 }
 
 void CWaveInfoBlock::scale()
 {
     CSceneObject::scale();
     waveCounter->scale();
-    currentWave->scale();
+    enemyCounter->scale();
 }
 
 void CWaveInfoBlock::remove()
 {
     waveCounter->remove();
-    currentWave->remove();
+    enemyCounter->remove();
     CSceneObject::remove();
+}
+
+void CWaveInfoBlock::onEnemyNumChanged(int newEnemyNum)
+{
+    enemyCounter->changeText(QString::number(newEnemyNum));
+    enemyCounter->draw();
+    enemyCounter->show();
 }
 
 void CWaveInfoBlock::onCurWaveChanged(int newCurWave)
 {
     this->waveCounter->changeText(QString::number(newCurWave + 1)
                                   + QString("/")
-                                  + QString::number(game->waveManager.getNumberOfWaves()));
+                                  + QString::number(totalWaveNum));
     waveCounter->draw();
     waveCounter->show();
 }
 
-void CWaveInfoBlock::onCashChanged(int newCash)
+int CWaveInfoBlock::getTotalWaveNum() const
 {
-    this->currentWave->changeText(QString::number(newCash));
-    currentWave->draw();
-    currentWave->show();
+    return totalWaveNum;
+}
+
+void CWaveInfoBlock::setTotalWaveNum(int value)
+{
+    totalWaveNum = value;
 }

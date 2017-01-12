@@ -8,8 +8,8 @@ CUserInfo::CUserInfo(CGame *game)
     this->game = game;
     this->zOrder = UserInfoOnSides;
 
-    this->textureSize = QSize(OffsetX,
-                              OffsetY + CellSize * (CellNumY / 2));
+    this->textureSize = QSize(game->OffsetX,
+                              game->OffsetY + game->CellSize * (game->CellNumY / 2));
     this->pixmap = game->r->userInfoBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
 
@@ -27,17 +27,17 @@ CUserInfo::CUserInfo(CGame *game)
                                                                   INTERNAL_OFFSET_Y * 2 + (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2),
                                                  QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
                                                        (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2)));
-    connect(&game->user,
+    connect(&game->userManager,
             SIGNAL(hpChanged(int)),
             this,
             SLOT(onHpChanged(int)));
 
-    connect(&game->user,
+    connect(&game->userManager,
             SIGNAL(cashChanged(int)),
             this,
             SLOT(onCashChanged(int)));
-    hp->changeText(QString::number(game->user.getHp()));
-    coins->changeText(QString::number(game->user.getCash()));
+    hp->changeText(QString::number(game->userManager.getHp()));
+    coins->changeText(QString::number(game->userManager.getCash()));
 }
 
 void CUserInfo::draw()

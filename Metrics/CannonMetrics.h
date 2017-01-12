@@ -15,9 +15,9 @@ const qreal BurnCannonMidFireSpeed = 43;
 const qreal BurnCannonBigFireSpeed = 35;
 
 //fire radius, in local points
-const qreal BurnCannonSmRadius = CellSize * 2.6;
-const qreal BurnCannonMidRadius = CellSize * 3;
-const qreal BurnCannonBigRadius = CellSize * 3.4;
+qreal BurnCannonSmRadius;
+qreal BurnCannonMidRadius;
+qreal BurnCannonBigRadius;
 
 const int BurnCannonSmCost = 12;
 const int BurnCannonMidCost = 18;
@@ -36,9 +36,9 @@ const qreal FastCannonMidFireSpeed = 50;
 const qreal FastCannonBigFireSpeed = 40;
 
 //fire radius, in local points
-const qreal FastCannonSmRadius = CellSize * 2;
-const qreal FastCannonMidRadius = CellSize * 2.3;
-const qreal FastCannonBigRadius = CellSize * 2.6;
+qreal FastCannonSmRadius;
+qreal FastCannonMidRadius;
+qreal FastCannonBigRadius;
 
 const int FastCannonSmCost = 7;
 const int FastCannonMidCost = 12;
@@ -57,9 +57,9 @@ const qreal MonsterCannonMidFireSpeed = 50;
 const qreal MonsterCannonBigFireSpeed = 40;
 
 //fire radius, in local points
-const qreal MonsterCannonSmRadius = CellSize * 2.2;
-const qreal MonsterCannonMidRadius = CellSize * 2.5;
-const qreal MonsterCannonBigRadius = CellSize * 2.7;
+qreal MonsterCannonSmRadius;
+qreal MonsterCannonMidRadius;
+qreal MonsterCannonBigRadius;
 
 const int MonsterCannonSmCost = 9;
 const int MonsterCannonMidCost = 14;
@@ -79,9 +79,9 @@ const qreal SlowCannonMidFireSpeed = 47;
 const qreal SlowCannonBigFireSpeed = 37;
 
 //fire radius, in local points
-const qreal SlowCannonSmRadius = CellSize * 2.4;
-const qreal SlowCannonMidRadius = CellSize * 2.7;
-const qreal SlowCannonBigRadius = CellSize * 3;
+qreal SlowCannonSmRadius;
+qreal SlowCannonMidRadius;
+qreal SlowCannonBigRadius;
 
 const int SlowCannonSmCost = 11;
 const int SlowCannonMidCost = 17;

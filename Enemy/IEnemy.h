@@ -25,6 +25,8 @@ public:
     QPoint getNextGameCell() const;
     bool beforeTurnArea() const;
     QPointF getSpeed() const;
+    bool getWasInsideGame();
+    bool getWasOutsideGame();
     
     //IGameObject methods override
     virtual void scale() override;

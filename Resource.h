@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QObject>
 #include <QApplication>
 #include <QWidget>
 #include <QMainWindow>
@@ -124,6 +125,7 @@ struct R
     std::shared_ptr<QPixmap> cannonTypePreview[TypesOfCannon];
     std::shared_ptr<QPixmap> cannonUnableTypePreview[TypesOfCannon];
 
+    std::shared_ptr<QPixmap> border_cell;
     std::shared_ptr<QPixmap> cell1;
     std::shared_ptr<QPixmap> cell2;
     std::shared_ptr<QPixmap> cellSelected;
@@ -168,7 +170,7 @@ struct R
     std::shared_ptr<QPixmap> hp_background;
     
     std::shared_ptr<QPixmap> enemy_comes;
-    QString waves;
+    QString levels;
     
     QSoundEffect s_button_pressed;
     

@@ -19,12 +19,11 @@ qreal manhattanLength(QPointF p1, QPointF p2);
 
 void reconcileAngles(qreal &angle, const qreal &deltaAngle, const qreal &step);
 
-void updateDistances(
-    std::vector<std::vector<std::shared_ptr<ICannon>>> &cannons,
-    std::vector<std::vector<int>> &distances);
+void updateDistances(std::vector<std::vector<std::shared_ptr<ICannon>>> &cannons,
+    std::vector<std::vector<int>> &distances, CGame *game);
 bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int>> &distances,
-             std::vector<std::shared_ptr<IEnemy> > &enemies);
-QPoint findLowerNeighbour(std::vector<std::vector<int>> &distances, const QPoint& curPoint);
+             std::vector<std::shared_ptr<IEnemy> > &enemies, CGame *game);
+QPoint findLowerNeighbour(std::vector<std::vector<int>> &distances, const QPoint& curPoint, CGame *game);
 
 template <class T>
 T choose(ESizeType type, T var1, T var2, T var3)
@@ -48,7 +47,7 @@ std::shared_ptr<QPixmap> renderPixmapFromText(QString text,
                                               QFont font = QFont("Helvetica [Cronyx]", 376),
                                               QColor backgroundColor = Qt::transparent);
 
-void readWaves(const QString &filename, std::vector<CWave> &waves);
+void readLevel(const QString &filename, std::vector<CWave> &waves);
 
 qreal ticksToTime(int ticks);
 

@@ -27,7 +27,7 @@ void IEnemy::hit(int hpDiff)
         hide();
         
         int cash = hpMax / EnemyCostFactor + 2;
-        game->user.increaseCash(cash);
+        game->userManager.increaseCash(cash);
     }
 
     //not optimal, called too often
@@ -43,7 +43,7 @@ void IEnemy::updateHpPos()
 {
     QPointF leftTop(0, 0);
     leftTop.setX(this->center.x() - HpSize.width() / 2.0);
-    leftTop.setY(this->center.y() + CellSize / 2.0 - HpSize.height() * 4);
+    leftTop.setY(this->center.y() + game->CellSize / 2.0 - HpSize.height() * 4);
     hpCurItem->setLeftTop(leftTop);
     hpBackgroundItem->setLeftTop(leftTop);
 }
@@ -78,6 +78,16 @@ bool IEnemy::beforeTurnArea() const
 QPointF IEnemy::getSpeed() const
 {
     return movements->getSpeed() * moveIter;
+}
+
+bool IEnemy::getWasInsideGame()
+{
+    return wasInsideGame;
+}
+
+bool IEnemy::getWasOutsideGame()
+{
+    return wasOutsideGame;
 }
 
 
@@ -115,7 +125,7 @@ bool IEnemy::move()
     bool insideGame = game->scene->insideGameRect(center);
     if (wasInsideGame && !wasOutsideGame && !insideGame)
     {
-        game->user.decreaseHp(1);
+        game->userManager.decreaseHp(1);
         wasOutsideGame = true;
     }
     if (!wasInsideGame && insideGame)

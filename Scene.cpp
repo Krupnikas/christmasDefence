@@ -130,8 +130,8 @@ void CScene::updateGameRect(QRect newWindowRect)
     gameRect = windowRect = newWindowRect;
     
     
-    QPoint enclosingTopLeft(gameRect.topLeft() - QPoint(CellSize, CellSize));
-    QPoint enclosingBottomRight(gameRect.bottomRight() + QPoint(CellSize, CellSize));
+    QPoint enclosingTopLeft(gameRect.topLeft() - QPoint(LocalWidth / 20, LocalHeight / 20));
+    QPoint enclosingBottomRight(gameRect.bottomRight() + QPoint(LocalWidth / 20, LocalHeight / 20));
     enclosingRect = QRect(enclosingTopLeft, enclosingBottomRight);
     
     QPoint center = newWindowRect.center();

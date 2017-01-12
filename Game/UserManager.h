@@ -2,11 +2,13 @@
 
 #include <Resource.h>
 
-class CUser : public QObject
+class CGame;
+
+class CUserManager : public QObject
 {
     Q_OBJECT
 public:
-    CUser(R *r);
+    CUserManager(CGame *game);
         
     int getCash() const;
     void setCash(int value);
@@ -23,7 +25,7 @@ signals:
     void cashChanged(int newCash);
     
 private:
-    R *r;
+    CGame *game;
     
     std::mutex cashMutex;
     int cash;

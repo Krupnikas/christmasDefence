@@ -7,8 +7,8 @@
 #include <Scene.h>
 #include <Window.h>
 #include <SceneObject/GameBackground.h>
-#include <Wave/WaveManager.h>
-#include <Game/User.h>
+#include <Game/WaveManager.h>
+#include <Game/UserManager.h>
 
 class IBullet;
 class IEnemy;
@@ -28,6 +28,23 @@ class CGame : public IWindow
 public:
     const QPoint UnselCell = QPoint(0, 0);
     
+    //game metrics
+    int CellNumX;
+    int CellNumY;
+    int OffsetX;
+    int OffsetY;
+    int CellSize;
+    QPoint startCell;
+    QPoint endCell;
+    
+    int CannonSelectionButtonSize;
+    int CannonSelectionRadius;
+    int CannonUpgradeButtonSize;
+    int CannonUpgradeRadius;
+    
+
+
+    //game data    
     MainView *view;
     R *r;
     CScene *scene;
@@ -36,7 +53,7 @@ public:
     
     
     CWaveManager waveManager;
-    CUser user;   
+    CUserManager userManager;   
 
     EButtonType pressedButton;
     
@@ -105,7 +122,9 @@ public slots:
 
 //private methods
 private:
-    void scaleObjects();
+    void scale_objects_();
+    void read_level_(QString filename);
+    void init_metrics_();
 
 //private attributes
 private:

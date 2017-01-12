@@ -100,7 +100,6 @@ void CGameMenu::onButtonPressed(int type)
         break;   
     case EButtonType::eBTgmQuickPlay:
         hide();
-        game->show();
         game->startGameLevel(1);
         break;
     case EButtonType::eBTgmDev:

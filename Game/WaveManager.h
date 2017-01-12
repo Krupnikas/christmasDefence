@@ -1,33 +1,41 @@
 #pragma once
 
-#include <Wave/Wave.h>
-#include <QObject>
+#include <Game/Wave.h>
 
 class CGame;
 
 class CWaveManager : public QObject
 {
     Q_OBJECT
+    
+//public methods:
 public:
-    CWaveManager();
-    void initialize(CGame *game, int level);
+    CWaveManager(CGame *game);
+    void initialize();
 
     void setCurWave(int newCurWave);
     void onTimer();
     QString getWaveInfo();
     
     int getNumberOfWaves();
+    
+    
+//publics fields
+public:
+    std::vector<CWave> waves;
 
+    
+//private fields
 private:
     CGame *game;
-    std::vector<CWave> waves;
+    
     
     bool waveGoing;
     int curWave;
     int counter;
 
+//signals
 signals:
-
     void curWaveChanged(int newCurWave);
 
 };

@@ -5,12 +5,13 @@
 CHpCurrent::CHpCurrent(IEnemy *enemy)
 {
     //IGameObject fields
+    this->game = enemy->getGame();
+    
     angle = 0;
     center = enemy->getCenter();
     leftTop.setX(center.x() - HpSize.width() / 2);
-    leftTop.setY(enemy->getLeftTop().y() + CellSize - HpSize.height());
+    leftTop.setY(enemy->getLeftTop().y() + game->CellSize - HpSize.height());
     
-    this->game = enemy->getGame();
     zOrder = enemy->getZOrder() + 0.2;
     
     textureSize = HpSize;

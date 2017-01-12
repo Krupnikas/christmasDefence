@@ -8,7 +8,7 @@ CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
     this->game = game;
     this->zOrder = GameInfoblockZOrder;
     
-    backgroundImageSize = CannonSelectionRadius * 8.0 / 3;
+    backgroundImageSize = game->CannonSelectionRadius * 8.0 / 3;
     this->textureSize = QSize(backgroundImageSize,
                               backgroundImageSize);
     this->pixmap = game->r->cannonSelectionBackground;
@@ -20,13 +20,13 @@ CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
 
     cellSelection = std::make_shared<CSceneObject>(
                 0, GameBackgroundZOrder,
-                QPointF(0, 0), QSizeF(CellSize, CellSize),
+                QPointF(0, 0), QSizeF(game->CellSize, game->CellSize),
                 game->r->cellSelected, game);
     
     initButtons();
     updatePosition(selectedCell);
 
-    connect(&game->user,
+    connect(&game->userManager,
             SIGNAL(cashChanged(int)),
             this,
             SLOT(onCashChanged(int)));
@@ -60,24 +60,24 @@ void CCannonSelection::updateButtonsPositions()
         if (selectedCell.y() == 0)
         {
             topLeft.setX(center.x()
-                         + CannonSelectionRadius
-                         - CannonSelectionButtonSize / 2);
+                         + game->CannonSelectionRadius
+                         - game->CannonSelectionButtonSize / 2);
 
             topLeft.setY(center.y()
-                         - CannonSelectionButtonSize / 2);
+                         - game->CannonSelectionButtonSize / 2);
 
-        } else if (selectedCell.y() == CellNumY - 1) {
+        } else if (selectedCell.y() == game->CellNumY - 1) {
 
             topLeft.setX(center.x()
-                         + CannonSelectionRadius
-                         - CannonSelectionButtonSize / 2);
+                         + game->CannonSelectionRadius
+                         - game->CannonSelectionButtonSize / 2);
 
             topLeft.setY(center.y()
-                         - CannonSelectionButtonSize / 2);
+                         - game->CannonSelectionButtonSize / 2);
 
         } else {
-            topLeft = QPoint(center.x() - CannonSelectionButtonSize/2,
-                                          center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2);
+            topLeft = QPoint(center.x() - game->CannonSelectionButtonSize/2,
+                                          center.y() + game->CannonSelectionRadius - game->CannonSelectionButtonSize/2);
         }
         closeButton->setLeftTop(topLeft);
     }
@@ -90,10 +90,10 @@ void CCannonSelection::initButtons()
 {
     if (CloseButtonInInfoBlocksEnabled)
     {
-        QRectF closeRect(center.x() - CannonSelectionButtonSize/2,
-                         center.y() + CannonSelectionRadius - CannonSelectionButtonSize/2,
-                         CannonSelectionButtonSize,
-                         CannonSelectionButtonSize);
+        QRectF closeRect(center.x() - game->CannonSelectionButtonSize/2,
+                         center.y() + game->CannonSelectionRadius - game->CannonSelectionButtonSize/2,
+                         game->CannonSelectionButtonSize,
+                         game->CannonSelectionButtonSize);
         closeButton = std::make_shared<CButton>(
                     ButtonZOrder + 0.1, closeRect.center(),
                     closeRect.size(),
@@ -109,8 +109,8 @@ void CCannonSelection::initButtons()
     for (int i = 0; i < TypesOfCannon; i++)
     {
         QRectF buttonRect(calculateTopLeftForButton(i),
-                          QSize(CannonSelectionButtonSize,
-                                CannonSelectionButtonSize));
+                          QSize(game->CannonSelectionButtonSize,
+                                game->CannonSelectionButtonSize));
         
         cannonButton[i] = std::make_shared<CButton>(
                     ButtonZOrder, buttonRect.center(),
@@ -133,33 +133,33 @@ QPoint CCannonSelection::calculateTopLeftForButton(int i)
     if (selectedCell.y() == 0)
     {
         topLeft.setX(center.x()
-                     - CannonSelectionRadius
+                     - game->CannonSelectionRadius
                         * sin(-(i * 3.14 /(TypesOfCannon - 1 + c) - 1.57))
-                     - CannonSelectionButtonSize / 2);
+                     - game->CannonSelectionButtonSize / 2);
 
         topLeft.setY(center.y()
-                     + CannonSelectionRadius
+                     + game->CannonSelectionRadius
                         * cos(-(i * 3.14 /(TypesOfCannon - 1 + c) - 1.57))
-                     - CannonSelectionButtonSize / 2);
+                     - game->CannonSelectionButtonSize / 2);
 
-    } else if (selectedCell.y() == CellNumY - 1) {
+    } else if (selectedCell.y() == game->CellNumY - 1) {
 
         topLeft.setX(center.x()
-                     - CannonSelectionRadius * sin((i + 2 * c) * 3.14 /(TypesOfCannon - 1 + c) + 1.57 * (1 - c))
-                     - CannonSelectionButtonSize / 2);
+                     - game->CannonSelectionRadius * sin((i + 2 * c) * 3.14 /(TypesOfCannon - 1 + c) + 1.57 * (1 - c))
+                     - game->CannonSelectionButtonSize / 2);
 
         topLeft.setY(center.y()
-                     + CannonSelectionRadius * cos((i + 2 * c) * 3.14 /(TypesOfCannon - 1 + c) + 1.57 * (1 - c))
-                     - CannonSelectionButtonSize / 2);
+                     + game->CannonSelectionRadius * cos((i + 2 * c) * 3.14 /(TypesOfCannon - 1 + c) + 1.57 * (1 - c))
+                     - game->CannonSelectionButtonSize / 2);
 
     } else {
         topLeft.setX(center.x()
-                     - CannonSelectionRadius * sin((i + c) * 6.28 /(TypesOfCannon + c) + 0.785 * (1 - c))
-                     - CannonSelectionButtonSize / 2);
+                     - game->CannonSelectionRadius * sin((i + c) * 6.28 /(TypesOfCannon + c) + 0.785 * (1 - c))
+                     - game->CannonSelectionButtonSize / 2);
 
         topLeft.setY(center.y()
-                     + CannonSelectionRadius * cos((i + c) * 6.28 /(TypesOfCannon + c) + 0.785 * (1 - c))
-                     - CannonSelectionButtonSize / 2);
+                     + game->CannonSelectionRadius * cos((i + c) * 6.28 /(TypesOfCannon + c) + 0.785 * (1 - c))
+                     - game->CannonSelectionButtonSize / 2);
     }
     return topLeft;
 }
