@@ -4,12 +4,12 @@
 //Fast enemy
 // in local points
 
-qreal FastEnemyStep;
+extern qreal FastEnemyStep;
 
-QSizeF FastEnemyTextureSize;
-QSizeF FastEnemySize;
+extern QSizeF FastEnemyTextureSize;
+extern QSizeF FastEnemySize;
 
-const int EnemyHpFactor = 65;
-const int EnemyCostFactor = 500;
+extern int EnemyHpFactor;
+extern int EnemyCostFactor;
 
-QSizeF HpSize;
+extern QSizeF HpSize;

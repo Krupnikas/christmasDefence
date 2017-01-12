@@ -122,7 +122,12 @@ HEADERS  += \
     Game/Wave.h \
     Game/WaveManager.h \
     Game/UserManager.h \
-    Game/FieldItem.h
+    Game/FieldItem.h \
+    Metrics/BulletMetricsDef.h \
+    Metrics/CannonMetricsDef.h \
+    Metrics/EnemyMetricsDef.h \
+    Metrics/MetricsDef.h \
+    Metrics/ZOrderMetricsDef.h
 
 FORMS    += mainview.ui
 

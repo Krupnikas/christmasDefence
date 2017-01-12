@@ -1,6 +1,8 @@
 #include <mainview.h>
 #include <QApplication>
 
+#include <Metrics/MetricsDef.h>
+
 int main(int argc, char *argv[])
 {
 

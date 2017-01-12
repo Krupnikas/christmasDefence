@@ -1,9 +1,9 @@
 #pragma once
 
-const int BackgroundZOrder = 0;
-const int EnemyZOrder = 2;
-const int UserInfoOnSides = 4;
-const int ButtonZOrder = 10;
+extern int BackgroundZOrder;
+extern int EnemyZOrder;
+extern int UserInfoOnSides;
+extern int ButtonZOrder;
 
-const int GameInfoblockZOrder = 5;
-const int GameBackgroundZOrder = 0;
+extern int GameInfoblockZOrder;
+extern int GameBackgroundZOrder;

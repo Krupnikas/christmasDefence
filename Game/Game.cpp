@@ -87,7 +87,7 @@ void CGame::create()
     waveInformationBlock = std::make_shared<CWaveInfoBlock>(this);
         
     menuButton = std::make_shared<CButton>(
-                BackgroundZOrder + 0.1,
+                BackgroundZOrder + 0.3,
                 QPointF(OffsetX / 2, LocalHeight - CellSize / 2),
                 QSizeF(CellSize * 0.7, CellSize * 0.7),
                 this, static_cast<int>(EButtonType::eBTgMenu),
@@ -520,7 +520,7 @@ void CGame::read_level_(QString filename)
     CellNumY = line.toInt();
     
     //init game metrics
-
+    init_metrics_();
     
 
     //start cell
