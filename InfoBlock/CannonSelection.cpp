@@ -6,9 +6,9 @@ CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
     this->label = "Cannon Selection Block";
     this->angle = 0;
     this->game = game;
-    this->zOrder = GameInfoblockZOrder;
+    this->zOrder = m::GameInfoblockZOrder;
     
-    backgroundImageSize = game->CannonSelectionRadius * 8.0 / 3;
+    backgroundImageSize = m::CannonSelectionRadius * 8.0 / 3;
     this->textureSize = QSize(backgroundImageSize,
                               backgroundImageSize);
     this->pixmap = game->r->cannonSelectionBackground;
@@ -19,8 +19,8 @@ CCannonSelection::CCannonSelection(CGame *game, QPoint selectedCell)
     this->selectedCell = selectedCell;
 
     cellSelection = std::make_shared<CSceneObject>(
-                0, GameBackgroundZOrder,
-                QPointF(0, 0), QSizeF(game->CellSize, game->CellSize),
+                0, m::GameBackgroundZOrder,
+                QPointF(0, 0), QSizeF(m::CellSize, m::CellSize),
                 game->r->cellSelected, game);
     
     initButtons();
@@ -55,47 +55,47 @@ void CCannonSelection::updatePosition(QPoint selectedCell)
 void CCannonSelection::updateButtonsPositions()
 {
     QPoint topLeft;
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
     {
         if (selectedCell.y() == 0)
         {
             topLeft.setX(center.x()
-                         + game->CannonSelectionRadius
-                         - game->CannonSelectionButtonSize / 2);
+                         + m::CannonSelectionRadius
+                         - m::CannonSelectionButtonSize / 2);
 
             topLeft.setY(center.y()
-                         - game->CannonSelectionButtonSize / 2);
+                         - m::CannonSelectionButtonSize / 2);
 
-        } else if (selectedCell.y() == game->CellNumY - 1) {
+        } else if (selectedCell.y() == m::CellNumY - 1) {
 
             topLeft.setX(center.x()
-                         + game->CannonSelectionRadius
-                         - game->CannonSelectionButtonSize / 2);
+                         + m::CannonSelectionRadius
+                         - m::CannonSelectionButtonSize / 2);
 
             topLeft.setY(center.y()
-                         - game->CannonSelectionButtonSize / 2);
+                         - m::CannonSelectionButtonSize / 2);
 
         } else {
-            topLeft = QPoint(center.x() - game->CannonSelectionButtonSize/2,
-                                          center.y() + game->CannonSelectionRadius - game->CannonSelectionButtonSize/2);
+            topLeft = QPoint(center.x() - m::CannonSelectionButtonSize/2,
+                                          center.y() + m::CannonSelectionRadius - m::CannonSelectionButtonSize/2);
         }
         closeButton->setLeftTop(topLeft);
     }
 
-    for (int i = 0; i < TypesOfCannon; i++)
+    for (int i = 0; i < m::TypesOfCannon; i++)
        cannonButton[i]->setLeftTop(calculateTopLeftForButton(i));
 }
 
 void CCannonSelection::initButtons()
 {
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
     {
-        QRectF closeRect(center.x() - game->CannonSelectionButtonSize/2,
-                         center.y() + game->CannonSelectionRadius - game->CannonSelectionButtonSize/2,
-                         game->CannonSelectionButtonSize,
-                         game->CannonSelectionButtonSize);
+        QRectF closeRect(center.x() - m::CannonSelectionButtonSize/2,
+                         center.y() + m::CannonSelectionRadius - m::CannonSelectionButtonSize/2,
+                         m::CannonSelectionButtonSize,
+                         m::CannonSelectionButtonSize);
         closeButton = std::make_shared<CButton>(
-                    ButtonZOrder + 0.1, closeRect.center(),
+                    m::ButtonZOrder + 0.1, closeRect.center(),
                     closeRect.size(),
                     game, static_cast<int>(EButtonType::eBTCloseButton),
                     game->r->buttonClose
@@ -105,15 +105,15 @@ void CCannonSelection::initButtons()
                 this, SLOT(onButtonPressed(int)));
     }
     
-    cannonButton.resize(TypesOfCannon);    
-    for (int i = 0; i < TypesOfCannon; i++)
+    cannonButton.resize(m::TypesOfCannon);    
+    for (int i = 0; i < m::TypesOfCannon; i++)
     {
         QRectF buttonRect(calculateTopLeftForButton(i),
-                          QSize(game->CannonSelectionButtonSize,
-                                game->CannonSelectionButtonSize));
+                          QSize(m::CannonSelectionButtonSize,
+                                m::CannonSelectionButtonSize));
         
         cannonButton[i] = std::make_shared<CButton>(
-                    ButtonZOrder, buttonRect.center(),
+                    m::ButtonZOrder, buttonRect.center(),
                     buttonRect.size(),
                     game, static_cast<int>(EButtonType::eBTCloseButton) + i + 1,
                     game->r->cannonTypePreview[i]
@@ -128,38 +128,38 @@ QPoint CCannonSelection::calculateTopLeftForButton(int i)
 {
 
     QPoint topLeft;
-    int c = (CloseButtonInInfoBlocksEnabled ? 1 : 0);
+    int c = (m::CloseButtonInInfoBlocksEnabled ? 1 : 0);
 
     if (selectedCell.y() == 0)
     {
         topLeft.setX(center.x()
-                     - game->CannonSelectionRadius
-                        * sin(-(i * 3.14 /(TypesOfCannon - 1 + c) - 1.57))
-                     - game->CannonSelectionButtonSize / 2);
+                     - m::CannonSelectionRadius
+                        * sin(-(i * 3.14 /(m::TypesOfCannon - 1 + c) - 1.57))
+                     - m::CannonSelectionButtonSize / 2);
 
         topLeft.setY(center.y()
-                     + game->CannonSelectionRadius
-                        * cos(-(i * 3.14 /(TypesOfCannon - 1 + c) - 1.57))
-                     - game->CannonSelectionButtonSize / 2);
+                     + m::CannonSelectionRadius
+                        * cos(-(i * 3.14 /(m::TypesOfCannon - 1 + c) - 1.57))
+                     - m::CannonSelectionButtonSize / 2);
 
-    } else if (selectedCell.y() == game->CellNumY - 1) {
+    } else if (selectedCell.y() == m::CellNumY - 1) {
 
         topLeft.setX(center.x()
-                     - game->CannonSelectionRadius * sin((i + 2 * c) * 3.14 /(TypesOfCannon - 1 + c) + 1.57 * (1 - c))
-                     - game->CannonSelectionButtonSize / 2);
+                     - m::CannonSelectionRadius * sin((i + 2 * c) * 3.14 /(m::TypesOfCannon - 1 + c) + 1.57 * (1 - c))
+                     - m::CannonSelectionButtonSize / 2);
 
         topLeft.setY(center.y()
-                     + game->CannonSelectionRadius * cos((i + 2 * c) * 3.14 /(TypesOfCannon - 1 + c) + 1.57 * (1 - c))
-                     - game->CannonSelectionButtonSize / 2);
+                     + m::CannonSelectionRadius * cos((i + 2 * c) * 3.14 /(m::TypesOfCannon - 1 + c) + 1.57 * (1 - c))
+                     - m::CannonSelectionButtonSize / 2);
 
     } else {
         topLeft.setX(center.x()
-                     - game->CannonSelectionRadius * sin((i + c) * 6.28 /(TypesOfCannon + c) + 0.785 * (1 - c))
-                     - game->CannonSelectionButtonSize / 2);
+                     - m::CannonSelectionRadius * sin((i + c) * 6.28 /(m::TypesOfCannon + c) + 0.785 * (1 - c))
+                     - m::CannonSelectionButtonSize / 2);
 
         topLeft.setY(center.y()
-                     + game->CannonSelectionRadius * cos((i + c) * 6.28 /(TypesOfCannon + c) + 0.785 * (1 - c))
-                     - game->CannonSelectionButtonSize / 2);
+                     + m::CannonSelectionRadius * cos((i + c) * 6.28 /(m::TypesOfCannon + c) + 0.785 * (1 - c))
+                     - m::CannonSelectionButtonSize / 2);
     }
     return topLeft;
 }
@@ -168,13 +168,13 @@ int CCannonSelection::getCannonPrice(int i)
 {
     switch (i){
     case 0:
-        return FastCannonSmCost;
+        return m::FastCannonSmCost;
     case 1:
-        return MonsterCannonSmCost;
+        return m::MonsterCannonSmCost;
     case 2:
-        return SlowCannonSmCost;
+        return m::SlowCannonSmCost;
     case 3:
-        return BurnCannonSmCost;
+        return m::BurnCannonSmCost;
     default:
         return 0;
     }
@@ -185,10 +185,10 @@ void CCannonSelection::scale()
     CSceneObject::scale();
     cellSelection->scale();
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->scale();
     
-    for (int i = 0; i < TypesOfCannon; i++)
+    for (int i = 0; i < m::TypesOfCannon; i++)
     {
         cannonButton[i]->scale();
     }    
@@ -199,10 +199,10 @@ void CCannonSelection::scaleWithLoss(QSizeF newSize)
     CSceneObject::scaleWithLoss(newSize);
     cellSelection->scaleWithLoss(newSize);
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->scaleWithLoss(newSize);
     
-    for (int i = 0; i < TypesOfCannon; i++)
+    for (int i = 0; i < m::TypesOfCannon; i++)
     {
         cannonButton[i]->scaleWithLoss(newSize);
     }
@@ -213,10 +213,10 @@ void CCannonSelection::remove()
     CSceneObject::remove();
     cellSelection->remove();
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->remove();
     
-    for (int i = 0; i < TypesOfCannon; i++)
+    for (int i = 0; i < m::TypesOfCannon; i++)
     {
         cannonButton[i]->remove();
     }   
@@ -227,10 +227,10 @@ void CCannonSelection::show()
     CSceneObject::show();
     cellSelection->show();
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->show();
     
-    for (int i = 0; i < TypesOfCannon; i++)
+    for (int i = 0; i < m::TypesOfCannon; i++)
     {
         cannonButton[i]->show();
     }
@@ -242,10 +242,10 @@ void CCannonSelection::hide()
     CSceneObject::hide();    
     cellSelection->hide();    
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->hide();
 
-    for (int i = 0; i < TypesOfCannon; i++)
+    for (int i = 0; i < m::TypesOfCannon; i++)
     {
         cannonButton[i]->hide();
     }
@@ -258,10 +258,10 @@ void CCannonSelection::draw()
     CSceneObject::draw();
     cellSelection->draw();
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->draw();
 
-    for (int i = 0; i < TypesOfCannon; i++)
+    for (int i = 0; i < m::TypesOfCannon; i++)
         cannonButton[i]->draw();
 }
 

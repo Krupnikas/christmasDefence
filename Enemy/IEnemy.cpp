@@ -26,7 +26,7 @@ void IEnemy::hit(int hpDiff)
         dead = true;
         hide();
         
-        int cash = hpMax / EnemyCostFactor + 2;
+        int cash = hpMax / m::EnemyCostFactor + 2;
         game->userManager.increaseCash(cash);
     }
 
@@ -42,16 +42,16 @@ void IEnemy::hit(int hpDiff)
 void IEnemy::updateHpPos()
 {
     QPointF leftTop(0, 0);
-    leftTop.setX(this->center.x() - HpSize.width() / 2.0);
-    leftTop.setY(this->center.y() + game->CellSize / 2.0 - HpSize.height() * 4);
+    leftTop.setX(this->center.x() - m::HpSize.width() / 2.0);
+    leftTop.setY(this->center.y() + m::CellSize / 2.0 - m::HpSize.height() * 4);
     hpCurItem->setLeftTop(leftTop);
     hpBackgroundItem->setLeftTop(leftTop);
 }
 
 void IEnemy::updateHpSize()
 {
-    QSizeF hpCurSize(HpSize);
-    hpCurSize.setWidth(HpSize.width() * hpCur / hpMax);
+    QSizeF hpCurSize(m::HpSize);
+    hpCurSize.setWidth(m::HpSize.width() * hpCur / hpMax);
     hpCurItem->scaleWithLoss(hpCurSize);
 }
 

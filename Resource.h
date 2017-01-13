@@ -88,6 +88,10 @@ enum class ESelectionStatus {
     eCannonUpgrade
 };
 
+enum class EEdge {
+    eLeft, eTop, eRight, eBottom, eInside
+};
+
 struct R
 {
     QString dir;
@@ -122,8 +126,8 @@ struct R
     std::shared_ptr<QPixmap> wave_counter_icon;
     std::shared_ptr<QPixmap> game_menu_button;
 
-    std::shared_ptr<QPixmap> cannonTypePreview[TypesOfCannon];
-    std::shared_ptr<QPixmap> cannonUnableTypePreview[TypesOfCannon];
+    std::shared_ptr<QPixmap> cannonTypePreview[m::TypesOfCannon];
+    std::shared_ptr<QPixmap> cannonUnableTypePreview[m::TypesOfCannon];
 
     std::shared_ptr<QPixmap> border_cell;
     std::shared_ptr<QPixmap> cell1;

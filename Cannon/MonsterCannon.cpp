@@ -13,7 +13,7 @@ CMonsterCannon::CMonsterCannon(CGame *game, QPoint cell, double angle)
     this->game = game;
     zOrder = 2;
 
-    textureSize = QSize(game->CellSize, game->CellSize);
+    textureSize = QSize(m::CellSize, m::CellSize);
     pixmap = game->r->monster_cannon_1;
     position = game->scene->addPixmap(textureSize, pixmap);
 
@@ -23,14 +23,14 @@ CMonsterCannon::CMonsterCannon(CGame *game, QPoint cell, double angle)
     //ICannon fields
     sizeType = ESizeType::eSmall;
     gameCell = cell;
-    rotationSpeed = MonsterCannonSmRotation;
-    fireSpeed = MonsterCannonSmFireSpeed;
-    fireRadius = MonsterCannonSmRadius;
+    rotationSpeed = m::MonsterCannonSmRotation;
+    fireSpeed = m::MonsterCannonSmFireSpeed;
+    fireRadius = m::MonsterCannonSmRadius;
     radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
 
-    cost = MonsterCannonSmCost;
+    cost = m::MonsterCannonSmCost;
     sGunshot.setSource(game->r->url_gunshots[2]);
-    sGunshot.setVolume(SoundLevel);
+    sGunshot.setVolume(m::SoundLevel);
 }
 
 CMonsterCannon::~CMonsterCannon(){}
@@ -70,19 +70,19 @@ void CMonsterCannon::upgrade()
 
     rotationSpeed =
             helper::choose(sizeType,
-                            MonsterCannonSmRotation,
-                            MonsterCannonMidRotation,
-                            MonsterCannonBigRotation);
+                            m::MonsterCannonSmRotation,
+                            m::MonsterCannonMidRotation,
+                            m::MonsterCannonBigRotation);
     fireSpeed =
             helper::choose(sizeType,
-                            MonsterCannonSmFireSpeed,
-                            MonsterCannonMidFireSpeed,
-                            MonsterCannonBigFireSpeed);
+                            m::MonsterCannonSmFireSpeed,
+                            m::MonsterCannonMidFireSpeed,
+                            m::MonsterCannonBigFireSpeed);
     fireRadius =
             helper::choose(sizeType,
-                            MonsterCannonSmRadius,
-                            MonsterCannonMidRadius,
-                            MonsterCannonBigRadius);
+                            m::MonsterCannonSmRadius,
+                            m::MonsterCannonMidRadius,
+                            m::MonsterCannonBigRadius);
 
     radiusItem->upgrade(this);
     draw();
@@ -93,26 +93,26 @@ int CMonsterCannon::getUpgradeCost() const
 {
     ESizeType upSizeType = getUpgradeSizeType();
     return helper::choose(upSizeType,
-                          MonsterCannonSmCost,
-                          MonsterCannonMidCost,
-                          MonsterCannonBigCost);
+                          m::MonsterCannonSmCost,
+                          m::MonsterCannonMidCost,
+                          m::MonsterCannonBigCost);
 }
 
 int CMonsterCannon::getCurCost() const
 {
     return helper::choose(sizeType,
-                          MonsterCannonSmCost,
-                          MonsterCannonMidCost,
-                          MonsterCannonBigCost);
+                          m::MonsterCannonSmCost,
+                          m::MonsterCannonMidCost,
+                          m::MonsterCannonBigCost);
 }
 
 qreal CMonsterCannon::getBulletSpeed() const
 {
-    return MonsterBulletStep;
+    return m::MonsterBulletStep;
 }
 
 qreal CMonsterCannon::getBulletRadius() const
 {
-    return std::min(MonsterBulletSizeY / 2, MonsterBulletSizeX / 2);
+    return std::min(m::MonsterBulletSizeY / 2, m::MonsterBulletSizeX / 2);
 }
 

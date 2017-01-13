@@ -1,6 +1,10 @@
 #pragma once
 
 #include <QSize>
+
+namespace m
+{
+
 //Fast enemy
 // in local points
 
@@ -13,3 +17,5 @@ int EnemyHpFactor = 65;
 int EnemyCostFactor = 500;
 
 QSizeF HpSize;
+
+}

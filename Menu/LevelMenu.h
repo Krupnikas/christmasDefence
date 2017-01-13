@@ -33,5 +33,5 @@ private:
     std::shared_ptr<CButton> back;
     std::vector<std::shared_ptr<CButton>> levels;
     
-    const int BackButton = LevelNum;
+    const int BackButton = m::LevelNum;
 };

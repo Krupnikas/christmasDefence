@@ -12,7 +12,7 @@ CBurnBullet::CBurnBullet(CGame *game, QPointF center, double angle, ESizeType ty
     this->game = game;
     this->zOrder = 1;
     
-    this->textureSize = QSize(BurnBulletSizeX, BurnBulletSizeY);
+    this->textureSize = QSize(m::BurnBulletSizeX, m::BurnBulletSizeY);
     this->pixmap = helper::choose(type,
                                   game->r->burn_bullet_1,
                                   game->r->burn_bullet_2,
@@ -24,8 +24,8 @@ CBurnBullet::CBurnBullet(CGame *game, QPointF center, double angle, ESizeType ty
     this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
     
     //IBullet fields
-    this->step = BurnBulletStep;
-    this->hitPower = helper::choose(type, BurnBulletSmHit, BurnBulletMidHit, BurnBulletBigHit);
+    this->step = m::BurnBulletStep;
+    this->hitPower = helper::choose(type, m::BurnBulletSmHit, m::BurnBulletMidHit, m::BurnBulletBigHit);
 }
 
 bool CBurnBullet::move()

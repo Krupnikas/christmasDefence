@@ -1,9 +1,15 @@
 #pragma once
 
-int BackgroundZOrder = 0;
-int EnemyZOrder = 2;
-int UserInfoOnSides = 4;
-int ButtonZOrder = 10;
+namespace m
+{
 
-int GameInfoblockZOrder = 5;
-int GameBackgroundZOrder = 0;
+qreal BackgroundZOrder = 0;
+qreal GameFieldZOrder = 0.1;
+qreal EnemyZOrder = 2;
+qreal UserInfoOnSides = 4;
+qreal ButtonZOrder = 10;
+
+qreal GameInfoblockZOrder = 5;
+qreal GameBackgroundZOrder = 0;
+
+}

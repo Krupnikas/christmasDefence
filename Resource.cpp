@@ -11,16 +11,16 @@ R::R()
     game_menu_background = std::make_shared<QPixmap>(getGm("background"));
     game_menu_caption = std::make_shared<QPixmap>(getGm("caption"));
     
-    gm_buttons.resize(GameMenuButtonNum);
-    for (int i = 0; i < GameMenuButtonNum; ++i)
+    gm_buttons.resize(m::GameMenuButtonNum);
+    for (int i = 0; i < m::GameMenuButtonNum; ++i)
         gm_buttons[i] = std::make_shared<QPixmap>(getGmWithPrefix("button_", i + 1));
     
-    gm_focused_buttons.resize(GameMenuButtonNum);
-    for (int i = 0; i < GameMenuButtonNum; ++i)
+    gm_focused_buttons.resize(m::GameMenuButtonNum);
+    for (int i = 0; i < m::GameMenuButtonNum; ++i)
         gm_focused_buttons[i] = std::make_shared<QPixmap>(getGmWithPrefix("focused_button_", i + 1));
     
-    gm_pressed_buttons.resize(GameMenuButtonNum);    
-    for (int i = 0; i < GameMenuButtonNum; ++i)
+    gm_pressed_buttons.resize(m::GameMenuButtonNum);    
+    for (int i = 0; i < m::GameMenuButtonNum; ++i)
         gm_pressed_buttons[i] = std::make_shared<QPixmap>(getGmWithPrefix("pressed_button_", i + 1));
 
     //LevelMenu resources
@@ -28,16 +28,16 @@ R::R()
     level_menu_caption = std::make_shared<QPixmap>(getLm("caption"));
     level_menu_back = std::make_shared<QPixmap>(getLm("back"));
     
-    lm_levels.resize(LevelNum);
-    for (int i = 0; i < LevelNum; ++i)
+    lm_levels.resize(m::LevelNum);
+    for (int i = 0; i < m::LevelNum; ++i)
         lm_levels[i] = std::make_shared<QPixmap>(getLmWithPrefix("", i + 1));
     
-    lm_focused_levels.resize(LevelNum);
-    for (int i = 0; i < LevelNum; ++i)
+    lm_focused_levels.resize(m::LevelNum);
+    for (int i = 0; i < m::LevelNum; ++i)
         lm_focused_levels[i] = std::make_shared<QPixmap>(getLmWithPrefix("focused_", i + 1));
 
-    lm_pressed_levels.resize(LevelNum);
-    for (int i = 0; i < LevelNum; ++i)
+    lm_pressed_levels.resize(m::LevelNum);
+    for (int i = 0; i < m::LevelNum; ++i)
         lm_pressed_levels[i] = std::make_shared<QPixmap>(getLmWithPrefix("pressed_", i + 1));
     
     
@@ -111,10 +111,10 @@ R::R()
     levels = get("levels/level");
     
     s_button_pressed.setSource(QUrl(getSound("button.wav")));
-    s_button_pressed.setVolume(SoundLevel);
+    s_button_pressed.setVolume(m::SoundLevel);
     
-    url_gunshots.resize(TypesOfCannon);
-    for (int i = 0; i < TypesOfCannon; ++i)
+    url_gunshots.resize(m::TypesOfCannon);
+    for (int i = 0; i < m::TypesOfCannon; ++i)
     {
         QString path = getSound("gunshot") + QString::number(i + 1) + ".wav";
         url_gunshots[i] = QUrl(path);
@@ -122,7 +122,7 @@ R::R()
     
     url_cash = QUrl(getSound("cash.wav"));
     
-    for (int i = 0; i < TypesOfCannon; i++)
+    for (int i = 0; i < m::TypesOfCannon; i++)
     {
         cannonTypePreview[i] = std::make_shared<QPixmap>(get(getNameOfTypePreview(i)));
         cannonUnableTypePreview[i] = std::make_shared<QPixmap>(get(getNameOfUnableTypePreview(i)));

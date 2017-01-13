@@ -7,14 +7,34 @@ namespace mov
 
 Queue::Queue() : frontInd(0), backInd(QueueSize - 1)
 {
-    int defVal = dN;
-    if (!ExitLeft)
-        defVal = dP;
+    int dx = 0;
+    int dy = 0;
+    
+    switch (helper::cellToEdge(m::startCell))
+    {
+    case EEdge::eLeft:
+        dx = dP;
+        break;
+    case EEdge::eTop:
+        dy = dP;
+        break;
+    case EEdge::eRight:
+        dx = dN;
+        break;
+    case EEdge::eBottom:
+        dy = dN;
+        break;
+    case EEdge::eInside:
+        qDebug() << "Queue(): START CELL INSIDE GAME!!!";
+        return;
+        break;
+    }
+    
     curSum = QPoint(0, 0);
     for (int i = 0; i < QueueSize; ++i)
     {
-        dxArr[i] = defVal;
-        dyArr[i] = 0;
+        dxArr[i] = dx;
+        dyArr[i] = dy;
         curSum.setX(curSum.x() + dxArr[i]);
     }
 }
@@ -62,66 +82,88 @@ Cell::Cell(const Cell &cell):
 Movements::Movements(CGame *game):
     game(game)
 {
-    ExitWidth = game->OffsetX * 2;
-    LocalExitSize = LocalSize * ExitWidth / game->CellSize / QueueSize * QueueSize;
+    ExitWidth = m::OffsetX * 2;
+    ExitHeight = m::OffsetY * 2;
+    
+    LocalExitWidth = LocalSize * ExitWidth / m::CellSize / QueueSize * QueueSize;
+    LocalExitHeight = LocalSize * ExitWidth / m::CellSize / QueueSize * QueueSize;
     
     NormalRect = QRect(0, 0, LocalSize, LocalSize);
-    NormalSize = QSize(game->CellSize, game->CellSize);
+    NormalSize = QSize(m::CellSize, m::CellSize);
     
-    EdgeRect = QRect(0, 0, LocalExitSize, LocalSize);
-    EdgeSize = QSize(ExitWidth, game->CellSize);
+    EdgeXRect = QRect(0, 0, LocalExitWidth, LocalSize);
+    EdgeXSize = QSize(ExitWidth, m::CellSize);
+    EdgeYRect = QRect(0, 0, LocalSize, LocalExitHeight);
+    EdgeYSize = QSize(m::CellSize, ExitHeight);
     
     NormalLocalCell = Cell(NormalSize, NormalRect, false);
-    EdgeLocalCell = Cell(EdgeSize, EdgeRect, true);
+    EdgeXLocalCell = Cell(EdgeXSize, EdgeXRect, true);
+    EdgeYLocalCell = Cell(EdgeYSize, EdgeYRect, true);
     
-    
-    curLocalCell = EdgeLocalCell;
-    nextLocalCell = NormalLocalCell;
-    
-    if (ExitLeft)
-    {
-        curGameCell = QPoint(game->startCell.x() + 1, game->startCell.y());
-        nextGameCell = QPoint(game->startCell.x(), game->startCell.y());
-        curPos = QPoint(LocalExitSize - 1, half);
-    }
+    EEdge edge = helper::cellToEdge(m::startCell);
+    if (edge == EEdge::eLeft || edge == EEdge::eRight)
+        curLocalCell = EdgeXLocalCell;
     else
+        curLocalCell = EdgeYLocalCell;
+    
+    curGameCell = m::startCell;
+    nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
+    
+    switch (helper::cellToEdge(m::startCell))
     {
-        curGameCell = QPoint(-1, game->startCell.y());
-        nextGameCell = QPoint(0, game->startCell.y());
+    case EEdge::eLeft:
         curPos = QPoint(-1, half);
+        break;
+    case EEdge::eTop:
+        curPos = QPoint(half, - 1);
+        break;
+    case EEdge::eRight:
+        curPos = QPoint(LocalExitWidth - 1, half);
+        break;
+    case EEdge::eBottom:
+        curPos = QPoint(half, LocalExitHeight - 1);
+        break;
+    case EEdge::eInside:
+        qDebug() << "Movements(): START CELL INSIDE GAME!!!";
+        return;
+        break;
     }
+    
 }
 
 QPointF Movements::move()
 {
     if (beforeTurnArea())
     {
-        if (onTurnArea())
-            updateNext();
-        QPoint toCenter = vectorToCenter();
+        if (on_turn_area_())
+            update_next_();
+        QPoint toCenter = vector_to_center_();
         queue.push(toCenter);
     }
     else
     {
-        QPoint toNext = vectorToNext();
+        QPoint toNext = vector_to_next_();
         queue.push(toNext);
     }
 
     curPos += queue.curSum;
-    updateCur();
+    update_cur_();
     return curCenter();
 }
 
 QPointF Movements::curCenter() const
 {
-    QPointF curPoint;
-    if (curGameCell.x() < 0)
-        curPoint.setX((curGameCell.x() + 0.5) * ExitWidth + static_cast<qreal>(curPos.x()) * ExitWidth / LocalExitSize);
+    QPointF curPoint(0, 0);
+    if (curGameCell.x() == 0)
+        curPoint.setX(static_cast<qreal>(curPos.x()) * ExitWidth / LocalExitWidth);
     else
-        curPoint.setX(game->OffsetX + curGameCell.x() * game->CellSize + static_cast<qreal>(curPos.x()) * 
+        curPoint.setX(m::OffsetX + (curGameCell.x() - 1) * m::CellSize + static_cast<qreal>(curPos.x()) * 
                   curLocalCell.cellGameSize.width() / curLocalCell.localRect.width());
     
-    curPoint.setY(game->OffsetY + curGameCell.y() * game->CellSize + static_cast<qreal>(curPos.y()) * 
+    if (curGameCell.y() == 0)
+        curPoint.setY(static_cast<qreal>(curPos.y()) * ExitHeight / LocalExitHeight);
+    else
+        curPoint.setY(m::OffsetY + (curGameCell.y() - 1) * m::CellSize + static_cast<qreal>(curPos.y()) * 
                   curLocalCell.cellGameSize.height() / curLocalCell.localRect.height());
     return curPoint;
 }
@@ -133,7 +175,7 @@ qreal Movements::curAngle() const
 
 int Movements::iterNum(qreal step) const
 {
-    qreal pointsOnMove = static_cast<qreal>(QueueSize) * game->CellSize / LocalSize;
+    qreal pointsOnMove = static_cast<qreal>(QueueSize) * m::CellSize / LocalSize;
     if (step < pointsOnMove)
     {
         //qDebug() << "Movements: too small step:(";
@@ -145,28 +187,42 @@ int Movements::iterNum(qreal step) const
 
 qreal Movements::getDistanceToFinish() const
 {
-    if (curGameCell.x() < 0)
-    {
-        qreal dist = game->distances[0][game->CellNumY / 2];
-        qreal localDist = (curLocalCell.localRect.width() - curPos.x()) / curLocalCell.localRect.width();
-        if (ExitLeft)
-            localDist *= -1;
-        
-        return dist + localDist;
-    }
-    
-    if (curGameCell.x() >= game->CellNumX)
-    {
-        qreal dist = game->distances[game->CellNumX - 1][game->CellNumY / 2];
-        qreal localDist = curPos.x() / curLocalCell.localRect.width();
-        if (!ExitLeft)
-            localDist *= -1;
-        
-        return dist + localDist;
-    }
+    EEdge startEdge = helper::cellToEdge(m::startCell);
+    EEdge curEdge = helper::cellToEdge(curGameCell);
     
     qreal dist = game->distances[curGameCell.x()][curGameCell.y()];
-    if (isCenterDirected())
+    qreal addDist = 0;
+    
+    qreal pWidth = curPos.x() / curLocalCell.localRect.width();
+    qreal nWidth = (curLocalCell.localRect.width() - curPos.x()) / curLocalCell.localRect.width();
+    qreal pHeight = curPos.y() / curLocalCell.localRect.height();
+    qreal nHeight = (curLocalCell.localRect.height() - curPos.y()) / curLocalCell.localRect.height();
+    
+    if (curEdge != EEdge::eInside)
+    {
+        switch (curEdge)
+        {
+        case EEdge::eLeft:
+            addDist += (startEdge == curEdge) ? pWidth : nWidth;
+            break;
+        case EEdge::eTop:
+            addDist += (startEdge == curEdge) ? pHeight : nHeight;
+            break;
+        case EEdge::eRight:
+            addDist += (startEdge == curEdge) ? nWidth : pWidth;
+            break;
+        case EEdge::eBottom:
+            addDist += (startEdge == curEdge) ? nHeight : pHeight;
+        case EEdge::eInside:
+            qDebug() << "Movements: getDistanceToFinish: WTH???!!!";
+            break;
+        }
+        
+        return dist + addDist;
+    }
+    
+    
+    if (is_center_directed_())
     {
         dist += half / curLocalCell.localRect.width();
         dist += (std::abs(CellCenter.x() - curPos.x()) +
@@ -192,20 +248,22 @@ QPoint Movements::getNextGameCell() const
 
 QPointF Movements::getSpeed() const
 {
-    return QPointF(static_cast<qreal>(queue.curSum.x()) / curLocalCell.localRect.width() * curLocalCell.cellGameSize.width(),
-                   static_cast<qreal>(queue.curSum.y()) / curLocalCell.localRect.height() * curLocalCell.cellGameSize.height());
+    return QPointF(static_cast<qreal>(queue.curSum.x()) / curLocalCell.localRect.width() *
+                   curLocalCell.cellGameSize.width(),
+                   static_cast<qreal>(queue.curSum.y()) / curLocalCell.localRect.height() *
+                   curLocalCell.cellGameSize.height());
 }
 
 bool Movements::beforeTurnArea() const
 {
-    bool centerDirected = isCenterDirected();
+    bool centerDirected = is_center_directed_();
     bool insideTurnArea = turnArea.contains(curPos, true);
     return !insideTurnArea && centerDirected;
 }
 
 
 //private methods:
-bool Movements::isCenterDirected() const
+bool Movements::is_center_directed_() const
 {
     bool insideTurnArea = turnArea.contains(curPos, true);
     if (!insideTurnArea && curPos.x() != half && curPos.y() != half)
@@ -220,13 +278,13 @@ bool Movements::isCenterDirected() const
             (curPos.x() >= half && dx <= 0);
 }
 
-bool Movements::onTurnArea() const
+bool Movements::on_turn_area_() const
 {
-    bool centerDirected = isCenterDirected();
+    bool centerDirected = is_center_directed_();
     return centerDirected && !turnArea.contains(curPos, true) && turnArea.contains(curPos, false);
 }
 
-QPoint Movements::vectorToCenter()
+QPoint Movements::vector_to_center_()
 {
     qreal dx = dZ;
     qreal dy = dZ;
@@ -243,19 +301,19 @@ QPoint Movements::vectorToCenter()
     return QPoint(dx, dy);
 }
 
-QPoint Movements::vectorToNext()
+QPoint Movements::vector_to_next_()
 {
     if (std::abs(curGameCell.x() - nextGameCell.x()) + std::abs(curGameCell.y() - nextGameCell.y()) > 1)
     {
         qDebug() << "Movements: wrong next cell";
-        updateNext();
+        update_next_();
     }
     if (std::abs(curGameCell.x() - nextGameCell.x()) + std::abs(curGameCell.y() - nextGameCell.y()) > 1)
         qDebug() << "Movements: still wrong next cell(((((";
     return QPoint(nextGameCell.x() - curGameCell.x(), nextGameCell.y() - curGameCell.y());
 }
 
-void Movements::updateCur()
+void Movements::update_cur_()
 {
     bool update = false;
     if (curPos.x() < 0)
@@ -286,23 +344,25 @@ void Movements::updateCur()
     
     if (update)
     {
-        if (curGameCell.x() < 0 || curGameCell.x() >= game->CellNumX)
-            curLocalCell = EdgeLocalCell;
-        else
-            curLocalCell = NormalLocalCell;
-
-        updateNext();
+        curLocalCell = get_movements_cell_(curGameCell);
+        update_next_();
     }
 }
 
-void Movements::updateNext()
+void Movements::update_next_()
 {
-    nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell, game);
+    nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
+    nextLocalCell = get_movements_cell_(nextGameCell);
+}
 
-    if (nextGameCell.x() < 0 || nextGameCell.x() >= game->CellNumX)
-        nextLocalCell = EdgeLocalCell;
+Cell Movements::get_movements_cell_(QPoint gameCell)
+{
+    if (gameCell.x() <= 0 || gameCell.x() >= m::CellNumX - 1)
+        return EdgeXLocalCell;
+    else if (gameCell.y() <= 0 || gameCell.y() >= m::CellNumY - 1)
+        return EdgeYLocalCell;
     else
-        nextLocalCell = NormalLocalCell;
+        return NormalLocalCell;
 }
 
 } // namespace mov

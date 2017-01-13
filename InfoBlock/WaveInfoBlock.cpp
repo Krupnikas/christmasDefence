@@ -7,14 +7,14 @@ CWaveInfoBlock::CWaveInfoBlock(CGame *game):
     this->label = "Wave Information Block";
     this->angle = 0;
     this->game = game;
-    this->zOrder = UserInfoOnSides;
+    this->zOrder = m::UserInfoOnSides;
 
-    this->textureSize = QSize(game->OffsetX,
-                              game->OffsetY + game->CellSize * (game->CellNumY / 2));
+    this->textureSize = QSize(m::OffsetX,
+                              m::OffsetY + m::CellSize * (m::CellNumY / 2));
     this->pixmap = game->r->userInfoBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
 
-    this->leftTop = QPoint(game->OffsetX + game->CellSize * game->CellNumX, 0);
+    this->leftTop = QPoint(m::OffsetX + m::CellSize * m::CellNumX, 0);
 
     waveCounter = std::make_shared<CImageAndNumber>(game,
                                            game->r->wave_counter_icon,

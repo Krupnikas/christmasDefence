@@ -1,9 +1,15 @@
 #pragma once
 
-extern int BackgroundZOrder;
-extern int EnemyZOrder;
-extern int UserInfoOnSides;
-extern int ButtonZOrder;
+namespace m
+{
 
-extern int GameInfoblockZOrder;
-extern int GameBackgroundZOrder;
+extern qreal BackgroundZOrder;
+extern qreal GameFieldZOrder;
+extern qreal EnemyZOrder;
+extern qreal UserInfoOnSides;
+extern qreal ButtonZOrder;
+
+extern qreal GameInfoblockZOrder;
+extern qreal GameBackgroundZOrder;
+
+}

@@ -130,8 +130,8 @@ void CScene::updateGameRect(QRect newWindowRect)
     gameRect = windowRect = newWindowRect;
     
     
-    QPoint enclosingTopLeft(gameRect.topLeft() - QPoint(LocalWidth / 20, LocalHeight / 20));
-    QPoint enclosingBottomRight(gameRect.bottomRight() + QPoint(LocalWidth / 20, LocalHeight / 20));
+    QPoint enclosingTopLeft(gameRect.topLeft() - QPoint(m::LocalWidth / 20, m::LocalHeight / 20));
+    QPoint enclosingBottomRight(gameRect.bottomRight() + QPoint(m::LocalWidth / 20, m::LocalHeight / 20));
     enclosingRect = QRect(enclosingTopLeft, enclosingBottomRight);
     
     QPoint center = newWindowRect.center();
@@ -261,23 +261,23 @@ void CScene::updateItems()
 qreal CScene::toGlobalX(qreal xLocal)
 {
     return gameRect.left()
-            + 1.0 * gameRect.width() * xLocal / LocalWidth;
+            + 1.0 * gameRect.width() * xLocal / m::LocalWidth;
 }
 
 qreal CScene::toGlobalY(qreal yLocal)
 {
     return gameRect.top()
-            + 1.0 * gameRect.height() * yLocal / LocalHeight;
+            + 1.0 * gameRect.height() * yLocal / m::LocalHeight;
 }
 
 qreal CScene::toGlobalCX(qreal cxLocal)
 {
-    return 1.0 * gameRect.width() * cxLocal / LocalWidth;
+    return 1.0 * gameRect.width() * cxLocal / m::LocalWidth;
 }
 
 qreal CScene::toGlobalCY(qreal cyLocal)
 {
-    return 1.0 * gameRect.height() * cyLocal / LocalHeight;
+    return 1.0 * gameRect.height() * cyLocal / m::LocalHeight;
 }
 
 qreal CScene::toGlobalDist(qreal distLocal, qreal angle)
@@ -310,22 +310,22 @@ QSizeF CScene::toGlobalSize(QSizeF localSize)
 
 qreal CScene::toLocalX(qreal xGlobal)
 {
-    return (xGlobal - gameRect.left()) * LocalWidth / gameRect.width();
+    return (xGlobal - gameRect.left()) * m::LocalWidth / gameRect.width();
 }
 
 qreal CScene::toLocalY(qreal yGlobal)
 {
-    return (yGlobal - gameRect.top()) * LocalHeight/ gameRect.height();
+    return (yGlobal - gameRect.top()) * m::LocalHeight/ gameRect.height();
 }
 
 qreal CScene::toLocalCX(qreal cxGlobal)
 {
-    return cxGlobal * LocalWidth / gameRect.width();
+    return cxGlobal * m::LocalWidth / gameRect.width();
 }
 
 qreal CScene::toLocalCY(qreal cyGlobal)
 {
-    return cyGlobal * LocalHeight / gameRect.height();
+    return cyGlobal * m::LocalHeight / gameRect.height();
 }
 
 QPointF CScene::toLocalPoint(QPointF globalPoint)

@@ -1,5 +1,8 @@
 #pragma once
 
+namespace m
+{
+
 //Burn cannon
 // rotation speed, in angles
 qreal BurnCannonSmRotation = 2.3;
@@ -83,3 +86,5 @@ qreal SlowCannonBigRadius;
 int SlowCannonSmCost = 11;
 int SlowCannonMidCost = 17;
 int SlowCannonBigCost = 23;
+
+}

@@ -1,5 +1,8 @@
 #pragma once
 
+namespace m
+{
+
 //Burn bullet
 int BurnBulletSizeX;
 int BurnBulletSizeY;
@@ -42,3 +45,4 @@ int SlowBulletSmHit = 21;
 int SlowBulletMidHit = 31;
 int SlowBulletBigHit = 40;
 
+}

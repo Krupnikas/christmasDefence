@@ -8,8 +8,8 @@ CFastEnemy::CFastEnemy(CGame *game, int enemyTexture, int enemyPower)
 {
     //IEnemy fields
     movements = std::shared_ptr<mov::Movements>(new mov::Movements(game));
-    moveIter = movements->iterNum(FastEnemyStep);
-    hpCur = hpMax = enemyPower * EnemyHpFactor;
+    moveIter = movements->iterNum(m::FastEnemyStep);
+    hpCur = hpMax = enemyPower * m::EnemyHpFactor;
     
     //IGameObject fields
     label = "Fast Enemy";
@@ -19,10 +19,10 @@ CFastEnemy::CFastEnemy(CGame *game, int enemyTexture, int enemyPower)
     leftTop.setY(center.y() - textureSize.height() / 2);
     
     this->game = game;
-    zOrder = EnemyZOrder;
+    zOrder = m::EnemyZOrder;
     
-    textureSize = FastEnemyTextureSize;
-    size = FastEnemySize;
+    textureSize = m::FastEnemyTextureSize;
+    size = m::FastEnemySize;
     pixmap = getTexture(enemyTexture);
     position = game->scene->addPixmap(textureSize, pixmap);
     

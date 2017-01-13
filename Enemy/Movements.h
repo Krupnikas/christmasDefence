@@ -63,13 +63,15 @@ public:
     bool beforeTurnArea() const;
     
 private:
-    bool isCenterDirected() const;
-    bool onTurnArea() const;
-    QPoint vectorToCenter();
-    QPoint vectorToNext();
+    bool is_center_directed_() const;
+    bool on_turn_area_() const;
+    QPoint vector_to_center_();
+    QPoint vector_to_next_();
     
-    void updateCur();
-    void updateNext();
+    void update_cur_();
+    void update_next_();
+    
+    Cell get_movements_cell_(QPoint gameCell);
     
 private:
     CGame *game;
@@ -84,16 +86,22 @@ private:
     Queue queue;
     
     int ExitWidth;
-    int LocalExitSize;
+    int ExitHeight;
+    int LocalExitWidth;
+    int LocalExitHeight;
     
     QRect NormalRect;
     QSize NormalSize;
     
-    QRect EdgeRect;
-    QSize EdgeSize;
+    QRect EdgeXRect;
+    QSize EdgeXSize;
+    
+    QRect EdgeYRect;
+    QSize EdgeYSize;
     
     Cell NormalLocalCell;
-    Cell EdgeLocalCell;
+    Cell EdgeXLocalCell;
+    Cell EdgeYLocalCell;
     
 };
 

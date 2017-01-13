@@ -9,13 +9,13 @@ CHpBackground::CHpBackground(IEnemy *enemy)
     
     angle = 0;
     center = enemy->getCenter();
-    leftTop.setX(center.x() - HpSize.width() / 2);
-    leftTop.setY(enemy->getLeftTop().y() + game->CellSize - HpSize.height());
+    leftTop.setX(center.x() - m::HpSize.width() / 2);
+    leftTop.setY(enemy->getLeftTop().y() + m::CellSize - m::HpSize.height());
     
     zOrder = enemy->getZOrder() + 0.1;
     
-    textureSize = HpSize;
-    size = HpSize;
+    textureSize = m::HpSize;
+    size = m::HpSize;
     pixmap = std::shared_ptr<QPixmap>(game->r->hp_background);
     position = game->scene->addPixmap(textureSize, pixmap);
 }

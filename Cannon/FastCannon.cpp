@@ -13,7 +13,7 @@ CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
     this->game = game;
     zOrder = 2;
     
-    textureSize = QSize(game->CellSize, game->CellSize);
+    textureSize = QSize(m::CellSize, m::CellSize);
     pixmap = game->r->fast_cannon_1;
     position = game->scene->addPixmap(textureSize, pixmap);
     
@@ -23,15 +23,15 @@ CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
     //ICannon fields
     sizeType = ESizeType::eSmall;
     gameCell = cell;
-    rotationSpeed = FastCannonSmRotation;
-    fireSpeed = FastCannonSmFireSpeed;
-    fireRadius = FastCannonSmRadius;
+    rotationSpeed = m::FastCannonSmRotation;
+    fireSpeed = m::FastCannonSmFireSpeed;
+    fireRadius = m::FastCannonSmRadius;
     radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
     
-    cost = FastCannonSmCost;
+    cost = m::FastCannonSmCost;
     
     sGunshot.setSource(game->r->url_gunshots[1]);
-    sGunshot.setVolume(SoundLevel);
+    sGunshot.setVolume(m::SoundLevel);
 }
 
 CFastCannon::~CFastCannon(){}
@@ -73,19 +73,19 @@ void CFastCannon::upgrade()
     
     rotationSpeed = 
             helper::choose(sizeType, 
-                            FastCannonSmRotation,
-                            FastCannonMidRotation,
-                            FastCannonBigRotation);
+                            m::FastCannonSmRotation,
+                            m::FastCannonMidRotation,
+                            m::FastCannonBigRotation);
     fireSpeed = 
             helper::choose(sizeType,
-                            FastCannonSmFireSpeed,
-                            FastCannonMidFireSpeed,
-                            FastCannonBigFireSpeed);
+                            m::FastCannonSmFireSpeed,
+                            m::FastCannonMidFireSpeed,
+                            m::FastCannonBigFireSpeed);
     fireRadius = 
             helper::choose(sizeType,
-                            FastCannonSmRadius,
-                            FastCannonMidRadius,
-                            FastCannonBigRadius);
+                            m::FastCannonSmRadius,
+                            m::FastCannonMidRadius,
+                            m::FastCannonBigRadius);
     
     radiusItem->upgrade(this);
     draw();
@@ -96,26 +96,26 @@ int CFastCannon::getUpgradeCost() const
 {
     ESizeType upSizeType = getUpgradeSizeType();
     return helper::choose(upSizeType,
-                          FastCannonSmCost,
-                          FastCannonMidCost,
-                          FastCannonBigCost);
+                          m::FastCannonSmCost,
+                          m::FastCannonMidCost,
+                          m::FastCannonBigCost);
 }
 
 int CFastCannon::getCurCost() const
 {
     return helper::choose(sizeType,
-                          FastCannonSmCost,
-                          FastCannonMidCost,
-                          FastCannonBigCost);
+                          m::FastCannonSmCost,
+                          m::FastCannonMidCost,
+                          m::FastCannonBigCost);
 }
 
 qreal CFastCannon::getBulletSpeed() const
 {
-    return FastBulletStep;
+    return m::FastBulletStep;
 }
 
 qreal CFastCannon::getBulletRadius() const
 {
-    return std::min(FastBulletSizeY / 2, FastBulletSizeX / 2);
+    return std::min(m::FastBulletSizeY / 2, m::FastBulletSizeX / 2);
 }
 

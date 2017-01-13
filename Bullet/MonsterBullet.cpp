@@ -12,7 +12,7 @@ CMonsterBullet::CMonsterBullet(CGame *game, QPointF center, double angle, ESizeT
     this->game = game;
     this->zOrder = 1;
     
-    this->textureSize = QSize(MonsterBulletSizeX, MonsterBulletSizeY);
+    this->textureSize = QSize(m::MonsterBulletSizeX, m::MonsterBulletSizeY);
     this->pixmap = helper::choose(type,
                                   game->r->monster_bullet_1,
                                   game->r->monster_bullet_2,
@@ -24,8 +24,8 @@ CMonsterBullet::CMonsterBullet(CGame *game, QPointF center, double angle, ESizeT
     this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
     
     //IBullet fields
-    this->step = MonsterBulletStep;
-    this->hitPower = helper::choose(type, MonsterBulletSmHit, MonsterBulletMidHit, MonsterBulletBigHit);
+    this->step = m::MonsterBulletStep;
+    this->hitPower = helper::choose(type, m::MonsterBulletSmHit, m::MonsterBulletMidHit, m::MonsterBulletBigHit);
 }
 
 bool CMonsterBullet::move()

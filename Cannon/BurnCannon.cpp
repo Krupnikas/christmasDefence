@@ -13,7 +13,7 @@ CBurnCannon::CBurnCannon(CGame *game, QPoint cell, double angle)
     this->game = game;
     zOrder = 2;
 
-    textureSize = QSize(game->CellSize, game->CellSize);
+    textureSize = QSize(m::CellSize, m::CellSize);
     pixmap = game->r->burn_cannon_1;
     position = game->scene->addPixmap(textureSize, pixmap);
 
@@ -23,14 +23,14 @@ CBurnCannon::CBurnCannon(CGame *game, QPoint cell, double angle)
     //ICannon fields
     sizeType = ESizeType::eSmall;
     gameCell = cell;
-    rotationSpeed = BurnCannonSmRotation;
-    fireSpeed = BurnCannonSmFireSpeed;
-    fireRadius = BurnCannonSmRadius;
+    rotationSpeed = m::BurnCannonSmRotation;
+    fireSpeed = m::BurnCannonSmFireSpeed;
+    fireRadius = m::BurnCannonSmRadius;
     radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
 
-    cost = BurnCannonSmCost;
+    cost = m::BurnCannonSmCost;
     sGunshot.setSource(game->r->url_gunshots[0]);
-    sGunshot.setVolume(SoundLevel);
+    sGunshot.setVolume(m::SoundLevel);
 }
 
 CBurnCannon::~CBurnCannon(){}
@@ -70,19 +70,19 @@ void CBurnCannon::upgrade()
 
     rotationSpeed =
             helper::choose(sizeType,
-                            BurnCannonSmRotation,
-                            BurnCannonMidRotation,
-                            BurnCannonBigRotation);
+                            m::BurnCannonSmRotation,
+                            m::BurnCannonMidRotation,
+                            m::BurnCannonBigRotation);
     fireSpeed =
             helper::choose(sizeType,
-                            BurnCannonSmFireSpeed,
-                            BurnCannonMidFireSpeed,
-                            BurnCannonBigFireSpeed);
+                            m::BurnCannonSmFireSpeed,
+                            m::BurnCannonMidFireSpeed,
+                            m::BurnCannonBigFireSpeed);
     fireRadius =
             helper::choose(sizeType,
-                            BurnCannonSmRadius,
-                            BurnCannonMidRadius,
-                            BurnCannonBigRadius);
+                            m::BurnCannonSmRadius,
+                            m::BurnCannonMidRadius,
+                            m::BurnCannonBigRadius);
 
     radiusItem->upgrade(this);
     draw();
@@ -93,26 +93,26 @@ int CBurnCannon::getUpgradeCost() const
 {
     ESizeType upSizeType = getUpgradeSizeType();
     return helper::choose(upSizeType,
-                          BurnCannonSmCost,
-                          BurnCannonMidCost,
-                          BurnCannonBigCost);
+                          m::BurnCannonSmCost,
+                          m::BurnCannonMidCost,
+                          m::BurnCannonBigCost);
 }
 
 int CBurnCannon::getCurCost() const
 {
     return helper::choose(sizeType,
-                          BurnCannonSmCost,
-                          BurnCannonMidCost,
-                          BurnCannonBigCost);
+                          m::BurnCannonSmCost,
+                          m::BurnCannonMidCost,
+                          m::BurnCannonBigCost);
 }
 
 qreal CBurnCannon::getBulletSpeed() const
 {
-    return BurnBulletStep;
+    return m::BurnBulletStep;
 }
 
 qreal CBurnCannon::getBulletRadius() const
 {
-    return std::min(BurnBulletSizeY / 2, BurnBulletSizeX / 2);
+    return std::min(m::BurnBulletSizeY / 2, m::BurnBulletSizeX / 2);
 }
 

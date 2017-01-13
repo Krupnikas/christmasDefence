@@ -1,5 +1,8 @@
 #pragma once
 
+namespace m
+{
+
 const int TypesOfCannon = 4;
 
 
@@ -86,3 +89,5 @@ extern qreal SlowCannonBigRadius;
 extern int SlowCannonSmCost;
 extern int SlowCannonMidCost;
 extern int SlowCannonBigCost;
+
+}

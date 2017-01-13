@@ -11,29 +11,29 @@ void CGameMenu::create()
 {
     background = std::make_shared<CSceneBackground>(game, game->r->game_menu_background);
     
-    qreal itemZOrder = BackgroundZOrder + 0.1;
+    qreal itemZOrder = m::BackgroundZOrder + 0.1;
     
     caption = std::make_shared<CSceneObject>(
                 0, itemZOrder,
-                QPointF(LocalWidth / 5.0, 0),
-                QSizeF(LocalWidth / 5.0 * 3, LocalHeight / 3.0),
+                QPointF(m::LocalWidth / 5.0, 0),
+                QSizeF(m::LocalWidth / 5.0 * 3, m::LocalHeight / 3.0),
                 game->r->game_menu_caption, game);
     
     
     
-    qreal buttonWidth = LocalWidth / 5.0 * 3;
-    qreal buttonTop = LocalHeight / 3.0;
+    qreal buttonWidth = m::LocalWidth / 5.0 * 3;
+    qreal buttonTop = m::LocalHeight / 3.0;
     
-    qreal buttonDist = LocalHeight * 2.0 / 3 / GameMenuButtonNum / 5;
-    qreal buttonHeight = (LocalHeight / 3.0 * 2 - buttonDist * (GameMenuButtonNum + 1)) / GameMenuButtonNum;
+    qreal buttonDist = m::LocalHeight * 2.0 / 3 / m::GameMenuButtonNum / 5;
+    qreal buttonHeight = (m::LocalHeight / 3.0 * 2 - buttonDist * (m::GameMenuButtonNum + 1)) / m::GameMenuButtonNum;
     
-    buttons.resize(GameMenuButtonNum);
+    buttons.resize(m::GameMenuButtonNum);
     
-    for (int i = 0; i < GameMenuButtonNum; ++i)
+    for (int i = 0; i < m::GameMenuButtonNum; ++i)
     {
         buttons[i] = std::make_shared<CButton>(
                     itemZOrder,
-                    QPointF(LocalWidth / 2, buttonTop + buttonDist * (i + 1) + buttonHeight * (i + 0.5)),
+                    QPointF(m::LocalWidth / 2, buttonTop + buttonDist * (i + 1) + buttonHeight * (i + 0.5)),
                     QSizeF(buttonWidth, buttonHeight),
                     game, static_cast<int>(EButtonType::eBTgmCampaign) + i,
                     game->r->gm_buttons[i], game->r->gm_focused_buttons[i],

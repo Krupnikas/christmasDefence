@@ -8,7 +8,7 @@ CCannonUpgrade::CCannonUpgrade(CGame *game, QPoint SelectedCell)
     this->game = game;
     this->zOrder = 5;
 
-    backgroundImageSize = game->CannonUpgradeRadius * 8.0 / 3;
+    backgroundImageSize = m::CannonUpgradeRadius * 8.0 / 3;
 
     this->textureSize = QSize(backgroundImageSize,
                               backgroundImageSize);
@@ -35,14 +35,14 @@ void CCannonUpgrade::updatePosition(QPoint SelectedCell)
 
 void CCannonUpgrade::initButtons()
 {
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
     {
-        QRectF rect(center.x() - game->CannonUpgradeButtonSize/2,
-                    center.y() + game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2,
-                    game->CannonUpgradeButtonSize,
-                    game->CannonUpgradeButtonSize);
+        QRectF rect(center.x() - m::CannonUpgradeButtonSize/2,
+                    center.y() + m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2,
+                    m::CannonUpgradeButtonSize,
+                    m::CannonUpgradeButtonSize);
         closeButton = std::make_shared<CButton>(
-                    ButtonZOrder, rect.center(),
+                    m::ButtonZOrder, rect.center(),
                     rect.size(),
                     game, static_cast<int>(EButtonType::eBTCloseButton),
                     game->r->buttonClose
@@ -52,11 +52,11 @@ void CCannonUpgrade::initButtons()
                 this, SLOT(onButtonPressed(int)));
     }
 
-    QRectF rect(center.x() - cos(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2,
-                center.y() - sin(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2,
-                game->CannonUpgradeButtonSize,
-                game->CannonUpgradeButtonSize);
-    upgradeButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
+    QRectF rect(center.x() - cos(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2,
+                center.y() - sin(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2,
+                m::CannonUpgradeButtonSize,
+                m::CannonUpgradeButtonSize);
+    upgradeButton = std::make_shared<CButton>(m::ButtonZOrder, rect.center(),
                   rect.size(),
                   game, static_cast<int>(EButtonType::eBTcannonUpgrade),
                   game->r->buttonUpgrade);
@@ -64,13 +64,13 @@ void CCannonUpgrade::initButtons()
             this, SLOT(onButtonPressed(int)));
     
     
-    rect = QRectF(center.x() + cos(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2,
-                  center.y() - sin(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2,
-                  game->CannonUpgradeButtonSize,
-                  game->CannonUpgradeButtonSize);
+    rect = QRectF(center.x() + cos(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2,
+                  center.y() - sin(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2,
+                  m::CannonUpgradeButtonSize,
+                  m::CannonUpgradeButtonSize);
 
 
-    sellButton = std::make_shared<CButton>(ButtonZOrder, rect.center(),
+    sellButton = std::make_shared<CButton>(m::ButtonZOrder, rect.center(),
                     rect.size(),
                     game, static_cast<int>(EButtonType::eBTcannonSell),
                     game->r->buttonSell
@@ -82,25 +82,25 @@ void CCannonUpgrade::initButtons()
 
 void CCannonUpgrade::updateButtonsPositions()
 {
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
     {
-        closeButton->setLeftTop(QPointF(center.x() - game->CannonUpgradeButtonSize/2,
-                                      center.y() + game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2));
+        closeButton->setLeftTop(QPointF(center.x() - m::CannonUpgradeButtonSize/2,
+                                      center.y() + m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2));
         closeButton->draw();
     }
 
     if (selectedCell.y() == 0) {
-        upgradeButton->setLeftTop(QPointF(center.x() - cos(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2,
-                                         center.y() + sin(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2));
+        upgradeButton->setLeftTop(QPointF(center.x() - cos(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2,
+                                         center.y() + sin(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2));
 
-        sellButton->setLeftTop(QPointF(center.x() + cos(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2,
-                                      center.y() + sin(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2));
+        sellButton->setLeftTop(QPointF(center.x() + cos(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2,
+                                      center.y() + sin(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2));
     } else {
-    upgradeButton->setLeftTop(QPointF(center.x() - cos(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2,
-                                     center.y() - sin(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2));
+    upgradeButton->setLeftTop(QPointF(center.x() - cos(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2,
+                                     center.y() - sin(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2));
 
-    sellButton->setLeftTop(QPointF(center.x() + cos(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2,
-                                  center.y() - sin(1) * game->CannonUpgradeRadius - game->CannonUpgradeButtonSize/2));
+    sellButton->setLeftTop(QPointF(center.x() + cos(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2,
+                                  center.y() - sin(1) * m::CannonUpgradeRadius - m::CannonUpgradeButtonSize/2));
     }
 
     upgradeButton->draw();
@@ -111,7 +111,7 @@ void CCannonUpgrade::scale()
 {
     CSceneObject::scale();
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->scale();
 
     upgradeButton->scale();
@@ -122,7 +122,7 @@ void CCannonUpgrade::scaleWithLoss(QSizeF newSize)
 {
     CSceneObject::scaleWithLoss(newSize);
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->scaleWithLoss(newSize);
 
     upgradeButton->scaleWithLoss(newSize);
@@ -133,7 +133,7 @@ void CCannonUpgrade::remove()
 {
     CSceneObject::remove();
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->remove();
 
     upgradeButton->remove();
@@ -144,7 +144,7 @@ void CCannonUpgrade::draw()
 {
     CSceneObject::draw();
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->draw();
 
     upgradeButton->draw();
@@ -162,7 +162,7 @@ void CCannonUpgrade::hide()
     else
         game->cannons[posX][posY]->hideRadius();
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->hide();
 
     upgradeButton->hide();
@@ -182,7 +182,7 @@ void CCannonUpgrade::show()
     else
         game->cannons[posX][posY]->showRadius();
     
-    if (CloseButtonInInfoBlocksEnabled)
+    if (m::CloseButtonInInfoBlocksEnabled)
         closeButton->show();
 
     upgradeButton->show();

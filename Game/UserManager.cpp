@@ -8,7 +8,7 @@ CUserManager::CUserManager(CGame *game):
     hp(UserHp)
 {
     cashSound.setSource(game->r->url_cash);
-    cashSound.setVolume(SoundLevel);
+    cashSound.setVolume(m::SoundLevel);
 }
 
 int CUserManager::getCash() const

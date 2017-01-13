@@ -11,25 +11,25 @@ void CLevelMenu::create()
 {
     background = std::make_shared<CSceneBackground>(game, game->r->level_menu_background);
     
-    qreal itemZOrder = BackgroundZOrder + 0.1;
+    qreal itemZOrder = m::BackgroundZOrder + 0.1;
     
     caption = std::make_shared<CSceneObject>(
                 0, itemZOrder,
-                QPointF(LocalWidth / 5.0, 0),
-                QSizeF(LocalWidth / 5.0 * 3, LocalHeight / 4.0),
+                QPointF(m::LocalWidth / 5.0, 0),
+                QSizeF(m::LocalWidth / 5.0 * 3, m::LocalHeight / 4.0),
                 game->r->level_menu_caption, game);
     
-    levels.resize(LevelNum);
+    levels.resize(m::LevelNum);
     int width = 5;
-    int height = LevelNum / width;
+    int height = m::LevelNum / width;
     
-    qreal buttonTopOffset = LocalHeight / 4.0;
-    qreal buttonDistTop = LocalHeight * 3.0 / 4 / height / 5;
-    qreal buttonHeight = (LocalHeight / 3.0 * 2 - buttonDistTop * (height + 1)) / height;
+    qreal buttonTopOffset = m::LocalHeight / 4.0;
+    qreal buttonDistTop = m::LocalHeight * 3.0 / 4 / height / 5;
+    qreal buttonHeight = (m::LocalHeight / 3.0 * 2 - buttonDistTop * (height + 1)) / height;
     
     qreal buttonWidth = buttonHeight;
-    qreal buttonDistLeft = LocalWidth / width / 10.0 * 7;
-    qreal buttonLeftOffset = (LocalWidth - (buttonWidth * width + buttonDistLeft * (width - 1))) / 2;
+    qreal buttonDistLeft = m::LocalWidth / width / 10.0 * 7;
+    qreal buttonLeftOffset = (m::LocalWidth - (buttonWidth * width + buttonDistLeft * (width - 1))) / 2;
     
     for (int i = 0; i < height; ++i)
         for (int j = 0; j < width; ++j)
@@ -52,9 +52,9 @@ void CLevelMenu::create()
         
     back = std::make_shared<CButton>(
                 itemZOrder,
-                QPointF(buttonWidth / 2, LocalHeight - buttonHeight / 2),
+                QPointF(buttonWidth / 2, m::LocalHeight - buttonHeight / 2),
                 QSizeF(buttonWidth, buttonHeight),
-                game, LevelNum,
+                game, m::LevelNum,
                 game->r->level_menu_back
                 );
     connect(back.get(), SIGNAL(pressed(int)), this, SLOT(onButtonPressed(int)));
@@ -111,7 +111,7 @@ void CLevelMenu::close()
 
 void CLevelMenu::onButtonPressed(int level)
 {
-    if (level < 0 || level > LevelNum)
+    if (level < 0 || level > m::LevelNum)
     {
         qDebug() << "CLevelMenu: onButtonPressed: invalid level";
         return;

@@ -28,22 +28,6 @@ class CGame : public IWindow
 public:
     const QPoint UnselCell = QPoint(0, 0);
     
-    //game metrics
-    int CellNumX;
-    int CellNumY;
-    int OffsetX;
-    int OffsetY;
-    int CellSize;
-    QPoint startCell;
-    QPoint endCell;
-    
-    int CannonSelectionButtonSize;
-    int CannonSelectionRadius;
-    int CannonUpgradeButtonSize;
-    int CannonUpgradeRadius;
-    
-
-
     //game data    
     MainView *view;
     R *r;

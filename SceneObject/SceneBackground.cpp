@@ -3,7 +3,7 @@
 
 CSceneBackground::CSceneBackground(CGame *game, std::shared_ptr<QPixmap> pixmap)
 {
-    this->zOrder = BackgroundZOrder;
+    this->zOrder = m::BackgroundZOrder;
     this->game = game;
     this->pixmap = pixmap;
     this->position = game->scene->addBackgroundPixmap(pixmap);

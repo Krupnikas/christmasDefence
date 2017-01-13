@@ -12,7 +12,7 @@ CSlowBullet::CSlowBullet(CGame *game, QPointF center, double angle, ESizeType ty
     this->game = game;
     this->zOrder = 1;
     
-    this->textureSize = QSize(SlowBulletSizeX, SlowBulletSizeY);
+    this->textureSize = QSize(m::SlowBulletSizeX, m::SlowBulletSizeY);
     this->pixmap = helper::choose(type,
                                   game->r->slow_bullet_1,
                                   game->r->slow_bullet_2,
@@ -24,8 +24,8 @@ CSlowBullet::CSlowBullet(CGame *game, QPointF center, double angle, ESizeType ty
     this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
     
     //IBullet fields
-    this->step = SlowBulletStep;
-    this->hitPower = helper::choose(type, SlowBulletSmHit, SlowBulletMidHit, SlowBulletBigHit);
+    this->step = m::SlowBulletStep;
+    this->hitPower = helper::choose(type, m::SlowBulletSmHit, m::SlowBulletMidHit, m::SlowBulletBigHit);
 }
 
 bool CSlowBullet::move()

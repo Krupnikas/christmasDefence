@@ -87,9 +87,9 @@ void CGame::create()
     waveInformationBlock = std::make_shared<CWaveInfoBlock>(this);
         
     menuButton = std::make_shared<CButton>(
-                BackgroundZOrder + 0.3,
-                QPointF(OffsetX / 2, LocalHeight - CellSize / 2),
-                QSizeF(CellSize * 0.7, CellSize * 0.7),
+                m::BackgroundZOrder + 0.3,
+                QPointF(m::OffsetX / 2, m::LocalHeight - m::CellSize / 2),
+                QSizeF(m::CellSize * 0.7, m::CellSize * 0.7),
                 this, static_cast<int>(EButtonType::eBTgMenu),
                 r->game_menu_button
                 );
@@ -118,8 +118,8 @@ void CGame::show()
         bullets[i]->show();
     for (size_t i = 0; i < enemies.size(); ++i)
         enemies[i]->show();
-    for (int i = 0; i < CellNumX; ++i)
-        for (int j = 0; j < CellNumY; ++j)
+    for (int i = 0; i < m::CellNumX; ++i)
+        for (int j = 0; j < m::CellNumY; ++j)
             if (cannons[i][j])
             {
                 cannons[i][j]->draw();
@@ -156,8 +156,8 @@ void CGame::hide()
         bullets[i]->hide();
     for (size_t i = 0; i < enemies.size(); ++i)
         enemies[i]->hide();
-    for (int i = 0; i < CellNumX; ++i)
-        for (int j = 0; j < CellNumY; ++j)
+    for (int i = 0; i < m::CellNumX; ++i)
+        for (int j = 0; j < m::CellNumY; ++j)
             if (cannons[i][j])
                 cannons[i][j]->hide();
     
@@ -210,19 +210,19 @@ void CGame::startGameLevel(int level)
     
     create();
 
-    cannons.resize(CellNumX);
-    distances.resize(CellNumX);
-    for (int i = 0; i < CellNumX; ++i)
+    cannons.resize(m::CellNumX);
+    distances.resize(m::CellNumX);
+    for (int i = 0; i < m::CellNumX; ++i)
     {
-        cannons[i].assign(CellNumY, nullptr);
-        distances[i].resize(CellNumY);
+        cannons[i].assign(m::CellNumY, nullptr);
+        distances[i].resize(m::CellNumY);
     }
     
     waveManager.initialize();
-    helper::updateDistances(cannons, distances, this);
+    helper::updateDistances(cannons, distances);
 
-    positionTimer->start(TimerInterval);
-    drawTimer->start(TimerInterval);
+    positionTimer->start(m::TimerInterval);
+    drawTimer->start(m::TimerInterval);
     
     show();
 }
@@ -237,8 +237,8 @@ void CGame::endGame()
         enemies[i]->remove();
     enemies.clear();
 
-    for (int i = 0; i < CellNumX; ++i)
-        for (int j = 0; j < CellNumY; ++j)
+    for (int i = 0; i < m::CellNumX; ++i)
+        for (int j = 0; j < m::CellNumY; ++j)
             if (cannons[i][j])
             {
                 cannons[i][j]->remove();
@@ -253,7 +253,7 @@ void CGame::endGame()
 
 bool CGame::isGameCell(QPoint cell)
 {
-    return cell.x() >= 0 && cell.x() < CellNumX && cell.y() >= 0 && cell.y() < CellNumY;
+    return cell.x() >= 0 && cell.x() < m::CellNumX && cell.y() >= 0 && cell.y() < m::CellNumY;
 }
 
 bool CGame::buyCannon(std::shared_ptr<ICannon> cannon)
@@ -264,9 +264,9 @@ bool CGame::buyCannon(std::shared_ptr<ICannon> cannon)
 
     int cost = cannon->getCurCost();
 
-    if (x < 0 || x > CellNumX   ||
-        y < 0 || y > CellNumY   ||
-        !helper::okToAdd(x, y, distances, enemies, this) ||
+    if (x < 0 || x > m::CellNumX   ||
+        y < 0 || y > m::CellNumY   ||
+        !helper::okToAdd(x, y, distances, enemies) ||
         cost > userManager.getCash())
         return false;
 
@@ -274,7 +274,7 @@ bool CGame::buyCannon(std::shared_ptr<ICannon> cannon)
 
     cannonsMutex.lock();
     cannons[x][y] = cannon;
-    helper::updateDistances(cannons, distances, this);
+    helper::updateDistances(cannons, distances);
     cannonsMutex.unlock();
     cannon->draw();
     cannon->show();
@@ -290,7 +290,7 @@ void CGame::sellCannon(std::shared_ptr<ICannon> cannon)
 
     cannonsMutex.lock();
     cannons[cell.x()][cell.y()] = nullptr;
-    helper::updateDistances(cannons, distances, this);
+    helper::updateDistances(cannons, distances);
     cannonsMutex.unlock();
 }
 
@@ -326,13 +326,13 @@ bool CGame::addEnemy(int enemyType, int enemyTexture, int enemyPower)
 
 QPointF CGame::cellLeftTop(QPoint cell)
 {
-    return QPointF(OffsetX + cell.x() * CellSize, OffsetY + cell.y() * CellSize);
+    return QPointF(m::OffsetX + cell.x() * m::CellSize, m::OffsetY + cell.y() * m::CellSize);
 }
 
 QPointF CGame::cellCenter(QPoint cell)
 {
     QPointF leftTop(cellLeftTop(cell));
-    return QPointF(leftTop.x() + CellSize / 2.0, leftTop.y() + CellSize / 2.0);
+    return QPointF(leftTop.x() + m::CellSize / 2.0, leftTop.y() + m::CellSize / 2.0);
 }
 
 void CGame::selectCell(QPoint pos)
@@ -383,8 +383,8 @@ void CGame::deselectCell()
 QPoint CGame::findNearestCell(QPointF from)
 {
     QPoint nearestCell(-1, -1);
-    nearestCell.setX((from.x() - OffsetX) / CellSize);
-    nearestCell.setY((from.y() - OffsetY) / CellSize);
+    nearestCell.setX((from.x() - m::OffsetX) / m::CellSize);
+    nearestCell.setY((from.y() - m::OffsetY) / m::CellSize);
     return nearestCell;
 }
 
@@ -447,8 +447,8 @@ void CGame::onDrawTimer()
 
     cannonsMutex.lock();
 
-        for (int i = 0; i < CellNumX; ++i)
-            for (int j = 0; j < CellNumY; ++j)
+        for (int i = 0; i < m::CellNumX; ++i)
+            for (int j = 0; j < m::CellNumY; ++j)
                 if (cannons[i][j])
                 {
                     cannons[i][j]->count();
@@ -488,8 +488,8 @@ void CGame::scale_objects_()
     for (size_t i = 0; i < enemies.size(); ++i)
         enemies[i]->scale();
 
-    for (int i = 0; i < CellNumX; ++i)
-        for (int j = 0; j < CellNumY; ++j)
+    for (int i = 0; i < m::CellNumX; ++i)
+        for (int j = 0; j < m::CellNumY; ++j)
             if (cannons[i][j])
                 cannons[i][j]->scale();
 
@@ -517,7 +517,7 @@ void CGame::read_level_(QString filename)
     
     //field size init
     line = textStream.readLine();
-    CellNumY = line.toInt();
+    m::CellNumY = line.toInt();
     
     //init game metrics
     init_metrics_();
@@ -528,14 +528,14 @@ void CGame::read_level_(QString filename)
     std::stringstream in(line.toStdString());
     int edge, pos;
     in >> edge >> pos;
-    startCell = generate_cell_(edge, pos, CellNumX, CellNumY);
+    m::startCell = generate_cell_(edge, pos, m::CellNumX, m::CellNumY);
     
     //end cell
     line = textStream.readLine();
     in.clear();
     in.str(line.toStdString());
     in >> edge >> pos;
-    endCell = generate_cell_(edge, pos, CellNumX, CellNumY);
+    m::endCell = generate_cell_(edge, pos, m::CellNumX, m::CellNumY);
     
     //TODO : init field with items
     line = textStream.readLine();
@@ -575,55 +575,55 @@ void CGame::read_level_(QString filename)
 void CGame::init_metrics_()
 {
     //general
-    CellSize = LocalHeight / (CellNumY + 2);
-    OffsetY = CellSize;
-    CellNumX = (LocalWidth - 2 * CellSize) / CellSize;
-    OffsetX = (LocalWidth - CellNumX * CellSize) / 2;
+    m::CellSize = m::LocalHeight / (m::CellNumY + 2);
+    m::OffsetY = m::CellSize;
+    m::CellNumX = (m::LocalWidth - 2 * m::CellSize) / m::CellSize;
+    m::OffsetX = (m::LocalWidth - m::CellNumX * m::CellSize) / 2;
     
     //bullet
-    BurnBulletSizeX = CellSize / 3.0;
-    BurnBulletSizeY = CellSize / 3.0;
-    BurnBulletStep = CellSize / 10.0; // in local points
+    m::BurnBulletSizeX = m::CellSize / 3.0;
+    m::BurnBulletSizeY = m::CellSize / 3.0;
+    m::BurnBulletStep = m::CellSize / 10.0; // in local points
     
-    FastBulletSizeX = CellSize / 3.0;
-    FastBulletSizeY = CellSize / 3.0;
-    FastBulletStep = CellSize / 10.0; // in local points
+    m::FastBulletSizeX = m::CellSize / 3.0;
+    m::FastBulletSizeY = m::CellSize / 3.0;
+    m::FastBulletStep = m::CellSize / 10.0; // in local points
     
-    MonsterBulletSizeX = CellSize / 3.0;
-    MonsterBulletSizeY = CellSize / 3.0;    
-    MonsterBulletStep = CellSize / 10.0; // in local points
+    m::MonsterBulletSizeX = m::CellSize / 3.0;
+    m::MonsterBulletSizeY = m::CellSize / 3.0;    
+    m::MonsterBulletStep = m::CellSize / 10.0; // in local points
     
-    SlowBulletSizeX = CellSize / 3.0;
-    SlowBulletSizeY = CellSize / 3.0;
-    SlowBulletStep = CellSize / 10.0; // in local points
+    m::SlowBulletSizeX = m::CellSize / 3.0;
+    m::SlowBulletSizeY = m::CellSize / 3.0;
+    m::SlowBulletStep = m::CellSize / 10.0; // in local points
     
     
     
     //cannon
-    CannonSelectionButtonSize = round(1.0 * CellSize);
-    CannonSelectionRadius = 1.1 * CellSize;
-    CannonUpgradeButtonSize = round(1.0 * CellSize);
-    CannonUpgradeRadius = 1.1 * CellSize;
+    m::CannonSelectionButtonSize = round(1.0 * m::CellSize);
+    m::CannonSelectionRadius = 1.1 * m::CellSize;
+    m::CannonUpgradeButtonSize = round(1.0 * m::CellSize);
+    m::CannonUpgradeRadius = 1.1 * m::CellSize;
     
-    BurnCannonSmRadius = CellSize * 2.6;
-    BurnCannonMidRadius = CellSize * 3;
-    BurnCannonBigRadius = CellSize * 3.4;
+    m::BurnCannonSmRadius = m::CellSize * 2.6;
+    m::BurnCannonMidRadius = m::CellSize * 3;
+    m::BurnCannonBigRadius = m::CellSize * 3.4;
     
-    FastCannonSmRadius = CellSize * 2;
-    FastCannonMidRadius = CellSize * 2.3;
-    FastCannonBigRadius = CellSize * 2.6;
+    m::FastCannonSmRadius = m::CellSize * 2;
+    m::FastCannonMidRadius = m::CellSize * 2.3;
+    m::FastCannonBigRadius = m::CellSize * 2.6;
     
-    MonsterCannonSmRadius = CellSize * 2.2;
-    MonsterCannonMidRadius = CellSize * 2.5;
-    MonsterCannonBigRadius = CellSize * 2.7;
+    m::MonsterCannonSmRadius = m::CellSize * 2.2;
+    m::MonsterCannonMidRadius = m::CellSize * 2.5;
+    m::MonsterCannonBigRadius = m::CellSize * 2.7;
     
-    SlowCannonSmRadius = CellSize * 2.4;
-    SlowCannonMidRadius = CellSize * 2.7;
-    SlowCannonBigRadius = CellSize * 3;
+    m::SlowCannonSmRadius = m::CellSize * 2.4;
+    m::SlowCannonMidRadius = m::CellSize * 2.7;
+    m::SlowCannonBigRadius = m::CellSize * 3;
     
     //enemy
-    FastEnemyStep = CellSize / 500.0;
-    FastEnemyTextureSize = QSizeF(CellSize * 0.8, CellSize * 0.8);
-    FastEnemySize = QSizeF(FastEnemyTextureSize * 1/*0.4*/);
-    HpSize = QSizeF(CellSize * 0.7, CellSize * 0.05);
+    m::FastEnemyStep = m::CellSize / 500.0;
+    m::FastEnemyTextureSize = QSizeF(m::CellSize * 0.8, m::CellSize * 0.8);
+    m::FastEnemySize = QSizeF(m::FastEnemyTextureSize * 1/*0.4*/);
+    m::HpSize = QSizeF(m::CellSize * 0.7, m::CellSize * 0.05);
 }

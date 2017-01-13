@@ -6,10 +6,10 @@ CUserInfo::CUserInfo(CGame *game)
     this->label = "User Information Block";
     this->angle = 0;
     this->game = game;
-    this->zOrder = UserInfoOnSides;
+    this->zOrder = m::UserInfoOnSides;
 
-    this->textureSize = QSize(game->OffsetX,
-                              game->OffsetY + game->CellSize * (game->CellNumY / 2));
+    this->textureSize = QSize(m::OffsetX,
+                              m::OffsetY + m::CellSize * (m::CellNumY / 2));
     this->pixmap = game->r->userInfoBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
 

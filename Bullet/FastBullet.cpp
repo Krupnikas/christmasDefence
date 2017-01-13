@@ -12,7 +12,7 @@ CFastBullet::CFastBullet(CGame *game, QPointF center, double angle, ESizeType ty
     this->game = game;
     this->zOrder = 1;
     
-    this->textureSize = QSize(FastBulletSizeX, FastBulletSizeY);
+    this->textureSize = QSize(m::FastBulletSizeX, m::FastBulletSizeY);
     this->pixmap = helper::choose(type,
                                   game->r->fast_bullet_1,
                                   game->r->fast_bullet_2,
@@ -24,8 +24,8 @@ CFastBullet::CFastBullet(CGame *game, QPointF center, double angle, ESizeType ty
     this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
     
     //IBullet fields
-    this->step = FastBulletStep;
-    this->hitPower = helper::choose(type, FastBulletSmHit, FastBulletMidHit, FastBulletBigHit);
+    this->step = m::FastBulletStep;
+    this->hitPower = helper::choose(type, m::FastBulletSmHit, m::FastBulletMidHit, m::FastBulletBigHit);
 }
 
 bool CFastBullet::move()

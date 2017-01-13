@@ -1,5 +1,8 @@
 #pragma once
 
+namespace m
+{
+
 //Burn bullet
 extern int BurnBulletSizeX;
 extern int BurnBulletSizeY;
@@ -8,8 +11,7 @@ extern qreal BurnBulletStep; // in local points
 
 extern int BurnBulletSmHit;
 extern int BurnBulletMidHit;
-extern  int BurnBulletBigHit;
-
+extern int BurnBulletBigHit;
 
 //Fast bullet
 extern int FastBulletSizeX;
@@ -41,3 +43,5 @@ extern qreal SlowBulletStep; // in local points
 extern int SlowBulletSmHit;
 extern int SlowBulletMidHit;
 extern int SlowBulletBigHit;
+
+}
