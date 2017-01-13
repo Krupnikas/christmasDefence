@@ -145,27 +145,39 @@ bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int> > &distances
 
 QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoint& curPoint)
 {   
-    EEdge startEdge = cellToEdge(m::startCell);
     EEdge curEdge = cellToEdge(curPoint);
-    QPoint ans(curPoint);
     
-    if (ExitLeft)
+    if (curEdge != EEdge::eInside)
     {
-        if (ans.x() <= 0 || ans.x() >= m::CellNumX)
+        EEdge startEdge = cellToEdge(m::startCell);
+        QPoint ans(0, 0);
+        
+        int dx = 0;
+        int dy = 0;
+        
+        switch (curEdge)
         {
-            ans.setX(ans.x() - 1);
-            return ans;
+        case EEdge::eLeft:
+            dx = (startEdge == curEdge) ? 1 : -1;
+            break;
+        case EEdge::eTop:
+            dy = (startEdge == curEdge) ? 1 : -1;
+            break;
+        case EEdge::eRight:
+            dx = (startEdge == curEdge) ? -1 : 1;
+            break;
+        case EEdge::eBottom:
+            dy = (startEdge == curEdge) ? -1 : 1;
+        case EEdge::eInside:
+            qDebug() << "Helper: findLowerNeighbour: WTH???!!!";
+            break;
         }
+        ans.setX(curPoint.x() + dx);
+        ans.setY(curPoint.y() + dy);
+        
+        return ans;
     }
-    else
-    {
-        if (ans.x() < 0 || ans.x() >= m::CellNumX - 1)
-        {
-            ans.setX(ans.x() + 1);        
-            return ans;
-        }
-    }
-
+    
     //random permutation of indecies for moving to random cell first
     std::vector<int> randomInd(dNum);
     for (int i = 0; i < dNum; ++i)
@@ -260,6 +272,39 @@ std::shared_ptr<QPixmap> renderPixmapFromText(QString text, QPen pen, QBrush bru
     return pixmap;
 }
 
+QRectF getCellLeftTop(QPoint cell)
+{
+    return getCellLeftTop(cell.x(), cell.y());
+}
+
+QRectF getCellLeftTop(int cellX, int cellY)
+{
+    int x = 0;
+    if (cellX > 0)
+        x = m::OffsetX + (cellX - 1) * m::CellSize;
+    
+    int y = 0;
+    if (cellY > 0)
+        y = m::OffsetY + (cellY - 1) * m::CellSize;
+    return QPointF(x, y);
+}
+
+QSizeF getCellSize(QPoint cell)
+{
+    return getCellSize(cell.x(), cell.y());
+}
+
+QSizeF getCellSize(int cellX, int cellY)
+{
+    EEdge edge(helper::cellToEdge(QPoint(cellX, cellY)));
+    if (edge == EEdge::eLeft || edge == EEdge::eRight)
+        return QSizeF(m::OffsetX, m::CellSize);
+    else if (edge == EEdge::eTop || edge == EEdge::eBottom)
+        return QSizeF(m::CellSize, m::OffsetY);
+    else
+        return QSizeF(m::CellSize, m::CellSize);
+}
+
 EEdge cellToEdge(QPoint cell)
 {
     int x = cell.x();
@@ -275,5 +320,63 @@ EEdge cellToEdge(QPoint cell)
     else 
         return EEdge::eInside;
 }
+
+
+void initMetrics()
+{
+    //general
+    m::CellSize = m::LocalHeight / m::CellNumY;
+    m::OffsetY = m::CellSize;
+    m::CellNumX = m::LocalWidth / m::CellSize;
+    m::OffsetX = (m::LocalWidth - m::CellNumX * m::CellSize) / 2;
+    
+    //bullet
+    m::BurnBulletSizeX = m::CellSize / 3.0;
+    m::BurnBulletSizeY = m::CellSize / 3.0;
+    m::BurnBulletStep = m::CellSize / 10.0; // in local points
+    
+    m::FastBulletSizeX = m::CellSize / 3.0;
+    m::FastBulletSizeY = m::CellSize / 3.0;
+    m::FastBulletStep = m::CellSize / 10.0; // in local points
+    
+    m::MonsterBulletSizeX = m::CellSize / 3.0;
+    m::MonsterBulletSizeY = m::CellSize / 3.0;    
+    m::MonsterBulletStep = m::CellSize / 10.0; // in local points
+    
+    m::SlowBulletSizeX = m::CellSize / 3.0;
+    m::SlowBulletSizeY = m::CellSize / 3.0;
+    m::SlowBulletStep = m::CellSize / 10.0; // in local points
+    
+    
+    
+    //cannon
+    m::CannonSelectionButtonSize = round(1.0 * m::CellSize);
+    m::CannonSelectionRadius = 1.1 * m::CellSize;
+    m::CannonUpgradeButtonSize = round(1.0 * m::CellSize);
+    m::CannonUpgradeRadius = 1.1 * m::CellSize;
+    
+    m::BurnCannonSmRadius = m::CellSize * 2.6;
+    m::BurnCannonMidRadius = m::CellSize * 3;
+    m::BurnCannonBigRadius = m::CellSize * 3.4;
+    
+    m::FastCannonSmRadius = m::CellSize * 2;
+    m::FastCannonMidRadius = m::CellSize * 2.3;
+    m::FastCannonBigRadius = m::CellSize * 2.6;
+    
+    m::MonsterCannonSmRadius = m::CellSize * 2.2;
+    m::MonsterCannonMidRadius = m::CellSize * 2.5;
+    m::MonsterCannonBigRadius = m::CellSize * 2.7;
+    
+    m::SlowCannonSmRadius = m::CellSize * 2.4;
+    m::SlowCannonMidRadius = m::CellSize * 2.7;
+    m::SlowCannonBigRadius = m::CellSize * 3;
+    
+    //enemy
+    m::FastEnemyStep = m::CellSize / 500.0;
+    m::FastEnemyTextureSize = QSizeF(m::CellSize * 0.8, m::CellSize * 0.8);
+    m::FastEnemySize = QSizeF(m::FastEnemyTextureSize * 1/*0.4*/);
+    m::HpSize = QSizeF(m::CellSize * 0.7, m::CellSize * 0.05);
+}
+
 
 }

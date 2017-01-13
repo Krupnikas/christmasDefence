@@ -520,7 +520,7 @@ void CGame::read_level_(QString filename)
     m::CellNumY = line.toInt();
     
     //init game metrics
-    init_metrics_();
+    helper::initMetrics();
     
 
     //start cell
@@ -570,60 +570,4 @@ void CGame::read_level_(QString filename)
     userManager.setHp(hp);
     
     levelFile.close();
-}
-
-void CGame::init_metrics_()
-{
-    //general
-    m::CellSize = m::LocalHeight / (m::CellNumY + 2);
-    m::OffsetY = m::CellSize;
-    m::CellNumX = (m::LocalWidth - 2 * m::CellSize) / m::CellSize;
-    m::OffsetX = (m::LocalWidth - m::CellNumX * m::CellSize) / 2;
-    
-    //bullet
-    m::BurnBulletSizeX = m::CellSize / 3.0;
-    m::BurnBulletSizeY = m::CellSize / 3.0;
-    m::BurnBulletStep = m::CellSize / 10.0; // in local points
-    
-    m::FastBulletSizeX = m::CellSize / 3.0;
-    m::FastBulletSizeY = m::CellSize / 3.0;
-    m::FastBulletStep = m::CellSize / 10.0; // in local points
-    
-    m::MonsterBulletSizeX = m::CellSize / 3.0;
-    m::MonsterBulletSizeY = m::CellSize / 3.0;    
-    m::MonsterBulletStep = m::CellSize / 10.0; // in local points
-    
-    m::SlowBulletSizeX = m::CellSize / 3.0;
-    m::SlowBulletSizeY = m::CellSize / 3.0;
-    m::SlowBulletStep = m::CellSize / 10.0; // in local points
-    
-    
-    
-    //cannon
-    m::CannonSelectionButtonSize = round(1.0 * m::CellSize);
-    m::CannonSelectionRadius = 1.1 * m::CellSize;
-    m::CannonUpgradeButtonSize = round(1.0 * m::CellSize);
-    m::CannonUpgradeRadius = 1.1 * m::CellSize;
-    
-    m::BurnCannonSmRadius = m::CellSize * 2.6;
-    m::BurnCannonMidRadius = m::CellSize * 3;
-    m::BurnCannonBigRadius = m::CellSize * 3.4;
-    
-    m::FastCannonSmRadius = m::CellSize * 2;
-    m::FastCannonMidRadius = m::CellSize * 2.3;
-    m::FastCannonBigRadius = m::CellSize * 2.6;
-    
-    m::MonsterCannonSmRadius = m::CellSize * 2.2;
-    m::MonsterCannonMidRadius = m::CellSize * 2.5;
-    m::MonsterCannonBigRadius = m::CellSize * 2.7;
-    
-    m::SlowCannonSmRadius = m::CellSize * 2.4;
-    m::SlowCannonMidRadius = m::CellSize * 2.7;
-    m::SlowCannonBigRadius = m::CellSize * 3;
-    
-    //enemy
-    m::FastEnemyStep = m::CellSize / 500.0;
-    m::FastEnemyTextureSize = QSizeF(m::CellSize * 0.8, m::CellSize * 0.8);
-    m::FastEnemySize = QSizeF(m::FastEnemyTextureSize * 1/*0.4*/);
-    m::HpSize = QSizeF(m::CellSize * 0.7, m::CellSize * 0.05);
 }
