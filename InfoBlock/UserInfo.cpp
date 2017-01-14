@@ -9,7 +9,7 @@ CUserInfo::CUserInfo(CGame *game)
     this->zOrder = m::UserInfoOnSides;
 
     this->textureSize = QSize(m::OffsetX,
-                              m::OffsetY + m::CellSize * (m::CellNumY / 2));
+                              m::OffsetY + m::CellSize * (m::CellNumY / 2 - 1));
     this->pixmap = game->r->userInfoBackground;
     this->position = game->scene->addPixmap(textureSize, pixmap);
 

@@ -51,8 +51,8 @@ void readLevel(const QString &filename, std::vector<CWave> &waves);
 
 qreal ticksToTime(int ticks);
 
-QRectF getCellLeftTop(QPoint cell);
-QRectF getCellLeftTop(int cellX, int cellY);
+QPointF getCellLeftTop(QPoint cell);
+QPointF getCellLeftTop(int cellX, int cellY);
 
 QSizeF getCellSize(QPoint cell);
 QSizeF getCellSize(int cellX, int cellY);

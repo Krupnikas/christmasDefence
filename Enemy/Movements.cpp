@@ -36,6 +36,7 @@ Queue::Queue() : frontInd(0), backInd(QueueSize - 1)
         dxArr[i] = dx;
         dyArr[i] = dy;
         curSum.setX(curSum.x() + dxArr[i]);
+        curSum.setY(curSum.y() + dyArr[i]);
     }
 }
 
@@ -86,7 +87,7 @@ Movements::Movements(CGame *game):
     ExitHeight = m::OffsetY * 2;
     
     LocalExitWidth = LocalSize * ExitWidth / m::CellSize / QueueSize * QueueSize;
-    LocalExitHeight = LocalSize * ExitWidth / m::CellSize / QueueSize * QueueSize;
+    LocalExitHeight = LocalSize * ExitHeight / m::CellSize / QueueSize * QueueSize;
     
     NormalRect = QRect(0, 0, LocalSize, LocalSize);
     NormalSize = QSize(m::CellSize, m::CellSize);
@@ -108,6 +109,7 @@ Movements::Movements(CGame *game):
     
     curGameCell = m::startCell;
     nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
+    nextLocalCell = NormalLocalCell;
     
     switch (helper::cellToEdge(m::startCell))
     {
@@ -135,7 +137,7 @@ QPointF Movements::move()
 {
     if (beforeTurnArea())
     {
-        if (on_turn_area_())
+        if (on_turn_area_() && helper::cellToEdge(curGameCell) == EEdge::eInside)
             update_next_();
         QPoint toCenter = vector_to_center_();
         queue.push(toCenter);
@@ -154,14 +156,14 @@ QPointF Movements::move()
 QPointF Movements::curCenter() const
 {
     QPointF curPoint(0, 0);
-    if (curGameCell.x() == 0)
-        curPoint.setX(static_cast<qreal>(curPos.x()) * ExitWidth / LocalExitWidth);
+    if (curGameCell.x() <= 0)
+        curPoint.setX(-m::OffsetX + static_cast<qreal>(curPos.x()) * ExitWidth / LocalExitWidth);
     else
         curPoint.setX(m::OffsetX + (curGameCell.x() - 1) * m::CellSize + static_cast<qreal>(curPos.x()) * 
                   curLocalCell.cellGameSize.width() / curLocalCell.localRect.width());
     
-    if (curGameCell.y() == 0)
-        curPoint.setY(static_cast<qreal>(curPos.y()) * ExitHeight / LocalExitHeight);
+    if (curGameCell.y() <= 0)
+        curPoint.setY(-ExitHeight / 2 + static_cast<qreal>(curPos.y()) * ExitHeight / LocalExitHeight);
     else
         curPoint.setY(m::OffsetY + (curGameCell.y() - 1) * m::CellSize + static_cast<qreal>(curPos.y()) * 
                   curLocalCell.cellGameSize.height() / curLocalCell.localRect.height());
@@ -214,7 +216,7 @@ qreal Movements::getDistanceToFinish() const
         case EEdge::eBottom:
             addDist += (startEdge == curEdge) ? nHeight : pHeight;
         case EEdge::eInside:
-            qDebug() << "Movements: getDistanceToFinish: WTH???!!!";
+            qDebug() << "Movements: getDistanceToFinish: WTH?!?!?!";
             break;
         }
         
@@ -332,7 +334,7 @@ void Movements::update_cur_()
     if (curPos.y() < 0)
     {
         curGameCell.setY(curGameCell.y() - 1);
-        curPos.setY(curPos.y() + curLocalCell.localRect.height());
+        curPos.setY(curPos.y() + nextLocalCell.localRect.height());
         update = true;
     }
     else if (curPos.y() >= curLocalCell.localRect.height())

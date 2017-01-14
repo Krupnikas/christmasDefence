@@ -84,6 +84,7 @@ public:
     bool addEnemy(int enemyType, int enemyTexture, int enemyPower);
     
     QPointF cellLeftTop(QPoint cell);
+    QSizeF cellSize(QPoint cell);
     QPointF cellCenter(QPoint cell);
     
     void updateDistances();

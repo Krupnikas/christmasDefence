@@ -95,7 +95,7 @@ void updateDistances(
     for (size_t x = 0; x < cannons.size(); ++x)
         for (size_t y = 0; y < cannons[x].size(); ++y)
         {
-            if (cannons[x][y])
+            if (cannons[x][y] || x == 0 || x == m::CellNumX - 1 || y == 0 || y == m::CellNumY - 1)
                 distances[x][y] = Inf;    
             else
                 distances[x][y] = -1;
@@ -150,7 +150,7 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
     if (curEdge != EEdge::eInside)
     {
         EEdge startEdge = cellToEdge(m::startCell);
-        QPoint ans(0, 0);
+        QPoint ans(curPoint);
         
         int dx = 0;
         int dy = 0;
@@ -169,7 +169,7 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
         case EEdge::eBottom:
             dy = (startEdge == curEdge) ? -1 : 1;
         case EEdge::eInside:
-            qDebug() << "Helper: findLowerNeighbour: WTH???!!!";
+            qDebug() << "Helper: findLowerNeighbour: WTF?!?!?!";
             break;
         }
         ans.setX(curPoint.x() + dx);
@@ -272,18 +272,18 @@ std::shared_ptr<QPixmap> renderPixmapFromText(QString text, QPen pen, QBrush bru
     return pixmap;
 }
 
-QRectF getCellLeftTop(QPoint cell)
+QPointF getCellLeftTop(QPoint cell)
 {
     return getCellLeftTop(cell.x(), cell.y());
 }
 
-QRectF getCellLeftTop(int cellX, int cellY)
+QPointF getCellLeftTop(int cellX, int cellY)
 {
-    int x = 0;
+    qreal x = 0;
     if (cellX > 0)
         x = m::OffsetX + (cellX - 1) * m::CellSize;
     
-    int y = 0;
+    qreal y = 0;
     if (cellY > 0)
         y = m::OffsetY + (cellY - 1) * m::CellSize;
     return QPointF(x, y);
@@ -328,7 +328,7 @@ void initMetrics()
     m::CellSize = m::LocalHeight / m::CellNumY;
     m::OffsetY = m::CellSize;
     m::CellNumX = m::LocalWidth / m::CellSize;
-    m::OffsetX = (m::LocalWidth - m::CellNumX * m::CellSize) / 2;
+    m::OffsetX = m::CellSize + (m::LocalWidth - m::CellNumX * m::CellSize) / 2;
     
     //bullet
     m::BurnBulletSizeX = m::CellSize / 3.0;
@@ -372,7 +372,7 @@ void initMetrics()
     m::SlowCannonBigRadius = m::CellSize * 3;
     
     //enemy
-    m::FastEnemyStep = m::CellSize / 500.0;
+    m::FastEnemyStep = m::CellSize / 50.0;
     m::FastEnemyTextureSize = QSizeF(m::CellSize * 0.8, m::CellSize * 0.8);
     m::FastEnemySize = QSizeF(m::FastEnemyTextureSize * 1/*0.4*/);
     m::HpSize = QSizeF(m::CellSize * 0.7, m::CellSize * 0.05);

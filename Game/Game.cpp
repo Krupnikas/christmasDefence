@@ -326,13 +326,32 @@ bool CGame::addEnemy(int enemyType, int enemyTexture, int enemyPower)
 
 QPointF CGame::cellLeftTop(QPoint cell)
 {
-    return QPointF(m::OffsetX + cell.x() * m::CellSize, m::OffsetY + cell.y() * m::CellSize);
+    qreal x = 0;
+    if (cell.x() > 0)
+        x = m::OffsetX + (cell.x() - 1) * m::CellSize;
+    
+    qreal y = 0;
+    if (cell.y() > 0)
+        y = m::OffsetY + (cell.y() - 1) * m::CellSize;
+    return QPointF(x, y);
+}
+
+QSizeF CGame::cellSize(QPoint cell)
+{
+    EEdge edge(helper::cellToEdge(cell));
+    if (edge == EEdge::eLeft || edge == EEdge::eRight)
+        return QSizeF(m::OffsetX, m::CellSize);
+    else if (edge == EEdge::eTop || edge == EEdge::eBottom)
+        return QSizeF(m::CellSize, m::OffsetY);
+    else
+        return QSizeF(m::CellSize, m::CellSize);
 }
 
 QPointF CGame::cellCenter(QPoint cell)
 {
     QPointF leftTop(cellLeftTop(cell));
-    return QPointF(leftTop.x() + m::CellSize / 2.0, leftTop.y() + m::CellSize / 2.0);
+    QSizeF size(cellSize(cell));
+    return QPointF(leftTop.x() + size.width() / 2.0, leftTop.y() + size.height() / 2.0);
 }
 
 void CGame::selectCell(QPoint pos)
@@ -383,8 +402,8 @@ void CGame::deselectCell()
 QPoint CGame::findNearestCell(QPointF from)
 {
     QPoint nearestCell(-1, -1);
-    nearestCell.setX((from.x() - m::OffsetX) / m::CellSize);
-    nearestCell.setY((from.y() - m::OffsetY) / m::CellSize);
+    nearestCell.setX(from.x() / m::CellSize);
+    nearestCell.setY(from.y() / m::CellSize);
     return nearestCell;
 }
 

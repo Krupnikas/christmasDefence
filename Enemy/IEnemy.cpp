@@ -4,6 +4,7 @@
 #include <Enemy/CHpBackground.h>
 #include <Enemy/CHpCurrent.h>
 #include <Cannon/FastCannon.h>
+#include <Helper.h>
 
 IEnemy::IEnemy():
     dead(false),
@@ -130,8 +131,33 @@ bool IEnemy::move()
     }
     if (!wasInsideGame && insideGame)
         wasInsideGame = true;
-
-    return game->scene->insideEnclosingRect(center);
+    
+    if (!wasOutsideGame)
+        return true;
+    
+    EEdge edge(helper::cellToEdge(m::endCell));
+    switch (edge)
+    {
+    case EEdge::eLeft:
+        if (center.x() + textureSize.width() <= 0)
+            return false;
+        break;
+    case EEdge::eTop:
+        if (center.y() + textureSize.height() <= 0)
+            return false;
+        break;
+    case EEdge::eRight:
+        if (center.x() - textureSize.width() >= m::LocalWidth)
+            return false;
+        break;
+    case EEdge::eBottom:
+        if (center.y() - textureSize.height() >= m::LocalHeight)
+            return false;
+    case EEdge::eInside:
+        break;
+    }
+    
+    return true;
 }
 
 void IEnemy::hide()
