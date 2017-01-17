@@ -182,5 +182,5 @@ QString R::getNameOfUnableTypePreview(int num)
 
 QString R::getSound(QString val)
 {
-    return "qrc:/" + dir + "soundso/" + val;
+    return "qrc:/" + dir + "sounds/" + val;
 }
