@@ -53,6 +53,7 @@ MainView::MainView(QApplication *app, QWidget *parent):
     }
 
     QSurfaceFormat::setDefaultFormat(fmt);
+    this->setAttribute(Qt::WA_AcceptTouchEvents);
     
     //playlist setting
     QString sound = r.getSound("mainTheme.mp3");//"qrc:/res/christmas/sounds/mainTheme.mp3";
@@ -173,6 +174,20 @@ void MainView::mousePressEvent(QMouseEvent *event)
 void MainView::mouseReleaseEvent(QMouseEvent *event)
 {
     emit mouseUp(event);
+}
+
+void MainView::wheelEvent(QWheelEvent *event)
+{
+    ui->graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    //Scale the view ie. do the zoom
+    double scaleFactor = 1.15; //How fast we zoom
+    if(event->delta() > 0) {
+        //Zoom in
+        ui->graphicsView->scale(scaleFactor, scaleFactor);
+    } else {
+        //Zooming out
+        ui->graphicsView->scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+    }
 }
 
 bool MainView::eventFilter(QObject *, QEvent *event)

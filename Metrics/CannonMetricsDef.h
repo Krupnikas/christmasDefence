@@ -31,9 +31,9 @@ qreal FastCannonMidRotation = 2;
 qreal FastCannonBigRotation = 2;
 
 //fire speed in game tacts
-qreal FastCannonSmFireSpeed = 60;
-qreal FastCannonMidFireSpeed = 50;
-qreal FastCannonBigFireSpeed = 40;
+qreal FastCannonSmFireSpeed = 5;
+qreal FastCannonMidFireSpeed = 7;
+qreal FastCannonBigFireSpeed = 10;
 
 //fire radius, in local points
 qreal FastCannonSmRadius;
