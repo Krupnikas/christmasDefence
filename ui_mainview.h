@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainview.ui'
 **
-** Created by: Qt User Interface Compiler version 5.7.0
+** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -42,6 +42,8 @@ public:
         gridLayout->setContentsMargins(0, 0, 0, 0);
         graphicsView = new QGraphicsView(gridLayoutWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
         gridLayout->addWidget(graphicsView, 0, 0, 1, 1);
 
