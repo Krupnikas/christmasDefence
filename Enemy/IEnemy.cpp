@@ -135,7 +135,7 @@ bool IEnemy::move()
     if (!wasOutsideGame)
         return true;
     
-    EEdge edge(helper::cellToEdge(m::endCell));
+    EEdge edge(helper::cellToEdge(m::endCells[0]));
     switch (edge)
     {
     case EEdge::eLeft:

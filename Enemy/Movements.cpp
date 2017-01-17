@@ -10,7 +10,7 @@ Queue::Queue() : frontInd(0), backInd(QueueSize - 1)
     int dx = 0;
     int dy = 0;
     
-    switch (helper::cellToEdge(m::startCell))
+    switch (helper::cellToEdge(m::startCells[0]))
     {
     case EEdge::eLeft:
         dx = dP;
@@ -101,17 +101,17 @@ Movements::Movements(CGame *game):
     EdgeXLocalCell = Cell(EdgeXSize, EdgeXRect, true);
     EdgeYLocalCell = Cell(EdgeYSize, EdgeYRect, true);
     
-    EEdge edge = helper::cellToEdge(m::startCell);
+    curGameCell = m::startCells[rand() % m::startCells.size()];
+    nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
+    nextLocalCell = NormalLocalCell;
+    
+    EEdge edge = helper::cellToEdge(curGameCell);
     if (edge == EEdge::eLeft || edge == EEdge::eRight)
         curLocalCell = EdgeXLocalCell;
     else
         curLocalCell = EdgeYLocalCell;
     
-    curGameCell = m::startCell;
-    nextGameCell = helper::findLowerNeighbour(game->distances, curGameCell);
-    nextLocalCell = NormalLocalCell;
-    
-    switch (helper::cellToEdge(m::startCell))
+    switch (helper::cellToEdge(curGameCell))
     {
     case EEdge::eLeft:
         curPos = QPoint(-1, half);
@@ -189,7 +189,7 @@ int Movements::iterNum(qreal step) const
 
 qreal Movements::getDistanceToFinish() const
 {
-    EEdge startEdge = helper::cellToEdge(m::startCell);
+    EEdge startEdge = helper::cellToEdge(m::startCells[0]);
     EEdge curEdge = helper::cellToEdge(curGameCell);
     
     qreal dist = game->distances[curGameCell.x()][curGameCell.y()];

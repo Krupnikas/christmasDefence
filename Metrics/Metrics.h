@@ -32,8 +32,8 @@ extern int CannonSelectionRadius;
 extern int CannonUpgradeButtonSize;
 extern int CannonUpgradeRadius;
 
-extern QPoint startCell;
-extern QPoint endCell;
+extern std::vector<QPoint> startCells;
+extern std::vector<QPoint> endCells;
 
 }
 

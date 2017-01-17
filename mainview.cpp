@@ -69,7 +69,7 @@ MainView::MainView(QApplication *app, QWidget *parent):
     player.play();
     
     
-   // this->showFullScreen();*/
+   // this->showFullScreen();
 }
 
 MainView::~MainView()

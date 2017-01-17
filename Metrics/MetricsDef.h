@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QPoint>
+#include <vector>
 
 namespace m
 {
@@ -20,8 +21,8 @@ int CannonSelectionRadius;
 int CannonUpgradeButtonSize;
 int CannonUpgradeRadius;
 
-QPoint startCell;
-QPoint endCell;
+std::vector<QPoint> startCells;
+std::vector<QPoint> endCells;
 
 }
 

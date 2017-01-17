@@ -21,7 +21,7 @@ void reconcileAngles(qreal &angle, const qreal &deltaAngle, const qreal &step);
 
 void updateDistances(std::vector<std::vector<std::shared_ptr<ICannon>>> &cannons,
     std::vector<std::vector<int>> &distances);
-bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int>> &distances,
+bool okToAdd(QPoint cell, const std::vector<std::vector<int>> &distances,
              std::vector<std::shared_ptr<IEnemy> > &enemies);
 QPoint findLowerNeighbour(std::vector<std::vector<int>> &distances, const QPoint& curPoint);
 

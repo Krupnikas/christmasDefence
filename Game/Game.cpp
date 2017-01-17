@@ -14,42 +14,80 @@
 namespace
 {
     
-QPoint generate_cell_(int edge, int pos, int cellNumX, int cellNumY)
+std::vector<QPoint> generate_cells_(int edge, int pos)
 {
-    int x = -1;
-    int y = -1;
+    std::vector<QPoint> cells;
     
-    int xMid = (cellNumX - 1) / 2;
+    int xMid = (m::CellNumX - 1) / 2;
     int xLess = rand() % xMid;
-    int xGr = xMid + rand() % (cellNumX - xMid - 1) + 1;
+    int xGr = xMid + rand() % (m::CellNumX - xMid - 1) + 1;
     
-    int yMid = (cellNumY - 1) / 2;
+    int yMid = (m::CellNumY - 1) / 2;
     int yLess = rand() % yMid;
-    int yGr = yMid + rand() & (cellNumY - yMid) + 1;
+    int yGr = yMid + rand() & (m::CellNumY - yMid) + 1;
 
     
     switch (edge) {
     case 0: //left
-        x = 0;
-        y = (pos == 1) ? yMid : ((pos == 0) ? yGr : yLess);
+        if (pos == 0)
+            cells.push_back(QPoint(0, yGr));
+        else if (pos == 1)
+        {
+            cells.push_back(QPoint(0, yMid));
+            if (m::CellNumY % 2 == 0)
+                cells.push_back(QPoint(0, yMid + 1));
+        }
+        else
+            cells.push_back(QPoint(0, yLess));
         break;
     case 1: //top
-        y = 0;
-        x = (pos == 1) ? xMid : ((pos == 0) ? xLess : xGr);
+        if (pos == 0)
+            cells.push_back(QPoint(xLess, 0));
+        else if (pos == 1)
+        {
+            cells.push_back(QPoint(xMid, 0));
+            if (m::CellNumX % 2 == 0)
+                cells.push_back(QPoint(xMid + 1, 0));
+        }
+        else
+            cells.push_back(QPoint(xGr, 0));
         break;
     case 2: //right
-        x = cellNumX - 1;
-        y = (pos == 1) ? yMid : ((pos == 0) ? yLess : yGr);
+    {
+        int x = m::CellNumX - 1;
+        if (pos == 0)
+            cells.push_back(QPoint(x, yLess));
+        else if (pos == 1)
+        {
+            cells.push_back(QPoint(x, yMid));
+            if (m::CellNumY % 2 == 0)
+                cells.push_back(QPoint(x, yMid + 1));
+        }
+        else
+            cells.push_back(QPoint(x, yGr));
         break;
+    }
     case 3: //bottom
-        y = cellNumY - 1;
-        x = (pos == 1) ? xMid : ((pos == 0) ? xGr : xLess);
+    {
+        int y = m::CellNumY - 1;
+        if (pos == 0)
+            cells.push_back(QPoint(xGr, y));
+        else if (pos == 1)
+        {
+            cells.push_back(QPoint(xMid, y));
+            if (m::CellNumX % 2 == 0)
+                cells.push_back(QPoint(xMid + 1, y));
+        }
+        else
+            cells.push_back(QPoint(xLess, y));
         break;
+    }
     default:
         break;
     }
     
-    return QPoint(x, y);
+    
+    return cells;
 }
 
 }
@@ -253,7 +291,7 @@ void CGame::endGame()
 
 bool CGame::isGameCell(QPoint cell)
 {
-    return cell.x() >= 0 && cell.x() < m::CellNumX && cell.y() >= 0 && cell.y() < m::CellNumY;
+    return helper::cellToEdge(cell) == EEdge::eInside;
 }
 
 bool CGame::buyCannon(std::shared_ptr<ICannon> cannon)
@@ -266,7 +304,7 @@ bool CGame::buyCannon(std::shared_ptr<ICannon> cannon)
 
     if (x < 0 || x > m::CellNumX   ||
         y < 0 || y > m::CellNumY   ||
-        !helper::okToAdd(x, y, distances, enemies) ||
+        !helper::okToAdd(cell, distances, enemies) ||
         cost > userManager.getCash())
         return false;
 
@@ -547,14 +585,14 @@ void CGame::read_level_(QString filename)
     std::stringstream in(line.toStdString());
     int edge, pos;
     in >> edge >> pos;
-    m::startCell = generate_cell_(edge, pos, m::CellNumX, m::CellNumY);
+    m::startCells = generate_cells_(edge, pos);
     
     //end cell
     line = textStream.readLine();
     in.clear();
     in.str(line.toStdString());
     in >> edge >> pos;
-    m::endCell = generate_cell_(edge, pos, m::CellNumX, m::CellNumY);
+    m::endCells = generate_cells_(edge, pos);
     
     //TODO : init field with items
     line = textStream.readLine();

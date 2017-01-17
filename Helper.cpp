@@ -20,8 +20,11 @@ std::mutex distancesMutex;
 void breadth_first_search_(std::vector<std::vector<int> > &distances)
 {
     std::queue<std::pair<int, int>> queue;
-    queue.push(std::make_pair(m::endCell.x(), m::endCell.y()));
-    distances[m::endCell.x()][m::endCell.y()] = 0;
+    for (QPoint &p: m::endCells)
+    {
+        queue.push(std::make_pair(p.x(), p.y()));
+        distances[p.x()][p.y()] = 0;
+    }
     
     while (!queue.empty())
     {
@@ -92,8 +95,8 @@ void updateDistances(
 {
     distancesMutex.lock();
     //here we expect cannons to be correct array
-    for (size_t x = 0; x < cannons.size(); ++x)
-        for (size_t y = 0; y < cannons[x].size(); ++y)
+    for (int x = 0; x < static_cast<int>(cannons.size()); ++x)
+        for (int y = 0; y < static_cast<int>(cannons[x].size()); ++y)
         {
             if (cannons[x][y] || x == 0 || x == m::CellNumX - 1 || y == 0 || y == m::CellNumY - 1)
                 distances[x][y] = Inf;    
@@ -106,27 +109,32 @@ void updateDistances(
 }
 
 
-bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int> > &distances,
+bool okToAdd(QPoint cell, const std::vector<std::vector<int> > &distances,
              std::vector<std::shared_ptr<IEnemy> > &enemies)
 {
+    int x = cell.x();
+    int y = cell.y();
     for (size_t i = 0; i < enemies.size(); ++i)
     {
-        if (enemies[i]->getCurrentGameCell() == QPoint(xInd, yInd) ||
-            (enemies[i]->getNextGameCell() == QPoint(xInd, yInd) &&
+        if (enemies[i]->getCurrentGameCell() == cell ||
+            (enemies[i]->getNextGameCell() == cell &&
              !enemies[i]->beforeTurnArea()))
             return false;
     }
 
     distancesMutex.lock();
-        if ((xInd == m::endCell.x() && yInd == m::endCell.y()) || (xInd == m::startCell.x() && yInd == m::startCell.y()))
-        {
-            distancesMutex.unlock();
-            return false;
-        }
-        std::vector<std::vector<int>> distCheck(distances);
+    
+    /*
+    if ((cell == m::endCell.x() && yInd == m::endCell.y()) || (cell == m::startCell.x() && yInd == m::startCell.y()))
+    {
+        distancesMutex.unlock();
+        return false;
+    }*/
+    std::vector<std::vector<int>> distCheck(distances);
+    
     distancesMutex.unlock();
     
-    distCheck[xInd][yInd] = Inf;
+    distCheck[x][y] = Inf;
     for (size_t x = 0; x < distCheck.size(); ++x)
         for (size_t y = 0; y < distCheck[x].size(); ++y)
             if (distCheck[x][y] != Inf)
@@ -139,7 +147,13 @@ bool okToAdd(int xInd, int yInd, const std::vector<std::vector<int> > &distances
             for (int y = 0; y < CellNumY; ++y)
                 if (distances[x][y] == -1)
                     connected = false;*/
-    return /*connected && */(distCheck[m::startCell.x()][m::startCell.y()] > -1);
+    bool startAccessible = false;
+    for (QPoint p: m::startCells)
+    {
+        if (distCheck[p.x()][p.y()] > -1)
+            startAccessible = true;
+    }
+    return /*connected && */startAccessible;
 }
 
 
@@ -149,7 +163,9 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
     
     if (curEdge != EEdge::eInside)
     {
-        EEdge startEdge = cellToEdge(m::startCell);
+        std::set<EEdge> startEdges;
+        for (QPoint &p: m::startCells)
+            startEdges.insert(cellToEdge(p));
         QPoint ans(curPoint);
         
         int dx = 0;
@@ -158,16 +174,16 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
         switch (curEdge)
         {
         case EEdge::eLeft:
-            dx = (startEdge == curEdge) ? 1 : -1;
+            dx = (startEdges.count(curEdge) > 0) ? 1 : -1;
             break;
         case EEdge::eTop:
-            dy = (startEdge == curEdge) ? 1 : -1;
+            dy = (startEdges.count(curEdge) > 0) ? 1 : -1;
             break;
         case EEdge::eRight:
-            dx = (startEdge == curEdge) ? -1 : 1;
+            dx = (startEdges.count(curEdge) > 0) ? -1 : 1;
             break;
         case EEdge::eBottom:
-            dy = (startEdge == curEdge) ? -1 : 1;
+            dy = (startEdges.count(curEdge) > 0) ? -1 : 1;
         case EEdge::eInside:
             qDebug() << "Helper: findLowerNeighbour: WTF?!?!?!";
             break;
@@ -372,7 +388,7 @@ void initMetrics()
     m::SlowCannonBigRadius = m::CellSize * 3;
     
     //enemy
-    m::FastEnemyStep = m::CellSize / 50.0;
+    m::FastEnemyStep = m::CellSize / 500.0;
     m::FastEnemyTextureSize = QSizeF(m::CellSize * 0.8, m::CellSize * 0.8);
     m::FastEnemySize = QSizeF(m::FastEnemyTextureSize * 1/*0.4*/);
     m::HpSize = QSizeF(m::CellSize * 0.7, m::CellSize * 0.05);

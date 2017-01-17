@@ -64,7 +64,9 @@ SOURCES += \
     Game/Wave.cpp \
     Game/WaveManager.cpp \
     Game/UserManager.cpp \
-    Game/FieldItem.cpp
+    Game/FieldItem.cpp \
+    Effect/CEffect.cpp \
+    Effect/CEnemyEffect.cpp
 
 
 HEADERS  += \
@@ -127,7 +129,9 @@ HEADERS  += \
     Metrics/CannonMetricsDef.h \
     Metrics/EnemyMetricsDef.h \
     Metrics/MetricsDef.h \
-    Metrics/ZOrderMetricsDef.h
+    Metrics/ZOrderMetricsDef.h \
+    Effect/CEffect.h \
+    Effect/CEnemyEffect.h
 
 FORMS    += mainview.ui
 

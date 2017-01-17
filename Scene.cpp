@@ -61,9 +61,12 @@ void CScene::positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal,
     qreal sizeXGlobal = toGlobalCX(sizeLocal.width());
     qreal sizeYGlobal = toGlobalCY(sizeLocal.height());
     item->setTransformOriginPoint(sizeXGlobal / 2, sizeYGlobal / 2);
-    item->setRotation(angle);
     item->setPos(toGlobalX(leftTopLocal.x()), toGlobalY(leftTopLocal.y()));
-    item->setZValue(zval);
+    
+    if (angle != item->rotation())
+        item->setRotation(angle);
+    if (zval != item->zValue())
+        item->setZValue(zval);
 }
 
 void CScene::positionItemByCenter(const QPointF &centerLocal, const QSizeF &sizeLocal,

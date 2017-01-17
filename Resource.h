@@ -39,6 +39,7 @@
 #include <atomic>
 #include <mutex>
 #include <vector>
+#include <set>
 #include <queue>
 #include <string>
 #include <sstream>

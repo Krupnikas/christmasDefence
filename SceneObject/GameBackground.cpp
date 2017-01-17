@@ -13,15 +13,17 @@ CGameBackground::CGameBackground(CGame *game):
     cells.assign(m::CellNumX, std::vector<std::shared_ptr<CSceneObject>>(m::CellNumY, nullptr));
     
     //start cell
-    cells[m::startCell.x()][m::startCell.y()] = std::make_shared<CSceneObject>(
-                0, m::BackgroundZOrder + 0.2,
-                game->cellLeftTop(m::startCell), game->cellSize(m::startCell),
-                game->r->cell1, game);
-    
+    for (QPoint &p: m::startCells)
+        cells[p.x()][p.y()] = std::make_shared<CSceneObject>(
+                    0, m::BackgroundZOrder + 0.2,
+                    game->cellLeftTop(p), game->cellSize(p),
+                    game->r->cell1, game);
+        
     //end cell
-    cells[m::endCell.x()][m::endCell.y()] = std::make_shared<CSceneObject>(
+    for (QPoint &p: m::endCells)
+    cells[p.x()][p.y()] = std::make_shared<CSceneObject>(
                 0, m::BackgroundZOrder + 0.2,
-                game->cellLeftTop(m::endCell), game->cellSize(m::endCell),
+                game->cellLeftTop(p), game->cellSize(p),
                 game->r->cell2, game);
     
     //game cells
