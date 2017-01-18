@@ -6,7 +6,7 @@ R::R()
     res_dir = "://res/christmas/";
     gm_dir = "://gm/res/christmas/game_menu/";
     lm_dir = "://lm/res/christmas/level_menu/";
-    
+
     //GameMenu resources
     game_menu_background = std::make_shared<QPixmap>(getGm("background"));
     game_menu_caption = std::make_shared<QPixmap>(getGm("caption"));

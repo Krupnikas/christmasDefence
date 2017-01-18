@@ -85,5 +85,6 @@
         <file>res/christmas/levels/level19.txt</file>
         <file>res/christmas/levels/level20.txt</file>
         <file>res/christmas/border.png</file>
+        <file>res/christmas/splash.png</file>
     </qresource>
 </RCC>
