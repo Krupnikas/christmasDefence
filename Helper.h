@@ -47,8 +47,6 @@ std::shared_ptr<QPixmap> renderPixmapFromText(QString text,
                                               QFont font = QFont("Helvetica [Cronyx]", 376),
                                               QColor backgroundColor = Qt::transparent);
 
-void readLevel(const QString &filename, std::vector<CWave> &waves);
-
 qreal ticksToTime(int ticks);
 
 QPointF getCellLeftTop(QPoint cell);

@@ -17,10 +17,10 @@ const int Inf = std::numeric_limits<int>::max();
 
 std::mutex distancesMutex;
 
-void breadth_first_search_(std::vector<std::vector<int> > &distances)
+void breadth_first_search_(std::vector<std::vector<int> > &distances, std::vector<QPoint> startPoints)
 {
     std::queue<std::pair<int, int>> queue;
-    for (QPoint &p: m::endCells)
+    for (QPoint &p: startPoints)
     {
         queue.push(std::make_pair(p.x(), p.y()));
         distances[p.x()][p.y()] = 0;
@@ -104,7 +104,7 @@ void updateDistances(
                 distances[x][y] = -1;
         }
     
-    breadth_first_search_(distances);
+    breadth_first_search_(distances, m::endCells);
     distancesMutex.unlock();
 }
 
@@ -130,30 +130,38 @@ bool okToAdd(QPoint cell, const std::vector<std::vector<int> > &distances,
         distancesMutex.unlock();
         return false;
     }*/
-    std::vector<std::vector<int>> distCheck(distances);
-    
+    std::vector<std::vector<int>> distCheckOrig(distances);
     distancesMutex.unlock();
     
-    distCheck[x][y] = Inf;
-    for (size_t x = 0; x < distCheck.size(); ++x)
-        for (size_t y = 0; y < distCheck[x].size(); ++y)
-            if (distCheck[x][y] != Inf)
-                distCheck[x][y] = -1;
-    
-    breadth_first_search_(distCheck);
-    
-    /*    bool connected = true;
-        for (int x = 0; x < CellNumX; ++x)
-            for (int y = 0; y < CellNumY; ++y)
-                if (distances[x][y] == -1)
-                    connected = false;*/
-    bool startAccessible = false;
-    for (QPoint p: m::startCells)
+    bool pathExists = true;
+    for (QPoint &p: m::startCells)
     {
-        if (distCheck[p.x()][p.y()] > -1)
-            startAccessible = true;
+        std::vector<std::vector<int>> distCheck(distCheckOrig);
+        distCheck[x][y] = Inf;
+        for (size_t x = 0; x < distCheck.size(); ++x)
+            for (size_t y = 0; y < distCheck[x].size(); ++y)
+                if (distCheck[x][y] != Inf)
+                    distCheck[x][y] = -1;
+        
+        for (QPoint &p: m::startCells)
+            distCheck[p.x()][p.y()] = Inf;
+        
+        breadth_first_search_(distCheck, std::vector<QPoint>{p});
+        
+        bool startAccessible = false;
+        for (QPoint p: m::endCells)
+        {
+            if (distCheck[p.x()][p.y()] > -1)
+                startAccessible = true;
+        }
+        if (!startAccessible)
+        {
+            pathExists = false;
+            break;
+        }
     }
-    return /*connected && */startAccessible;
+    
+    return pathExists;
 }
 
 
@@ -219,38 +227,6 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
 qreal manhattanLength(QPointF p1, QPointF p2)
 {
     return pow(pow(std::abs(p1.x() - p2.x()), 2.0) + pow(std::abs(p1.y() - p2.y()), 2.0), 0.5);
-}
-
-void readLevel(const QString &filename, std::vector<CWave> &waves)
-{
-    QFile waveFile(filename);
-    if (!waveFile.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        qDebug() << "Helper: readWaves: failed to open waves.txt";
-        return;
-    }
-    QTextStream textStream(&waveFile);
-    QString line;
-    line = textStream.readLine();
-    int waveNum(line.toInt());
-    
-    waves.clear();
-    for (int i = 0; i < waveNum; ++i)
-    {
-        CWave wave;        
-        line = textStream.readLine();
-        std::stringstream in(line.toStdString());
-        
-        in >> wave.timeBeforeStart;
-        in >> wave.enemyIncomeInterval;
-        in >> wave.totalEnemyNum;
-        in >> wave.enemyType;
-        in >> wave.enemyTexture;
-        in >> wave.enemyPower;
-        waves.push_back(wave);        
-    }
-    
-    waveFile.close();
 }
 
 qreal ticksToTime(int ticks)
@@ -390,7 +366,7 @@ void initMetrics()
     //enemy
     m::FastEnemyStep = m::CellSize / 500.0;
     m::FastEnemyTextureSize = QSizeF(m::CellSize * 0.8, m::CellSize * 0.8);
-    m::FastEnemySize = QSizeF(m::FastEnemyTextureSize * 1/*0.4*/);
+    m::FastEnemySize = QSizeF(m::FastEnemyTextureSize * 0.4);
     m::HpSize = QSizeF(m::CellSize * 0.7, m::CellSize * 0.05);
 }
 

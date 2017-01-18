@@ -38,7 +38,7 @@ CSlowCannon::~CSlowCannon(){}
 void CSlowCannon::fire()
 {
     std::shared_ptr<IBullet> bullet =
-            std::make_shared<CSlowBullet>(game, center, this->angle, sizeType);
+            std::make_shared<CSlowBullet>(game, game->cannons[gameCell.x()][gameCell.y()], this->angle, sizeType);
     game->bullets.push_back(bullet);
     bullet->draw();
     bullet->show();

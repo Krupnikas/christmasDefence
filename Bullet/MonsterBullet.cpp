@@ -2,9 +2,9 @@
 #include <Game/Game.h>
 #include <Helper.h>
 #include <Enemy/IEnemy.h>
+#include <Cannon/ICannon.h>
 
-
-CMonsterBullet::CMonsterBullet(CGame *game, QPointF center, double angle, ESizeType type)
+CMonsterBullet::CMonsterBullet(CGame *game, std::shared_ptr<ICannon> cannon, double angle, ESizeType type)
 {
     //IGameObject fields
     this->label = "Monster Bullet";
@@ -19,26 +19,12 @@ CMonsterBullet::CMonsterBullet(CGame *game, QPointF center, double angle, ESizeT
                                   game->r->monster_bullet_3);
     this->position = game->scene->addPixmap(textureSize, pixmap);
     
-    this->center = center;
+    this->center = cannon->getCenter();
     this->leftTop.setX(center.x() - game->scene->toLocalCX(position->boundingRect().width()) / 2);
     this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
     
     //IBullet fields
-    this->step = m::MonsterBulletStep;
-    this->hitPower = helper::choose(type, m::MonsterBulletSmHit, m::MonsterBulletMidHit, m::MonsterBulletBigHit);
-}
-
-bool CMonsterBullet::move()
-{
-    center = helper::addVector(center, game->scene->toGlobalDist(step, angle), angle);
-    leftTop = helper::addVector(leftTop, game->scene->toGlobalDist(step, angle), angle);
-    return game->scene->insideEnclosingRect(center);
-}
-
-
-
-void CMonsterBullet::onTimer()
-{
-    move();
-    draw();
+    step = m::MonsterBulletStep;
+    hitPower = helper::choose(type, m::MonsterBulletSmHit, m::MonsterBulletMidHit, m::MonsterBulletBigHit);
+    sourceCannon = cannon;
 }

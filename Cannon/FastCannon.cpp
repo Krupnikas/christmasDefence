@@ -39,7 +39,7 @@ CFastCannon::~CFastCannon(){}
 void CFastCannon::fire()
 {
     std::shared_ptr<IBullet> bullet = 
-            std::make_shared<CFastBullet>(game, center, this->angle, sizeType);
+            std::make_shared<CFastBullet>(game, game->cannons[gameCell.x()][gameCell.y()], this->angle, sizeType);
     game->bullets.push_back(bullet);
     bullet->draw();
     bullet->show();

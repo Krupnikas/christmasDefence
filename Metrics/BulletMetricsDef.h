@@ -3,6 +3,9 @@
 namespace m
 {
 
+qreal BulletDisappearStart = 1.2;
+qreal BulletDisappearEnd = 1.4;
+
 //Burn bullet
 int BurnBulletSizeX;
 int BurnBulletSizeY;

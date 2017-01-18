@@ -26,9 +26,9 @@ int BurnCannonBigCost = 25;
 
 //Fast cannon
 // rotation speed, in angles
-qreal FastCannonSmRotation = 2;
-qreal FastCannonMidRotation = 2;
-qreal FastCannonBigRotation = 2;
+qreal FastCannonSmRotation = 4;
+qreal FastCannonMidRotation = 3.8;
+qreal FastCannonBigRotation = 3.5;
 
 //fire speed in game tacts
 qreal FastCannonSmFireSpeed = 5;

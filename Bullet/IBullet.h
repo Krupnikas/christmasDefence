@@ -4,6 +4,7 @@
 #include <SceneObject/SceneObject.h>
 
 class CGame;
+class ICannon;
 
 class IBullet : public CSceneObject
 {     
@@ -11,11 +12,11 @@ class IBullet : public CSceneObject
     
 public:
     
+    IBullet();
     virtual ~IBullet();
 
-    virtual bool move() = 0;
-    
-    bool reachedEnemy();
+    virtual bool move();
+    virtual bool reachedEnemy();
     
     //getters and setters
     int getX() const;
@@ -31,4 +32,7 @@ protected:
     
     qreal step;
     int hitPower;
+    
+    std::shared_ptr<ICannon> sourceCannon;
+    
 };

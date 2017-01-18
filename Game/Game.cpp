@@ -45,7 +45,7 @@ std::vector<QPoint> generate_cells_(int edge, int pos)
             cells.push_back(QPoint(xLess, 0));
         else if (pos == 1)
         {
-            cells.push_back(QPoint(xMid, 0));
+            cells.push_back(QPoint(xMid - 1, 0));
             if (m::CellNumX % 2 == 0)
                 cells.push_back(QPoint(xMid + 2, 0));
         }
@@ -74,7 +74,7 @@ std::vector<QPoint> generate_cells_(int edge, int pos)
             cells.push_back(QPoint(xGr, y));
         else if (pos == 1)
         {
-            cells.push_back(QPoint(xMid, y));
+            cells.push_back(QPoint(xMid - 1, y));
             if (m::CellNumX % 2 == 0)
                 cells.push_back(QPoint(xMid + 2, y));
         }

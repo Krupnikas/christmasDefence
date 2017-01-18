@@ -3,6 +3,9 @@
 namespace m
 {
 
+extern qreal BulletDisappearStart;
+extern qreal BulletDisappearEnd;
+
 //Burn bullet
 extern int BurnBulletSizeX;
 extern int BurnBulletSizeY;

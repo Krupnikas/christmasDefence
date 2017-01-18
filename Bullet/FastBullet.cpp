@@ -2,9 +2,10 @@
 #include <Game/Game.h>
 #include <Helper.h>
 #include <Enemy/IEnemy.h>
+#include <Cannon/ICannon.h>
 
 
-CFastBullet::CFastBullet(CGame *game, QPointF center, double angle, ESizeType type)
+CFastBullet::CFastBullet(CGame *game, std::shared_ptr<ICannon> cannon, double angle, ESizeType type)
 {
     //IGameObject fields
     this->label = "Fast Bullet";
@@ -19,31 +20,12 @@ CFastBullet::CFastBullet(CGame *game, QPointF center, double angle, ESizeType ty
                                   game->r->fast_bullet_3);
     this->position = game->scene->addPixmap(textureSize, pixmap);
     
-    this->center = center;
+    this->center = cannon->getCenter();
     this->leftTop.setX(center.x() - game->scene->toLocalCX(position->boundingRect().width()) / 2);
     this->leftTop.setY(center.y() - game->scene->toLocalCY(position->boundingRect().height()) / 2);
     
     //IBullet fields
-    this->step = m::FastBulletStep;
-    this->hitPower = helper::choose(type, m::FastBulletSmHit, m::FastBulletMidHit, m::FastBulletBigHit);
-}
-
-bool CFastBullet::move()
-{
-    center = helper::addVector(center, game->scene->toGlobalDist(step, angle), angle);
-    leftTop = helper::addVector(leftTop, game->scene->toGlobalDist(step, angle), angle);
-    return game->scene->insideEnclosingRect(center);
-/*    {
-        game->scene->removeItem(position);
-    }*/
-   /* if (!game->scene->insideGameRect(center))
-        game->bullets.erase(iterator);*/
-}
-
-
-
-void CFastBullet::onTimer()
-{
-    move();
-    draw();
+    step = m::FastBulletStep;
+    hitPower = helper::choose(type, m::FastBulletSmHit, m::FastBulletMidHit, m::FastBulletBigHit);
+    sourceCannon = cannon;
 }
