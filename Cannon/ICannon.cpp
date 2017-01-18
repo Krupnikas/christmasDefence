@@ -298,7 +298,9 @@ void ICannon::rotate()
         findEnemy();
     else
     {
-        if (curEnemy->isDead() || !reachingEnemy(curEnemy))
+        if (curEnemy->isDead() ||
+                !game->scene->insideGameRect(curEnemy->getCenter()) ||
+                !reachingEnemy(curEnemy))
         {
             findEnemy();
         }

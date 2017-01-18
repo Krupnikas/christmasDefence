@@ -23,9 +23,9 @@ int FastBulletSizeY;
 
 qreal FastBulletStep; // in local points
 
-int FastBulletSmHit = 3;
-int FastBulletMidHit = 6;
-int FastBulletBigHit = 9;
+int FastBulletSmHit = 2;
+int FastBulletMidHit = 4;
+int FastBulletBigHit = 8;
 
 
 //Monster bullet
