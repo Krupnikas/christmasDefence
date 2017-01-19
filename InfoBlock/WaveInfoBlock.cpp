@@ -75,7 +75,12 @@ void CWaveInfoBlock::remove()
 
 void CWaveInfoBlock::onEnemyNumChanged(int newEnemyNum)
 {
-    enemyCounter->changeText(QString::number(newEnemyNum));
+    QString text;
+    if (newEnemyNum >= 0)
+        text = QString::number(newEnemyNum);
+    else
+        text = "GJ!";
+    enemyCounter->changeText(text);
     enemyCounter->draw();
     enemyCounter->show();
 }

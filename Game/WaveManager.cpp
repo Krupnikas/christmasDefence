@@ -74,7 +74,10 @@ void CWaveManager::onTimer()
                     waveGoing = false;
                     counter = 0;
                     setCurWave(curWave + 1);
-                    game->waveInformationBlock->onEnemyNumChanged(waves[curWave].totalEnemyNum);
+                    if (curWave >= waves.size())
+                        game->waveInformationBlock->onEnemyNumChanged(-1);
+                    else
+                        game->waveInformationBlock->onEnemyNumChanged(waves[curWave].totalEnemyNum);
                     return;
                 }
             }

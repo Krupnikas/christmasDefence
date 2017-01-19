@@ -440,8 +440,8 @@ void CGame::deselectCell()
 QPoint CGame::findNearestCell(QPointF from)
 {
     QPoint nearestCell(-1, -1);
-    nearestCell.setX(from.x() / m::CellSize);
-    nearestCell.setY(from.y() / m::CellSize);
+    nearestCell.setX((from.x() - m::OffsetX) / m::CellSize + 1);
+    nearestCell.setY((from.y() - m::OffsetY) / m::CellSize + 1);
     return nearestCell;
 }
 

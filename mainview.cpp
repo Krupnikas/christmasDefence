@@ -84,25 +84,21 @@ void MainView::resizeEvent(QResizeEvent *event)
     ui->graphicsView->setSceneRect(ui->gridLayout->geometry());
     scene.updateGameRect(ui->graphicsView->geometry());
     ui->graphicsView->setScene(scene.getGraphicsScene());
-
-    if (gameStatus != EGameStatus::eNotInited)
-    {
-        gameMenu.resize();
-        levelMenu.resize();
-        game.resize();
-    }
     
     switch (gameStatus)
     {
     case EGameStatus::eNotInited:
         break;
     case EGameStatus::eGameMenu:
+        gameMenu.resize();
         gameMenu.show();
         break;
     case EGameStatus::eLevelMenu:
+        levelMenu.resize();
         levelMenu.show();
         break;
     case EGameStatus::eGame:
+        game.resize();
         game.show();
         break;
     default:

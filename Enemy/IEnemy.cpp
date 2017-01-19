@@ -139,19 +139,19 @@ bool IEnemy::move()
     switch (edge)
     {
     case EEdge::eLeft:
-        if (center.x() + textureSize.width() <= 0)
+        if (center.x() + textureSize.width() / 2 <= 0)
             return false;
         break;
     case EEdge::eTop:
-        if (center.y() + textureSize.height() <= 0)
+        if (center.y() + textureSize.height() / 2 <= 0)
             return false;
         break;
     case EEdge::eRight:
-        if (center.x() - textureSize.width() >= m::LocalWidth)
+        if (center.x() - textureSize.width() / 2 >= m::LocalWidth)
             return false;
         break;
     case EEdge::eBottom:
-        if (center.y() - textureSize.height() >= m::LocalHeight)
+        if (center.y() - textureSize.height() / 2 >= m::LocalHeight)
             return false;
     case EEdge::eInside:
         break;

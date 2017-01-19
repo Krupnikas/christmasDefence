@@ -148,11 +148,11 @@ bool okToAdd(QPoint cell, const std::vector<std::vector<int> > &distances,
         
         breadth_first_search_(distCheck, std::vector<QPoint>{p});
         
-        bool startAccessible = false;
+        bool startAccessible = true;
         for (QPoint p: m::endCells)
         {
-            if (distCheck[p.x()][p.y()] > -1)
-                startAccessible = true;
+            if (distCheck[p.x()][p.y()] == -1)
+                startAccessible = false;
         }
         if (!startAccessible)
         {
@@ -317,10 +317,12 @@ EEdge cellToEdge(QPoint cell)
 void initMetrics()
 {
     //general
-    m::CellSize = m::LocalHeight / m::CellNumY;
-    m::OffsetY = m::CellSize;
-    m::CellNumX = m::LocalWidth / m::CellSize;
-    m::OffsetX = m::CellSize + (m::LocalWidth - m::CellNumX * m::CellSize) / 2;
+    m::OffsetY = m::LocalHeight / 30;
+    m::CellSize = (m::LocalHeight - 2 * m::OffsetY)  / (m::CellNumY - 2);
+    qreal offsetX = m::LocalWidth / 20;
+    m::CellNumX = (m::LocalWidth - 2 * offsetX) / m::CellSize + 2;
+    //m::OffsetX = m::CellSize + (m::LocalWidth - m::CellNumX * m::CellSize) / 2;
+    m::OffsetX = (m::LocalWidth - (m::CellNumX - 2) * m::CellSize) / 2;
     
     //bullet
     m::BurnBulletSizeX = m::CellSize / 3.0;

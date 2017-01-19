@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
     MainView w(&a);
     w.show();
 
-    QTimer::singleShot(3000, &splash, SLOT(close()));
-    QTimer::singleShot(3000, &w, SLOT(show()));
+    QTimer::singleShot(1000, &splash, SLOT(close()));
+    QTimer::singleShot(1000, &w, SLOT(show()));
 
     return a.exec();
 }

@@ -83,8 +83,8 @@ Cell::Cell(const Cell &cell):
 Movements::Movements(CGame *game):
     game(game)
 {
-    ExitWidth = m::OffsetX * 2;
-    ExitHeight = m::OffsetY * 2;
+    ExitWidth = m::OffsetX + m::CellSize;
+    ExitHeight = m::OffsetY + m::CellSize;
     
     LocalExitWidth = LocalSize * ExitWidth / m::CellSize / QueueSize * QueueSize;
     LocalExitHeight = LocalSize * ExitHeight / m::CellSize / QueueSize * QueueSize;
@@ -157,13 +157,15 @@ QPointF Movements::curCenter() const
 {
     QPointF curPoint(0, 0);
     if (curGameCell.x() <= 0)
-        curPoint.setX(-m::OffsetX + static_cast<qreal>(curPos.x()) * ExitWidth / LocalExitWidth);
+        curPoint.setX(-(ExitWidth  * (curGameCell.x() + 1)) +
+                      m::OffsetX + static_cast<qreal>(curPos.x()) * ExitWidth / LocalExitWidth);
     else
         curPoint.setX(m::OffsetX + (curGameCell.x() - 1) * m::CellSize + static_cast<qreal>(curPos.x()) * 
                   curLocalCell.cellGameSize.width() / curLocalCell.localRect.width());
     
     if (curGameCell.y() <= 0)
-        curPoint.setY(-ExitHeight / 2 + static_cast<qreal>(curPos.y()) * ExitHeight / LocalExitHeight);
+        curPoint.setY(-(ExitHeight * (curGameCell.y() + 1)) +
+                      m::OffsetY + static_cast<qreal>(curPos.y()) * ExitHeight / LocalExitHeight);
     else
         curPoint.setY(m::OffsetY + (curGameCell.y() - 1) * m::CellSize + static_cast<qreal>(curPos.y()) * 
                   curLocalCell.cellGameSize.height() / curLocalCell.localRect.height());
