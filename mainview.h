@@ -37,6 +37,8 @@ public:
     explicit MainView(QApplication *app, QWidget *parent = 0);
     ~MainView();
 
+    void setGraphicsViewUpdatesEnabled(bool enabled);
+
     void resizeEvent(QResizeEvent *) override;
     virtual void showEvent(QShowEvent *event) override;
     

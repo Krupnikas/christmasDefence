@@ -7,6 +7,7 @@ CSceneBackground::CSceneBackground(CGame *game, std::shared_ptr<QPixmap> pixmap)
     this->game = game;
     this->pixmap = pixmap;
     this->position = game->scene->addBackgroundPixmap(pixmap);
+    this->position->setCacheMode(QGraphicsItem::ItemCoordinateCache);
 }
 
 void CSceneBackground::scale()

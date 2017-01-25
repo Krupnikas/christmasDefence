@@ -9,6 +9,7 @@ CGameBackground::CGameBackground(CGame *game):
                 0, m::BackgroundZOrder + 0.1,
                 QPointF(0, 0), QSizeF(m::LocalWidth, m::LocalHeight),
                 game->r->field_background, game);
+    fieldBackground->getPosition()->setCacheMode(QGraphicsItem::ItemCoordinateCache);
 
     cells.assign(m::CellNumX, std::vector<std::shared_ptr<CSceneObject>>(m::CellNumY, nullptr));
     
@@ -45,6 +46,7 @@ CGameBackground::CGameBackground(CGame *game):
                             0, m::BackgroundZOrder + 0.2,
                             game->cellLeftTop(QPoint(i, j)), game->cellSize(QPoint(i, j)),
                             cellPixmap, game);
+                cells[i][j]->getPosition()->setCacheMode(QGraphicsItem::ItemCoordinateCache);
             }
 }
 

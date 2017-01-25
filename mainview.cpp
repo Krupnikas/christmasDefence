@@ -35,6 +35,8 @@ MainView::MainView(QApplication *app, QWidget *parent):
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    ui->graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+
     //OpenGL optimizations
     QGLFormat format = QGLFormat(QGL::DirectRendering);
     QGLWidget *glWidget = new QGLWidget(format);
@@ -76,6 +78,11 @@ MainView::MainView(QApplication *app, QWidget *parent):
 MainView::~MainView()
 {
     delete ui;
+}
+
+void MainView::setGraphicsViewUpdatesEnabled(bool enabled)
+{
+    ui->graphicsView->setUpdatesEnabled(enabled);
 }
 
 void MainView::resizeEvent(QResizeEvent *event)
