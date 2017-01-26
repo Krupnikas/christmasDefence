@@ -496,7 +496,7 @@ void CGame::onPositionTimer()
 
 void CGame::onDrawTimer()
 {
-    view->setGraphicsViewUpdatesEnabled(false);
+    //view->setGraphicsViewUpdatesEnabled(false);
 
     for (size_t i = 0; i < bullets.size(); ++i)
         bullets[i]->draw();
@@ -531,7 +531,7 @@ void CGame::onDrawTimer()
     }
     scene->updateFPS(fps);
 
-    view->setGraphicsViewUpdatesEnabled(true);
+    //view->setGraphicsViewUpdatesEnabled(true);
 }
 
 void CGame::onMousePressed(QMouseEvent *pressEvent)

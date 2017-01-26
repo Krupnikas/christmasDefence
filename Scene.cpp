@@ -19,7 +19,7 @@ std::shared_ptr<QGraphicsItem> CScene::addPixmap(const QSizeF &sizeLocal, std::s
     std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(*scaledPixmap));
     item->hide();
     item->setFlag(QGraphicsItem::ItemHasNoContents, true);
-    item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+    //item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
     return item;
 }
 
@@ -35,7 +35,7 @@ std::shared_ptr<QGraphicsItem> CScene::addBackgroundPixmap(std::shared_ptr<QPixm
     std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(*scaledPixmap));
     item->hide();
     item->setFlag(QGraphicsItem::ItemHasNoContents, true);
-    item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+    //item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
     return item;
 }
 
@@ -51,7 +51,7 @@ std::shared_ptr<QGraphicsItem> CScene::addEllipse(const QPointF &centerLocal, co
                 graphicsScene->addEllipse(0, 0, sizeXGlobal, sizeYGlobal));
     item->setPos(leftTopX, leftTopY);
     item->hide();
-    item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+    //item->setCacheMode(QGraphicsItem::ItemCoordinateCache);
     return item;
 }
 

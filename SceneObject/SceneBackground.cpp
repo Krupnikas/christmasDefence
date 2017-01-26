@@ -10,11 +10,11 @@ CSceneBackground::CSceneBackground(CGame *game, std::shared_ptr<QPixmap> pixmap)
     this->position->setCacheMode(QGraphicsItem::ItemCoordinateCache);
 }
 
-void CSceneBackground::scale()
-{
-    if (position)
-        game->scene->removeItem(position);
-    position = game->scene->addBackgroundPixmap(pixmap);
-}
+//void CSceneBackground::scale()
+//{
+//    if (position)
+//        game->scene->removeItem(position);
+//    position = game->scene->addBackgroundPixmap(pixmap);
+//}
 
 void CSceneBackground::draw(){}
