@@ -8,7 +8,7 @@ R::R()
     lm_dir = "://lm/res/christmas/level_menu/";
 
     //GameMenu resources
-    game_menu_background = std::make_shared<QPixmap>(getGm("background1"));
+    game_menu_background = std::make_shared<QPixmap>(getGm("background"));
     game_menu_caption = std::make_shared<QPixmap>(getGm("caption"));
     
     gm_buttons.resize(m::GameMenuButtonNum);
@@ -24,7 +24,7 @@ R::R()
         gm_pressed_buttons[i] = std::make_shared<QPixmap>(getGmWithPrefix("pressed_button_", i + 1));
 
     //LevelMenu resources
-    level_menu_background = std::make_shared<QPixmap>(getLm("background1"));
+    level_menu_background = std::make_shared<QPixmap>(getLm("background"));
     level_menu_caption = std::make_shared<QPixmap>(getLm("caption"));
     level_menu_back = std::make_shared<QPixmap>(getLm("back"));
     
@@ -47,8 +47,8 @@ R::R()
     cell2 = std::make_shared<QPixmap>(get("cell2"));
     cellSelected = std::make_shared<QPixmap>(get("cellSelected"));
     
-    game_background = std::make_shared<QPixmap>(get("game_background1"));
-    field_background = std::make_shared<QPixmap>(get("field_background1"));
+    game_background = std::make_shared<QPixmap>(get("game_background"));
+    field_background = std::make_shared<QPixmap>(get("field_background"));
 
     cannonSelectionBackground = std::make_shared<QPixmap>(get("cannonSelectingInfoBlockBackground"));
     cannonUpgradeBackground = std::make_shared<QPixmap>(get("cannonUpgradeInfoBlockBackground"));
