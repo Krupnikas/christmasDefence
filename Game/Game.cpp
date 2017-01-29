@@ -458,6 +458,7 @@ void CGame::onButtonPressed(int type)
     case EButtonType::eBTgMenu:
         hide();
         endGame();
+        view->gameMenu.create();
         view->gameMenu.show();
         break;
     default:
@@ -496,6 +497,18 @@ void CGame::onPositionTimer()
             enemies[i]->remove();
     if (lastEnemyInd < enemies.size())
         enemies.resize(lastEnemyInd);
+    
+    cannonsMutex.lock();
+
+        for (int i = 0; i < m::CellNumX; ++i)
+            for (int j = 0; j < m::CellNumY; ++j)
+                if (cannons[i][j])
+                {
+                    cannons[i][j]->count();
+                    cannons[i][j]->rotate();
+                }
+
+    cannonsMutex.unlock();
 }
 
 void CGame::onDrawTimer()
@@ -508,17 +521,10 @@ void CGame::onDrawTimer()
     for (auto enemy: enemies)
         enemy->draw();
 
-    cannonsMutex.lock();
-
-        for (int i = 0; i < m::CellNumX; ++i)
-            for (int j = 0; j < m::CellNumY; ++j)
-                if (cannons[i][j])
-                {
-                    cannons[i][j]->count();
-                    cannons[i][j]->rotate();
-                }
-
-    cannonsMutex.unlock();
+    for (int i = 0; i < m::CellNumX; ++i)
+        for (int j = 0; j < m::CellNumY; ++j)
+            if (cannons[i][j])
+                cannons[i][j]->draw();
 
     static QTime time;
     static int frameCnt=0;

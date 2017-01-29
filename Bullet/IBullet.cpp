@@ -28,8 +28,8 @@ bool IBullet::move()
     qreal radius = sourceCannon->getFireRadius();
     qreal disappearStart = radius * m::BulletDisappearStart;
     qreal disappearEnd = radius * m::BulletDisappearEnd;
-    if (dist > disappearStart)
-        position->setOpacity((disappearEnd - dist) / (disappearEnd - disappearStart));
+    //if (dist > disappearStart)
+    //    position->setOpacity((disappearEnd - dist) / (disappearEnd - disappearStart));
     
     return game->scene->insideEnclosingRect(center) &&
              dist <= disappearEnd;

@@ -121,7 +121,6 @@ void MainView::showEvent(QShowEvent*)
     scene.updateGameRect(ui->gridLayout->geometry());
 
     gameMenu.create();
-    levelMenu.create();
     //game.create();
 
     gameMenu.show();

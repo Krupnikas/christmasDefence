@@ -119,12 +119,13 @@ void CLevelMenu::onButtonPressed(int level)
     
     if (level == BackButton)
     {
-        hide();
+        close();
+        game->view->gameMenu.create();
         game->view->gameMenu.show();
         return;
     }
     
-    hide();
+    close();
     game->startGameLevel(level + 1);
     
 }

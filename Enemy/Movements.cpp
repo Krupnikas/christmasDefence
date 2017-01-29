@@ -191,7 +191,7 @@ int Movements::iterNum(qreal step) const
 
 qreal Movements::getDistanceToFinish() const
 {
-    EEdge startEdge = helper::cellToEdge(m::startCells[0]);
+    EEdge startEdge = helper::cellToEdge(QPoint(m::CellNumX / 2, m::CellNumY / 2));// m::startCells[0]);
     EEdge curEdge = helper::cellToEdge(curGameCell);
     
     qreal dist = game->distances[curGameCell.x()][curGameCell.y()];

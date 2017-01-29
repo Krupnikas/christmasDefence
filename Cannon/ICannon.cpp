@@ -319,7 +319,6 @@ void ICannon::rotate()
     if (std::abs(deltaAngle) <= rotationSpeed)
     {
         angle += deltaAngle;
-        draw();
         if (counter == fireSpeed)
         {
             fire();
@@ -332,7 +331,6 @@ void ICannon::rotate()
             angle += rotationSpeed;
         else
             angle -= rotationSpeed;
-        draw();
     }
     
     

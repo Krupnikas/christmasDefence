@@ -95,11 +95,12 @@ void CGameMenu::onButtonPressed(int type)
     switch (eType)
     {
     case EButtonType::eBTgmCampaign:
-        hide();
+        close();
+        game->view->levelMenu.create();
         game->view->levelMenu.show();
         break;   
     case EButtonType::eBTgmQuickPlay:
-        hide();
+        close();
         game->startGameLevel(1);
         break;
     case EButtonType::eBTgmDev:
