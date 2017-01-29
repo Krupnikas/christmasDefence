@@ -100,6 +100,7 @@ CGame::CGame(MainView *view, R *r, CScene *scene, QMediaPlaylist *playlist, QMed
     player(player),
     waveManager(this),
     userManager(this),
+    calculator(this),
     selectionStatus(ESelectionStatus::eNone)
 {
     pressedButton = EButtonType::eBTnone;
@@ -107,7 +108,7 @@ CGame::CGame(MainView *view, R *r, CScene *scene, QMediaPlaylist *playlist, QMed
     positionTimer = new QTimer(this);
     drawTimer = new QTimer(this);
 
-    connect(positionTimer, SIGNAL(timeout()), this, SLOT(onPositionTimer()));
+    connect(positionTimer, SIGNAL(timeout()), &calculator, SLOT(start()));
     connect(drawTimer, SIGNAL(timeout()), this, SLOT(onDrawTimer()));
 }
 
@@ -472,73 +473,7 @@ void CGame::onButtonPressed(int type)
 
 void CGame::onPositionTimer()
 {
-    waveManager.onTimer();
 
-    size_t lastBulletInd = 0;
-    for (size_t i = 0; i < bullets.size(); ++i)
-        if (bullets[i]->move() && !bullets[i]->reachedEnemy())
-        {
-            if (lastBulletInd < i)
-                bullets[lastBulletInd++] = bullets[i];
-            else
-                lastBulletInd++;
-        }
-        else
-            bullets[i]->remove();
-    if (lastBulletInd < bullets.size())
-        bullets.resize(lastBulletInd);
-
-    static QElapsedTimer timer;
-    timer.start();
-    size_t lastEnemyInd = 0;
-    for (size_t i = 0; i < enemies.size(); ++i)
-        if (!enemies[i]->isDead() && enemies[i]->move())
-        {
-            if (lastEnemyInd < i)
-                enemies[lastEnemyInd++] = enemies[i];
-            else
-                lastEnemyInd++;
-        }
-        else
-            enemies[i]->remove();
-    if (lastEnemyInd < enemies.size())
-        enemies.resize(lastEnemyInd);
-    
-    qint64 elapsed = timer.nsecsElapsed();
-    //if (elapsed > 1e6)
-        qDebug() << "enemies counting " << elapsed / 1e6f;
-    
-    
-    
-    cannonsMutex.lock();
-    timer.restart();
-    
-    for (int i = 0; i < m::CellNumX; ++i)
-        for (int j = 0; j < m::CellNumY; ++j)
-            if (cannons[i][j])
-            {
-                cannons[i][j]->count();
-                cannons[i][j]->rotate();
-            }
-    
-    elapsed = timer.nsecsElapsed();
-    //if (elapsed > 5e6)
-        qDebug() << "cannons counting " << elapsed / 1e6f;
-    cannonsMutex.unlock();
-    
-    static QTime time;
-    static int frameCnt=0;
-    static double timeElapsed=0;
-    // tps counting...
-    frameCnt++;
-    timeElapsed += time.elapsed();
-    time.restart();
-    if (timeElapsed >= 500)
-    {
-       tps = frameCnt * 1000.0 / timeElapsed;
-       timeElapsed = 0;
-       frameCnt = 0;
-    }
 }
 
 void CGame::onDrawTimer()

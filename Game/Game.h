@@ -9,6 +9,7 @@
 #include <SceneObject/GameBackground.h>
 #include <Game/WaveManager.h>
 #include <Game/UserManager.h>
+#include <Game/CalculationThread.h>
 
 class IBullet;
 class IEnemy;
@@ -41,6 +42,8 @@ public:
 
     EButtonType pressedButton;
     
+    CCalculationThread calculator;
+    
     QTimer *positionTimer;
     QTimer *drawTimer;
 
@@ -59,6 +62,11 @@ public:
     std::vector<std::shared_ptr<IEnemy> > enemies;
     std::vector<std::vector<std::shared_ptr<ICannon>>> cannons;
     std::vector<std::vector<int>> distances;
+    
+    qreal fps = 0;
+    qreal tps = 0;
+    
+    std::mutex cannonsMutex;
     
 //public methods
 public:
@@ -115,8 +123,7 @@ private:
 
 //private attributes
 private:
-    qreal fps = 0;
-    qreal tps = 0;
+
+    //TODO: move all fields HERE!!!!
     
-    std::mutex cannonsMutex;
 };

@@ -70,7 +70,8 @@ SOURCES += \
     Game/UserManager.cpp \
     Game/FieldItem.cpp \
     Effect/CEffect.cpp \
-    Effect/CEnemyEffect.cpp
+    Effect/CEnemyEffect.cpp \
+    Game/CalculationThread.cpp
 
 
 HEADERS  += \
@@ -135,7 +136,8 @@ HEADERS  += \
     Metrics/MetricsDef.h \
     Metrics/ZOrderMetricsDef.h \
     Effect/CEffect.h \
-    Effect/CEnemyEffect.h
+    Effect/CEnemyEffect.h \
+    Game/CalculationThread.h
 
 FORMS    += mainview.ui
 
