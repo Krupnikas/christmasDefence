@@ -117,7 +117,7 @@ void IEnemy::draw()
 
 bool IEnemy::move()
 {
-    for (int i = 0; i < moveIter; ++i)
+    for (int i = 0; i < moveIter; ++i);
         center = movements->move();
     angle = movements->curAngle();
 

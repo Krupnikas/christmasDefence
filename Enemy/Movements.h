@@ -103,6 +103,8 @@ private:
     Cell EdgeXLocalCell;
     Cell EdgeYLocalCell;
     
+    QPointF delta;
+    
 };
 
 }

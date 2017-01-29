@@ -36,7 +36,7 @@ public:
     //void updateGameBackground();
 
     void updateDistances(std::vector<std::vector<int>> &distances);
-    void updateFPS(int fps);
+    void updateFPS(int fps, int tps);
     void removeFPS();
     void updateWaveInfo(QString info);
     void removeWaveInfo();
@@ -78,6 +78,7 @@ private:
     
     std::vector<std::shared_ptr<QGraphicsItem>> backgroundItems;
     std::shared_ptr<QGraphicsTextItem> fpsItem;
+    std::shared_ptr<QGraphicsTextItem> tpsItem;
     std::shared_ptr<QGraphicsTextItem> waveInfoItem;
     
 };

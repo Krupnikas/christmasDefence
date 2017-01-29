@@ -135,15 +135,15 @@ qreal calc_desired_vector(QPointF cannonCenter,
 {
     int clockwise = clockwise_movement_(cannonCenter, enemyCenter, enemySpeed);
     
-    if (clockwise == 2)
+    //if (clockwise == 2)
         return helper::calcAngle(cannonCenter, enemyCenter);
 
-    return bin_search_angle_(cannonCenter,
-                                       enemyCenter, enemySpeed, enemyRadius,
-                                       bulletSpeed, bulletRadius, game, clockwise);
+//    return bin_search_angle_(cannonCenter,
+//                                       enemyCenter, enemySpeed, enemyRadius,
+//                                       bulletSpeed, bulletRadius, game, clockwise);
 }
 
-qreal calc_delta_angle(QPointF cannonCenter, qreal cannonAngle,
+qreal calc_delta_angle_(QPointF cannonCenter, qreal cannonAngle,
                        QPointF enemyCenter, QPointF enemySpeed, qreal enemyRadius,
                        qreal bulletSpeed, qreal bulletRadius, CGame *game)
 {
@@ -309,7 +309,7 @@ void ICannon::rotate()
     if (!curEnemy)
         return;
     
-    qreal deltaAngle = calc_delta_angle(game->scene->toGlobalPoint(center), angle,
+    qreal deltaAngle = calc_delta_angle_(game->scene->toGlobalPoint(center), angle,
                                         game->scene->toGlobalPoint(curEnemy->getCenter()),
                                         game->scene->toGlobalSize(curEnemy->getSpeed()),
                                         game->scene->toGlobalCX(curEnemy->getSize().width() / 20),

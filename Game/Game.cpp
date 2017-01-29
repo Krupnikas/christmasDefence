@@ -259,7 +259,11 @@ void CGame::startGameLevel(int level)
     userManager.setCash(20000);
     for (int i = 0; i < m::CellNumX; ++i)
         for (int j = 0; j < m::CellNumY; ++j)
-            buyCannon(std::make_shared<CFastCannon>(this, QPoint(i, j), 0));
+        {
+            bool buy = rand() % 2;
+            if (buy)
+                buyCannon(std::make_shared<CFastCannon>(this, QPoint(i, j), 0));
+        }
     
     waveManager.initialize();
     helper::updateDistances(cannons, distances);
@@ -484,6 +488,8 @@ void CGame::onPositionTimer()
     if (lastBulletInd < bullets.size())
         bullets.resize(lastBulletInd);
 
+    static QElapsedTimer timer;
+    timer.start();
     size_t lastEnemyInd = 0;
     for (size_t i = 0; i < enemies.size(); ++i)
         if (!enemies[i]->isDead() && enemies[i]->move())
@@ -498,17 +504,41 @@ void CGame::onPositionTimer()
     if (lastEnemyInd < enemies.size())
         enemies.resize(lastEnemyInd);
     
+    qint64 elapsed = timer.nsecsElapsed();
+    //if (elapsed > 1e6)
+        qDebug() << "enemies counting " << elapsed / 1e6f;
+    
+    
+    
     cannonsMutex.lock();
-
-        for (int i = 0; i < m::CellNumX; ++i)
-            for (int j = 0; j < m::CellNumY; ++j)
-                if (cannons[i][j])
-                {
-                    cannons[i][j]->count();
-                    cannons[i][j]->rotate();
-                }
-
+    timer.restart();
+    
+    for (int i = 0; i < m::CellNumX; ++i)
+        for (int j = 0; j < m::CellNumY; ++j)
+            if (cannons[i][j])
+            {
+                cannons[i][j]->count();
+                cannons[i][j]->rotate();
+            }
+    
+    elapsed = timer.nsecsElapsed();
+    //if (elapsed > 5e6)
+        qDebug() << "cannons counting " << elapsed / 1e6f;
     cannonsMutex.unlock();
+    
+    static QTime time;
+    static int frameCnt=0;
+    static double timeElapsed=0;
+    // tps counting...
+    frameCnt++;
+    timeElapsed += time.elapsed();
+    time.restart();
+    if (timeElapsed >= 500)
+    {
+       tps = frameCnt * 1000.0 / timeElapsed;
+       timeElapsed = 0;
+       frameCnt = 0;
+    }
 }
 
 void CGame::onDrawTimer()
@@ -539,7 +569,8 @@ void CGame::onDrawTimer()
        timeElapsed = 0;
        frameCnt = 0;
     }
-    scene->updateFPS(fps);
+    
+    scene->updateFPS(fps, tps);
 
     //view->setGraphicsViewUpdatesEnabled(true);
 }

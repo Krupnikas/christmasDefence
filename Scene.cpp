@@ -60,11 +60,17 @@ void CScene::positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal,
 {
     qreal sizeXGlobal = toGlobalCX(sizeLocal.width());
     qreal sizeYGlobal = toGlobalCY(sizeLocal.height());
-    item->setTransformOriginPoint(sizeXGlobal / 2, sizeYGlobal / 2);
-    item->setPos(toGlobalX(leftTopLocal.x()), toGlobalY(leftTopLocal.y()));
+    
+    QPointF curPos = item->pos();
+    QPointF newPos = QPointF(toGlobalX(leftTopLocal.x()), toGlobalY(leftTopLocal.y()));
+    if (curPos != newPos)
+        item->setPos(newPos);
     
     if (angle != item->rotation())
+    {
+        item->setTransformOriginPoint(sizeXGlobal / 2, sizeYGlobal / 2);
         item->setRotation(angle);
+    }
     if (zval != item->zValue())
         item->setZValue(zval);
 }
@@ -72,16 +78,9 @@ void CScene::positionItem(const QPointF &leftTopLocal, const QSizeF &sizeLocal,
 void CScene::positionItemByCenter(const QPointF &centerLocal, const QSizeF &sizeLocal,
                                   qreal angle, qreal zval, std::shared_ptr<QGraphicsItem> item)
 {
-    int sizeXGlobal = toGlobalCX(sizeLocal.width());
-    int sizeYGlobal = toGlobalCY(sizeLocal.height());
-    item->setTransformOriginPoint(sizeXGlobal / 2, sizeYGlobal / 2);
-    item->setRotation(angle);
-    
-    QRectF boundRect = item->boundingRect();
-    qreal left = toGlobalX(centerLocal.x()) - boundRect.width() / 2;
-    qreal top = toGlobalY(centerLocal.y()) - boundRect.height() / 2;
-    item->setPos(left, top);
-    item->setZValue(zval);
+    qreal left = centerLocal.x() - sizeLocal.width() / 2;
+    qreal top = centerLocal.y() - sizeLocal.height() / 2;
+    positionItem(QPointF(left, top), sizeLocal, angle, zval, item);
 }
 
 void CScene::removeItem(std::shared_ptr<QGraphicsItem> item)
@@ -98,29 +97,6 @@ void CScene::scaleItem(QSizeF originSizeLocal, QSizeF resultSizeLocal,
                                               resultSizeGlobal.height() / originSizeGlobal.height());
     item->setTransform(transform);
 }
-
-/*
-std::shared_ptr<QGraphicsItem> CScene::drawAndPosition(int xLocal, int yLocal, int xSizeLocal, int ySizeLocal,
-                            std::shared_ptr<QPixmap> pixmap, qreal angle, qreal zval)
-{
-    int sizeX = toGlobalCX(xSizeLocal);
-    int sizeY = toGlobalCY(ySizeLocal);
-    QPixmap scaledpixmap = pixmap;
-    if (pixmap->size() != QSize(sizeX, sizeY))
-        scaledPixmap = pixmap->scaled(sizeX, sizeY, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    
-    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
-    backgroundItems.push_back(item);
-    
-    if (angle != 0)
-    {
-        item->setTransformOriginPoint(sizeX / 2, sizeY / 2);
-        item->setRotation(angle);
-    }
-    item->setPos(toGlobalX(xLocal), toGlobalY(yLocal));
-    item->setZValue(zval);
-    return item;
-}*/
 
 void CScene::updateGameRect(QRect newWindowRect)
 {
@@ -152,48 +128,6 @@ void CScene::updateGameRect(QRect newWindowRect)
         gameRect.setHeight(newHeight);
     }
 }
-
-
-//void CScene::updateGameBackground()
-//{
-//    //update Window background
-//    QPixmap scaledPixmap = r->game_background.scaled(windowRect.size(),
-//                                                       Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-//    std::shared_ptr<QGraphicsPixmapItem> item(graphicsScene->addPixmap(scaledPixmap));
-//    backgroundItems.push_back(item);
-//    item->setZValue(0);
-
-
-//    //update game background
-//    drawAndPosition(0, 0, LocalWidth, LocalHeight, &r->game_background);
-    
-//    //draw chess-like field
-//    for (int i = 0; i < CellNumX; ++i)
-//    {
-//        for (int j = 0; j < CellNumY; ++j)
-//        {
-//            int x = OffsetX + i * CellSize;
-//            int y = OffsetY + j * CellSize;
-//            if ((i+j)%2 == 0)
-//            {
-//                drawAndPosition(x, y, CellSize, CellSize, &(r->cell1));
-//            }
-//            else
-//                drawAndPosition(x, y, CellSize, CellSize, &(r->cell2));
-//        }
-//    }
-    
-//    //draw path inside and outside the field
-//    int y = (CellNumY / 2) * CellSize + OffsetY;
-//    int xLeft = 0;
-//    int xRight = OffsetX + CellNumX * CellSize;
-    
-//    drawAndPosition(xLeft, y, OffsetX, CellSize, &r->cell1);
-//    if (CellNumX % 2)
-//        drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell1);
-//    else
-//        drawAndPosition(xRight, y, OffsetX, CellSize, &r->cell2);
-//}
 
 void CScene::updateDistances(std::vector<std::vector<int>>&)
 {
@@ -231,7 +165,7 @@ void CScene::removeWaveInfo()
     }
 }
 
-void CScene::updateFPS(int fps)
+void CScene::updateFPS(int fps, int tps)
 {
 #ifdef SHOW_FPS
     if (fpsItem)
@@ -241,6 +175,14 @@ void CScene::updateFPS(int fps)
     fpsItem->setPos(toGlobalX(10), toGlobalY(10));
     fpsItem->setDefaultTextColor(Qt::red);
     fpsItem->setZValue(10);
+    
+    if (tpsItem)
+        graphicsScene->removeItem(tpsItem.get());
+    
+    tpsItem = std::shared_ptr<QGraphicsTextItem>(graphicsScene->addText(QString::number((int)tps) + " TPS"));
+    tpsItem->setPos(toGlobalX(m::LocalWidth - m::CellSize * 2), toGlobalY(10));
+    tpsItem->setDefaultTextColor(Qt::red);
+    tpsItem->setZValue(10);
 #endif
 }
 
@@ -252,8 +194,6 @@ void CScene::removeFPS()
         fpsItem = nullptr;
     }
 }
-
-
 
 void CScene::updateItems()
 {

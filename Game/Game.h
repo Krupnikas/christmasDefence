@@ -116,6 +116,7 @@ private:
 //private attributes
 private:
     qreal fps = 0;
+    qreal tps = 0;
     
     std::mutex cannonsMutex;
 };

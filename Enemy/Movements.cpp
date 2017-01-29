@@ -81,7 +81,8 @@ Cell::Cell(const Cell &cell):
 
 ///////////////////////////////////////////////
 Movements::Movements(CGame *game):
-    game(game)
+    game(game),
+    delta(QPoint(0, 0))
 {
     ExitWidth = m::OffsetX + m::CellSize;
     ExitHeight = m::OffsetY + m::CellSize;
@@ -148,8 +149,16 @@ QPointF Movements::move()
         queue.push(toNext);
     }
 
+    QPointF oldCenter = curCenter();
     curPos += queue.curSum;
     update_cur_();
+    QPointF newCenter = curCenter();
+    QPointF d = newCenter - oldCenter;
+    if (delta == QPoint(0, 0))
+        delta = d;
+    if (delta != d)
+//        qDebug() << "SHIT! ";
+    delta = d;
     return curCenter();
 }
 

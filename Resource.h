@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QMainWindow>
 #include <QEventLoop>
+#include <QElapsedTimer>
 #include <QTimer>
 #include <QTime>
 #include <QRect>

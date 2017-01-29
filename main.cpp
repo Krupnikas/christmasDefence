@@ -11,13 +11,13 @@ int main(int argc, char *argv[])
 
     QPixmap pixmap("://res/christmas/splash.png");
     QSplashScreen splash(pixmap);
-    splash.show();
+    //splash.show();
 
     MainView w(&a);
     w.show();
 
-    QTimer::singleShot(1000, &splash, SLOT(close()));
-    QTimer::singleShot(1000, &w, SLOT(show()));
+    //QTimer::singleShot(1000, &splash, SLOT(close()));
+    //QTimer::singleShot(1000, &w, SLOT(show()));
 
     return a.exec();
 }
