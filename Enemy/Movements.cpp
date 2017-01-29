@@ -217,6 +217,7 @@ qreal Movements::getDistanceToFinish() const
             break;
         case EEdge::eBottom:
             addDist += (startEdge == curEdge) ? nHeight : pHeight;
+            break;
         case EEdge::eInside:
             qDebug() << "Movements: getDistanceToFinish: WTH?!?!?!";
             break;

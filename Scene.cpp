@@ -128,7 +128,7 @@ void CScene::updateGameRect(QRect newWindowRect)
     //Устанавливаем новую ширину
     //Иначе экран выше, чем 16х9
     //Устанавливаем новую высоту
-    qDebug() << "New window rect: " << newWindowRect;
+    //qDebug() << "New window rect: " << newWindowRect;
     backgroundItems.clear();
     gameRect = windowRect = newWindowRect;
     
