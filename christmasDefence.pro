@@ -11,6 +11,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = christmasDefence
 TEMPLATE = app
 
+setting.name = DEVELOPMENT_TEAM
+setting.value = XXXXXXXXXXXXXX
+QMAKE_MAC_XCODE_SETTINGS += setting
+
 CONFIG += c++11 
 
 SOURCES += \

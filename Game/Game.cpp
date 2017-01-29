@@ -24,7 +24,7 @@ std::vector<QPoint> generate_cells_(int edge, int pos)
     
     int yMid = (m::CellNumY - 1) / 2;
     int yLess = rand() % yMid;
-    int yGr = yMid + rand() & (m::CellNumY - yMid) + 1;
+    int yGr = yMid + rand() % (m::CellNumY - yMid) + 1;
 
     
     switch (edge) {
@@ -256,6 +256,11 @@ void CGame::startGameLevel(int level)
         distances[i].resize(m::CellNumY);
     }
     
+    userManager.setCash(20000);
+    for (int i = 0; i < m::CellNumX; ++i)
+        for (int j = 0; j < m::CellNumY; ++j)
+            buyCannon(std::make_shared<CFastCannon>(this, QPoint(i, j), 0));
+    
     waveManager.initialize();
     helper::updateDistances(cannons, distances);
 
@@ -302,8 +307,7 @@ bool CGame::buyCannon(std::shared_ptr<ICannon> cannon)
 
     int cost = cannon->getCurCost();
 
-    if (x < 0 || x > m::CellNumX   ||
-        y < 0 || y > m::CellNumY   ||
+    if (!isGameCell(cell) ||
         !helper::okToAdd(cell, distances, enemies) ||
         cost > userManager.getCash())
         return false;
