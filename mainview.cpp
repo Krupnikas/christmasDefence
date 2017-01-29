@@ -40,8 +40,8 @@ MainView::MainView(QApplication *app, QWidget *parent):
     //OpenGL optimizations
     QGLFormat format = QGLFormat(QGL::DirectRendering);
     QGLWidget *glWidget = new QGLWidget(format);
-    ui->graphicsView->setViewport(glWidget);
-
+    ui->graphicsView->setViewport(new QOpenGLWidget());
+/*
     QSurfaceFormat fmt;
     fmt.setDepthBufferSize(24);
     QOpenGLContext::OpenGLModuleType type(QOpenGLContext::openGLModuleType());
@@ -56,7 +56,7 @@ MainView::MainView(QApplication *app, QWidget *parent):
 
     QSurfaceFormat::setDefaultFormat(fmt);
     this->setAttribute(Qt::WA_AcceptTouchEvents);
-    
+    */
     //playlist setting
     QString sound = r.getSound("mainTheme.mp3");//"qrc:/res/christmas/sounds/mainTheme.mp3";
     bool success = playlist.addMedia(QUrl(sound/*r.getSound("mainTheme.mp3")*/));

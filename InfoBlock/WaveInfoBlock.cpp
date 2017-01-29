@@ -18,30 +18,30 @@ CWaveInfoBlock::CWaveInfoBlock(CGame *game):
 
     waveCounter = std::make_shared<CImageAndNumber>(game,
                                            game->r->wave_counter_icon,
-                                           QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
-                                                                  InternalOffsetY),
-                                                 QSize(textureSize.width() - 2 * InternalOffsetX,
-                                                       (textureSize.height() - 3 * InternalOffsetY)/2)));
+                                                    QRect(leftTop.toPoint() + QPoint(textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                                                     textureSize.height() * (InternalPercentageOffsetY / 100.0)),
+                                                          QSize(textureSize.width() - 2 * textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                               (textureSize.height()- 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2)));
     enemyCounter = std::make_shared<CImageAndNumber>(game,
                                            game->r->current_wave_icon,
-                                           QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
-                                                                  InternalOffsetY * 2 + (textureSize.height() - 3 * InternalOffsetY)/2),
-                                                 QSize(textureSize.width() - 2 * InternalOffsetX,
-                                                       (textureSize.height() - 3 * InternalOffsetY)/2)));
+                                                     QRect(leftTop.toPoint() + QPoint(textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                                            textureSize.height() * (InternalPercentageOffsetY / 100.0) * 2 + (textureSize.height() - 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2),
+                                                           QSize(textureSize.width() - 2 * textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                                 (textureSize.height() - 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2)));
 }
 
 void CWaveInfoBlock::draw()
 {
     CSceneObject::draw();
-    waveCounter->updatePosition(QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
-                                                        InternalOffsetY),
-                                       QSize(textureSize.width() - 2 * InternalOffsetX,
-                                             (textureSize.height() - 3 * InternalOffsetY)/2)));
+    waveCounter->updatePosition(QRect(leftTop.toPoint() + QPoint(textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                                 textureSize.height() * (InternalPercentageOffsetY / 100.0)),
+                                                QSize(textureSize.width() - 2 * textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                      (textureSize.height() - 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2)));
     waveCounter->draw();
-    enemyCounter->updatePosition(QRect(leftTop.toPoint() + QPoint(InternalOffsetX,
-                                                           InternalOffsetY * 2 + (textureSize.height() - 3 * InternalOffsetY)/2),
-                                          QSize(textureSize.width() - 2 * InternalOffsetX,
-                                                (textureSize.height() - 3 * InternalOffsetY)/2)));
+    enemyCounter->updatePosition(QRect(leftTop.toPoint() + QPoint(textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                                  textureSize.height() * (InternalPercentageOffsetY / 100.0) * 2 + (textureSize.height() - 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2),
+                                                 QSize(textureSize.width() - 2 * textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                       (textureSize.height() - 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2)));
     enemyCounter->draw();
 }
 

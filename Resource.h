@@ -33,6 +33,7 @@
 #include <qopengl.h>
 #include <QOpenGLContext>
 #include <QtOpenGL/QGLWidget>
+#include <QOpenGLWidget>
 #include <QtOpenGL/QGLFormat>
 
 #include <memory>
