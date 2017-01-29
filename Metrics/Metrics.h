@@ -18,7 +18,8 @@ const qreal SoundLevel = 0.1;
 
 //const int MenuButtonOffset = 1;
 extern bool CloseButtonInInfoBlocksEnabled;
-extern int TimerInterval;
+extern int PositionTimerInterval;
+extern int DrawTimerInterval;
 
 extern int OffsetY;
 extern int OffsetX;

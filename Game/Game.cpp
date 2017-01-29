@@ -264,8 +264,8 @@ void CGame::startGameLevel(int level)
     waveManager.initialize();
     helper::updateDistances(cannons, distances);
 
-    positionTimer->start(m::TimerInterval);
-    drawTimer->start(m::TimerInterval);
+    positionTimer->start(m::PositionTimerInterval);
+    drawTimer->start(m::DrawTimerInterval);
     
     show();
 }
