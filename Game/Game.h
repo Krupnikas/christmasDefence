@@ -43,6 +43,8 @@ public:
     
     QTimer *positionTimer;
     QTimer *drawTimer;
+
+    QTime time;
     
     std::shared_ptr<CGameBackground> background;
     std::shared_ptr<CCannonSelection> cannonSelectionInfoBlock;

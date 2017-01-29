@@ -7,7 +7,8 @@ namespace m
 {
 
 bool CloseButtonInInfoBlocksEnabled = true;
-int TimerInterval = 16;
+int PositionTimerInterval = 16;
+int DrawTimerInterval = 1;
 
 int OffsetY;
 int OffsetX;

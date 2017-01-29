@@ -231,7 +231,7 @@ qreal manhattanLength(QPointF p1, QPointF p2)
 
 qreal ticksToTime(int ticks)
 {
-    return static_cast<qreal>(ticks) * m::TimerInterval / 1000;
+    return static_cast<qreal>(ticks) * m::PositionTimerInterval / 1000;
 }
 
 std::shared_ptr<QPixmap> renderPixmapFromText(QString text, QPen pen, QBrush brush, QFont font, QColor backgroundColor)
