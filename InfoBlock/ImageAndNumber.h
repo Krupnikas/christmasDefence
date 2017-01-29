@@ -9,10 +9,10 @@ class CImageAndNumber : public IInfoBlock
 public:
     CImageAndNumber(CGame *game, std::shared_ptr<QPixmap> IconPixmap, QRectF BoundingRect, QString text = QString("0"));
 
-    const int IconOffsetX = 20;
-    const int IconOffsetY = 25;
-    const int TextOffsetX = 5;
-    const int TextOffsetY = 25;
+    const qreal IconPercentOffsetX = 10;
+    const qreal IconPercentOffsetY = 15;
+    const qreal TextPercentOffsetX = 10;
+    const qreal TextPercentOffsetY = 15;
 
     void updatePosition(QRect BoundingRect);
 

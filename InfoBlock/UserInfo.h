@@ -9,8 +9,8 @@ class CUserInfo : public IInfoBlock
 public:
     CUserInfo(CGame *game);
 
-    const int INTERNAL_OFFSET_X = 15;
-    const int INTERNAL_OFFSET_Y = 15;
+    const qreal InternalPercentageOffsetX = 5;
+    const qreal InternalPercentageOffsetY = 1;
 
     std::shared_ptr<CImageAndNumber> hp;
     std::shared_ptr<CImageAndNumber> coins;

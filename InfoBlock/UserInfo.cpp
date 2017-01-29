@@ -17,16 +17,16 @@ CUserInfo::CUserInfo(CGame *game)
 
     hp = std::make_shared<CImageAndNumber>(game,
                                            game->r->hp_icon,
-                                           QRect(leftTop.toPoint() + QPoint(INTERNAL_OFFSET_X,
-                                                                  INTERNAL_OFFSET_Y),
-                                                 QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
-                                                       (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2)));
+                                           QRect(leftTop.toPoint() + QPoint(textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                                            textureSize.height() * (InternalPercentageOffsetY / 100.0)),
+                                                 QSize(textureSize.width() - 2 * textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                      (textureSize.height()- 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2)));
     coins = std::make_shared<CImageAndNumber>(game,
                                            game->r->coins_icon,
-                                           QRect(leftTop.toPoint() + QPoint(INTERNAL_OFFSET_X,
-                                                                  INTERNAL_OFFSET_Y * 2 + (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2),
-                                                 QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
-                                                       (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2)));
+                                           QRect(leftTop.toPoint() + QPoint(textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                                  textureSize.height() * (InternalPercentageOffsetY / 100.0) * 2 + (textureSize.height() - 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2),
+                                                 QSize(textureSize.width() - 2 * textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                       (textureSize.height() - 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2)));
     connect(&game->userManager,
             SIGNAL(hpChanged(int)),
             this,
@@ -43,15 +43,15 @@ CUserInfo::CUserInfo(CGame *game)
 void CUserInfo::draw()
 {
     CSceneObject::draw();
-    hp->updatePosition(QRect(leftTop.toPoint() + QPoint(INTERNAL_OFFSET_X,
-                                                        INTERNAL_OFFSET_Y),
-                                       QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
-                                             (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2)));
+    hp->updatePosition(QRect(leftTop.toPoint() + QPoint(textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                        textureSize.height() * (InternalPercentageOffsetY / 100.0)),
+                                       QSize(textureSize.width() - 2 * textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                             (textureSize.height() - 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2)));
     hp->draw();
-    coins->updatePosition(QRect(leftTop.toPoint() + QPoint(INTERNAL_OFFSET_X,
-                                                           INTERNAL_OFFSET_Y * 2 + (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2),
-                                          QSize(textureSize.width() - 2 * INTERNAL_OFFSET_X,
-                                                (textureSize.height() - 3 * INTERNAL_OFFSET_Y)/2)));
+    coins->updatePosition(QRect(leftTop.toPoint() + QPoint(textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                           textureSize.height() * (InternalPercentageOffsetY / 100.0) * 2 + (textureSize.height() - 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2),
+                                          QSize(textureSize.width() - 2 * textureSize.width() * (InternalPercentageOffsetX / 100.0),
+                                                (textureSize.height() - 3 * textureSize.height() * (InternalPercentageOffsetY / 100.0))/2)));
     coins->draw();
 }
 

@@ -16,18 +16,23 @@ CImageAndNumber::CImageAndNumber(CGame *game, std::shared_ptr<QPixmap> IconPixma
     this->leftTop = BoundingRect.topLeft();
 
     icon = std::make_shared<CSceneObject>(0, 4.6,
-                                          QPointF(leftTop) + QPointF(IconOffsetX, IconOffsetY),
-                                          QSizeF(BoundingRect.width() - 2 * IconOffsetX,
-                                                 BoundingRect.width() - 2 * IconOffsetX),
+                                          QPointF(leftTop) + QPointF(
+                                              BoundingRect.width() * IconPercentOffsetX / 100.0,
+                                              BoundingRect.height() * IconPercentOffsetY / 100.0),
+                                          QSizeF(BoundingRect.width() - 2 * BoundingRect.width() * IconPercentOffsetX / 100.0,
+                                                 BoundingRect.width() - 2 * BoundingRect.width() * IconPercentOffsetX / 100.0),
                                           IconPixmap, game);
 
     renderedText = helper::renderPixmapFromText(numberText);
 
     text = std::make_shared<CSceneObject>(0, 4.6,
                                           QPointF(leftTop) +
-                                          QPointF(TextOffsetX, 2 * TextOffsetY + icon->getTextureSize().height()),
-                                          QSizeF(BoundingRect.width() - 2 * TextOffsetX,
-                                                (BoundingRect.width() - 2 * TextOffsetX)
+                                          QPointF(BoundingRect.width() * TextPercentOffsetX / 100.0,
+                                                  BoundingRect.height() * IconPercentOffsetY / 100.0
+                                                  + BoundingRect.height() * TextPercentOffsetY / 100.0
+                                                  + icon->getTextureSize().height()),
+                                          QSizeF(BoundingRect.width() - 2 * BoundingRect.width() * TextPercentOffsetX / 100.0,
+                                                (BoundingRect.width() - 2 * BoundingRect.width() * TextPercentOffsetX / 100.0)
                                                 * renderedText->height() / renderedText->width()),
                                           renderedText, game);
 }

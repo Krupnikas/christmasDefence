@@ -192,6 +192,7 @@ QPoint findLowerNeighbour(std::vector<std::vector<int> > &distances, const QPoin
             break;
         case EEdge::eBottom:
             dy = (startEdges.count(curEdge) > 0) ? -1 : 1;
+            break;
         case EEdge::eInside:
             qDebug() << "Helper: findLowerNeighbour: WTF?!?!?!";
             break;
