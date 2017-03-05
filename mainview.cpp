@@ -40,7 +40,7 @@ MainView::MainView(QApplication *app, QWidget *parent):
     //OpenGL optimizations
     QGLFormat format = QGLFormat(QGL::DirectRendering);
     QGLWidget *glWidget = new QGLWidget(format);
-    ui->graphicsView->setViewport(new QOpenGLWidget());
+    ui->graphicsView->setViewport(glWidget/*new QOpenGLWidget()*/);
 /*
     QSurfaceFormat fmt;
     fmt.setDepthBufferSize(24);
@@ -58,18 +58,18 @@ MainView::MainView(QApplication *app, QWidget *parent):
     this->setAttribute(Qt::WA_AcceptTouchEvents);
     */
     //playlist setting
-    QString sound = r.getSound("mainTheme.mp3");//"qrc:/res/christmas/sounds/mainTheme.mp3";
-    bool success = playlist.addMedia(QUrl(sound/*r.getSound("mainTheme.mp3")*/));
-    if (!success)
-        qDebug() << "failed to load mp3";
+//    QString sound = r.getSound("mainTheme.mp3");//"qrc:/res/christmas/sounds/mainTheme.mp3";
+//    bool success = playlist.addMedia(QUrl(sound/*r.getSound("mainTheme.mp3")*/));
+//    if (!success)
+//        qDebug() << "failed to load mp3";
     
-    playlist.setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);    
+//    playlist.setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);    
 
-    playlist.setCurrentIndex(0);
+//    playlist.setCurrentIndex(0);
     
-    player.setPlaylist(&playlist);
-    player.setVolume(1);
-    player.play();
+//    player.setPlaylist(&playlist);
+//    player.setVolume(1);
+//    player.play();
     
     
     //this->showFullScreen();

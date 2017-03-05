@@ -263,7 +263,7 @@ void CGame::startGameLevel(int level)
         {
             bool buy = rand() % 2;
             if (buy)
-                buyCannon(std::make_shared<CFastCannon>(this, QPoint(i, j), 0));
+                buyCannon(std::make_shared<CFastCannon>(this, QPoint(i, j), 45));
         }
     
     waveManager.initialize();
