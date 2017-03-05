@@ -461,10 +461,11 @@ void CGame::onButtonPressed(int type)
     switch (eType)
     {
     case EButtonType::eBTgMenu:
-        hide();
-        endGame();
-        view->gameMenu.create();
-        view->gameMenu.show();
+        addEnemy(1, 0, 10);
+//        hide();
+//        endGame();
+//        view->gameMenu.create();
+//        view->gameMenu.show();
         break;
     default:
         break;

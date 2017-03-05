@@ -12,7 +12,7 @@ CCalculationThread::CCalculationThread(CGame* game):
 
 void CCalculationThread::run()
 {
-    game->waveManager.onTimer();
+    //game->waveManager.onTimer();
 
     size_t lastBulletInd = 0;
     for (size_t i = 0; i < game->bullets.size(); ++i)
