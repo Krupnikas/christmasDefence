@@ -30,8 +30,8 @@ CFastCannon::CFastCannon(CGame *game, QPoint cell, double angle)
     
     cost = m::FastCannonSmCost;
     
-    sGunshot.setSource(game->r->url_gunshots[1]);
-    sGunshot.setVolume(m::SoundLevel);
+    //sGunshot.setSource(game->r->url_gunshots[1]);
+    //sGunshot.setVolume(m::SoundLevel);
 }
 
 CFastCannon::~CFastCannon(){}
@@ -45,7 +45,7 @@ void CFastCannon::fire()
     bullet->show();
     
     QSoundEffect::Status status = sGunshot.status();
-    sGunshot.play();
+    //sGunshot.play();
 }
 
 void CFastCannon::upgrade()
