@@ -31,7 +31,7 @@ qreal FastCannonMidRotation = 3.8;
 qreal FastCannonBigRotation = 3.5;
 
 //fire speed in game tacts
-qreal FastCannonSmFireSpeed = 5;
+qreal FastCannonSmFireSpeed = 20;//5;
 qreal FastCannonMidFireSpeed = 7;
 qreal FastCannonBigFireSpeed = 10;
 

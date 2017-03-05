@@ -59,14 +59,18 @@ public:
     ESelectionStatus selectionStatus;
 
     std::vector<std::shared_ptr<IBullet> > bullets;
+    QMutex bulletsMutex;
+    
     std::vector<std::shared_ptr<IEnemy> > enemies;
+    QMutex enemiesMutex;
+    
     std::vector<std::vector<std::shared_ptr<ICannon>>> cannons;
+    QMutex cannonsMutex;
+    
     std::vector<std::vector<int>> distances;
     
     qreal fps = 0;
     qreal tps = 0;
-    
-    std::mutex cannonsMutex;
     
 //public methods
 public:

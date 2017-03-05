@@ -29,8 +29,8 @@ CSlowCannon::CSlowCannon(CGame *game, QPoint cell, double angle)
     radiusItem = std::make_shared<CCannonRadius>(dynamic_cast<ICannon *>(this));
 
     cost = m::SlowCannonSmCost;
-    sGunshot.setSource(game->r->url_gunshots[3]);
-    sGunshot.setVolume(m::SoundLevel);
+    //sGunshot.setSource(game->r->url_gunshots[3]);
+    //sGunshot.setVolume(m::SoundLevel);
 }
 
 CSlowCannon::~CSlowCannon(){}
@@ -44,7 +44,7 @@ void CSlowCannon::fire()
     bullet->show();
     
     QSoundEffect::Status status = sGunshot.status();
-    sGunshot.play();
+    //sGunshot.play();
 }
 
 void CSlowCannon::upgrade()

@@ -14,8 +14,13 @@ void CCalculationThread::run()
 {
     //game->waveManager.onTimer();
 
+    game->bulletsMutex.lock();
+    size_t bullets_size = game->bullets.size();
+    game->bulletsMutex.unlock();
+    
     size_t lastBulletInd = 0;
-    for (size_t i = 0; i < game->bullets.size(); ++i)
+    for (size_t i = 0; i < bullets_size; ++i)
+    {
         if (game->bullets[i]->move() && !game->bullets[i]->reachedEnemy())
         {
             if (lastBulletInd < i)
@@ -25,6 +30,7 @@ void CCalculationThread::run()
         }
         else
             game->bullets[i]->remove();
+    }
     if (lastBulletInd < game->bullets.size())
         game->bullets.resize(lastBulletInd);
 

@@ -332,7 +332,7 @@ void initMetrics()
     
     m::FastBulletSizeX = m::CellSize / 3.0;
     m::FastBulletSizeY = m::CellSize / 3.0;
-    m::FastBulletStep = m::CellSize / 10.0; // in local points
+    m::FastBulletStep = m::CellSize / 50.0; // in local points
     
     m::MonsterBulletSizeX = m::CellSize / 3.0;
     m::MonsterBulletSizeY = m::CellSize / 3.0;    
