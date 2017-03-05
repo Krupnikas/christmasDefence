@@ -505,7 +505,7 @@ void CGame::onPositionTimer()
         enemies.resize(lastEnemyInd);
     
     qint64 elapsed = timer.nsecsElapsed();
-    //if (elapsed > 1e6)
+    if (elapsed > 1e6)
         qDebug() << "enemies counting " << elapsed / 1e6f;
     
     
@@ -522,7 +522,7 @@ void CGame::onPositionTimer()
             }
     
     elapsed = timer.nsecsElapsed();
-    //if (elapsed > 5e6)
+    if (elapsed > 5e6)
         qDebug() << "cannons counting " << elapsed / 1e6f;
     cannonsMutex.unlock();
     
