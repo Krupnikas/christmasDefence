@@ -152,10 +152,10 @@ void CGame::show()
     menuButton->draw();
     menuButton->show();
 
-    for (size_t i = 0; i < bullets.size(); ++i)
-        bullets[i]->show();
-    for (size_t i = 0; i < enemies.size(); ++i)
-        enemies[i]->show();
+    for (auto bullet: bullets)
+        bullet->show();
+    for (auto enemie: enemies)
+        enemie->show();
     for (int i = 0; i < m::CellNumX; ++i)
         for (int j = 0; j < m::CellNumY; ++j)
             if (cannons[i][j])
@@ -190,10 +190,10 @@ void CGame::hide()
     waveInformationBlock->hide();
     menuButton->hide();
 
-    for (size_t i = 0; i < bullets.size(); ++i)
-        bullets[i]->hide();
-    for (size_t i = 0; i < enemies.size(); ++i)
-        enemies[i]->hide();
+    for (auto bullet: bullets)
+        bullet->hide();
+    for (auto enemie: enemies)
+        enemie->hide();
     for (int i = 0; i < m::CellNumX; ++i)
         for (int j = 0; j < m::CellNumY; ++j)
             if (cannons[i][j])
@@ -276,12 +276,12 @@ void CGame::startGameLevel(int level)
 
 void CGame::endGame()
 {
-    for (size_t i = 0; i < bullets.size(); ++i)
-        bullets[i]->remove();
+    for (auto bullet: bullets)
+        bullet->remove();
     bullets.clear();
 
-    for (size_t i = 0; i < enemies.size(); ++i)
-        enemies[i]->remove();
+    for (auto enemie: enemies)
+        enemie->remove();
     enemies.clear();
 
     for (int i = 0; i < m::CellNumX; ++i)
@@ -474,35 +474,27 @@ void CGame::onPositionTimer()
 {
     waveManager.onTimer();
 
-    size_t lastBulletInd = 0;
-    for (size_t i = 0; i < bullets.size(); ++i)
-        if (bullets[i]->move() && !bullets[i]->reachedEnemy())
+    for (auto it = bullets.begin(); it != bullets.end(); ++it)
+    {
+        auto bullet = *it;
+        if (!bullet->move() || bullet->reachedEnemy())
         {
-            if (lastBulletInd < i)
-                bullets[lastBulletInd++] = bullets[i];
-            else
-                lastBulletInd++;
+            bullet->remove();
+            it = bullets.erase(it);   
         }
-        else
-            bullets[i]->remove();
-    if (lastBulletInd < bullets.size())
-        bullets.resize(lastBulletInd);
+    }
 
     static QElapsedTimer timer;
     timer.start();
-    size_t lastEnemyInd = 0;
-    for (size_t i = 0; i < enemies.size(); ++i)
-        if (!enemies[i]->isDead() && enemies[i]->move())
+    for (auto it = enemies.begin(); it != enemies.end(); ++it)
+    {
+        auto enemie = *it;
+        if (enemie->isDead() || !enemie->move())
         {
-            if (lastEnemyInd < i)
-                enemies[lastEnemyInd++] = enemies[i];
-            else
-                lastEnemyInd++;
+            enemie->remove();
+            it = enemies.erase(it);
         }
-        else
-            enemies[i]->remove();
-    if (lastEnemyInd < enemies.size())
-        enemies.resize(lastEnemyInd);
+    }
     
     qint64 elapsed = timer.nsecsElapsed();
     if (elapsed > 1e6)
@@ -545,8 +537,8 @@ void CGame::onDrawTimer()
 {
     //view->setGraphicsViewUpdatesEnabled(false);
 
-    for (size_t i = 0; i < bullets.size(); ++i)
-        bullets[i]->draw();
+    for (auto bullet: bullets)
+        bullet->draw();
 
     for (auto enemy: enemies)
         enemy->draw();
@@ -584,11 +576,11 @@ void CGame::scale_objects_()
 {
     background->scale();
 
-    for (size_t i = 0; i < bullets.size(); ++i)
-        bullets[i]->scale();
+    for (auto bullet: bullets)
+        bullet->scale();
 
-    for (size_t i = 0; i < enemies.size(); ++i)
-        enemies[i]->scale();
+    for (auto enemie: enemies)
+        enemie->scale();
 
     for (int i = 0; i < m::CellNumX; ++i)
         for (int j = 0; j < m::CellNumY; ++j)

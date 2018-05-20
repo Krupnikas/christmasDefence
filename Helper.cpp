@@ -110,15 +110,15 @@ void updateDistances(
 
 
 bool okToAdd(QPoint cell, const std::vector<std::vector<int> > &distances,
-             std::vector<std::shared_ptr<IEnemy> > &enemies)
+             std::list<std::shared_ptr<IEnemy> > &enemies)
 {
     int x = cell.x();
     int y = cell.y();
-    for (size_t i = 0; i < enemies.size(); ++i)
+    for (auto enemie: enemies)
     {
-        if (enemies[i]->getCurrentGameCell() == cell ||
-            (enemies[i]->getNextGameCell() == cell &&
-             !enemies[i]->beforeTurnArea()))
+        if (enemie->getCurrentGameCell() == cell ||
+            (enemie->getNextGameCell() == cell &&
+             !enemie->beforeTurnArea()))
             return false;
     }
 

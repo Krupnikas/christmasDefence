@@ -55,8 +55,8 @@ public:
     
     ESelectionStatus selectionStatus;
 
-    std::vector<std::shared_ptr<IBullet> > bullets;
-    std::vector<std::shared_ptr<IEnemy> > enemies;
+    std::list<std::shared_ptr<IBullet> > bullets;
+    std::list<std::shared_ptr<IEnemy> > enemies;
     std::vector<std::vector<std::shared_ptr<ICannon>>> cannons;
     std::vector<std::vector<int>> distances;
     
