@@ -256,14 +256,14 @@ void CGame::startGameLevel(int level)
         distances[i].resize(m::CellNumY);
     }
     
-    userManager.setCash(20000);
-    for (int i = 0; i < m::CellNumX; ++i)
-        for (int j = 0; j < m::CellNumY; ++j)
-        {
-            bool buy = rand() % 2;
-            if (buy)
-                buyCannon(std::make_shared<CFastCannon>(this, QPoint(i, j), 45));
-        }
+//    userManager.setCash(200);
+//    for (int i = 0; i < m::CellNumX; ++i)
+//        for (int j = 0; j < m::CellNumY; ++j)
+//        {
+//            bool buy = rand() % 2;
+//            if (buy)
+//                buyCannon(std::make_shared<CFastCannon>(this, QPoint(i, j), 0));
+//        }
     
     waveManager.initialize();
     helper::updateDistances(cannons, distances);
