@@ -2,6 +2,9 @@
 
 A minimalist, strategy-focused tower defense game built with Godot 4.2+.
 
+![Godot](https://img.shields.io/badge/Godot-4.2+-blue?logo=godot-engine)
+![License](https://img.shields.io/badge/License-MIT-green)
+
 ## Features
 
 - **9 Cannon Types**: Gun, Sniper, Rapid, Fire, Ice, Acid, Laser, Tesla, Miner
