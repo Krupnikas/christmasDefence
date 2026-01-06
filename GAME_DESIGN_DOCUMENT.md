@@ -238,17 +238,17 @@ CSceneObject (base renderable)
 
 ### Cannon Types (9 Total)
 
-| # | Type | Unlock | Cost | Mechanic | Status |
-|---|------|--------|------|----------|--------|
-| 1 | **Gun** | Level 1 | 50 | Balanced damage, medium range | Implement |
-| 2 | **Sniper** | Level 2 | 100 | Long range, 20% critical (2x damage) | Implement |
-| 3 | **Rapid** | Level 3 | 75 | 3x fire rate, 0.4x damage | Implement |
-| 4 | **Fire** | Level 4 | 80 | Burn DoT (3s, 5 DPS) | Exists (BurnCannon) |
-| 5 | **Ice** | Level 5 | 80 | 50% slow (3s) | Exists (SlowCannon) |
-| 6 | **Acid** | Level 6 | 120 | Splash (50% damage, 1 cell radius) | Implement |
-| 7 | **Laser** | Level 8 | 150 | Pierce through all enemies in line | Implement |
-| 8 | **Tesla** | Level 10 | 200 | Chain to 3 enemies (50% decay) | Implement |
-| 9 | **Miner** | Level 7 | 150 | 2.5 coins/sec, no attack | Implement |
+| # | Type | Unlock | Cost | Mechanic |
+|---|------|--------|------|----------|
+| 1 | **Gun** | Level 1 | 50 | Balanced damage, medium range |
+| 2 | **Sniper** | Level 2 | 100 | Long range, 20% critical (2x damage) |
+| 3 | **Rapid** | Level 3 | 75 | 3x fire rate, 0.4x damage |
+| 4 | **Fire** | Level 4 | 80 | Burn DoT (3s, 5 DPS) |
+| 5 | **Ice** | Level 5 | 80 | 50% slow (3s) |
+| 6 | **Acid** | Level 6 | 120 | Splash (50% damage, 1 cell radius) |
+| 7 | **Laser** | Level 8 | 150 | Pierce through all enemies in line |
+| 8 | **Tesla** | Level 10 | 200 | Chain to 3 enemies (50% decay) |
+| 9 | **Miner** | Level 7 | 150 | 2.5 coins/sec, no attack |
 
 ### Cannon Properties
 
@@ -302,14 +302,14 @@ Each cannon has 3 tiers (existing `ESizeType`):
 
 ### Enemy Types (6 Total)
 
-| # | Type | HP | Speed | Special | Status |
-|---|------|----|----- -|---------|--------|
-| 1 | **Regular** | 100 | 1.0x | None | Implement |
-| 2 | **Fast** | 50 | 2.0x | Low HP | Exists |
-| 3 | **Tank** | 300 | 0.5x | 50% physical resist | Implement |
-| 4 | **Flying** | 80 | 1.2x | Ignores ground obstacles | Implement |
-| 5 | **Dodger** | 70 | 1.3x | 40% dodge chance | Implement |
-| 6 | **Resistant** | 120 | 0.9x | Immune to status effects | Implement |
+| # | Type | HP | Speed | Special |
+|---|------|-----|-------|---------|
+| 1 | **Regular** | 100 | 1.0x | None |
+| 2 | **Fast** | 50 | 2.0x | Low HP |
+| 3 | **Tank** | 300 | 0.5x | 50% physical resist |
+| 4 | **Flying** | 80 | 1.2x | Ignores ground obstacles |
+| 5 | **Dodger** | 70 | 1.3x | 40% dodge chance |
+| 6 | **Resistant** | 120 | 0.9x | Immune to status effects |
 
 ### Enemy Properties
 
@@ -852,13 +852,13 @@ Required spending for survival: ~1500
 Margin for error: ~13%  ← Target range
 ```
 
-### Difficulty Validation Checklist
+### Difficulty Validation Criteria
 
-- [ ] Level completable with optimal play
-- [ ] No single cannon dominates
-- [ ] Economy forces meaningful choices
-- [ ] Status combos rewarded
-- [ ] Final waves require full map usage
+- Level completable with optimal play
+- No single cannon dominates
+- Economy forces meaningful choices
+- Status combos rewarded
+- Final waves require full map usage
 
 ---
 
@@ -880,23 +880,23 @@ Margin for error: ~13%  ← Target range
 
 ### New Classes Required
 
-| Class | Priority | Description |
-|-------|----------|-------------|
-| `CPathfindingManager` | High | A* implementation |
-| `CStatusEffectManager` | High | DoT and slow processing |
-| `CGunCannon` | High | Base cannon type |
-| `CSniperCannon` | Medium | Long range + crit |
-| `CAcidCannon` | Medium | Splash damage |
-| `CLaserCannon` | Medium | Pierce mechanic |
-| `CTeslaCannon` | Medium | Chain mechanic |
-| `CMinerCannon` | High | Economy generator |
-| `CTankEnemy` | Medium | High HP enemy |
-| `CFlyingEnemy` | Medium | Ignore obstacles |
-| `CDodgerEnemy` | Low | Dodge mechanic |
-| `CResistantEnemy` | Low | Status immunity |
-| `CSaveManager` | High | Progress persistence |
-| `CStarRating` | Medium | UI component |
-| `CCameraController` | Low | Zoom/pan |
+| Class | Description |
+|-------|-------------|
+| `CPathfindingManager` | A* implementation |
+| `CStatusEffectManager` | DoT and slow processing |
+| `CGunCannon` | Base cannon type |
+| `CSniperCannon` | Long range + crit |
+| `CAcidCannon` | Splash damage |
+| `CLaserCannon` | Pierce mechanic |
+| `CTeslaCannon` | Chain mechanic |
+| `CMinerCannon` | Economy generator |
+| `CTankEnemy` | High HP enemy |
+| `CFlyingEnemy` | Ignore obstacles |
+| `CDodgerEnemy` | Dodge mechanic |
+| `CResistantEnemy` | Status immunity |
+| `CSaveManager` | Progress persistence |
+| `CStarRating` | UI component |
+| `CCameraController` | Zoom/pan |
 
 ### Migration Path
 

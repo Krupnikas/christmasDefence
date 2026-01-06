@@ -1,0 +1,72 @@
+name: Deploy Godot Game to GitHub Pages
+
+on:
+  push:
+    branches: [ master, main ]
+    paths:
+      - 'godot_version/**'
+      - '.github/workflows/deploy-godot.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+env:
+  GODOT_VERSION: 4.2.2
+  EXPORT_NAME: tower-defence
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.2.2
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup export templates
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+
+      - name: Create export directory
+        run: mkdir -v -p build/web
+
+      - name: Export to Web
+        working-directory: godot_version
+        run: |
+          godot --headless --verbose --export-release "Web" ../build/web/index.html
+
+      - name: Add coi-serviceworker for SharedArrayBuffer
+        run: |
+          cd build/web
+          # Download coi-serviceworker for cross-origin isolation
+          curl -fsSL https://raw.githubusercontent.com/nickvitale/coi-serviceworker/main/coi-serviceworker.min.js > coi-serviceworker.min.js
+          # Inject into index.html
+          sed -i 's|<head>|<head><script src="coi-serviceworker.min.js"></script>|' index.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
