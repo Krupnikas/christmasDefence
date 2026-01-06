@@ -2,7 +2,7 @@ name: Deploy Godot Game to GitHub Pages
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [ master, main, claude/document-branches-code-PXPDE ]
     paths:
       - 'godot_version/**'
       - '.github/workflows/deploy-godot.yml'
