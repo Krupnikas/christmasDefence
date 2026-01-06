@@ -3,32 +3,18 @@ name: Deploy Godot Game to GitHub Pages
 on:
   push:
     branches: [ master, main, claude/document-branches-code-PXPDE ]
-    paths:
-      - 'godot_version/**'
-      - '.github/workflows/deploy-godot.yml'
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 env:
-  GODOT_VERSION: 4.2.2
-  EXPORT_NAME: tower-defence
+  GODOT_VERSION: 4.3
 
 jobs:
-  build:
+  export-web:
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:4.2.2
-
+      image: barichello/godot-ci:4.3
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: true
@@ -38,35 +24,19 @@ jobs:
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
 
-      - name: Create export directory
+      - name: Create build directory
         run: mkdir -v -p build/web
 
       - name: Export to Web
         working-directory: godot_version
+        run: godot --headless --verbose --export-release "Web" ../build/web/index.html
+
+      - name: Install rsync
         run: |
-          godot --headless --verbose --export-release "Web" ../build/web/index.html
+          apt-get update && apt-get install -y rsync
 
-      - name: Add coi-serviceworker for SharedArrayBuffer
-        run: |
-          cd build/web
-          # Download coi-serviceworker for cross-origin isolation
-          curl -fsSL https://raw.githubusercontent.com/nickvitale/coi-serviceworker/main/coi-serviceworker.min.js > coi-serviceworker.min.js
-          # Inject into index.html
-          sed -i 's|<head>|<head><script src="coi-serviceworker.min.js"></script>|' index.html
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: build/web
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: build/web

@@ -14,10 +14,9 @@ config/name="Tower Defence"
 config/description="A minimalist, strategy-focused tower defense game"
 config/version="1.0.0"
 run/main_scene="res://scenes/ui/main_menu.tscn"
-config/features=PackedStringArray("4.2", "GL Compatibility")
+config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
-config/icon="res://assets/sprites/icon.png"
 
 [autoload]
 
